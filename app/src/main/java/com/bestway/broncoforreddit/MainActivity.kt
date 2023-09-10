@@ -14,22 +14,8 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.List
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Surface
@@ -40,13 +26,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.bestway.broncoforreddit.components.PostWidget
 import com.bestway.broncoforreddit.data.mock.listOfMockedPosts
-import com.bestway.broncoforreddit.ui.model.BottomNav
 import com.bestway.broncoforreddit.ui.theme.BroncoForRedditTheme
+import com.bestway.broncoforreddit.ui.widgets.BRNavigationBar
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -55,6 +41,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
+            val context = LocalContext.current
+
             val pagerState = rememberPagerState()
             val coroutineScope = rememberCoroutineScope()
             val list by remember { mutableStateOf(listOfMockedPosts) }
@@ -64,49 +52,15 @@ class MainActivity : ComponentActivity() {
             val tabs by rememberSaveable {
                 mutableStateOf(
                     listOf(
-                        "Hot",
-                        "New",
-                        "Top",
-                        "Best",
-                        "Rising",
-                        "Controversial"
+                        getString(R.string.hot),
+                        getString(R.string.title_new),
+                        getString(R.string.top),
+                        getString(R.string.best),
+                        getString(R.string.rising),
+                        getString(R.string.controversial)
                     )
                 )
             }
-
-            val bottomNavs by remember {
-                mutableStateOf(
-                    listOf(
-                        BottomNav(
-                            title = "Home",
-                            selectedIcon = Icons.Filled.Home,
-                            unselectedIcon = Icons.Outlined.Home
-                        ),
-                        BottomNav(
-                            title = "Search",
-                            selectedIcon = Icons.Filled.Search,
-                            unselectedIcon = Icons.Outlined.Search
-                        ),
-                        BottomNav(
-                            title = "Create",
-                            selectedIcon = Icons.Filled.Add,
-                            unselectedIcon = Icons.Outlined.Add
-                        ),
-                        BottomNav(
-                            title = "Subs",
-                            selectedIcon = Icons.Filled.List,
-                            unselectedIcon = Icons.Outlined.List
-                        ),
-                        BottomNav(
-                            title = "About",
-                            selectedIcon = Icons.Filled.Info,
-                            unselectedIcon = Icons.Outlined.Info
-                        ),
-                    )
-                )
-            }
-
-            var selectedBottomNavIndex by rememberSaveable { mutableStateOf(0) }
 
             BroncoForRedditTheme {
                 // A surface container using the 'background' color from the theme
@@ -116,30 +70,9 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Scaffold(
                         bottomBar = {
-                            NavigationBar {
-                                bottomNavs.forEachIndexed { index, bottomNav ->
-                                    NavigationBarItem(
-                                        selected = selectedBottomNavIndex == index,
-                                        onClick = {
-                                            selectedBottomNavIndex = index
-                                        },
-                                        icon = {
-                                            Icon(
-                                                imageVector = if (selectedBottomNavIndex == index) {
-                                                    bottomNav.selectedIcon
-                                                } else {
-                                                    bottomNav.unselectedIcon
-                                                },
-                                                contentDescription = "Bottom Bar: ${bottomNav.title}"
-                                            )
-
-                                        },
-                                        label = {
-                                            Text(text = bottomNav.title)
-                                        }
-                                    )
-                                }
-                            }
+                            BRNavigationBar(
+                                context = context
+                            )
                         }
                     ) {
                         Column(

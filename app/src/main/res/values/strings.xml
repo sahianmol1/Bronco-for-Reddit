@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Bronco for reddit</string>
+    <string name="bottom_bar_content_description">Bottom Bar: %1$s</string>
+    <string name="hot">Hot</string>
+    <string name="title_new">New</string>
+    <string name="top">Top</string>
+    <string name="best">Best</string>
+    <string name="rising">Rising</string>
+    <string name="controversial">Controversial</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="create">Create</string>
+    <string name="subs">Subs</string>
+    <string name="about">About</string>
 </resources>
