@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui.widgets
+package com.bestway.broncoforreddit.ui.features.common.widgets
 
 import android.content.Context
 import androidx.compose.material.icons.Icons
@@ -25,7 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.bestway.broncoforreddit.R
-import com.bestway.broncoforreddit.ui.model.BottomNav
+import com.bestway.broncoforreddit.ui.features.home.model.BottomNav
 
 @Composable
 fun BRNavigationBar(

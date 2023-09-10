@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui.widgets
+package com.bestway.broncoforreddit.ui.features.common.widgets
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -15,8 +15,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.bestway.broncoforreddit.components.PostWidget
 import com.bestway.broncoforreddit.data.mock.MockPost
+import com.bestway.broncoforreddit.ui.features.home.components.PostWidget
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

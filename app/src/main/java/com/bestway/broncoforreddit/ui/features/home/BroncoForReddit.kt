@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui
+package com.bestway.broncoforreddit.ui.features.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
@@ -19,9 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.bestway.broncoforreddit.R
 import com.bestway.broncoforreddit.data.mock.listOfMockedPosts
-import com.bestway.broncoforreddit.ui.widgets.BRHorizontalPager
-import com.bestway.broncoforreddit.ui.widgets.BRNavigationBar
-import com.bestway.broncoforreddit.ui.widgets.BRScrollableTabRow
+import com.bestway.broncoforreddit.ui.features.common.widgets.BRHorizontalPager
+import com.bestway.broncoforreddit.ui.features.common.widgets.BRNavigationBar
+import com.bestway.broncoforreddit.ui.features.common.widgets.BRScrollableTabRow
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable

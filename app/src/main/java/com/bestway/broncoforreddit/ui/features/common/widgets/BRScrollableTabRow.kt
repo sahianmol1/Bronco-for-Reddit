@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui.widgets
+package com.bestway.broncoforreddit.ui.features.common.widgets
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
