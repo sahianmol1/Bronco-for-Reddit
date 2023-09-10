@@ -16,7 +16,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.bestway.broncoforreddit.data.mock.MockPost
-import com.bestway.broncoforreddit.ui.features.home.components.PostWidget
+import com.bestway.broncoforreddit.ui.features.redditlistings.components.PostWidget
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

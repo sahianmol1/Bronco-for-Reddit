@@ -12,4 +12,8 @@
     <string name="create">Create</string>
     <string name="subs">Subs</string>
     <string name="about">About</string>
+    <string name="post_action_content_description">Post Action %1$s</string>
+    <string name="upvote">Upvote</string>
+    <string name="comment">Comment</string>
+    <string name="share">Share</string>
 </resources>
