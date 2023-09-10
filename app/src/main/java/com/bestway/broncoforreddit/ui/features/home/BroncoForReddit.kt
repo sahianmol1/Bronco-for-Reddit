@@ -1,10 +1,9 @@
 package com.bestway.broncoforreddit.ui.features.home
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +22,6 @@ import com.bestway.broncoforreddit.ui.features.common.widgets.BRHorizontalPager
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRNavigationBar
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRScrollableTabRow
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun BroncoForReddit() {
@@ -35,7 +33,7 @@ fun BroncoForReddit() {
     val tabs by rememberSaveable {
         mutableStateOf(
             listOf(
-                context.getString(R.string.hot),
+                context.getString(R.string.trending),
                 context.getString(R.string.title_new),
                 context.getString(R.string.top),
                 context.getString(R.string.best),
@@ -51,11 +49,11 @@ fun BroncoForReddit() {
     ) {
         Scaffold(
             bottomBar = { BRNavigationBar(context = context) }
-        ) {
+        ) { scaffoldPaddingValues ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .statusBarsPadding()
+                    .padding(scaffoldPaddingValues)
             ) {
                 BRScrollableTabRow(
                     tabs = tabs,
