@@ -15,15 +15,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.bestway.broncoforreddit.data.mock.MockPost
+import com.bestway.broncoforreddit.data.repositories.models.ListingsChildren
 import com.bestway.broncoforreddit.ui.features.redditlistings.components.PostWidget
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BRHorizontalPager(tabs: List<String>, pagerState: PagerState, list: List<MockPost>) {
-
-    val listSize by rememberSaveable { mutableStateOf(list.size) }
-    val lastElementOfList by rememberSaveable { mutableStateOf(list.size - 1) }
+fun BRHorizontalPager(tabs: List<String>, pagerState: PagerState, list: List<ListingsChildren>) {
 
     HorizontalPager(
         modifier = Modifier.fillMaxSize(),
@@ -34,14 +31,19 @@ fun BRHorizontalPager(tabs: List<String>, pagerState: PagerState, list: List<Moc
             0, 1, 2, 5 -> {
                 LazyColumn {
                     items(
-                        count = listSize,
-                        key = { index -> list[index].id }
+                        count = list.size,
+                        key = { index -> list[index].childrenData.id }
                     ) { index ->
                         PostWidget(
                             modifier = when (index) {
-                                lastElementOfList -> Modifier.navigationBarsPadding()
+                                list.size - 1 -> Modifier.navigationBarsPadding()
                                 else -> Modifier
-                            }
+                            },
+                            subName = list[index].childrenData.subName.orEmpty(),
+                            title = list[index].childrenData.title.orEmpty(),
+                            description = list[index].childrenData.description.orEmpty(),
+                            upVotes = list[index].childrenData.upVotes ?: 0,
+                            comments = list[index].childrenData.comments ?: 0,
                         )
                     }
                 }
