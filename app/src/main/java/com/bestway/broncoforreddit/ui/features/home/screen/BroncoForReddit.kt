@@ -1,5 +1,6 @@
-package com.bestway.broncoforreddit.ui.features.home
+package com.bestway.broncoforreddit.ui.features.home.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,25 +11,36 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bestway.broncoforreddit.R
-import com.bestway.broncoforreddit.data.mock.listOfMockedPosts
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRHorizontalPager
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRNavigationBar
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRScrollableTabRow
+import com.bestway.broncoforreddit.ui.features.home.HomeViewModel
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun BroncoForReddit() {
+fun BroncoForReddit(
+    homeViewModel: HomeViewModel = viewModel()
+) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
 
     val pagerState = rememberPagerState()
-    val list by remember { mutableStateOf(listOfMockedPosts) }
+    val trendingPosts = homeViewModel.trendingPosts.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        homeViewModel.getTrendingPosts()
+    }
 
     val tabs by rememberSaveable {
         mutableStateOf(
@@ -62,7 +74,7 @@ fun BroncoForReddit() {
                 BRHorizontalPager(
                     tabs = tabs,
                     pagerState = pagerState,
-                    list = list
+                    list = trendingPosts.value.children.orEmpty()
                 )
             }
         }

@@ -30,17 +30,24 @@ import androidx.compose.ui.unit.sp
 import com.bestway.broncoforreddit.R
 
 @Composable
-fun PostWidget(modifier: Modifier = Modifier) {
+fun PostWidget(
+    modifier: Modifier = Modifier,
+    subName: String,
+    title: String,
+    description: String,
+    upVotes: Int,
+    comments: Int
+) {
     Column(
         modifier = modifier
             .clickable { }
             .padding(top = 8.dp)
             .padding(horizontal = 16.dp),
     ) {
-        SubRedditName()
-        PostTitle()
-        PostDescription()
-        PostActions()
+        SubRedditName(subName = subName)
+        PostTitle(title = title)
+        PostDescription(description = description)
+        PostActions(upVotes = upVotes, comments = comments)
         Divider(
             modifier = Modifier
                 .padding(top = 8.dp)
@@ -49,7 +56,9 @@ fun PostWidget(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun SubRedditName() {
+fun SubRedditName(
+    subName: String
+) {
     Text(
         modifier = Modifier
             .clickable {  }
@@ -57,29 +66,28 @@ fun SubRedditName() {
         style = TextStyle(
             fontWeight = FontWeight.Bold
         ),
-        text = "r/onexindia",
+        text = subName,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis
     )
 }
 
 @Composable
-fun PostTitle() {
+fun PostTitle(title: String) {
     Text(
         modifier = Modifier.padding(vertical = 4.dp),
         fontWeight = FontWeight.Bold,
-        text = "How rich do I have to be to stop caring if my partner is smart in money matters?",
+        text = title,
         maxLines = 3,
         overflow = TextOverflow.Ellipsis
     )
 }
 
 @Composable
-fun PostDescription() {
+fun PostDescription(description: String) {
     Text(
         modifier = Modifier.padding(vertical = 4.dp),
-        text =
-        "I always worry that my partner is not smart enough and keep rejecting people based on this, so much that I have developed a bias that women should have good money understanding. How should I stop caring about this. Please help.",
+        text = description,
         color = MaterialTheme.colorScheme.onSecondaryContainer,
         maxLines = 3,
         overflow = TextOverflow.Ellipsis
@@ -87,7 +95,7 @@ fun PostDescription() {
 }
 
 @Composable
-fun PostActions() {
+fun PostActions(upVotes: Int, comments: Int) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -95,12 +103,12 @@ fun PostActions() {
     ) {
         PostActionItem(
             icon = Icons.Default.ArrowUpward,
-            label = "7.2K",
+            label = upVotes.toString(),
             actionDescription = stringResource(R.string.upvote)
         )
         PostActionItem(
             icon = Icons.Default.Message,
-            label = "4.3k",
+            label = comments.toString(),
             actionDescription = stringResource(R.string.comment)
         )
         PostActionItem(
@@ -142,5 +150,11 @@ fun PostActionItem(icon: ImageVector, label: String, actionDescription: String) 
 @Preview
 @Composable
 fun PostPreview() {
-    PostWidget()
+    PostWidget(
+        subName = "r/onexindia",
+        upVotes = 7200,
+        comments = 4300,
+        description = "I always worry that my partner is not smart enough and keep rejecting people based on this, so much that I have developed a bias that women should have good money understanding. How should I stop caring about this. Please help.",
+        title = "How rich do I have to be to stop caring if my partner is smart in money matters?"
+    )
 }
