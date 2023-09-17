@@ -1,6 +1,5 @@
 package com.bestway.broncoforreddit.ui.features.home.screen
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -26,14 +24,12 @@ import com.bestway.broncoforreddit.ui.features.common.widgets.BRNavigationBar
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRScrollableTabRow
 import com.bestway.broncoforreddit.ui.features.home.HomeViewModel
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun BroncoForReddit(
     homeViewModel: HomeViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
 
     val pagerState = rememberPagerState()
     val trendingPosts = homeViewModel.trendingPosts.collectAsStateWithLifecycle()
