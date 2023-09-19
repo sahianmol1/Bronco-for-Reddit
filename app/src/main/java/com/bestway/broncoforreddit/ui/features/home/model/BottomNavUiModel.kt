@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
 
 @Immutable
-data class BottomNav(
+data class BottomNavUiModel(
     val title: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector

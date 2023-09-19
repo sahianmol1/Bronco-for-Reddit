@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.bestway.broncoforreddit.ui.features.home.screen.BroncoForReddit
+import com.bestway.broncoforreddit.ui.features.home.screen.HomeScreen
 import com.bestway.broncoforreddit.ui.theme.BroncoForRedditTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,6 +14,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        setContent { BroncoForRedditTheme { BroncoForReddit() } }
+        setContent { BroncoForRedditTheme { HomeScreen() } }
     }
 }

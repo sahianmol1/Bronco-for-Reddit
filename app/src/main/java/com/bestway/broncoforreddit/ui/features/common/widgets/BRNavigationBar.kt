@@ -25,7 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.bestway.broncoforreddit.R
-import com.bestway.broncoforreddit.ui.features.home.model.BottomNav
+import com.bestway.broncoforreddit.ui.features.home.model.BottomNavUiModel
 
 @Composable
 fun BRNavigationBar(
@@ -35,27 +35,27 @@ fun BRNavigationBar(
     val bottomNavItems by remember {
         mutableStateOf(
             listOf(
-                BottomNav(
+                BottomNavUiModel(
                     title = context.getString(R.string.home),
                     selectedIcon = Icons.Filled.Home,
                     unselectedIcon = Icons.Outlined.Home
                 ),
-                BottomNav(
+                BottomNavUiModel(
                     title = context.getString(R.string.search),
                     selectedIcon = Icons.Filled.Search,
                     unselectedIcon = Icons.Outlined.Search
                 ),
-                BottomNav(
+                BottomNavUiModel(
                     title = context.getString(R.string.create),
                     selectedIcon = Icons.Filled.Add,
                     unselectedIcon = Icons.Outlined.Add
                 ),
-                BottomNav(
+                BottomNavUiModel(
                     title = context.getString(R.string.subs),
                     selectedIcon = Icons.Filled.List,
                     unselectedIcon = Icons.Outlined.List
                 ),
-                BottomNav(
+                BottomNavUiModel(
                     title = context.getString(R.string.about),
                     selectedIcon = Icons.Filled.Info,
                     unselectedIcon = Icons.Outlined.Info
