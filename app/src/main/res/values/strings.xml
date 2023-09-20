@@ -16,4 +16,5 @@
     <string name="upvote">Upvote</string>
     <string name="comment">Comment</string>
     <string name="share">Share</string>
+    <string name="unavailable">Unavailable</string>
 </resources>

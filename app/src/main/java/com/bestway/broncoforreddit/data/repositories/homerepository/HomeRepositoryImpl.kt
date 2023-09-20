@@ -9,29 +9,40 @@ import javax.inject.Inject
 class HomeRepositoryImpl @Inject constructor(
     private val apiRequests: ApiRequests
 ) : HomeRepository {
-    override suspend fun getTendingPosts(): Flow<ListingsResponse> {
+    override suspend fun getTrendingPosts(): Flow<ListingsResponse> {
         return flow {
             emit(apiRequests.getHotListings())
         }
     }
 
-    override suspend fun getTopPosts() {
-        TODO("Not yet implemented")
+    override suspend fun getTopPosts(): Flow<ListingsResponse> {
+        return flow {
+            emit(apiRequests.getTopListings())
+        }
     }
 
-    override suspend fun getNewPosts() {
-        TODO("Not yet implemented")
+    override suspend fun getNewPosts(): Flow<ListingsResponse> {
+        return flow {
+            emit(apiRequests.getNewListings())
+        }
     }
 
-    override suspend fun getBestPosts() {
-        TODO("Not yet implemented")
+    override suspend fun getBestPosts(): Flow<ListingsResponse> {
+        return flow {
+            emit(apiRequests.getBestListings())
+        }
     }
 
-    override suspend fun getRisingPosts() {
-        TODO("Not yet implemented")
+    override suspend fun getRisingPosts(): Flow<ListingsResponse> {
+        return flow {
+            emit(apiRequests.getRisingListings())
+        }
     }
 
-    override suspend fun getControversialPosts() {
-        TODO("Not yet implemented")
+    override suspend fun getControversialPosts(): Flow<ListingsResponse> {
+        return flow {
+            emit(apiRequests.getControversialListings())
+        }
     }
+
 }
