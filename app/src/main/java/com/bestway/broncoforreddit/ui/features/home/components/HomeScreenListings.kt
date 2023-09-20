@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui.features.home
+package com.bestway.broncoforreddit.ui.features.home.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bestway.broncoforreddit.data.repositories.models.ListingsChildren
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRLinearProgressIndicator
-import com.bestway.broncoforreddit.ui.features.redditlistings.components.PostWidget
 
 @Composable
 fun HomeScreenListings(

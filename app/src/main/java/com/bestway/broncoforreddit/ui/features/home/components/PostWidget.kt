@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui.features.redditlistings.components
+package com.bestway.broncoforreddit.ui.features.home.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

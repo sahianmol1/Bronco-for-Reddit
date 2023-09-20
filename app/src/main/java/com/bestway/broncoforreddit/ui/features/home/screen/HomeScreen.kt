@@ -29,8 +29,8 @@ import com.bestway.broncoforreddit.data.repositories.models.ListingsChildren
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRHorizontalPager
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRNavigationBar
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRScrollableTabRow
-import com.bestway.broncoforreddit.ui.features.home.HomeScreenListings
 import com.bestway.broncoforreddit.ui.features.home.HomeViewModel
+import com.bestway.broncoforreddit.ui.features.home.components.HomeScreenListings
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
