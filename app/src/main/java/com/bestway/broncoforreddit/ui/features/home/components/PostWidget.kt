@@ -1,5 +1,6 @@
 package com.bestway.broncoforreddit.ui.features.home.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -38,15 +43,20 @@ fun PostWidget(
     upVotes: Int,
     comments: Int
 ) {
+    var showFullPost by rememberSaveable { mutableStateOf(false) }
+
     Column(
         modifier = modifier
-            .clickable { }
+            .animateContentSize()
+            .clickable {
+                showFullPost = !showFullPost
+            }
             .padding(top = 8.dp)
             .padding(horizontal = 16.dp),
     ) {
         SubRedditName(subName = subName)
-        PostTitle(title = title)
-        PostDescription(description = description)
+        PostTitle(title = title, showFullPost = showFullPost)
+        PostDescription(description = description, showFullPost = showFullPost)
         PostActions(upVotes = upVotes, comments = comments)
         Divider(
             modifier = Modifier
@@ -61,11 +71,12 @@ fun SubRedditName(
 ) {
     Text(
         modifier = Modifier
-            .clickable {  }
+            .clickable { }
             .padding(vertical = 8.dp),
         style = TextStyle(
             fontWeight = FontWeight.Bold
         ),
+        color = MaterialTheme.colorScheme.onSecondaryContainer,
         text = subName,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis
@@ -73,23 +84,25 @@ fun SubRedditName(
 }
 
 @Composable
-fun PostTitle(title: String) {
+fun PostTitle(title: String, showFullPost: Boolean) {
     Text(
-        modifier = Modifier.padding(vertical = 4.dp),
+        modifier = Modifier
+            .padding(vertical = 4.dp),
         fontWeight = FontWeight.Bold,
         text = title,
-        maxLines = 3,
+        maxLines = if(!showFullPost) 3 else 100,
         overflow = TextOverflow.Ellipsis
     )
 }
 
 @Composable
-fun PostDescription(description: String) {
+fun PostDescription(description: String, showFullPost: Boolean) {
     Text(
-        modifier = Modifier.padding(vertical = 4.dp),
+        modifier = Modifier
+            .padding(vertical = 4.dp),
         text = description,
-        color = MaterialTheme.colorScheme.onSecondaryContainer,
-        maxLines = 3,
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.90f),
+        maxLines = if(!showFullPost) 3 else 100,
         overflow = TextOverflow.Ellipsis
     )
 }
