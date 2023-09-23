@@ -1,7 +1,7 @@
 package com.bestway.broncoforreddit.data.repositories.homerepository
 
+import com.bestway.broncoforreddit.data.models.ListingsResponse
 import com.bestway.broncoforreddit.data.remote.api.ApiRequests
-import com.bestway.broncoforreddit.data.repositories.models.ListingsResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

@@ -1,6 +1,6 @@
 package com.bestway.broncoforreddit.data.remote.api
 
-import com.bestway.broncoforreddit.data.repositories.models.ListingsResponse
+import com.bestway.broncoforreddit.data.models.ListingsResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

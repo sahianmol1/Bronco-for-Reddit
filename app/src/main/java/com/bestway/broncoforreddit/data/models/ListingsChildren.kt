@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.data.repositories.models
+package com.bestway.broncoforreddit.data.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -22,5 +22,9 @@ data class ChildrenData(
     @SerialName("ups")
     val upVotes: Int? = null,
     @SerialName("num_comments")
-    val comments: Int? = null
+    val comments: Int? = null,
+    @SerialName("url_overridden_by_dest")
+    val imageUrl: String? = null,
+    @SerialName("permalink")
+    val postUrl: String? = null
 )

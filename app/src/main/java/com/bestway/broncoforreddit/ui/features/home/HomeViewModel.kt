@@ -2,8 +2,8 @@ package com.bestway.broncoforreddit.ui.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bestway.broncoforreddit.data.models.ListingsData
 import com.bestway.broncoforreddit.data.repositories.homerepository.HomeRepository
-import com.bestway.broncoforreddit.data.repositories.models.ListingsData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

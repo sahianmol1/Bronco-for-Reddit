@@ -1,6 +1,6 @@
 package com.bestway.broncoforreddit.data.repositories.homerepository
 
-import com.bestway.broncoforreddit.data.repositories.models.ListingsResponse
+import com.bestway.broncoforreddit.data.models.ListingsResponse
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {

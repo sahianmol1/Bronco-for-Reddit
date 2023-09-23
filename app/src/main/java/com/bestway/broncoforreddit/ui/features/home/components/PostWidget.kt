@@ -2,16 +2,20 @@ package com.bestway.broncoforreddit.ui.features.home.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -19,12 +23,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -32,16 +39,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.bestway.broncoforreddit.R
 
 @Composable
 fun PostWidget(
     modifier: Modifier = Modifier,
     subName: String,
-    title: String,
-    description: String,
+    title: String?,
+    description: String?,
     upVotes: Int,
-    comments: Int
+    comments: Int,
+    imageUrl: String?,
+    postUrl: String?
 ) {
     var showFullPost by rememberSaveable { mutableStateOf(false) }
 
@@ -55,8 +65,17 @@ fun PostWidget(
             .padding(horizontal = 16.dp),
     ) {
         SubRedditName(subName = subName)
-        PostTitle(title = title, showFullPost = showFullPost)
-        PostDescription(description = description, showFullPost = showFullPost)
+        title?.let {
+            PostTitle(title = title, showFullPost = showFullPost)
+        }
+        description?.let {
+            if (it.isNotEmpty()) {
+                PostDescription(description = it, showFullPost = showFullPost)
+            }
+        }
+        imageUrl?.let {
+            PostImage(imageUrl = imageUrl)
+        }
         PostActions(upVotes = upVotes, comments = comments)
         Divider(
             modifier = Modifier
@@ -90,7 +109,7 @@ fun PostTitle(title: String, showFullPost: Boolean) {
             .padding(vertical = 4.dp),
         fontWeight = FontWeight.Bold,
         text = title,
-        maxLines = if(!showFullPost) 3 else 100,
+        maxLines = if (!showFullPost) 3 else 100,
         overflow = TextOverflow.Ellipsis
     )
 }
@@ -102,9 +121,48 @@ fun PostDescription(description: String, showFullPost: Boolean) {
             .padding(vertical = 4.dp),
         text = description,
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.90f),
-        maxLines = if(!showFullPost) 3 else 100,
+        maxLines = if (!showFullPost) 3 else 100,
         overflow = TextOverflow.Ellipsis
     )
+}
+
+@Composable
+fun PostImage(imageUrl: String) {
+    val interactionSource = remember { MutableInteractionSource() }
+    var isImageLoading by rememberSaveable { mutableStateOf(false) }
+    var isImageLoadingError by rememberSaveable { mutableStateOf(false) }
+
+    Box(
+        modifier = Modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
+        if (isImageLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .padding(vertical = 64.dp)
+            )
+        }
+        AsyncImage(
+            modifier = Modifier
+                .clickable(
+                    interactionSource = interactionSource,
+                    role = Role.Image,
+                    indication = null
+                ) { }
+                .padding(vertical = 4.dp)
+                .wrapContentSize(),
+            model = imageUrl,
+            contentScale = ContentScale.FillBounds,
+            onLoading = { isImageLoading = true },
+            onSuccess = { isImageLoading = false },
+            onError = {
+                // TODO: fix this and use a proper error image
+                isImageLoading = false
+                isImageLoadingError = true
+            },
+            contentDescription = "This is a reddit post image."
+        )
+    }
 }
 
 @Composable
@@ -165,9 +223,11 @@ fun PostActionItem(icon: ImageVector, label: String, actionDescription: String) 
 fun PostPreview() {
     PostWidget(
         subName = "r/onexindia",
+        title = "Post Title",
+        description = "Post Description",
         upVotes = 7200,
         comments = 4300,
-        description = "I always worry that my partner is not smart enough and keep rejecting people based on this, so much that I have developed a bias that women should have good money understanding. How should I stop caring about this. Please help.",
-        title = "How rich do I have to be to stop caring if my partner is smart in money matters?"
+        imageUrl = "https://i.redd.it/cdb74knmavpb1.jpg\n",
+        postUrl = "https://sample_post_url"
     )
 }

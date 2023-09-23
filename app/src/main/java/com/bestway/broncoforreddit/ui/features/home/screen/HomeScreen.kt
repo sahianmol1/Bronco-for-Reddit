@@ -25,7 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bestway.broncoforreddit.R
-import com.bestway.broncoforreddit.data.repositories.models.ListingsChildren
+import com.bestway.broncoforreddit.data.models.ListingsChildren
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRHorizontalPager
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRNavigationBar
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRScrollableTabRow
