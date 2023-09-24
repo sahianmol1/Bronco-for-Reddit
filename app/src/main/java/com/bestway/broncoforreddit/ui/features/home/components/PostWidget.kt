@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Message
@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
@@ -39,6 +40,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import com.bestway.broncoforreddit.R
 
@@ -51,7 +56,8 @@ fun PostWidget(
     upVotes: Int,
     comments: Int,
     imageUrl: String?,
-    postUrl: String?
+    postUrl: String?,
+    videoUrl: String?
 ) {
     var showFullPost by rememberSaveable { mutableStateOf(false) }
 
@@ -74,7 +80,15 @@ fun PostWidget(
             }
         }
         imageUrl?.let {
-            PostImage(imageUrl = imageUrl)
+            if (it.endsWith("png") || it.endsWith("jpg")) {
+                PostImage(imageUrl = imageUrl)
+            }
+            if (it.contains(".gif")){
+                PostVideo(videoUrl = imageUrl)
+            }
+        }
+        videoUrl?.let {
+            PostVideo(videoUrl = videoUrl)
         }
         PostActions(upVotes = upVotes, comments = comments)
         Divider(
@@ -150,7 +164,7 @@ fun PostImage(imageUrl: String) {
                     indication = null
                 ) { }
                 .padding(vertical = 4.dp)
-                .wrapContentSize(),
+                .fillMaxWidth(),
             model = imageUrl,
             contentScale = ContentScale.FillBounds,
             onLoading = { isImageLoading = true },
@@ -163,6 +177,30 @@ fun PostImage(imageUrl: String) {
             contentDescription = "This is a reddit post image."
         )
     }
+}
+
+@Composable
+fun PostVideo(videoUrl: String) {
+    val context = LocalContext.current
+
+    val player by remember { mutableStateOf(ExoPlayer.Builder(context).build()) }
+
+    AndroidView(
+        modifier = Modifier
+            .padding(vertical = 4.dp)
+            .defaultMinSize(minHeight = 250.dp)
+            .fillMaxWidth(),
+        factory = { return@AndroidView PlayerView(context) },
+        update = { playerView ->
+            playerView.player = player
+
+            player.setMediaItem(MediaItem.fromUri(videoUrl))
+
+            player.prepare()
+            player.play()
+        },
+    )
+
 }
 
 @Composable
@@ -228,6 +266,7 @@ fun PostPreview() {
         upVotes = 7200,
         comments = 4300,
         imageUrl = "https://i.redd.it/cdb74knmavpb1.jpg\n",
-        postUrl = "https://sample_post_url"
+        postUrl = "https://sample_post_url",
+        videoUrl = "https://sample_video_url"
     )
 }

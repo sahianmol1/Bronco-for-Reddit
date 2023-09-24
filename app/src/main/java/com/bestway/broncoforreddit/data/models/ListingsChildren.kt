@@ -26,5 +26,19 @@ data class ChildrenData(
     @SerialName("url_overridden_by_dest")
     val imageUrl: String? = null,
     @SerialName("permalink")
-    val postUrl: String? = null
+    val postUrl: String? = null,
+    @SerialName("secure_media")
+    val secureMedia: SecureMedia? = null
+)
+
+@Serializable
+data class SecureMedia(
+    @SerialName("reddit_video")
+    val redditVideo: RedditVideo? = null
+)
+
+@Serializable
+data class RedditVideo(
+    @SerialName("fallback_url")
+    val videoUrl: String? = null
 )

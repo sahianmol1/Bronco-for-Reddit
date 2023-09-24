@@ -2,8 +2,10 @@ package com.bestway.broncoforreddit.ui.features.home.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bestway.broncoforreddit.data.models.ListingsChildren
@@ -13,6 +15,7 @@ import com.bestway.broncoforreddit.ui.features.common.widgets.BRLinearProgressIn
 fun HomeScreenListings(
     list: List<ListingsChildren>
 ) {
+    val scrollState = rememberScrollState()
     AnimatedVisibility(
         visible = list.isNotEmpty(),
         enter = slideInVertically(
@@ -21,23 +24,24 @@ fun HomeScreenListings(
             }
         )
     ) {
-        LazyColumn {
-            items(
-                count = list.size,
-                key = { index -> list[index].childrenData.id }
-            ) { index ->
+        Column(
+            modifier = Modifier
+                .verticalScroll(scrollState)
+        ) {
+            list.forEachIndexed { index, listingsChildren ->
                 PostWidget(
                     modifier = when (index) {
                         list.size - 1 -> Modifier.navigationBarsPadding()
                         else -> Modifier
                     },
-                    subName = list[index].childrenData.subName.orEmpty(),
-                    title = list[index].childrenData.title,
-                    description = list[index].childrenData.description,
-                    imageUrl = list[index].childrenData.imageUrl,
-                    postUrl = list[index].childrenData.postUrl,
-                    upVotes = list[index].childrenData.upVotes ?: 0,
-                    comments = list[index].childrenData.comments ?: 0,
+                    subName = listingsChildren.childrenData.subName.orEmpty(),
+                    title = listingsChildren.childrenData.title,
+                    description = listingsChildren.childrenData.description,
+                    imageUrl = listingsChildren.childrenData.imageUrl,
+                    postUrl = listingsChildren.childrenData.postUrl,
+                    upVotes = listingsChildren.childrenData.upVotes ?: 0,
+                    comments = listingsChildren.childrenData.comments ?: 0,
+                    videoUrl = listingsChildren.childrenData.secureMedia?.redditVideo?.videoUrl
                 )
             }
         }
