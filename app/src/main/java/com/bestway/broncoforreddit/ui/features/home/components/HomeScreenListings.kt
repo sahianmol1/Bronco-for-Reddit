@@ -2,20 +2,20 @@ package com.bestway.broncoforreddit.ui.features.home.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bestway.broncoforreddit.data.models.ListingsChildren
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRLinearProgressIndicator
+import com.bestway.broncoforreddit.ui.features.home.recycleradapter.PostAdapter
 
 @Composable
 fun HomeScreenListings(
     list: List<ListingsChildren>
 ) {
-    val scrollState = rememberScrollState()
+    val context = LocalContext.current
     AnimatedVisibility(
         visible = list.isNotEmpty(),
         enter = slideInVertically(
@@ -24,27 +24,19 @@ fun HomeScreenListings(
             }
         )
     ) {
-        Column(
-            modifier = Modifier
-                .verticalScroll(scrollState)
-        ) {
-            list.forEachIndexed { index, listingsChildren ->
-                PostWidget(
-                    modifier = when (index) {
-                        list.size - 1 -> Modifier.navigationBarsPadding()
-                        else -> Modifier
-                    },
-                    subName = listingsChildren.childrenData.subName.orEmpty(),
-                    title = listingsChildren.childrenData.title,
-                    description = listingsChildren.childrenData.description,
-                    imageUrl = listingsChildren.childrenData.imageUrl,
-                    postUrl = listingsChildren.childrenData.postUrl,
-                    upVotes = listingsChildren.childrenData.upVotes ?: 0,
-                    comments = listingsChildren.childrenData.comments ?: 0,
-                    videoUrl = listingsChildren.childrenData.secureMedia?.redditVideo?.videoUrl
-                )
+
+        AndroidView(
+            factory = {
+
+                return@AndroidView RecyclerView(context)
+            },
+            update = { recyclerView ->
+                val adapter = PostAdapter()
+                recyclerView.layoutManager = LinearLayoutManager(context)
+                recyclerView.adapter = adapter
+                adapter.submitList(list)
             }
-        }
+        )
     }
 
     if (list.isEmpty()) {

@@ -94,4 +94,10 @@ dependencies {
     implementation("androidx.media3:media3-exoplayer:1.1.1")
     implementation("androidx.media3:media3-exoplayer-dash:1.1.1")
     implementation("androidx.media3:media3-ui:1.1.1")
+
+    // Constraint Layout
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0-alpha12")
+
+    // RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
 }
