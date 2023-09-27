@@ -39,6 +39,6 @@ data class SecureMedia(
 
 @Serializable
 data class RedditVideo(
-    @SerialName("fallback_url")
+    @SerialName("dash_url")
     val videoUrl: String? = null
 )

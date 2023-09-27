@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -83,7 +84,7 @@ fun PostWidget(
             if (it.endsWith("png") || it.endsWith("jpg")) {
                 PostImage(imageUrl = imageUrl)
             }
-            if (it.contains(".gif")){
+            if (it.contains(".gif")) {
                 PostVideo(videoUrl = imageUrl)
             }
         }
@@ -183,24 +184,31 @@ fun PostImage(imageUrl: String) {
 fun PostVideo(videoUrl: String) {
     val context = LocalContext.current
 
-    val player by remember { mutableStateOf(ExoPlayer.Builder(context).build()) }
+    val exoPlayer = remember {
+        ExoPlayer.Builder(context).build().apply {
+            this.setMediaItem(MediaItem.fromUri(videoUrl))
+            this.prepare()
+            this.play()
+        }
+    }
 
-    AndroidView(
-        modifier = Modifier
-            .padding(vertical = 4.dp)
-            .defaultMinSize(minHeight = 250.dp)
-            .fillMaxWidth(),
-        factory = { return@AndroidView PlayerView(context) },
-        update = { playerView ->
-            playerView.player = player
-
-            player.setMediaItem(MediaItem.fromUri(videoUrl))
-
-            player.prepare()
-            player.play()
-        },
-    )
-
+    DisposableEffect(
+        AndroidView(
+            modifier = Modifier
+                .padding(vertical = 4.dp)
+                .defaultMinSize(minHeight = 250.dp)
+                .fillMaxWidth(),
+            factory = {
+                PlayerView(it).apply {
+                    player = exoPlayer
+                }
+            }
+        )
+    ) {
+        onDispose {
+            exoPlayer.release()
+        }
+    }
 }
 
 @Composable
