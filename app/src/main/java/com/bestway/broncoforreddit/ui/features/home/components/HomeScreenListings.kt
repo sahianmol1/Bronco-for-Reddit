@@ -1,6 +1,7 @@
 package com.bestway.broncoforreddit.ui.features.home.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,11 +16,7 @@ fun HomeScreenListings(
 ) {
     AnimatedVisibility(
         visible = list.isNotEmpty(),
-        enter = slideInVertically(
-            initialOffsetY = { screenHeight ->
-                screenHeight / 2
-            }
-        )
+        enter = slideInFromBottomTransition()
     ) {
         LazyColumn {
             items(
@@ -38,6 +35,7 @@ fun HomeScreenListings(
                     postUrl = list[index].childrenData.postUrl,
                     upVotes = list[index].childrenData.upVotes ?: 0,
                     comments = list[index].childrenData.comments ?: 0,
+                    videoUrl = list[index].childrenData.secureMedia?.redditVideo?.videoUrl
                 )
             }
         }
@@ -46,4 +44,12 @@ fun HomeScreenListings(
     if (list.isEmpty()) {
         BRLinearProgressIndicator()
     }
+}
+
+private fun slideInFromBottomTransition(): EnterTransition {
+    return slideInVertically(
+        initialOffsetY = { screenHeight ->
+            screenHeight / 2
+        }
+    )
 }
