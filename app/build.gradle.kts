@@ -89,6 +89,7 @@ dependencies {
 
     // coil
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-gif:2.4.0")
 
     // Exo Player - for media playback
     implementation("androidx.media3:media3-exoplayer:1.1.1")

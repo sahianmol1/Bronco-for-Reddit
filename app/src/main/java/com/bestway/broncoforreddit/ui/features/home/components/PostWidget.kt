@@ -58,7 +58,8 @@ fun PostWidget(
     comments: Int,
     imageUrl: String?,
     postUrl: String?,
-    videoUrl: String?
+    videoUrl: String?,
+    gifUrl: String?
 ) {
     var showFullPost by rememberSaveable { mutableStateOf(false) }
 
@@ -85,11 +86,13 @@ fun PostWidget(
                 PostImage(imageUrl = imageUrl)
             }
             if (it.contains(".gif")) {
-                PostVideo(videoUrl = imageUrl)
+                gifUrl?.let {
+                    PostVideo(videoUrl = gifUrl)
+                }
             }
         }
         videoUrl?.let {
-            PostVideo(videoUrl = videoUrl)
+            PostVideo(videoUrl = it)
         }
         PostActions(upVotes = upVotes, comments = comments)
         Divider(
@@ -275,6 +278,7 @@ fun PostPreview() {
         comments = 4300,
         imageUrl = "https://i.redd.it/cdb74knmavpb1.jpg\n",
         postUrl = "https://sample_post_url",
-        videoUrl = "https://sample_video_url"
+        videoUrl = "https://sample_video_url",
+        gifUrl = null
     )
 }

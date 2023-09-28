@@ -28,7 +28,9 @@ data class ChildrenData(
     @SerialName("permalink")
     val postUrl: String? = null,
     @SerialName("secure_media")
-    val secureMedia: SecureMedia? = null
+    val secureMedia: SecureMedia? = null,
+    @SerialName("preview")
+    val gifUrl: GifPreview? = null
 )
 
 @Serializable
@@ -41,4 +43,16 @@ data class SecureMedia(
 data class RedditVideo(
     @SerialName("dash_url")
     val videoUrl: String? = null
+)
+
+@Serializable
+data class GifPreview(
+    @SerialName("reddit_video_preview")
+    val gifPreview: RedditGifPreview? = null
+)
+
+@Serializable
+data class RedditGifPreview(
+    @SerialName("dash_url")
+    val url: String? = null
 )

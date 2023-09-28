@@ -35,7 +35,8 @@ fun HomeScreenListings(
                     postUrl = list[index].childrenData.postUrl,
                     upVotes = list[index].childrenData.upVotes ?: 0,
                     comments = list[index].childrenData.comments ?: 0,
-                    videoUrl = list[index].childrenData.secureMedia?.redditVideo?.videoUrl
+                    videoUrl = list[index].childrenData.secureMedia?.redditVideo?.videoUrl,
+                    gifUrl = list[index].childrenData.gifUrl?.gifPreview?.url
                 )
             }
         }
