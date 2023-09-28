@@ -15,9 +15,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.VolumeOff
+import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -187,30 +190,51 @@ fun PostImage(imageUrl: String) {
 fun PostVideo(videoUrl: String) {
     val context = LocalContext.current
 
+    var isVolumeOff by rememberSaveable { mutableStateOf(true) }
+
     val exoPlayer = remember {
         ExoPlayer.Builder(context).build().apply {
             this.setMediaItem(MediaItem.fromUri(videoUrl))
             this.prepare()
+            this.volume = 0f
             this.play()
         }
     }
 
-    DisposableEffect(
-        AndroidView(
-            modifier = Modifier
-                .padding(vertical = 4.dp)
-                .defaultMinSize(minHeight = 250.dp)
-                .fillMaxWidth(),
-            factory = {
-                PlayerView(it).apply {
-                    player = exoPlayer
-                }
-            }
-        )
+    Box(
+        contentAlignment = Alignment.BottomEnd
     ) {
-        onDispose {
-            exoPlayer.release()
+        DisposableEffect(
+            AndroidView(
+                modifier = Modifier
+                    .padding(vertical = 4.dp)
+                    .defaultMinSize(minHeight = 250.dp)
+                    .fillMaxWidth(),
+                factory = {
+                    PlayerView(it).apply {
+                        player = exoPlayer
+                    }
+                }
+            )
+        ) {
+            onDispose {
+                exoPlayer.release()
+            }
         }
+
+        IconButton(
+            onClick = {
+                isVolumeOff = !isVolumeOff
+                if (isVolumeOff) exoPlayer.volume = 0f
+                else exoPlayer.volume = 0.7f
+            }
+        ) {
+            Icon(
+                if (isVolumeOff) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
+                contentDescription = "Silent",
+            )
+        }
+
     }
 }
 
