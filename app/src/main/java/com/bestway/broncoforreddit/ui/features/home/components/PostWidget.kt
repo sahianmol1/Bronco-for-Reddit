@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
@@ -45,6 +46,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
@@ -187,8 +190,10 @@ fun PostImage(imageUrl: String) {
 }
 
 @Composable
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 fun PostVideo(videoUrl: String) {
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     var isVolumeOff by rememberSaveable { mutableStateOf(true) }
 
@@ -198,6 +203,19 @@ fun PostVideo(videoUrl: String) {
             this.prepare()
             this.volume = 0f
             this.play()
+        }
+    }
+
+    var lifecycle by remember { mutableStateOf(Lifecycle.Event.ON_CREATE) }
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            lifecycle = event
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
 
@@ -214,7 +232,21 @@ fun PostVideo(videoUrl: String) {
                     PlayerView(it).apply {
                         player = exoPlayer
                     }
-                }
+                },
+                update = { playerView ->
+                    when (lifecycle) {
+                        Lifecycle.Event.ON_PAUSE -> {
+                            playerView.onPause()
+                            playerView.player?.pause()
+                        }
+
+                        Lifecycle.Event.ON_RESUME -> {
+                            playerView.onResume()
+                        }
+
+                        else -> Unit
+                    }
+                },
             )
         ) {
             onDispose {
