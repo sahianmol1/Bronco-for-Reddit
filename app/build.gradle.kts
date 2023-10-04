@@ -61,48 +61,49 @@ detekt {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.8.0-beta01")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.tooling.preview)
+    implementation(libs.compose.material3)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.compose.junit4)
+    debugImplementation(libs.compose.debug.tooling)
+    debugImplementation(libs.compose.debug.manifest)
 
     // Extended material icons
-    implementation("androidx.compose.material:material-icons-extended")
+    implementation(libs.extended.icons)
 
     // ktor client
-    implementation("io.ktor:ktor-client-cio:2.3.4")
-    implementation("io.ktor:ktor-client-content-negotiation:2.3.4")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.4")
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
 
     // KotlinX Serialization
 
     // dagger hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose")
+    // androidx-compose-lifecycle
+    implementation(libs.viewmodel.lifecycle)
+    implementation(libs.compose.runtime.lifecycle)
 
     // coil
-    implementation("io.coil-kt:coil-compose:2.4.0")
-    implementation("io.coil-kt:coil-gif:2.4.0")
+    implementation(libs.coil.compose)
+    implementation(libs.coil.gif)
 
     // Exo Player - for media playback
-    implementation("androidx.media3:media3-exoplayer:1.1.1")
-    implementation("androidx.media3:media3-exoplayer-dash:1.1.1")
-    implementation("androidx.media3:media3-ui:1.1.1")
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.ui)
 
     // Leak canary
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
+    debugImplementation(libs.leakcanary.android)
 }

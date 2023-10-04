@@ -1,0 +1,44 @@
+[versions]
+activity-compose = "1.8.0-rc01"
+androidx-junit = "1.1.5"
+coil-compose = "2.4.0"
+core-ktx = "1.12.0"
+espresso-core = "3.5.1"
+hilt-android = "2.44"
+junit = "4.13.2"
+ktor-client-cio = "2.3.4"
+leakcanary-android = "2.12"
+lifecycle-runtime-ktx = "2.6.2"
+media3-exoplayer = "1.1.1"
+compose-bom = "2023.03.00"
+
+[libraries]
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx" , version.ref = "core-ktx" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-core" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-junit" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3-exoplayer" }
+androidx-media3-exoplayer-dash = { module = "androidx.media3:media3-exoplayer-dash", version.ref = "media3-exoplayer" }
+androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3-exoplayer" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
+coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil-compose" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android" }
+junit = { module = "junit:junit", version.ref = "junit" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-client-cio" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-client-cio" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-client-cio" }
+leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary-android" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
+compose-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+compose-debug-tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose-debug-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+extended-icons = { module = "androidx.compose.material:material-icons-extended" }
+viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-compose" }
+compose-runtime-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-compose" }
+[plugins]
