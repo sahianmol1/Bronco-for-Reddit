@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
@@ -32,10 +33,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
@@ -47,12 +49,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import com.bestway.broncoforreddit.R
+import com.bestway.broncoforreddit.ui.features.common.rememberLifecycleEvent
 
 @Composable
 fun PostWidget(
@@ -193,7 +195,8 @@ fun PostImage(imageUrl: String) {
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 fun PostVideo(videoUrl: String) {
     val context = LocalContext.current
-    val lifecycleOwner = LocalLifecycleOwner.current
+
+    val lifecycleEvent = rememberLifecycleEvent()
 
     var isVolumeOff by rememberSaveable { mutableStateOf(true) }
 
@@ -206,35 +209,24 @@ fun PostVideo(videoUrl: String) {
         }
     }
 
-    var lifecycle by remember { mutableStateOf(Lifecycle.Event.ON_CREATE) }
-
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            lifecycle = event
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
-    }
-
     Box(
         contentAlignment = Alignment.BottomEnd
     ) {
         DisposableEffect(
             AndroidView(
                 modifier = Modifier
+                    .clickable {  }
                     .padding(vertical = 4.dp)
                     .defaultMinSize(minHeight = 250.dp)
                     .fillMaxWidth(),
                 factory = {
                     PlayerView(it).apply {
                         player = exoPlayer
+                        useController = false
                     }
                 },
                 update = { playerView ->
-                    when (lifecycle) {
+                    when (lifecycleEvent) {
                         Lifecycle.Event.ON_PAUSE -> {
                             playerView.onPause()
                             playerView.player?.pause()
@@ -255,18 +247,30 @@ fun PostVideo(videoUrl: String) {
         }
 
         IconButton(
+            modifier = Modifier
+                .drawBehind {
+                    drawCircle(
+                        color = Color.Black.copy(alpha = 0.5f),
+                        radius = 56.0f
+                    )
+                },
             onClick = {
                 isVolumeOff = !isVolumeOff
-                if (isVolumeOff) exoPlayer.volume = 0f
-                else exoPlayer.volume = 0.7f
+                if (isVolumeOff) {
+                    exoPlayer.volume = 0f
+                } else {
+                    exoPlayer.volume = 1f
+                }
             }
         ) {
             Icon(
-                if (isVolumeOff) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
+                modifier = Modifier
+                    .size(16.dp),
+                imageVector = if (isVolumeOff) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
                 contentDescription = "Silent",
+                tint = Color.White
             )
         }
-
     }
 }
 

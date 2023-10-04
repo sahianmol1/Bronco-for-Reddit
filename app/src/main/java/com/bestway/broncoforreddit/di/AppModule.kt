@@ -38,8 +38,8 @@ object AppModule {
                     // this: EndpointConfig
                     maxConnectionsPerRoute = 100
                     pipelineMaxSize = 20
-                    keepAliveTime = 5000
-                    connectTimeout = 5000
+                    keepAliveTime = 15000
+                    connectTimeout = 15000
                     connectAttempts = 5
                 }
             }
