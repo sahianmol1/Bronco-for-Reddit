@@ -65,6 +65,24 @@ fun BRNavigationBar(
     }
     var selectedBottomNavIndex by rememberSaveable { mutableStateOf(0) }
 
+    BRNavigationBarView(
+        modifier = modifier,
+        bottomNavItems = bottomNavItems,
+        selectedBottomNavIndex = selectedBottomNavIndex,
+        onNavItemClick = { index ->
+            selectedBottomNavIndex = index
+        }
+    )
+}
+
+@Composable
+fun BRNavigationBarView(
+    modifier: Modifier = Modifier,
+    bottomNavItems: List<BottomNavUiModel>,
+    selectedBottomNavIndex: Int,
+    onNavItemClick: (index: Int) -> Unit
+) {
+
     NavigationBar(
         modifier = modifier
     ) {
@@ -72,7 +90,7 @@ fun BRNavigationBar(
             NavigationBarItem(
                 selected = selectedBottomNavIndex == index,
                 onClick = {
-                    selectedBottomNavIndex = index
+                    onNavItemClick(index)
                 },
                 icon = {
                     Icon(

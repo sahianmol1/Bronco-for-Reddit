@@ -11,15 +11,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bestway.broncoforreddit.ui.features.home.components.PostActions
 import com.bestway.broncoforreddit.ui.features.home.components.SubRedditName
+import com.bestway.broncoforreddit.ui.models.RedditPostUiModel
 
 @Composable
 fun PostDetailsScreen(
     modifier: Modifier = Modifier,
-    subName: String,
-    title: String,
-    description: String,
-    upVotes: Int,
-    comments: Int
+    redditPostUiModel: RedditPostUiModel
 ) {
 
     Column(
@@ -28,10 +25,10 @@ fun PostDetailsScreen(
             .padding(top = 8.dp)
             .padding(horizontal = 16.dp),
     ) {
-        SubRedditName(subName = subName)
-        PostDetailsTitle(title = title)
-        PostDetailsDescription(description = description)
-        PostActions(upVotes = upVotes, comments = comments)
+        SubRedditName(subName = redditPostUiModel.subName)
+        PostDetailsTitle(title = redditPostUiModel.title.orEmpty())
+        PostDetailsDescription(description = redditPostUiModel.description.orEmpty())
+        PostActions(upVotes = redditPostUiModel.upVotes, comments = redditPostUiModel.comments)
     }
 }
 
