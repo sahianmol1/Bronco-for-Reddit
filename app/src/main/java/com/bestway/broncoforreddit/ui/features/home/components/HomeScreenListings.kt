@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bestway.broncoforreddit.data.models.ListingsChildren
 import com.bestway.broncoforreddit.ui.features.common.widgets.BRLinearProgressIndicator
+import com.bestway.broncoforreddit.ui.models.RedditPostUiModel
 
 @Composable
 fun HomeScreenListings(
@@ -23,20 +24,22 @@ fun HomeScreenListings(
                 count = list.size,
                 key = { index -> list[index].childrenData.id }
             ) { index ->
-                PostWidget(
+                PostComponent(
                     modifier = when (index) {
                         list.size - 1 -> Modifier.navigationBarsPadding()
                         else -> Modifier
                     },
-                    subName = list[index].childrenData.subName.orEmpty(),
-                    title = list[index].childrenData.title,
-                    description = list[index].childrenData.description,
-                    imageUrl = list[index].childrenData.imageUrl,
-                    postUrl = list[index].childrenData.postUrl,
-                    upVotes = list[index].childrenData.upVotes ?: 0,
-                    comments = list[index].childrenData.comments ?: 0,
-                    videoUrl = list[index].childrenData.secureMedia?.redditVideo?.videoUrl,
-                    gifUrl = list[index].childrenData.gifUrl?.gifPreview?.url
+                    redditPostUiModel = RedditPostUiModel(
+                        subName = list[index].childrenData.subName.orEmpty(),
+                        title = list[index].childrenData.title,
+                        description = list[index].childrenData.description,
+                        imageUrl = list[index].childrenData.imageUrl,
+                        postUrl = list[index].childrenData.postUrl,
+                        upVotes = list[index].childrenData.upVotes ?: 0,
+                        comments = list[index].childrenData.comments ?: 0,
+                        videoUrl = list[index].childrenData.secureMedia?.redditVideo?.videoUrl,
+                        gifUrl = list[index].childrenData.gifUrl?.gifPreview?.url
+                    )
                 )
             }
         }

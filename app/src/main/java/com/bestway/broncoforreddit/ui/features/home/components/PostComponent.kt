@@ -55,19 +55,12 @@ import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import com.bestway.broncoforreddit.R
 import com.bestway.broncoforreddit.ui.features.common.rememberLifecycleEvent
+import com.bestway.broncoforreddit.ui.models.RedditPostUiModel
 
 @Composable
-fun PostWidget(
+fun PostComponent(
     modifier: Modifier = Modifier,
-    subName: String,
-    title: String?,
-    description: String?,
-    upVotes: Int,
-    comments: Int,
-    imageUrl: String?,
-    postUrl: String?,
-    videoUrl: String?,
-    gifUrl: String?
+    redditPostUiModel: RedditPostUiModel
 ) {
     var showFullPost by rememberSaveable { mutableStateOf(false) }
 
@@ -80,29 +73,29 @@ fun PostWidget(
             .padding(top = 8.dp)
             .padding(horizontal = 16.dp),
     ) {
-        SubRedditName(subName = subName)
-        title?.let {
-            PostTitle(title = title, showFullPost = showFullPost)
+        SubRedditName(subName = redditPostUiModel.subName)
+        redditPostUiModel.title?.let {
+            PostTitle(title = redditPostUiModel.title, showFullPost = showFullPost)
         }
-        description?.let {
+        redditPostUiModel.description?.let {
             if (it.isNotEmpty()) {
                 PostDescription(description = it, showFullPost = showFullPost)
             }
         }
-        imageUrl?.let {
+        redditPostUiModel.imageUrl?.let {
             if (it.endsWith("png") || it.endsWith("jpg")) {
-                PostImage(imageUrl = imageUrl)
+                PostImage(imageUrl = redditPostUiModel.imageUrl)
             }
             if (it.contains(".gif")) {
-                gifUrl?.let {
-                    PostVideo(videoUrl = gifUrl)
+                redditPostUiModel.gifUrl?.let {
+                    PostVideo(videoUrl = redditPostUiModel.gifUrl)
                 }
             }
         }
-        videoUrl?.let {
+        redditPostUiModel.videoUrl?.let {
             PostVideo(videoUrl = it)
         }
-        PostActions(upVotes = upVotes, comments = comments)
+        PostActions(upVotes = redditPostUiModel.upVotes, comments = redditPostUiModel.comments)
         Divider(
             modifier = Modifier
                 .padding(top = 8.dp)
@@ -182,7 +175,7 @@ fun PostImage(imageUrl: String) {
             onLoading = { isImageLoading = true },
             onSuccess = { isImageLoading = false },
             onError = {
-                // TODO: fix this and use a proper error image
+                // Fix this and use a proper error image
                 isImageLoading = false
                 isImageLoadingError = true
             },
@@ -215,7 +208,7 @@ fun PostVideo(videoUrl: String) {
         DisposableEffect(
             AndroidView(
                 modifier = Modifier
-                    .clickable {  }
+                    .clickable { }
                     .padding(vertical = 4.dp)
                     .defaultMinSize(minHeight = 250.dp)
                     .fillMaxWidth(),
@@ -246,15 +239,9 @@ fun PostVideo(videoUrl: String) {
             }
         }
 
-        IconButton(
-            modifier = Modifier
-                .drawBehind {
-                    drawCircle(
-                        color = Color.Black.copy(alpha = 0.5f),
-                        radius = 56.0f
-                    )
-                },
-            onClick = {
+        PostVideoControls(
+            isVolumeOff = isVolumeOff,
+            onSoundButtonClick = {
                 isVolumeOff = !isVolumeOff
                 if (isVolumeOff) {
                     exoPlayer.volume = 0f
@@ -262,15 +249,32 @@ fun PostVideo(videoUrl: String) {
                     exoPlayer.volume = 1f
                 }
             }
-        ) {
-            Icon(
-                modifier = Modifier
-                    .size(16.dp),
-                imageVector = if (isVolumeOff) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
-                contentDescription = "Silent",
-                tint = Color.White
-            )
-        }
+        )
+    }
+}
+
+@Composable
+fun PostVideoControls(
+    isVolumeOff: Boolean,
+    onSoundButtonClick: () -> Unit
+) {
+    IconButton(
+        modifier = Modifier
+            .drawBehind {
+                drawCircle(
+                    color = Color.Black.copy(alpha = 0.5f),
+                    radius = 56.0f
+                )
+            },
+        onClick = onSoundButtonClick
+    ) {
+        Icon(
+            modifier = Modifier
+                .size(16.dp),
+            imageVector = if (isVolumeOff) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
+            contentDescription = "Silent",
+            tint = Color.White
+        )
     }
 }
 
@@ -330,15 +334,5 @@ fun PostActionItem(icon: ImageVector, label: String, actionDescription: String) 
 @Preview
 @Composable
 fun PostPreview() {
-    PostWidget(
-        subName = "r/onexindia",
-        title = "Post Title",
-        description = "Post Description",
-        upVotes = 7200,
-        comments = 4300,
-        imageUrl = "https://i.redd.it/cdb74knmavpb1.jpg\n",
-        postUrl = "https://sample_post_url",
-        videoUrl = "https://sample_video_url",
-        gifUrl = null
-    )
+    PostComponent(redditPostUiModel = RedditPostUiModel())
 }
