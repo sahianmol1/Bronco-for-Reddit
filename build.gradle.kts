@@ -4,5 +4,5 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.8.10" apply false
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10" apply false
     id("com.google.dagger.hilt.android") version "2.44" apply false
-    id("io.gitlab.arturbosch.detekt") version("1.23.1")
+    id("io.gitlab.arturbosch.detekt") version("1.23.1") apply false
 }

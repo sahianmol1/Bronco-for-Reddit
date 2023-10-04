@@ -14,7 +14,6 @@ fun BRHorizontalPager(
     pagerState: PagerState,
     pageContent: @Composable (pageNumber: Int) -> Unit
 ) {
-
     HorizontalPager(
         modifier = Modifier.fillMaxSize(),
         pageCount = tabs.size,

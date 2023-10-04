@@ -32,15 +32,10 @@ object AppModule {
             }
 
             engine {
-                // this: CIOEngineConfig
-                maxConnectionsCount = 1000
                 endpoint {
-                    // this: EndpointConfig
-                    maxConnectionsPerRoute = 100
-                    pipelineMaxSize = 20
-                    keepAliveTime = 15000
-                    connectTimeout = 15000
-                    connectAttempts = 5
+                    keepAliveTime = CONNECTION_TIMEOUT_MILLIS
+                    connectTimeout = CONNECTION_TIMEOUT_MILLIS
+                    connectAttempts = CONNECTION_RETRIES
                 }
             }
         }

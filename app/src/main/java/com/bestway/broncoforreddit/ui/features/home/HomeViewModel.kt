@@ -48,10 +48,9 @@ class HomeViewModel @Inject constructor(
     )
     var controversialPosts: StateFlow<ListingsData> = _controversialPosts.asStateFlow()
 
-
     fun getTrendingPosts() {
         viewModelScope.launch {
-          repository.getTrendingPosts().collectLatest { listingsResponse ->
+            repository.getTrendingPosts().collectLatest { listingsResponse ->
                 listingsResponse.data?.let { responseListingsData ->
                     _trendingPosts.update {
                         it.copy(
@@ -106,7 +105,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
     fun getBestPosts() {
         viewModelScope.launch {
             repository.getBestPosts().collectLatest { listingsResponse ->
@@ -125,7 +123,6 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
 
     fun getRisingsPosts() {
         viewModelScope.launch {
