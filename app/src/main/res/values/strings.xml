@@ -17,4 +17,5 @@
     <string name="comment">Comment</string>
     <string name="share">Share</string>
     <string name="unavailable">Unavailable</string>
+    <string name="leak_canary_display_activity_label">Bronco Leaks</string>
 </resources>

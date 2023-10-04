@@ -102,4 +102,7 @@ dependencies {
     implementation("androidx.media3:media3-exoplayer:1.1.1")
     implementation("androidx.media3:media3-exoplayer-dash:1.1.1")
     implementation("androidx.media3:media3-ui:1.1.1")
+
+    // Leak canary
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
 }
