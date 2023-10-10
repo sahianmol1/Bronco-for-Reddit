@@ -39,7 +39,6 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
 
-    val pagerState = rememberPagerState()
     val trendingPosts = homeViewModel.trendingPosts.collectAsStateWithLifecycle()
     val newPosts = homeViewModel.newPosts.collectAsStateWithLifecycle()
     val topPosts = homeViewModel.topPosts.collectAsStateWithLifecycle()
@@ -69,6 +68,12 @@ fun HomeScreen(
         )
     }
 
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        initialPageOffsetFraction = 0f,
+        pageCount = { tabs.size }
+    )
+
     var trendingList by remember { mutableStateOf(listOf<ListingsChildren>()) }
 
     LaunchedEffect(trendingPosts.value.children) {
@@ -92,7 +97,6 @@ fun HomeScreen(
                     pagerState = pagerState
                 )
                 BRHorizontalPager(
-                    tabs = tabs,
                     pagerState = pagerState,
                 ) { page ->
                     when (page) {
