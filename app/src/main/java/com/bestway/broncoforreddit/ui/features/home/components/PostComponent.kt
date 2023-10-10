@@ -171,7 +171,7 @@ fun PostImage(imageUrl: String) {
                 .padding(vertical = 4.dp)
                 .fillMaxWidth(),
             model = imageUrl,
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.Fit,
             onLoading = { isImageLoading = true },
             onSuccess = { isImageLoading = false },
             onError = {
