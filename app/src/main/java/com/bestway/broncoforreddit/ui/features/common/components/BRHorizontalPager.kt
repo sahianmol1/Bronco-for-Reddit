@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui.features.common.widgets
+package com.bestway.broncoforreddit.ui.features.common.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize

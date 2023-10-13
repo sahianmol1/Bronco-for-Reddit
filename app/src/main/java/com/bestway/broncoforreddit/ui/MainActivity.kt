@@ -1,10 +1,11 @@
-package com.bestway.broncoforreddit.ui.features.common
+package com.bestway.broncoforreddit.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.bestway.broncoforreddit.ui.features.home.screen.HomeScreen
+import androidx.navigation.compose.rememberNavController
+import com.bestway.broncoforreddit.navigation.BRNavHost
 import com.bestway.broncoforreddit.ui.theme.BroncoForRedditTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,6 +15,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        setContent { BroncoForRedditTheme { HomeScreen() } }
+        setContent {
+            BroncoForRedditTheme {
+                val navController = rememberNavController()
+                BRNavHost(navController = navController)
+            }
+        }
     }
 }

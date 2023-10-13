@@ -77,6 +77,10 @@ dependencies {
     debugImplementation(libs.compose.debug.tooling)
     debugImplementation(libs.compose.debug.manifest)
 
+    // Compose navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+
     // Extended material icons
     implementation(libs.extended.icons)
 

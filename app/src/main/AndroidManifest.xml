@@ -16,7 +16,7 @@
         android:theme="@style/Theme.BroncoForReddit"
         tools:targetApi="31">
         <activity
-            android:name=".ui.features.common.MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.BroncoForReddit">
             <intent-filter>

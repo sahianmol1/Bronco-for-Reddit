@@ -1,13 +1,11 @@
-package com.bestway.broncoforreddit.ui.features.common.widgets
+package com.bestway.broncoforreddit.ui.features.common.components
 
 import android.content.Context
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.List
@@ -18,6 +16,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,37 +24,38 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.bestway.broncoforreddit.R
+import com.bestway.broncoforreddit.navigation.Screens
 import com.bestway.broncoforreddit.ui.features.home.model.BottomNavUiModel
 
 @Composable
 fun BRNavigationBar(
     modifier: Modifier = Modifier,
+    onNavItemClick: (route: String) -> Unit,
     context: Context
 ) {
     val bottomNavItems by remember {
         mutableStateOf(
             listOf(
                 BottomNavUiModel(
+                    route = Screens.HomeScreen.route,
                     title = context.getString(R.string.home),
                     selectedIcon = Icons.Filled.Home,
                     unselectedIcon = Icons.Outlined.Home
                 ),
                 BottomNavUiModel(
+                    route = Screens.SearchScreen.route,
                     title = context.getString(R.string.search),
                     selectedIcon = Icons.Filled.Search,
                     unselectedIcon = Icons.Outlined.Search
                 ),
                 BottomNavUiModel(
-                    title = context.getString(R.string.create),
-                    selectedIcon = Icons.Filled.Add,
-                    unselectedIcon = Icons.Outlined.Add
-                ),
-                BottomNavUiModel(
+                    route = Screens.SubScreen.route,
                     title = context.getString(R.string.subs),
                     selectedIcon = Icons.Filled.List,
                     unselectedIcon = Icons.Outlined.List
                 ),
                 BottomNavUiModel(
+                    route = Screens.AboutUsScreen.route,
                     title = context.getString(R.string.about),
                     selectedIcon = Icons.Filled.Info,
                     unselectedIcon = Icons.Outlined.Info
@@ -63,13 +63,14 @@ fun BRNavigationBar(
             )
         )
     }
-    var selectedBottomNavIndex by rememberSaveable { mutableStateOf(0) }
+    var selectedBottomNavIndex by rememberSaveable { mutableIntStateOf(0) }
 
     BRNavigationBarView(
         modifier = modifier,
         bottomNavItems = bottomNavItems,
         selectedBottomNavIndex = selectedBottomNavIndex,
         onNavItemClick = { index ->
+            onNavItemClick(bottomNavItems[index].route)
             selectedBottomNavIndex = index
         }
     )
@@ -104,7 +105,6 @@ fun BRNavigationBarView(
                             bottomNav.title
                         )
                     )
-
                 },
                 label = {
                     Text(text = bottomNav.title)
