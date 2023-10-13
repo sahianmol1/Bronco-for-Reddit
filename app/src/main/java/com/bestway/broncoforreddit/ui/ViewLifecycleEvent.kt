@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui.features.common
+package com.bestway.broncoforreddit.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

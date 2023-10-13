@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bestway.broncoforreddit.data.models.ListingsChildren
-import com.bestway.broncoforreddit.ui.features.common.components.BRLinearProgressIndicator
+import com.bestway.broncoforreddit.ui.components.BRLinearProgressIndicator
 import com.bestway.broncoforreddit.ui.models.RedditPostUiModel
 
 @Composable

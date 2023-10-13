@@ -4,12 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,17 +21,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bestway.broncoforreddit.R
 import com.bestway.broncoforreddit.data.models.ListingsChildren
-import com.bestway.broncoforreddit.ui.features.common.components.BRHorizontalPager
-import com.bestway.broncoforreddit.ui.features.common.components.BRNavigationBar
-import com.bestway.broncoforreddit.ui.features.common.components.BRScrollableTabRow
+import com.bestway.broncoforreddit.ui.components.BRHorizontalPager
+import com.bestway.broncoforreddit.ui.components.BRScrollableTabRow
 import com.bestway.broncoforreddit.ui.features.home.HomeViewModel
 import com.bestway.broncoforreddit.ui.features.home.components.HomeScreenListings
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
+    modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = hiltViewModel(),
-    onBottomNavItemClicked: (route: String) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -82,51 +76,41 @@ fun HomeScreen(
         trendingList = trendingPosts.value.children.orEmpty()
     }
 
-    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-        Scaffold(
-            bottomBar = {
-                BRNavigationBar(
-                    context = context,
-                    onNavItemClick = onBottomNavItemClicked
-                )
-            }
-        ) { scaffoldPaddingValues ->
-            Column(modifier = Modifier.fillMaxSize().padding(scaffoldPaddingValues)) {
-                BRScrollableTabRow(tabs = tabs, pagerState = pagerState)
-                BRHorizontalPager(
-                    pagerState = pagerState,
-                ) { page ->
-                    when (page) {
-                        0 -> {
-                            HomeScreenListings(list = trendingList)
-                        }
-                        1 -> {
-                            HomeScreenListings(list = newPosts.value.children.orEmpty())
-                        }
-                        2 -> {
-                            HomeScreenListings(list = topPosts.value.children.orEmpty())
-                        }
-                        3 -> {
-                            HomeScreenListings(list = bestPosts.value.children.orEmpty())
-                        }
-                        4 -> {
-                            HomeScreenListings(list = risingPosts.value.children.orEmpty())
-                        }
-                        5 -> {
-                            HomeScreenListings(list = controversialPosts.value.children.orEmpty())
-                        }
-                        else -> {
-                            Column(
-                                modifier = Modifier.fillMaxSize(),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(text = stringResource(R.string.unavailable))
-                            }
-                        }
+    Column(modifier = modifier.fillMaxSize()) {
+        BRScrollableTabRow(tabs = tabs, pagerState = pagerState)
+        BRHorizontalPager(
+            pagerState = pagerState,
+        ) { page ->
+            when (page) {
+                0 -> {
+                    HomeScreenListings(list = trendingList)
+                }
+                1 -> {
+                    HomeScreenListings(list = newPosts.value.children.orEmpty())
+                }
+                2 -> {
+                    HomeScreenListings(list = topPosts.value.children.orEmpty())
+                }
+                3 -> {
+                    HomeScreenListings(list = bestPosts.value.children.orEmpty())
+                }
+                4 -> {
+                    HomeScreenListings(list = risingPosts.value.children.orEmpty())
+                }
+                5 -> {
+                    HomeScreenListings(list = controversialPosts.value.children.orEmpty())
+                }
+                else -> {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(text = stringResource(R.string.unavailable))
                     }
                 }
             }
         }
     }
+
 }

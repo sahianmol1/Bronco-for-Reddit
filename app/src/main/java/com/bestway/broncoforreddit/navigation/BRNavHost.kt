@@ -1,6 +1,7 @@
 package com.bestway.broncoforreddit.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,25 +15,15 @@ import com.bestway.broncoforreddit.ui.features.search.SearchScreen
 import com.bestway.broncoforreddit.ui.features.subs.SubsScreen
 
 @Composable
-fun BRNavHost(
-    navController: NavHostController
-) {
-    NavHost(navController = navController, startDestination = HomeScreen.route) {
-        composable(route = HomeScreen.route) {
-            HomeScreen(
-                onBottomNavItemClicked = { route ->
-                    navController.navigate(route)
-                }
-            )
-        }
-        composable(route = SearchScreen.route) {
-            SearchScreen()
-        }
-        composable(route = SubScreen.route) {
-            SubsScreen()
-        }
-        composable(route = AboutUsScreen.route) {
-            AboutUsScreen()
-        }
+fun BRNavHost(modifier: Modifier = Modifier, navController: NavHostController) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = HomeScreen.route
+    ) {
+        composable(route = HomeScreen.route) { HomeScreen() }
+        composable(route = SearchScreen.route) { SearchScreen() }
+        composable(route = SubScreen.route) { SubsScreen() }
+        composable(route = AboutUsScreen.route) { AboutUsScreen() }
     }
 }

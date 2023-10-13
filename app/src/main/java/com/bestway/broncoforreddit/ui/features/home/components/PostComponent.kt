@@ -54,8 +54,8 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import com.bestway.broncoforreddit.R
-import com.bestway.broncoforreddit.ui.features.common.rememberLifecycleEvent
 import com.bestway.broncoforreddit.ui.models.RedditPostUiModel
+import com.bestway.broncoforreddit.ui.rememberLifecycleEvent
 
 @Composable
 fun PostComponent(

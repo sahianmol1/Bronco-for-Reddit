@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui.features.common.components
+package com.bestway.broncoforreddit.ui.components
 
 import android.content.Context
 import androidx.compose.material.icons.Icons
