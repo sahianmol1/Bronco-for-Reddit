@@ -16,13 +16,15 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.bestway.broncoforreddit.R
 import com.bestway.broncoforreddit.navigation.Screens
 import com.bestway.broncoforreddit.ui.features.home.model.BottomNavUiModel
@@ -30,8 +32,8 @@ import com.bestway.broncoforreddit.ui.features.home.model.BottomNavUiModel
 @Composable
 fun BRNavigationBar(
     modifier: Modifier = Modifier,
-    onNavItemClick: (route: String) -> Unit,
-    context: Context
+    context: Context,
+    navController: NavHostController
 ) {
     val bottomNavItems by remember {
         mutableStateOf(
@@ -63,16 +65,11 @@ fun BRNavigationBar(
             )
         )
     }
-    var selectedBottomNavIndex by rememberSaveable { mutableIntStateOf(0) }
 
     BRNavigationBarView(
+        navController = navController,
         modifier = modifier,
         bottomNavItems = bottomNavItems,
-        selectedBottomNavIndex = selectedBottomNavIndex,
-        onNavItemClick = { index ->
-            onNavItemClick(bottomNavItems[index].route)
-            selectedBottomNavIndex = index
-        }
     )
 }
 
@@ -80,36 +77,50 @@ fun BRNavigationBar(
 fun BRNavigationBarView(
     modifier: Modifier = Modifier,
     bottomNavItems: List<BottomNavUiModel>,
-    selectedBottomNavIndex: Int,
-    onNavItemClick: (index: Int) -> Unit
+    navController: NavHostController
 ) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
 
-    NavigationBar(
-        modifier = modifier
-    ) {
+    NavigationBar(modifier = modifier) {
         bottomNavItems.forEachIndexed { index, bottomNav ->
             NavigationBarItem(
-                selected = selectedBottomNavIndex == index,
+                selected = getSelectedBottomNav(currentDestination, bottomNavItems, index),
                 onClick = {
-                    onNavItemClick(index)
+                    navController.navigate(bottomNavItems[index].route) {
+                        // Pop up to the start destination of the graph to
+                        // avoid building up a large stack of destinations
+                        // on the back stack as users select items
+                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                        // Avoid multiple copies of the same destination when
+                        // reselecting the same item
+                        launchSingleTop = true
+                        // Restore state when reselecting a previously selected item
+                        restoreState = true
+                    }
                 },
                 icon = {
                     Icon(
-                        imageVector = if (selectedBottomNavIndex == index) {
-                            bottomNav.selectedIcon
-                        } else {
-                            bottomNav.unselectedIcon
-                        },
-                        contentDescription = stringResource(
-                            R.string.bottom_bar_content_description,
-                            bottomNav.title
-                        )
+                        imageVector =
+                            if (getSelectedBottomNav(currentDestination, bottomNavItems, index)) {
+                                bottomNav.selectedIcon
+                            } else {
+                                bottomNav.unselectedIcon
+                            },
+                        contentDescription =
+                            stringResource(R.string.bottom_bar_content_description, bottomNav.title)
                     )
                 },
-                label = {
-                    Text(text = bottomNav.title)
-                }
+                label = { Text(text = bottomNav.title) }
             )
         }
     }
+}
+
+private fun getSelectedBottomNav(
+    currentDestination: NavDestination?,
+    bottomNavItems: List<BottomNavUiModel>,
+    index: Int
+): Boolean {
+    return currentDestination?.hierarchy?.any { it.route == bottomNavItems[index].route } == true
 }

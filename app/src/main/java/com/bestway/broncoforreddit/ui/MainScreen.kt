@@ -22,10 +22,8 @@ fun MainScreen(
         Scaffold(
             bottomBar = {
                 BRNavigationBar(
-                    context = context,
-                    onNavItemClick = { route ->
-                        navController.navigate(route)
-                    }
+                    navController = navController,
+                    context = context
                 )
             }
         ) { scaffoldPaddingValues ->
