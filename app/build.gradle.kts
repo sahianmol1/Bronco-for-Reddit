@@ -77,6 +77,9 @@ dependencies {
     debugImplementation(libs.compose.debug.tooling)
     debugImplementation(libs.compose.debug.manifest)
 
+    // Splash Screen
+    implementation(libs.androidx.core.splashscreen)
+
     // Compose navigation
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
