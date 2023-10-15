@@ -3,7 +3,7 @@ activity-compose = "1.8.0"
 androidx-junit = "1.1.5"
 coil-compose = "2.4.0"
 core-ktx = "1.12.0"
-core-splashscreen = "1.0.0"
+core-splashscreen = "1.0.1"
 espresso-core = "3.5.1"
 hilt-android = "2.44"
 hilt-navigation-compose = "1.0.0"
@@ -14,6 +14,7 @@ lifecycle-runtime-ktx = "2.6.2"
 media3-exoplayer = "1.1.1"
 compose-bom = "2023.10.00"
 navigation-compose = "2.7.4"
+firebase-bom-version = "32.3.1"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -47,4 +48,7 @@ compose-debug-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 extended-icons = { module = "androidx.compose.material:material-icons-extended" }
 viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-compose" }
 compose-runtime-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-compose" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom-version" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 [plugins]
