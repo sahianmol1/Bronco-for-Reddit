@@ -19,3 +19,14 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class com.bestway.broncoforreddit.data.models.** {
+    <init>();
+}
+
+-keep class com.bestway.broncoforreddit.ui.models.** {
+    <init>();
+}
+
+-dontwarn org.slf4j.impl.StaticLoggerBinder
+
