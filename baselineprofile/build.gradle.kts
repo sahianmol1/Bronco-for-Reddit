@@ -2,10 +2,11 @@
 plugins {
     alias(libs.plugins.androidTest)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.androidx.baselineprofile)
 }
 
 android {
-    namespace = "com.example.benchmark"
+    namespace = "com.example.baselineprofile"
     compileSdk = 34
 
     compileOptions {
@@ -18,36 +19,34 @@ android {
     }
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 28
         targetSdk = 34
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        // This benchmark buildType is used for benchmarking, and should function like your
-        // release build (for example, with minification on). It"s signed with a debug key
-        // for easy local/CI testing.
-        create("benchmark") {
-            isDebuggable = true
-            signingConfig = getByName("debug").signingConfig
-            matchingFallbacks += listOf("release")
-        }
-    }
-
     targetProjectPath = ":app"
-    experimentalProperties["android.experimental.self-instrumenting"] = true
+
+//    testOptions.managedDevices.devices {
+//        create<ManagedVirtualDevice>("pixel6Api34") {
+//            device = "Pixel 6"
+//            apiLevel = 34
+//            systemImageSource = "aosp"
+//        }
+//    }
 }
+
+// This is the configuration block for the Baseline Profile plugin.
+// You can specify to run the generators on a managed devices or connected devices.
+//baselineProfile {
+//    managedDevices += "pixel6Api34"
+//    useConnectedDevices = false
+//    enableEmulatorDisplay = true
+//}
 
 dependencies {
     implementation(libs.androidx.junit)
     implementation(libs.androidx.espresso.core)
     implementation(libs.uiautomator)
     implementation(libs.benchmark.macro.junit4)
-}
-
-androidComponents {
-    beforeVariants(selector().all()) {
-        it.enable = it.buildType == "benchmark"
-    }
 }

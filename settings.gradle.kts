@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "Bronco for reddit"
 include(":app")
 include(":benchmark")
+include(":baselineprofile")

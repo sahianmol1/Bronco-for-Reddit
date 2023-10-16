@@ -1,5 +1,7 @@
 package com.example.benchmark
 
+import androidx.benchmark.macro.BaselineProfileMode
+import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
@@ -21,7 +23,7 @@ import org.junit.runner.RunWith
  * for investigating your app's performance.
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleStartupBenchmark {
+class StartupBenchmark {
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
@@ -34,11 +36,12 @@ class ExampleStartupBenchmark {
     @Test
     fun startupWarm() = startup(StartupMode.WARM)
 
-    fun startup(startupMode: StartupMode) = benchmarkRule.measureRepeated(
+    private fun startup(startupMode: StartupMode) = benchmarkRule.measureRepeated(
         packageName = "com.bestway.broncoforreddit",
         metrics = listOf(StartupTimingMetric()),
         iterations = 5,
-        startupMode = startupMode
+        startupMode = startupMode,
+        compilationMode = CompilationMode.Partial(BaselineProfileMode.Require)
     ) {
         pressHome()
         startActivityAndWait()

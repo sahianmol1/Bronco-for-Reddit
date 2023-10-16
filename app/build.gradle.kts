@@ -7,6 +7,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    alias(libs.plugins.androidx.baselineprofile)
 }
 
 android {
@@ -39,6 +40,7 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
             isDebuggable = false
+            proguardFiles("benchmark-rules.pro")
         }
     }
     compileOptions {
@@ -46,7 +48,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     buildFeatures {
         compose = true
@@ -82,6 +84,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.compose.junit4)
+    "baselineProfile"(project(":baselineprofile"))
     debugImplementation(libs.compose.debug.tooling)
     debugImplementation(libs.compose.debug.manifest)
 
