@@ -55,7 +55,7 @@ import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import com.bestway.broncoforreddit.R
 import com.bestway.broncoforreddit.ui.models.RedditPostUiModel
-import com.bestway.broncoforreddit.ui.rememberLifecycleEvent
+import com.bestway.broncoforreddit.utils.rememberLifecycleEvent
 
 @Composable
 fun PostComponent(
@@ -206,6 +206,7 @@ fun PostVideo(videoUrl: String) {
         contentAlignment = Alignment.BottomEnd
     ) {
         DisposableEffect(
+            // TODO: Fix this lint warning and properly use a key for DisposableEffect
             AndroidView(
                 modifier = Modifier
                     .clickable { }

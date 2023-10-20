@@ -40,6 +40,7 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
             isDebuggable = false
+            isMinifyEnabled = false
             proguardFiles("benchmark-rules.pro")
         }
     }

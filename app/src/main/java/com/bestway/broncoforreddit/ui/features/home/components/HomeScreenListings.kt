@@ -1,8 +1,6 @@
 package com.bestway.broncoforreddit.ui.features.home.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -10,6 +8,7 @@ import androidx.compose.ui.Modifier
 import com.bestway.broncoforreddit.data.models.ListingsChildren
 import com.bestway.broncoforreddit.ui.components.BRLinearProgressIndicator
 import com.bestway.broncoforreddit.ui.models.RedditPostUiModel
+import com.bestway.broncoforreddit.utils.slideInFromBottomTransition
 
 @Composable
 fun HomeScreenListings(
@@ -48,12 +47,4 @@ fun HomeScreenListings(
     if (list.isEmpty()) {
         BRLinearProgressIndicator()
     }
-}
-
-private fun slideInFromBottomTransition(): EnterTransition {
-    return slideInVertically(
-        initialOffsetY = { screenHeight ->
-            screenHeight / 2
-        }
-    )
 }

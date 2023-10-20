@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import com.bestway.broncoforreddit.ui.features.home.screen.MainScreen
 import com.bestway.broncoforreddit.ui.theme.BroncoForRedditTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui
+package com.bestway.broncoforreddit.ui.features.home.screen
 
 import android.app.Activity
 import androidx.compose.foundation.layout.fillMaxSize
