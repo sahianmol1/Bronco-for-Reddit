@@ -5,30 +5,32 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class ApiRequests @Inject constructor(private val client: HttpClient) {
     suspend fun getHotListings(): ListingsResponse {
-        return client.get("https://www.reddit.com/hot.json").body()
+        return client.get(EndPoints.HOT).body()
     }
 
     suspend fun getNewListings(): ListingsResponse {
-        return client.get("https://www.reddit.com/new.json").body()
+        return client.get(EndPoints.NEW).body()
     }
 
     suspend fun getTopListings(): ListingsResponse {
-        return client.get("https://www.reddit.com/top.json").body()
+        return client.get(EndPoints.TOP).body()
     }
 
     suspend fun getBestListings(): ListingsResponse {
-        return client.get("https://www.reddit.com/best.json").body()
+        return client.get(EndPoints.BEST).body()
     }
 
     suspend fun getRisingListings(): ListingsResponse {
-        return client.get("https://www.reddit.com/rising.json").body()
+        return client.get(EndPoints.RISING).body()
     }
 
     suspend fun getControversialListings(): ListingsResponse {
-        return client.get("https://www.reddit.com/controversial.json").body()
+        return client.get(EndPoints.CONTROVERSIAL).body()
     }
 }
 

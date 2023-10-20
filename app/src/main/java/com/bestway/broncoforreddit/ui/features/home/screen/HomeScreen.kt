@@ -10,9 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -20,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bestway.broncoforreddit.R
-import com.bestway.broncoforreddit.data.models.ListingsChildren
 import com.bestway.broncoforreddit.ui.components.BRHorizontalPager
 import com.bestway.broncoforreddit.ui.components.BRScrollableTabRow
 import com.bestway.broncoforreddit.ui.features.home.HomeViewModel
@@ -34,7 +31,7 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
 
-    val trendingPosts = homeViewModel.trendingPosts.collectAsStateWithLifecycle()
+    val hotPosts = homeViewModel.trendingPosts.collectAsStateWithLifecycle()
     val newPosts = homeViewModel.newPosts.collectAsStateWithLifecycle()
     val topPosts = homeViewModel.topPosts.collectAsStateWithLifecycle()
     val bestPosts = homeViewModel.bestPosts.collectAsStateWithLifecycle()
@@ -53,7 +50,7 @@ fun HomeScreen(
     val tabs by rememberSaveable {
         mutableStateOf(
             listOf(
-                context.getString(R.string.trending),
+                context.getString(R.string.hot),
                 context.getString(R.string.title_new),
                 context.getString(R.string.top),
                 context.getString(R.string.best),
@@ -70,12 +67,6 @@ fun HomeScreen(
             pageCount = { tabs.size }
         )
 
-    var trendingList by remember { mutableStateOf(listOf<ListingsChildren>()) }
-
-    LaunchedEffect(trendingPosts.value.children) {
-        trendingList = trendingPosts.value.children.orEmpty()
-    }
-
     Column(modifier = modifier.fillMaxSize()) {
         BRScrollableTabRow(tabs = tabs, pagerState = pagerState)
         BRHorizontalPager(
@@ -83,7 +74,7 @@ fun HomeScreen(
         ) { page ->
             when (page) {
                 0 -> {
-                    HomeScreenListings(list = trendingList)
+                    HomeScreenListings(list = hotPosts.value.children.orEmpty())
                 }
                 1 -> {
                     HomeScreenListings(list = newPosts.value.children.orEmpty())

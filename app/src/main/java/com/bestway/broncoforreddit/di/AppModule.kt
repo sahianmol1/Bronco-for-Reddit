@@ -8,11 +8,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.engine.cio.endpoint
+import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.defaultRequest
-import io.ktor.http.URLProtocol
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import javax.inject.Singleton
@@ -24,11 +21,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideKtorClient(): HttpClient {
-        return HttpClient(CIO) {
-            defaultRequest {
-                host = Constants.BASE_URL
-                url { protocol = URLProtocol.HTTPS }
-            }
+        return HttpClient(Android) {
             install(ContentNegotiation) {
                 json(
                     Json {
@@ -38,18 +31,11 @@ object AppModule {
             }
 
             engine {
-                endpoint {
-                    keepAliveTime = Constants.CONNECTION_TIMEOUT_MILLIS
-                    connectTimeout = Constants.CONNECTION_TIMEOUT_MILLIS
-                    connectAttempts = Constants.CONNECTION_RETRIES
-                }
+                connectTimeout = Constants.CONNECTION_TIMEOUT_MILLIS
+                socketTimeout = Constants.SOCKET_TIMEOUT_MILLIS
             }
         }
     }
-
-    @Provides
-    @Singleton
-    fun provideApiRequests(client: HttpClient) = ApiRequests(client = client)
 
     @Singleton
     @Provides
