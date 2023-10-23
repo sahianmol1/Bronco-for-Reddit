@@ -1,8 +1,10 @@
 package com.bestway.broncoforreddit.ui.models
 
+import kotlinx.serialization.Serializable
 import javax.annotation.concurrent.Immutable
 
 @Immutable
+@Serializable
 data class RedditPostUiModel(
     val subName: String = "",
     val title: String? = null,

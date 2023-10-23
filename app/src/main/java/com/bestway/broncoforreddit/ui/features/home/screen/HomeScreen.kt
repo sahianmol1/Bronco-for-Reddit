@@ -22,11 +22,13 @@ import com.bestway.broncoforreddit.ui.components.BRHorizontalPager
 import com.bestway.broncoforreddit.ui.components.BRScrollableTabRow
 import com.bestway.broncoforreddit.ui.features.home.HomeViewModel
 import com.bestway.broncoforreddit.ui.features.home.components.HomeScreenListings
+import com.bestway.broncoforreddit.ui.models.RedditPostUiModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    onClick: (redditPostUiModel: RedditPostUiModel) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
@@ -74,22 +76,22 @@ fun HomeScreen(
         ) { page ->
             when (page) {
                 0 -> {
-                    HomeScreenListings(uiState = hotPosts.value)
+                    HomeScreenListings(uiState = hotPosts.value, onClick = onClick)
                 }
                 1 -> {
-                    HomeScreenListings(uiState = newPosts.value)
+                    HomeScreenListings(uiState = newPosts.value, onClick = onClick)
                 }
                 2 -> {
-                    HomeScreenListings(uiState = topPosts.value)
+                    HomeScreenListings(uiState = topPosts.value, onClick = onClick)
                 }
                 3 -> {
-                    HomeScreenListings(uiState = bestPosts.value)
+                    HomeScreenListings(uiState = bestPosts.value, onClick = onClick)
                 }
                 4 -> {
-                    HomeScreenListings(uiState = risingPosts.value)
+                    HomeScreenListings(uiState = risingPosts.value, onClick = onClick)
                 }
                 5 -> {
-                    HomeScreenListings(uiState = controversialPosts.value)
+                    HomeScreenListings(uiState = controversialPosts.value, onClick = onClick)
                 }
                 else -> {
                     Column(

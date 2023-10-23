@@ -1,7 +1,8 @@
 package com.bestway.broncoforreddit.ui.features.home.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -11,15 +12,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.bestway.broncoforreddit.R
 import com.bestway.broncoforreddit.ui.components.BRLinearProgressIndicator
 import com.bestway.broncoforreddit.ui.features.home.PostsUiState
 import com.bestway.broncoforreddit.ui.models.RedditPostUiModel
 import com.bestway.broncoforreddit.utils.slideInFromBottomTransition
 
 @Composable
-fun HomeScreenListings(uiState: PostsUiState) {
+fun HomeScreenListings(
+    uiState: PostsUiState,
+    onClick: (redditPostUiModel: RedditPostUiModel) -> Unit
+) {
     val list by remember(uiState) { mutableStateOf(uiState.data?.children.orEmpty()) }
 
     AnimatedVisibility(visible = list.isNotEmpty(), enter = slideInFromBottomTransition()) {
@@ -42,7 +52,8 @@ fun HomeScreenListings(uiState: PostsUiState) {
                             comments = list[index].childrenData.comments ?: 0,
                             videoUrl = list[index].childrenData.secureMedia?.redditVideo?.videoUrl,
                             gifUrl = list[index].childrenData.gifUrl?.gifPreview?.url
-                        )
+                        ),
+                    onClick = onClick
                 )
             }
         }
@@ -52,12 +63,18 @@ fun HomeScreenListings(uiState: PostsUiState) {
         visible = !uiState.errorMessage.isNullOrBlank(),
         enter = slideInFromBottomTransition()
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            Text("Uh oh! Something went wrong.")
+        var showLogs by rememberSaveable { mutableStateOf(false) }
+        Box(modifier = Modifier.fillMaxSize().padding(16.dp), contentAlignment = Alignment.Center) {
+            Text(
+                modifier = Modifier.clickable { showLogs = !showLogs },
+                text =
+                    if (!showLogs)
+                        stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
+                    else
+                        stringResource(R.string.uh_oh_something_went_wrong) +
+                            " Learn More /n ${uiState.errorMessage}",
+                textDecoration = TextDecoration.Underline
+            )
         }
     }
 

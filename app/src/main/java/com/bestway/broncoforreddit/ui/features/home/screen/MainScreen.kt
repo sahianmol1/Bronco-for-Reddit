@@ -19,9 +19,7 @@ import com.bestway.broncoforreddit.navigation.BRNavHost
 import com.bestway.broncoforreddit.ui.components.BRNavigationBar
 
 @Composable
-fun MainScreen(
-    navController: NavHostController
-) {
+fun MainScreen(navController: NavHostController) {
     val context = LocalContext.current
 
     val view = LocalView.current
@@ -39,13 +37,12 @@ fun MainScreen(
             bottomBar = {
                 BRNavigationBar(
                     navController = navController,
-                    context = context
+                    context = context,
                 )
             }
         ) { scaffoldPaddingValues ->
             BRNavHost(
-                modifier = Modifier
-                    .padding(scaffoldPaddingValues),
+                modifier = Modifier.padding(scaffoldPaddingValues),
                 navController = navController
             )
         }

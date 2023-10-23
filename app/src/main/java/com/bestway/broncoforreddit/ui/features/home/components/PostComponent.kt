@@ -60,7 +60,8 @@ import com.bestway.broncoforreddit.utils.rememberLifecycleEvent
 @Composable
 fun PostComponent(
     modifier: Modifier = Modifier,
-    redditPostUiModel: RedditPostUiModel
+    redditPostUiModel: RedditPostUiModel,
+    onClick: (redditPostUiModel: RedditPostUiModel) -> Unit
 ) {
     var showFullPost by rememberSaveable { mutableStateOf(false) }
 
@@ -68,7 +69,7 @@ fun PostComponent(
         modifier = modifier
             .animateContentSize()
             .clickable {
-                showFullPost = !showFullPost
+                onClick(redditPostUiModel)
             }
             .padding(top = 8.dp)
             .padding(horizontal = 16.dp),
@@ -280,9 +281,9 @@ fun PostVideoControls(
 }
 
 @Composable
-fun PostActions(upVotes: Int, comments: Int) {
+fun PostActions(modifier: Modifier = Modifier, upVotes: Int, comments: Int) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -335,5 +336,5 @@ fun PostActionItem(icon: ImageVector, label: String, actionDescription: String) 
 @Preview
 @Composable
 fun PostPreview() {
-    PostComponent(redditPostUiModel = RedditPostUiModel())
+    PostComponent(redditPostUiModel = RedditPostUiModel(), onClick = {})
 }

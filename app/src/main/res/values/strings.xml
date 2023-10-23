@@ -18,4 +18,5 @@
     <string name="share">Share</string>
     <string name="unavailable">Unavailable</string>
     <string name="leak_canary_display_activity_label">Bronco Leaks</string>
+    <string name="uh_oh_something_went_wrong">Uh oh! Something went wrong.</string>
 </resources>
