@@ -9,39 +9,39 @@ import javax.inject.Inject
 class HomeRepositoryImpl @Inject constructor(
     private val apiRequests: ApiRequests
 ) : HomeRepository {
-    override suspend fun getTrendingPosts(): Flow<ListingsResponse> {
+    override suspend fun getHotPosts(): Flow<ListingsResponse> {
         return flow {
-            emit(apiRequests.getHotListings())
+            emit(apiRequests.getHotListings().getOrThrow())
         }
     }
 
     override suspend fun getTopPosts(): Flow<ListingsResponse> {
         return flow {
-            emit(apiRequests.getTopListings())
+            emit(apiRequests.getTopListings().getOrThrow())
         }
     }
 
     override suspend fun getNewPosts(): Flow<ListingsResponse> {
         return flow {
-            emit(apiRequests.getNewListings())
+            emit(apiRequests.getNewListings().getOrThrow())
         }
     }
 
     override suspend fun getBestPosts(): Flow<ListingsResponse> {
         return flow {
-            emit(apiRequests.getBestListings())
+            emit(apiRequests.getBestListings().getOrThrow())
         }
     }
 
     override suspend fun getRisingPosts(): Flow<ListingsResponse> {
         return flow {
-            emit(apiRequests.getRisingListings())
+            emit(apiRequests.getRisingListings().getOrThrow())
         }
     }
 
     override suspend fun getControversialPosts(): Flow<ListingsResponse> {
         return flow {
-            emit(apiRequests.getControversialListings())
+            emit(apiRequests.getControversialListings().getOrThrow())
         }
     }
 

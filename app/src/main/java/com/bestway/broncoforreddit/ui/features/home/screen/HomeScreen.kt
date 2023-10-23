@@ -31,7 +31,7 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
 
-    val hotPosts = homeViewModel.trendingPosts.collectAsStateWithLifecycle()
+    val hotPosts = homeViewModel.hotPosts.collectAsStateWithLifecycle()
     val newPosts = homeViewModel.newPosts.collectAsStateWithLifecycle()
     val topPosts = homeViewModel.topPosts.collectAsStateWithLifecycle()
     val bestPosts = homeViewModel.bestPosts.collectAsStateWithLifecycle()
@@ -39,7 +39,7 @@ fun HomeScreen(
     val controversialPosts = homeViewModel.controversialPosts.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        homeViewModel.getTrendingPosts()
+        homeViewModel.getHotPosts()
         homeViewModel.getNewPosts()
         homeViewModel.getTopPosts()
         homeViewModel.getBestPosts()
@@ -74,22 +74,22 @@ fun HomeScreen(
         ) { page ->
             when (page) {
                 0 -> {
-                    HomeScreenListings(list = hotPosts.value.children.orEmpty())
+                    HomeScreenListings(uiState = hotPosts.value)
                 }
                 1 -> {
-                    HomeScreenListings(list = newPosts.value.children.orEmpty())
+                    HomeScreenListings(uiState = newPosts.value)
                 }
                 2 -> {
-                    HomeScreenListings(list = topPosts.value.children.orEmpty())
+                    HomeScreenListings(uiState = topPosts.value)
                 }
                 3 -> {
-                    HomeScreenListings(list = bestPosts.value.children.orEmpty())
+                    HomeScreenListings(uiState = bestPosts.value)
                 }
                 4 -> {
-                    HomeScreenListings(list = risingPosts.value.children.orEmpty())
+                    HomeScreenListings(uiState = risingPosts.value)
                 }
                 5 -> {
-                    HomeScreenListings(list = controversialPosts.value.children.orEmpty())
+                    HomeScreenListings(uiState = controversialPosts.value)
                 }
                 else -> {
                     Column(

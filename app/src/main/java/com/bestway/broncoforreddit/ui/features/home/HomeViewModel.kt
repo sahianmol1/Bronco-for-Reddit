@@ -1,164 +1,186 @@
 package com.bestway.broncoforreddit.ui.features.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bestway.broncoforreddit.data.models.ListingsData
 import com.bestway.broncoforreddit.data.repositories.homerepository.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val repository: HomeRepository
-) : ViewModel() {
+class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
 
-    private val _trendingPosts: MutableStateFlow<ListingsData> = MutableStateFlow(
-        ListingsData()
-    )
-    var trendingPosts: StateFlow<ListingsData> = _trendingPosts.asStateFlow()
+    private val _hotPosts: MutableStateFlow<PostsUiState> = MutableStateFlow(PostsUiState())
+    var hotPosts: StateFlow<PostsUiState> = _hotPosts.asStateFlow()
 
-    private val _newPosts: MutableStateFlow<ListingsData> = MutableStateFlow(
-        ListingsData()
-    )
-    var newPosts: StateFlow<ListingsData> = _newPosts.asStateFlow()
+    private val _newPosts: MutableStateFlow<PostsUiState> = MutableStateFlow(PostsUiState())
+    var newPosts: StateFlow<PostsUiState> = _newPosts.asStateFlow()
 
-    private val _topPosts: MutableStateFlow<ListingsData> = MutableStateFlow(
-        ListingsData()
-    )
-    var topPosts: StateFlow<ListingsData> = _topPosts.asStateFlow()
+    private val _topPosts: MutableStateFlow<PostsUiState> = MutableStateFlow(PostsUiState())
+    var topPosts: StateFlow<PostsUiState> = _topPosts.asStateFlow()
 
-    private val _bestPosts: MutableStateFlow<ListingsData> = MutableStateFlow(
-        ListingsData()
-    )
-    var bestPosts: StateFlow<ListingsData> = _bestPosts.asStateFlow()
+    private val _bestPosts: MutableStateFlow<PostsUiState> = MutableStateFlow(PostsUiState())
+    var bestPosts: StateFlow<PostsUiState> = _bestPosts.asStateFlow()
 
-    private val _risingPosts: MutableStateFlow<ListingsData> = MutableStateFlow(
-        ListingsData()
-    )
-    var risingPosts: StateFlow<ListingsData> = _risingPosts.asStateFlow()
+    private val _risingPosts: MutableStateFlow<PostsUiState> = MutableStateFlow(PostsUiState())
+    var risingPosts: StateFlow<PostsUiState> = _risingPosts.asStateFlow()
 
-    private val _controversialPosts: MutableStateFlow<ListingsData> = MutableStateFlow(
-        ListingsData()
-    )
-    var controversialPosts: StateFlow<ListingsData> = _controversialPosts.asStateFlow()
+    private val _controversialPosts: MutableStateFlow<PostsUiState> =
+        MutableStateFlow(PostsUiState())
+    var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
 
-    fun getTrendingPosts() {
-        viewModelScope.launch {
-            repository.getTrendingPosts().collectLatest { listingsResponse ->
+    private val hotPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
+
+        _hotPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+    }
+
+    private val newPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
+
+        _newPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+    }
+
+    private val topPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
+
+        _topPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+    }
+
+    private val bestPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
+
+        _bestPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+    }
+
+    private val risingPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
+
+        _risingPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+    }
+
+    private val controversialPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
+
+        _controversialPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+    }
+
+    fun getHotPosts() {
+        _hotPosts.update { it.copy(isLoading = true) }
+
+        viewModelScope.launch(hotPostsExceptionHandler) {
+            repository.getHotPosts().collectLatest { listingsResponse ->
                 listingsResponse.data?.let { responseListingsData ->
-                    _trendingPosts.update {
-                        it.copy(
-                            after = responseListingsData.after,
-                            dist = responseListingsData.dist,
-                            modhash = responseListingsData.modhash,
-                            geoFilter = responseListingsData.geoFilter,
-                            children = responseListingsData.children,
-                            before = responseListingsData.before
-                        )
+                    _hotPosts.update {
+                        it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
                     }
                 }
             }
+
+            // stop the loading if the data is null
+            _hotPosts.update { it.copy(isLoading = false) }
         }
     }
 
     fun getNewPosts() {
-        viewModelScope.launch {
+        _newPosts.update { it.copy(isLoading = true) }
+
+        viewModelScope.launch(newPostsExceptionHandler) {
             repository.getNewPosts().collectLatest { listingsResponse ->
                 listingsResponse.data?.let { responseListingsData ->
                     _newPosts.update {
-                        it.copy(
-                            after = responseListingsData.after,
-                            dist = responseListingsData.dist,
-                            modhash = responseListingsData.modhash,
-                            geoFilter = responseListingsData.geoFilter,
-                            children = responseListingsData.children,
-                            before = responseListingsData.before
-                        )
+                        it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
                     }
                 }
             }
+
+            // stop the loading if the data is null
+            _newPosts.update { it.copy(isLoading = false) }
         }
     }
 
     fun getTopPosts() {
-        viewModelScope.launch {
+        _topPosts.update { it.copy(isLoading = true) }
+
+        viewModelScope.launch(topPostsExceptionHandler) {
             repository.getTopPosts().collectLatest { listingsResponse ->
                 listingsResponse.data?.let { responseListingsData ->
                     _topPosts.update {
-                        it.copy(
-                            after = responseListingsData.after,
-                            dist = responseListingsData.dist,
-                            modhash = responseListingsData.modhash,
-                            geoFilter = responseListingsData.geoFilter,
-                            children = responseListingsData.children,
-                            before = responseListingsData.before
-                        )
+                        it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
                     }
                 }
             }
+
+            // stop the loading if the data is null
+            _topPosts.update { it.copy(isLoading = false) }
         }
     }
 
     fun getBestPosts() {
-        viewModelScope.launch {
+        _bestPosts.update { it.copy(isLoading = true) }
+
+        viewModelScope.launch(bestPostsExceptionHandler) {
             repository.getBestPosts().collectLatest { listingsResponse ->
                 listingsResponse.data?.let { responseListingsData ->
                     _bestPosts.update {
-                        it.copy(
-                            after = responseListingsData.after,
-                            dist = responseListingsData.dist,
-                            modhash = responseListingsData.modhash,
-                            geoFilter = responseListingsData.geoFilter,
-                            children = responseListingsData.children,
-                            before = responseListingsData.before
-                        )
+                        it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
                     }
                 }
             }
+
+            // stop the loading if the data is null
+            _bestPosts.update { it.copy(isLoading = false) }
         }
     }
 
     fun getRisingsPosts() {
-        viewModelScope.launch {
+        _risingPosts.update { it.copy(isLoading = true) }
+
+        viewModelScope.launch(risingPostsExceptionHandler) {
             repository.getRisingPosts().collectLatest { listingsResponse ->
                 listingsResponse.data?.let { responseListingsData ->
                     _risingPosts.update {
-                        it.copy(
-                            after = responseListingsData.after,
-                            dist = responseListingsData.dist,
-                            modhash = responseListingsData.modhash,
-                            geoFilter = responseListingsData.geoFilter,
-                            children = responseListingsData.children,
-                            before = responseListingsData.before
-                        )
+                        it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
                     }
                 }
             }
+
+            // stop the loading if the data is null
+            _risingPosts.update { it.copy(isLoading = false) }
         }
+
     }
 
     fun getControversialPosts() {
-        viewModelScope.launch {
+        _controversialPosts.update { it.copy(isLoading = true) }
+
+        viewModelScope.launch(controversialPostsExceptionHandler) {
             repository.getControversialPosts().collectLatest { listingsResponse ->
                 listingsResponse.data?.let { responseListingsData ->
                     _controversialPosts.update {
-                        it.copy(
-                            after = responseListingsData.after,
-                            dist = responseListingsData.dist,
-                            modhash = responseListingsData.modhash,
-                            geoFilter = responseListingsData.geoFilter,
-                            children = responseListingsData.children,
-                            before = responseListingsData.before
-                        )
+                        it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
                     }
                 }
+
+                // stop the loading if the data is null
+                _controversialPosts.update { it.copy(isLoading = false) }
             }
         }
     }
 }
+
+@Immutable
+data class PostsUiState(
+    val data: ListingsData? = null,
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null
+)

@@ -22,6 +22,7 @@ object AppModule {
     @Singleton
     fun provideKtorClient(): HttpClient {
         return HttpClient(Android) {
+            expectSuccess = true
             install(ContentNegotiation) {
                 json(
                     Json {
