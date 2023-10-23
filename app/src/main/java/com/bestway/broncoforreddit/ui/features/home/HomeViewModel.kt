@@ -19,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
 
+    // Ui State properties
     private val _hotPosts: MutableStateFlow<PostsUiState> = MutableStateFlow(PostsUiState())
     var hotPosts: StateFlow<PostsUiState> = _hotPosts.asStateFlow()
 
@@ -38,6 +39,8 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         MutableStateFlow(PostsUiState())
     var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
 
+
+    // Exception Handling properties starts here
     private val hotPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
 
@@ -73,6 +76,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
 
         _controversialPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
     }
+    // Exception Handling properties end here
 
     fun getHotPosts() {
         _hotPosts.update { it.copy(isLoading = true) }
