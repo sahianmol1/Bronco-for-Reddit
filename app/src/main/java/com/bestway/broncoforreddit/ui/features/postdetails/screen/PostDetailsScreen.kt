@@ -2,7 +2,9 @@ package com.bestway.broncoforreddit.ui.features.postdetails.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -22,7 +24,13 @@ fun PostDetailsScreen(modifier: Modifier = Modifier, redditPostUiModel: RedditPo
     val scrollState = rememberScrollState()
 
     Column(
-        modifier = modifier.verticalScroll(scrollState).fillMaxSize().padding(horizontal = 16.dp),
+        modifier =
+            modifier
+                .verticalScroll(scrollState)
+                .fillMaxSize()
+                .statusBarsPadding()
+                .navigationBarsPadding()
+                .padding(horizontal = 16.dp),
     ) {
         SubRedditName(subName = redditPostUiModel.subName)
         PostDetailsTitle(title = redditPostUiModel.title.orEmpty())
@@ -32,14 +40,10 @@ fun PostDetailsScreen(modifier: Modifier = Modifier, redditPostUiModel: RedditPo
                 PostImage(imageUrl = redditPostUiModel.imageUrl)
             }
             if (it.contains(".gif")) {
-                redditPostUiModel.gifUrl?.let {
-                    PostVideo(videoUrl = redditPostUiModel.gifUrl)
-                }
+                redditPostUiModel.gifUrl?.let { PostVideo(videoUrl = redditPostUiModel.gifUrl) }
             }
         }
-        redditPostUiModel.videoUrl?.let {
-            PostVideo(videoUrl = it)
-        }
+        redditPostUiModel.videoUrl?.let { PostVideo(videoUrl = it) }
         PostActions(
             modifier = Modifier.padding(top = 8.dp),
             upVotes = redditPostUiModel.upVotes,

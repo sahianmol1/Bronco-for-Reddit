@@ -87,7 +87,8 @@ fun BRNavigationBarView(
     navController: NavHostController
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
+    val currentDestination by
+        remember(navBackStackEntry) { mutableStateOf(navBackStackEntry?.destination) }
 
     AnimatedVisibility(
         visible = currentDestination.isTopLevelDestination(),

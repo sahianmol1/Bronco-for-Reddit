@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -69,7 +70,7 @@ fun HomeScreen(
             pageCount = { tabs.size }
         )
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize().statusBarsPadding()) {
         BRScrollableTabRow(tabs = tabs, pagerState = pagerState)
         BRHorizontalPager(
             pagerState = pagerState,

@@ -1,6 +1,8 @@
 package com.bestway.broncoforreddit.ui.features.home.screen
 
 import android.app.Activity
+import android.graphics.Color
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -9,18 +11,25 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.bestway.broncoforreddit.navigation.BRNavHost
 import com.bestway.broncoforreddit.ui.components.BRNavigationBar
+import com.bestway.broncoforreddit.utils.isTopLevelDestination
 
 @Composable
 fun MainScreen(navController: NavHostController) {
     val context = LocalContext.current
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination by remember(navBackStackEntry) { mutableStateOf(navBackStackEntry?.destination) }
 
     val view = LocalView.current
     val navigationBarColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
@@ -28,7 +37,9 @@ fun MainScreen(navController: NavHostController) {
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.navigationBarColor = navigationBarColor.toArgb()
+            window.navigationBarColor =
+                if (currentDestination.isTopLevelDestination()) navigationBarColor.toArgb()
+                else Color.TRANSPARENT
         }
     }
 
@@ -39,7 +50,8 @@ fun MainScreen(navController: NavHostController) {
                     navController = navController,
                     context = context,
                 )
-            }
+            },
+            contentWindowInsets = WindowInsets(left = 0.dp, top = 0.dp, right = 0.dp, bottom = 0.dp)
         ) { scaffoldPaddingValues ->
             BRNavHost(
                 modifier = Modifier.padding(scaffoldPaddingValues),
