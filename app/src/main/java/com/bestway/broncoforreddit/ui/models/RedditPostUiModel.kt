@@ -14,5 +14,6 @@ data class RedditPostUiModel(
     val imageUrl: String? = null,
     val postUrl: String? = null,
     val videoUrl: String? = null,
-    val gifUrl: String? = null
+    val gifUrl: String? = null,
+    val author: String = ""
 )

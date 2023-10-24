@@ -54,7 +54,8 @@ fun HomeScreenListings(
                             upVotes = list[index].childrenData.upVotes ?: 0,
                             comments = list[index].childrenData.comments ?: 0,
                             videoUrl = list[index].childrenData.secureMedia?.redditVideo?.videoUrl,
-                            gifUrl = list[index].childrenData.gifUrl?.gifPreview?.url
+                            gifUrl = list[index].childrenData.gifUrl?.gifPreview?.url,
+                            author = list[index].childrenData.author.orEmpty()
                         ),
                     onClick = onClick
                 )
@@ -73,6 +74,7 @@ fun HomeScreenListings(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // TODO: Code Cleanup
             Text(
                 modifier = Modifier.clickable { showLogs = !showLogs },
                 text =

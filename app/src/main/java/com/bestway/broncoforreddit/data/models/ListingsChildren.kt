@@ -30,7 +30,9 @@ data class ChildrenData(
     @SerialName("secure_media")
     val secureMedia: SecureMedia? = null,
     @SerialName("preview")
-    val gifUrl: GifPreview? = null
+    val gifUrl: GifPreview? = null,
+    @SerialName("author")
+    val author: String? = null
 )
 
 @Serializable

@@ -63,24 +63,20 @@ fun PostComponent(
     redditPostUiModel: RedditPostUiModel,
     onClick: (redditPostUiModel: RedditPostUiModel) -> Unit
 ) {
-    var showFullPost by rememberSaveable { mutableStateOf(false) }
-
     Column(
-        modifier = modifier
-            .animateContentSize()
-            .clickable {
-                onClick(redditPostUiModel)
-            }
-            .padding(top = 8.dp)
-            .padding(horizontal = 16.dp),
+        modifier =
+            modifier
+                .animateContentSize()
+                .clickable { onClick(redditPostUiModel) }
+                .padding(top = 8.dp)
+                .padding(horizontal = 16.dp),
     ) {
         SubRedditName(subName = redditPostUiModel.subName)
-        redditPostUiModel.title?.let {
-            PostTitle(title = redditPostUiModel.title, showFullPost = showFullPost)
-        }
+        OriginalPosterName(opName = redditPostUiModel.author)
+        redditPostUiModel.title?.let { PostTitle(title = redditPostUiModel.title) }
         redditPostUiModel.description?.let {
             if (it.isNotEmpty()) {
-                PostDescription(description = it, showFullPost = showFullPost)
+                PostDescription(description = it)
             }
         }
         redditPostUiModel.imageUrl?.let {
@@ -88,33 +84,20 @@ fun PostComponent(
                 PostImage(imageUrl = redditPostUiModel.imageUrl)
             }
             if (it.contains(".gif")) {
-                redditPostUiModel.gifUrl?.let {
-                    PostVideo(videoUrl = redditPostUiModel.gifUrl)
-                }
+                redditPostUiModel.gifUrl?.let { PostVideo(videoUrl = redditPostUiModel.gifUrl) }
             }
         }
-        redditPostUiModel.videoUrl?.let {
-            PostVideo(videoUrl = it)
-        }
+        redditPostUiModel.videoUrl?.let { PostVideo(videoUrl = it) }
         PostActions(upVotes = redditPostUiModel.upVotes, comments = redditPostUiModel.comments)
-        Divider(
-            modifier = Modifier
-                .padding(top = 8.dp)
-        )
+        Divider(modifier = Modifier.padding(top = 8.dp))
     }
 }
 
 @Composable
-fun SubRedditName(
-    subName: String
-) {
+fun SubRedditName(subName: String) {
     Text(
-        modifier = Modifier
-            .clickable { }
-            .padding(vertical = 8.dp),
-        style = TextStyle(
-            fontWeight = FontWeight.Bold
-        ),
+        modifier = Modifier.clickable {}.padding(top = 8.dp, bottom = 4.dp),
+        style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.onSecondaryContainer,
         text = subName,
         maxLines = 1,
@@ -123,25 +106,35 @@ fun SubRedditName(
 }
 
 @Composable
-fun PostTitle(title: String, showFullPost: Boolean) {
+fun OriginalPosterName(opName: String) {
     Text(
-        modifier = Modifier
-            .padding(vertical = 4.dp),
-        fontWeight = FontWeight.Bold,
-        text = title,
-        maxLines = if (!showFullPost) 3 else 100,
+        modifier = Modifier.clickable {}.padding(vertical = 4.dp),
+        style = TextStyle(fontWeight = FontWeight.Bold),
+        color = MaterialTheme.colorScheme.onPrimaryContainer,
+        text = "u/$opName",
+        maxLines = 1,
         overflow = TextOverflow.Ellipsis
     )
 }
 
 @Composable
-fun PostDescription(description: String, showFullPost: Boolean) {
+fun PostTitle(title: String) {
     Text(
-        modifier = Modifier
-            .padding(vertical = 4.dp),
+        modifier = Modifier.padding(vertical = 4.dp),
+        fontWeight = FontWeight.Bold,
+        text = title,
+        maxLines = 3,
+        overflow = TextOverflow.Ellipsis
+    )
+}
+
+@Composable
+fun PostDescription(description: String) {
+    Text(
+        modifier = Modifier.padding(vertical = 4.dp),
         text = description,
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.90f),
-        maxLines = if (!showFullPost) 3 else 100,
+        maxLines = 3,
         overflow = TextOverflow.Ellipsis
     )
 }
@@ -152,25 +145,19 @@ fun PostImage(imageUrl: String) {
     var isImageLoading by rememberSaveable { mutableStateOf(false) }
     var isImageLoadingError by rememberSaveable { mutableStateOf(false) }
 
-    Box(
-        modifier = Modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
+    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         if (isImageLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .padding(vertical = 64.dp)
-            )
+            CircularProgressIndicator(modifier = Modifier.padding(vertical = 64.dp))
         }
         AsyncImage(
-            modifier = Modifier
-                .clickable(
-                    interactionSource = interactionSource,
-                    role = Role.Image,
-                    indication = null
-                ) { }
-                .padding(vertical = 4.dp)
-                .fillMaxWidth(),
+            modifier =
+                Modifier.clickable(
+                        interactionSource = interactionSource,
+                        role = Role.Image,
+                        indication = null
+                    ) {}
+                    .padding(vertical = 4.dp)
+                    .fillMaxWidth(),
             model = imageUrl,
             contentScale = ContentScale.FillWidth,
             onLoading = { isImageLoading = true },
@@ -203,17 +190,15 @@ fun PostVideo(videoUrl: String) {
         }
     }
 
-    Box(
-        contentAlignment = Alignment.BottomEnd
-    ) {
+    Box(contentAlignment = Alignment.BottomEnd) {
         DisposableEffect(
             // TODO: Fix this lint warning and properly use a key for DisposableEffect
             AndroidView(
-                modifier = Modifier
-                    .clickable { }
-                    .padding(vertical = 4.dp)
-                    .defaultMinSize(minHeight = 250.dp)
-                    .fillMaxWidth(),
+                modifier =
+                    Modifier.clickable {}
+                        .padding(vertical = 4.dp)
+                        .defaultMinSize(minHeight = 250.dp)
+                        .fillMaxWidth(),
                 factory = {
                     PlayerView(it).apply {
                         player = exoPlayer
@@ -226,19 +211,15 @@ fun PostVideo(videoUrl: String) {
                             playerView.onPause()
                             playerView.player?.pause()
                         }
-
                         Lifecycle.Event.ON_RESUME -> {
                             playerView.onResume()
                         }
-
                         else -> Unit
                     }
                 },
             )
         ) {
-            onDispose {
-                exoPlayer.release()
-            }
+            onDispose { exoPlayer.release() }
         }
 
         PostVideoControls(
@@ -256,23 +237,16 @@ fun PostVideo(videoUrl: String) {
 }
 
 @Composable
-fun PostVideoControls(
-    isVolumeOff: Boolean,
-    onSoundButtonClick: () -> Unit
-) {
+fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
     IconButton(
-        modifier = Modifier
-            .drawBehind {
-                drawCircle(
-                    color = Color.Black.copy(alpha = 0.5f),
-                    radius = 56.0f
-                )
+        modifier =
+            Modifier.drawBehind {
+                drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
             },
         onClick = onSoundButtonClick
     ) {
         Icon(
-            modifier = Modifier
-                .size(16.dp),
+            modifier = Modifier.size(16.dp),
             imageVector = if (isVolumeOff) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
             contentDescription = "Silent",
             tint = Color.White
@@ -282,11 +256,7 @@ fun PostVideoControls(
 
 @Composable
 fun PostActions(modifier: Modifier = Modifier, upVotes: Int, comments: Int) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
+    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         PostActionItem(
             icon = Icons.Default.ArrowUpward,
             label = upVotes.toString(),
@@ -308,24 +278,17 @@ fun PostActions(modifier: Modifier = Modifier, upVotes: Int, comments: Int) {
 @Composable
 fun PostActionItem(icon: ImageVector, label: String, actionDescription: String) {
     Row(
-        modifier = Modifier
-            .wrapContentHeight()
-            .clickable { },
+        modifier = Modifier.wrapContentHeight().clickable {},
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier
-                .padding(start = 8.dp)
-                .padding(vertical = 8.dp),
+            modifier = Modifier.padding(start = 8.dp).padding(vertical = 8.dp),
             imageVector = icon,
-            contentDescription = stringResource(
-                R.string.post_action_content_description,
-                actionDescription
-            )
+            contentDescription =
+                stringResource(R.string.post_action_content_description, actionDescription)
         )
         Text(
-            modifier = Modifier
-                .padding(horizontal = 8.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
             text = label,
             fontSize = 12.sp,
             textAlign = TextAlign.Center
