@@ -42,12 +42,29 @@ fun HomeScreen(
     val controversialPosts = homeViewModel.controversialPosts.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        homeViewModel.getHotPosts()
-        homeViewModel.getNewPosts()
-        homeViewModel.getTopPosts()
-        homeViewModel.getBestPosts()
-        homeViewModel.getRisingsPosts()
-        homeViewModel.getControversialPosts()
+        if (hotPosts.value.data == null) {
+            homeViewModel.getHotPosts()
+        }
+
+        if (newPosts.value.data == null) {
+            homeViewModel.getNewPosts()
+        }
+
+        if (topPosts.value.data == null) {
+            homeViewModel.getTopPosts()
+        }
+
+        if (bestPosts.value.data == null) {
+            homeViewModel.getBestPosts()
+        }
+
+        if (risingPosts.value.data == null) {
+            homeViewModel.getRisingsPosts()
+        }
+
+        if (controversialPosts.value.data == null) {
+            homeViewModel.getControversialPosts()
+        }
     }
 
     val tabs by rememberSaveable {
