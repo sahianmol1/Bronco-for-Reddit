@@ -29,7 +29,7 @@ import com.bestway.broncoforreddit.ui.theme.BroncoForRedditTheme
 
 @Composable
 fun CommentsView(modifier: Modifier = Modifier) {
-    Column(modifier = modifier.padding(top = 4.dp)) {
+    Column(modifier = modifier.padding(top = 16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             UserImage()
             OPBadge()
@@ -87,7 +87,7 @@ fun CommentText(text: String) {
 @Composable
 fun CommentUpVotes() {
     Row(
-        modifier = Modifier.wrapContentHeight().clickable {},
+        modifier = Modifier.wrapContentHeight().clickable {}.padding(bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -108,7 +108,7 @@ fun CommentUpVotes() {
 @Composable
 fun ViewReplies() {
     Text(
-        modifier = Modifier.padding(start = 16.dp).clickable {},
+        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp).clickable {},
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.onPrimaryContainer,
         text = "View Replies",
