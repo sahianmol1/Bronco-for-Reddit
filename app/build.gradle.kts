@@ -134,4 +134,17 @@ dependencies {
 
     // Profile Installer - for benchmarks and baseline profiles
     implementation(libs.androidx.profileinstaller)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+
+    // Pagination
+    implementation(libs.androidx.paging.runtime)
+    testImplementation(libs.androidx.paging.common)
+    implementation(libs.androidx.paging.compose)
+
 }

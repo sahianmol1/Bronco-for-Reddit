@@ -1,5 +1,8 @@
 package com.bestway.broncoforreddit.data.models
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -10,7 +13,10 @@ data class ListingsChildren(
 )
 
 @Serializable
+@Entity("hot_posts")
 data class ChildrenData(
+    @PrimaryKey(autoGenerate = false)
+    val roomId: Int = 0,
     @SerialName("id")
     val id: String,
     @SerialName("title")
@@ -28,8 +34,10 @@ data class ChildrenData(
     @SerialName("permalink")
     val postUrl: String? = null,
     @SerialName("secure_media")
+    @Embedded
     val secureMedia: SecureMedia? = null,
     @SerialName("preview")
+    @Embedded
     val gifUrl: GifPreview? = null,
     @SerialName("author")
     val author: String? = null
@@ -38,6 +46,7 @@ data class ChildrenData(
 @Serializable
 data class SecureMedia(
     @SerialName("reddit_video")
+    @Embedded
     val redditVideo: RedditVideo? = null
 )
 
@@ -50,6 +59,7 @@ data class RedditVideo(
 @Serializable
 data class GifPreview(
     @SerialName("reddit_video_preview")
+    @Embedded
     val gifPreview: RedditGifPreview? = null
 )
 

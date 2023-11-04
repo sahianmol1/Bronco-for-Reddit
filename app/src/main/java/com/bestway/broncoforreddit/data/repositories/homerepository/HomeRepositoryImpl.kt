@@ -2,15 +2,19 @@ package com.bestway.broncoforreddit.data.repositories.homerepository
 
 import com.bestway.broncoforreddit.data.models.ListingsResponse
 import com.bestway.broncoforreddit.data.remote.api.ApiRequests
+import javax.inject.Inject
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
+import kotlinx.coroutines.withContext
 
 class HomeRepositoryImpl @Inject constructor(
-    private val apiRequests: ApiRequests
+    private val apiRequests: ApiRequests,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : HomeRepository {
-    override suspend fun getHotPosts(): Flow<ListingsResponse> {
-        return flow {
+    override suspend fun getHotPosts(): Flow<ListingsResponse> = withContext(ioDispatcher) {
+        return@withContext flow {
             emit(apiRequests.getHotListings().getOrThrow())
         }
     }

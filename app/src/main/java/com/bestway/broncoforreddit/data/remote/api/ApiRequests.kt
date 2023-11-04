@@ -1,6 +1,8 @@
 package com.bestway.broncoforreddit.data.remote.api
 
 import com.bestway.broncoforreddit.data.models.ListingsResponse
+import com.bestway.broncoforreddit.data.remote.api.utils.ApiConstants
+import com.bestway.broncoforreddit.data.remote.api.utils.EndPoints
 import com.bestway.broncoforreddit.data.remote.api.utils.getSafeResponse
 import io.ktor.client.HttpClient
 import javax.inject.Inject
@@ -8,8 +10,11 @@ import javax.inject.Singleton
 
 @Singleton
 class ApiRequests @Inject constructor(private val client: HttpClient) {
-    suspend fun getHotListings(): Result<ListingsResponse> {
-        return client.getSafeResponse(EndPoints.HOT)
+    suspend fun getHotListings(
+        limit: Int = ApiConstants.LIMIT_PER_PAGE,
+        after: String? = ""
+    ): Result<ListingsResponse> {
+        return client.getSafeResponse("${EndPoints.HOT}?limit=$limit&after=$after")
     }
 
     suspend fun getNewListings(): Result<ListingsResponse> {
