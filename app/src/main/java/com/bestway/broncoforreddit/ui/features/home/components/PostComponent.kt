@@ -98,7 +98,7 @@ fun SubRedditName(subName: String) {
     Text(
         modifier = Modifier.clickable {}.padding(top = 8.dp, bottom = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
-        color = MaterialTheme.colorScheme.onSecondaryContainer,
+        color = MaterialTheme.colorScheme.onPrimaryContainer,
         text = subName,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis
