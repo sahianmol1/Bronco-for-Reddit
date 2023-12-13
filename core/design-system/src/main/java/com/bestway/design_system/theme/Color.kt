@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui.theme
+package com.bestway.design_system.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -89,6 +89,9 @@ dependencies {
     debugImplementation(libs.compose.debug.tooling)
     debugImplementation(libs.compose.debug.manifest)
 
+    // modules
+    implementation(project(":core:design-system"))
+
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)
 

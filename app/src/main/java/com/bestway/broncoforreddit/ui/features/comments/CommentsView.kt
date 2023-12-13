@@ -25,7 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bestway.broncoforreddit.R
-import com.bestway.broncoforreddit.ui.theme.BroncoForRedditTheme
 
 @Composable
 fun CommentsView(modifier: Modifier = Modifier) {
@@ -120,5 +119,5 @@ fun ViewReplies() {
 @Preview
 @Composable
 fun CommentsViewPreview() {
-    BroncoForRedditTheme { CommentsView() }
+    com.bestway.design_system.theme.BroncoForRedditTheme { CommentsView() }
 }
