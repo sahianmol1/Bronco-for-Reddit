@@ -1,7 +1,7 @@
 package com.bestway.broncoforreddit.data.remote.api
 
-import com.bestway.broncoforreddit.data.models.ListingsResponse
 import com.bestway.broncoforreddit.data.remote.api.utils.getSafeResponse
+import com.bestway.broncoforreddit.data.remote.models.ListingsResponse
 import io.ktor.client.HttpClient
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -1,11 +1,12 @@
 package com.bestway.broncoforreddit.data.repositories.homerepository
 
-import com.bestway.broncoforreddit.data.models.ListingsResponse
+import com.bestway.broncoforreddit.data.local.models.HotPost
+import com.bestway.broncoforreddit.data.remote.models.ListingsResponse
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
 
-    suspend fun getHotPosts(): Flow<ListingsResponse>
+    suspend fun getHotPosts(): Flow<List<HotPost>>
 
     suspend fun getTopPosts(): Flow<ListingsResponse>
 

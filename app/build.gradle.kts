@@ -134,4 +134,8 @@ dependencies {
 
     // Profile Installer - for benchmarks and baseline profiles
     implementation(libs.androidx.profileinstaller)
+
+    // Room
+    implementation(libs.bundles.room)
+    kapt(libs.androidx.room.compiler)
 }

@@ -3,9 +3,11 @@ package com.bestway.broncoforreddit.ui.features.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bestway.broncoforreddit.data.models.ListingsData
+import com.bestway.broncoforreddit.data.remote.models.ListingsData
 import com.bestway.broncoforreddit.data.repositories.homerepository.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.annotation.concurrent.Immutable
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,8 +15,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.annotation.concurrent.Immutable
-import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
@@ -38,7 +38,6 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     private val _controversialPosts: MutableStateFlow<PostsUiState> =
         MutableStateFlow(PostsUiState())
     var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
-
 
     // Exception Handling properties starts here
     private val hotPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -83,11 +82,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
 
         viewModelScope.launch(hotPostsExceptionHandler) {
             repository.getHotPosts().collectLatest { listingsResponse ->
-                listingsResponse.data?.let { responseListingsData ->
-                    _hotPosts.update {
-                        it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
-                    }
-                }
+                Log.i("HomeViewModel", "getHotPosts: $listingsResponse")
             }
 
             // stop the loading if the data is null
@@ -161,7 +156,6 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
             // stop the loading if the data is null
             _risingPosts.update { it.copy(isLoading = false) }
         }
-
     }
 
     fun getControversialPosts() {
