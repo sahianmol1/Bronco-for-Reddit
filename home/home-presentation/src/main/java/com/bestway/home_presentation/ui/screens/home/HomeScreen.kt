@@ -21,8 +21,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bestway.broncoforreddit.R
 import com.bestway.broncoforreddit.ui.components.BRHorizontalPager
 import com.bestway.broncoforreddit.ui.components.BRScrollableTabRow
-import com.bestway.broncoforreddit.ui.features.home.components.HomeScreenListings
-import com.bestway.broncoforreddit.ui.models.RedditPostUiModel
+import com.bestway.home_presentation.models.RedditPostUiModel
+import com.bestway.home_presentation.ui.components.HomeScreenListings
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

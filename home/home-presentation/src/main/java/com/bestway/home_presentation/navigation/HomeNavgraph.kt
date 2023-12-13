@@ -9,6 +9,8 @@ import com.bestway.common.navigation.Destinations
 import com.bestway.home_presentation.models.RedditPostUiModel
 import com.bestway.home_presentation.ui.screens.home.HomeScreen
 import com.bestway.home_presentation.ui.screens.postdetails.PostDetailsScreen
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
     composable(route = Destinations.HomeScreenDestination.route) {
