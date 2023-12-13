@@ -66,6 +66,7 @@ uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", versi
 benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version = "2.7.5" }
 
 [plugins]
 androidTest = { id = "com.android.test", version.ref = "agp" }

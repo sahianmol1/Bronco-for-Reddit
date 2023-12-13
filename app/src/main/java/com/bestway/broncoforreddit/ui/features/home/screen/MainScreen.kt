@@ -21,9 +21,9 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.bestway.broncoforreddit.navigation.BRNavHost
 import com.bestway.broncoforreddit.ui.components.BRNavigationBar
 import com.bestway.broncoforreddit.utils.isTopLevelDestination
+import com.bestway.navigation.BRNavHost
 
 @Composable
 fun MainScreen(navController: NavHostController) {

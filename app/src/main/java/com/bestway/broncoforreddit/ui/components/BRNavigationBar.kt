@@ -32,9 +32,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.bestway.broncoforreddit.R
-import com.bestway.broncoforreddit.navigation.Destinations
 import com.bestway.broncoforreddit.ui.features.home.model.BottomNavUiModel
 import com.bestway.broncoforreddit.utils.isTopLevelDestination
+import com.bestway.navigation.Destinations
 
 @Composable
 fun BRNavigationBar(
@@ -46,25 +46,25 @@ fun BRNavigationBar(
         mutableStateOf(
             listOf(
                 BottomNavUiModel(
-                    route = Destinations.HomeScreenDestination.route,
+                    route = com.bestway.navigation.Destinations.HomeScreenDestination.route,
                     title = context.getString(R.string.home),
                     selectedIcon = Icons.Filled.Home,
                     unselectedIcon = Icons.Outlined.Home
                 ),
                 BottomNavUiModel(
-                    route = Destinations.SearchScreenDestination.route,
+                    route = com.bestway.navigation.Destinations.SearchScreenDestination.route,
                     title = context.getString(R.string.search),
                     selectedIcon = Icons.Filled.Search,
                     unselectedIcon = Icons.Outlined.Search
                 ),
                 BottomNavUiModel(
-                    route = Destinations.SubScreenDestination.route,
+                    route = com.bestway.navigation.Destinations.SubScreenDestination.route,
                     title = context.getString(R.string.subs),
                     selectedIcon = Icons.Filled.List,
                     unselectedIcon = Icons.Outlined.List
                 ),
                 BottomNavUiModel(
-                    route = Destinations.AboutUsDestination.route,
+                    route = com.bestway.navigation.Destinations.AboutUsDestination.route,
                     title = context.getString(R.string.about),
                     selectedIcon = Icons.Filled.Info,
                     unselectedIcon = Icons.Outlined.Info

@@ -91,6 +91,7 @@ dependencies {
 
     // modules
     implementation(project(":core:design-system"))
+    implementation(project(":core:navigation"))
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)
@@ -107,8 +108,6 @@ dependencies {
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
-
-    // KotlinX Serialization
 
     // dagger hilt
     implementation(libs.hilt.android)
