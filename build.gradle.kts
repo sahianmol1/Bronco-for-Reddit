@@ -12,4 +12,6 @@ plugins {
     id("com.google.firebase.crashlytics") version "2.9.9" apply false
     alias(libs.plugins.androidTest) apply false
     alias(libs.plugins.androidx.baselineprofile) apply false
+    alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
+    alias(libs.plugins.com.android.library) apply false
 }
