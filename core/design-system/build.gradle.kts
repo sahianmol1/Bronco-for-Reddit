@@ -53,4 +53,11 @@ dependencies {
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.tooling.preview)
     implementation(libs.compose.material3)
+
+    implementation(project(":core:common"))
+    implementation(project(":core:navigation"))
+
+    // Compose navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 }

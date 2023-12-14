@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui.components
+package com.bestway.design_system.ui_components
 
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
@@ -31,10 +31,10 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.bestway.broncoforreddit.R
-import com.bestway.broncoforreddit.ui.features.home.model.BottomNavUiModel
-import com.bestway.broncoforreddit.utils.isTopLevelDestination
-import com.bestway.navigation.Destinations
+import com.bestway.common.navigation.Destinations
+import com.bestway.design_system.R
+import com.bestway.design_system.models.BottomNavUiModel
+import com.bestway.design_system.utils.isTopLevelDestination
 
 @Composable
 fun BRNavigationBar(
@@ -46,25 +46,25 @@ fun BRNavigationBar(
         mutableStateOf(
             listOf(
                 BottomNavUiModel(
-                    route = com.bestway.navigation.Destinations.HomeScreenDestination.route,
+                    route = Destinations.HomeScreenDestination.route,
                     title = context.getString(R.string.home),
                     selectedIcon = Icons.Filled.Home,
                     unselectedIcon = Icons.Outlined.Home
                 ),
                 BottomNavUiModel(
-                    route = com.bestway.navigation.Destinations.SearchScreenDestination.route,
+                    route = Destinations.SearchScreenDestination.route,
                     title = context.getString(R.string.search),
                     selectedIcon = Icons.Filled.Search,
                     unselectedIcon = Icons.Outlined.Search
                 ),
                 BottomNavUiModel(
-                    route = com.bestway.navigation.Destinations.SubScreenDestination.route,
+                    route = Destinations.SubScreenDestination.route,
                     title = context.getString(R.string.subs),
                     selectedIcon = Icons.Filled.List,
                     unselectedIcon = Icons.Outlined.List
                 ),
                 BottomNavUiModel(
-                    route = com.bestway.navigation.Destinations.AboutUsDestination.route,
+                    route = Destinations.AboutUsDestination.route,
                     title = context.getString(R.string.about),
                     selectedIcon = Icons.Filled.Info,
                     unselectedIcon = Icons.Outlined.Info

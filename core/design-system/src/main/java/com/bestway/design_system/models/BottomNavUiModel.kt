@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.ui.features.home.model
+package com.bestway.design_system.models
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
