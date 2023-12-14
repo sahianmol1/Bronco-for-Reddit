@@ -31,6 +31,12 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
+    }
 }
 
 dependencies {
@@ -41,4 +47,21 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.tooling.preview)
+    implementation(libs.compose.material3)
+
+    // Compose navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(project(":about:about-presentation"))
+    implementation(project(":home:home-presentation"))
+    implementation(project(":search:search-presentation"))
+    implementation(project(":subreddits:subreddit-presentation"))
+    implementation(project(":core:common"))
+
 }
