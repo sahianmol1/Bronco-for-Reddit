@@ -18,9 +18,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.bestway.broncoforreddit.R
-import com.bestway.broncoforreddit.ui.components.BRHorizontalPager
-import com.bestway.broncoforreddit.ui.components.BRScrollableTabRow
+import com.bestway.design_system.ui_components.BRHorizontalPager
+import com.bestway.design_system.ui_components.BRScrollableTabRow
+import com.bestway.home_presentation.R
 import com.bestway.home_presentation.models.RedditPostUiModel
 import com.bestway.home_presentation.ui.components.HomeScreenListings
 

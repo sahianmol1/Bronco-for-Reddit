@@ -92,16 +92,11 @@ dependencies {
     // modules
     implementation(project(":core:design-system"))
     implementation(project(":core:navigation"))
+    implementation(project(":home:home-domain"))
+    implementation(project(":home:home-data"))
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)
-
-    // Compose navigation
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.hilt.navigation.compose)
-
-    // Extended material icons
-    implementation(libs.extended.icons)
 
     // ktor client
     implementation(libs.ktor.client.cio)
@@ -112,19 +107,6 @@ dependencies {
     // dagger hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-
-    // androidx-compose-lifecycle
-    implementation(libs.viewmodel.lifecycle)
-    implementation(libs.compose.runtime.lifecycle)
-
-    // coil
-    implementation(libs.coil.compose)
-    implementation(libs.coil.gif)
-
-    // Exo Player - for media playback
-    implementation(libs.androidx.media3.exoplayer)
-    implementation(libs.androidx.media3.exoplayer.dash)
-    implementation(libs.androidx.media3.ui)
 
     // Leak canary
     debugImplementation(libs.leakcanary.android)

@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.data.remote.api.utils
+package com.bestway.home_data.remote.api.utils
 
 object ApiConstants {
     const val UNKNOWN_ERROR = "Unknown Error"

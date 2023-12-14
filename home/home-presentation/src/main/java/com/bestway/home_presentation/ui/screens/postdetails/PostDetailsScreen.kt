@@ -16,8 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.bestway.broncoforreddit.ui.features.comments.CommentsView
-import com.bestway.broncoforreddit.ui.models.RedditPostUiModel
+import com.bestway.home_presentation.models.RedditPostUiModel
+import com.bestway.home_presentation.ui.components.CommentsView
 
 @Composable
 fun PostDetailsScreen(modifier: Modifier = Modifier, redditPostUiModel: RedditPostUiModel) {

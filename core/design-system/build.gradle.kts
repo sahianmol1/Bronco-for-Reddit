@@ -55,7 +55,6 @@ dependencies {
     implementation(libs.compose.material3)
 
     implementation(project(":core:common"))
-    implementation(project(":core:navigation"))
 
     // Compose navigation
     implementation(libs.androidx.navigation.compose)

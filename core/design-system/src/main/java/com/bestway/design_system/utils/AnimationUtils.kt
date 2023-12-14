@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.utils
+package com.bestway.design_system.utils
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.slideInVertically

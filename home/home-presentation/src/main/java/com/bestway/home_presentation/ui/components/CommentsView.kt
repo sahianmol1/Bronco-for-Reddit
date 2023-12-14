@@ -24,7 +24,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bestway.broncoforreddit.R
+import com.bestway.design_system.theme.BroncoForRedditTheme
+import com.bestway.home_presentation.R
 
 @Composable
 fun CommentsView(modifier: Modifier = Modifier) {
@@ -92,8 +93,7 @@ fun CommentUpVotes() {
         Icon(
             modifier = Modifier.padding(vertical = 8.dp),
             imageVector = Icons.Default.ArrowUpward,
-            contentDescription =
-            stringResource(R.string.post_action_content_description, "UpVotes")
+            contentDescription = stringResource(R.string.post_action_content_description, "UpVotes")
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
@@ -119,5 +119,5 @@ fun ViewReplies() {
 @Preview
 @Composable
 fun CommentsViewPreview() {
-    com.bestway.design_system.theme.BroncoForRedditTheme { CommentsView() }
+    BroncoForRedditTheme { CommentsView() }
 }

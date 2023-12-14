@@ -22,10 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.bestway.broncoforreddit.R
-import com.bestway.broncoforreddit.ui.components.BRLinearProgressIndicator
-import com.bestway.broncoforreddit.ui.models.RedditPostUiModel
-import com.bestway.broncoforreddit.utils.slideInFromBottomTransition
+import com.bestway.design_system.ui_components.BRLinearProgressIndicator
+import com.bestway.design_system.utils.slideInFromBottomTransition
+import com.bestway.home_presentation.R
+import com.bestway.home_presentation.models.RedditPostUiModel
 import com.bestway.home_presentation.ui.screens.home.PostsUiState
 
 @Composable

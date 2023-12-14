@@ -3,7 +3,6 @@ package com.bestway.home_presentation.ui.screens.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bestway.broncoforreddit.data.models.ListingsData
 import com.bestway.broncoforreddit.data.repositories.homerepository.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.annotation.concurrent.Immutable

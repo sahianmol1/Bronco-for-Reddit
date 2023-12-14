@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.data.models
+package com.bestway.home_data.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

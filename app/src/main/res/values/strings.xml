@@ -1,16 +1,4 @@
 <resources>
     <string name="app_name">Bronco for reddit</string>
-    <string name="hot">Hot</string>
-    <string name="title_new">New</string>
-    <string name="top">Top</string>
-    <string name="best">Best</string>
-    <string name="rising">Rising</string>
-    <string name="controversial">Controversial</string>
-    <string name="post_action_content_description">Post Action %1$s</string>
-    <string name="upvote">Upvote</string>
-    <string name="comment">Comment</string>
-    <string name="share">Share</string>
-    <string name="unavailable">Unavailable</string>
     <string name="leak_canary_display_activity_label">Bronco Leaks</string>
-    <string name="uh_oh_something_went_wrong">Uh oh! Something went wrong.</string>
 </resources>

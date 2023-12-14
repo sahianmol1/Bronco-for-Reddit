@@ -1,4 +1,4 @@
-package com.bestway.broncoforreddit.data.remote.api
+package com.bestway.home_data.remote.api
 
 object EndPoints {
     private const val BASE_URL = "https://www.reddit.com"

@@ -1,13 +1,11 @@
-package com.bestway.broncoforreddit.data.remote.api
+package com.bestway.home_data.remote.api
 
-import com.bestway.broncoforreddit.data.models.ListingsResponse
-import com.bestway.broncoforreddit.data.remote.api.utils.getSafeResponse
+import com.bestway.home_data.models.ListingsResponse
+import com.bestway.home_data.remote.api.utils.getSafeResponse
 import io.ktor.client.HttpClient
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class ApiRequests @Inject constructor(private val client: HttpClient) {
+
+class ApiRequests(private val client: HttpClient) {
     suspend fun getHotListings(): Result<ListingsResponse> {
         return client.getSafeResponse(EndPoints.HOT)
     }
