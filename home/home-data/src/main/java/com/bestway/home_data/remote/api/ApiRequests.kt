@@ -1,7 +1,7 @@
 package com.bestway.home_data.remote.api
 
-import com.bestway.home_data.models.ListingsResponse
 import com.bestway.home_data.remote.api.utils.getSafeResponse
+import com.bestway.models.listings.ListingsResponse
 import io.ktor.client.HttpClient
 
 

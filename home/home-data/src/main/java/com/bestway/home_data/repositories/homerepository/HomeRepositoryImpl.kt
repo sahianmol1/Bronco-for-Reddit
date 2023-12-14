@@ -1,8 +1,8 @@
 package com.bestway.home_data.repositories.homerepository
 
-import com.bestway.home_data.models.ListingsResponse
 import com.bestway.home_data.remote.api.ApiRequests
 import com.bestway.home_domain.repositories.HomeRepository
+import com.bestway.models.listings.ListingsResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

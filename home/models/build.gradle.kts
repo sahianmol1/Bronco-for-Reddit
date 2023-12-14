@@ -2,6 +2,7 @@
 plugins {
     id("java-library")
     alias(libs.plugins.org.jetbrains.kotlin.jvm)
+    kotlin("plugin.serialization")
 }
 
 java {
@@ -10,8 +11,5 @@ java {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
-
-    implementation(project(":home:models"))
-
+    implementation(libs.ktor.serialization.kotlinx.json)
 }

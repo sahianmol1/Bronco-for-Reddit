@@ -11,7 +11,7 @@ import io.ktor.client.request.get
 suspend inline fun <reified T> HttpClient.getSafeResponse(urlString: String): Result<T> {
     try {
         val response = this.get(urlString)
-        if (response.status.value in com.bestway.home_presentation.data.remote.api.utils.ApiConstants.SUCCESS_RESPONSE_RANGE) {
+        if (response.status.value in ApiConstants.SUCCESS_RESPONSE_RANGE) {
             return Result.success(response.body())
         }
     } catch (e: RedirectResponseException) {
@@ -22,5 +22,7 @@ suspend inline fun <reified T> HttpClient.getSafeResponse(urlString: String): Re
         return Result.failure(e)
     }
 
-    return Result.failure(Throwable(com.bestway.home_presentation.data.remote.api.utils.ApiConstants.UNKNOWN_ERROR))
+    return Result.failure(
+        Throwable(ApiConstants.UNKNOWN_ERROR)
+    )
 }

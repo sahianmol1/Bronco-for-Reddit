@@ -2,7 +2,6 @@
 plugins {
     id("java-library")
     alias(libs.plugins.org.jetbrains.kotlin.jvm)
-    kotlin("plugin.serialization")
 }
 
 java {
@@ -18,6 +17,7 @@ dependencies {
     implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
+
+    implementation(project(":home:models"))
 
 }

@@ -2,7 +2,9 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
-    kotlin("plugin.serialization")}
+    kotlin("plugin.serialization")
+    kotlin("kapt")
+}
 
 android {
     namespace = "com.bestway.home_presentation"
@@ -66,6 +68,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:design-system"))
     implementation(project(":home:home-domain"))
+    implementation(project(":home:models"))
 
     // Exo Player - for media playback
     implementation(libs.androidx.media3.exoplayer)
@@ -79,6 +82,10 @@ dependencies {
     // androidx-compose-lifecycle
     implementation(libs.viewmodel.lifecycle)
     implementation(libs.compose.runtime.lifecycle)
+
+    // dagger hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
 
 }

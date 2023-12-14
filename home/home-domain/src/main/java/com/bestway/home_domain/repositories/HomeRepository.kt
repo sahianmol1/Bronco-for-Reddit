@@ -1,5 +1,6 @@
 package com.bestway.home_domain.repositories
 
+import com.bestway.models.listings.ListingsResponse
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {

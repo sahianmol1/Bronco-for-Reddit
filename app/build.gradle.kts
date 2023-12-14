@@ -108,6 +108,9 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
+    // Compose navigation
+    implementation(libs.androidx.navigation.compose)
+
     // Leak canary
     debugImplementation(libs.leakcanary.android)
 

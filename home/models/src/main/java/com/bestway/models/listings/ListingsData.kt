@@ -1,4 +1,4 @@
-package com.bestway.home_data.models
+package com.bestway.models.listings
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

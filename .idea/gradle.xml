@@ -28,6 +28,7 @@
             <option value="$PROJECT_DIR$/home/home-data" />
             <option value="$PROJECT_DIR$/home/home-domain" />
             <option value="$PROJECT_DIR$/home/home-presentation" />
+            <option value="$PROJECT_DIR$/home/models" />
             <option value="$PROJECT_DIR$/search" />
             <option value="$PROJECT_DIR$/search/search-data" />
             <option value="$PROJECT_DIR$/search/search-domain" />
