@@ -85,7 +85,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.compose.junit4)
-    "baselineProfile"(project(":baselineprofile"))
+    "baselineProfile"(project(":performance:baselineprofile"))
     debugImplementation(libs.compose.debug.tooling)
     debugImplementation(libs.compose.debug.manifest)
 

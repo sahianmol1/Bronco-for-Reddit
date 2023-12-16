@@ -6,6 +6,8 @@
       <module name="Bronco_for_reddit.about.about-data.test" target="17" />
       <module name="Bronco_for_reddit.about.about-domain.main" target="17" />
       <module name="Bronco_for_reddit.about.about-domain.test" target="17" />
+      <module name="Bronco_for_reddit.baselineprofile" target="17" />
+      <module name="Bronco_for_reddit.benchmark" target="17" />
       <module name="Bronco_for_reddit.home.home-data.main" target="17" />
       <module name="Bronco_for_reddit.home.home-data.test" target="17" />
       <module name="Bronco_for_reddit.home.home-domain.main" target="17" />
