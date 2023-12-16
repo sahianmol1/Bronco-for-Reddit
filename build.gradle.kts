@@ -2,7 +2,7 @@
 plugins {
     id("com.android.application") version "8.1.2" apply false
     id("org.jetbrains.kotlin.android") version "1.8.10" apply false
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10" apply false
+    kotlin("plugin.serialization") version "1.8.10" apply false
     id("com.google.dagger.hilt.android") version "2.44" apply false
     id("io.gitlab.arturbosch.detekt") version("1.23.1") apply false
 
@@ -12,4 +12,6 @@ plugins {
     id("com.google.firebase.crashlytics") version "2.9.9" apply false
     alias(libs.plugins.androidTest) apply false
     alias(libs.plugins.androidx.baselineprofile) apply false
+    alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
+    alias(libs.plugins.com.android.library) apply false
 }
