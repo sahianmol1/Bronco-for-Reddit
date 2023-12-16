@@ -58,10 +58,10 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    implementation(project(":about:about-presentation"))
-    implementation(project(":home:home-presentation"))
-    implementation(project(":search:search-presentation"))
-    implementation(project(":subreddits:subreddit-presentation"))
+    implementation(project(":features:about:about-presentation"))
+    implementation(project(":features:home:home-presentation"))
+    implementation(project(":features:search:search-presentation"))
+    implementation(project(":features:subreddits:subreddit-presentation"))
     implementation(project(":core:common"))
 
 }

@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="17">
+      <module name="Bronco_for_reddit.about.about-data.main" target="17" />
+      <module name="Bronco_for_reddit.about.about-data.test" target="17" />
+      <module name="Bronco_for_reddit.about.about-domain.main" target="17" />
+      <module name="Bronco_for_reddit.about.about-domain.test" target="17" />
+      <module name="Bronco_for_reddit.home.home-data.main" target="17" />
+      <module name="Bronco_for_reddit.home.home-data.test" target="17" />
+      <module name="Bronco_for_reddit.home.home-domain.main" target="17" />
+      <module name="Bronco_for_reddit.home.home-domain.test" target="17" />
+      <module name="Bronco_for_reddit.home.models.main" target="17" />
+      <module name="Bronco_for_reddit.home.models.test" target="17" />
+      <module name="Bronco_for_reddit.search.search-data.main" target="17" />
+      <module name="Bronco_for_reddit.search.search-data.test" target="17" />
+      <module name="Bronco_for_reddit.search.search-domain.main" target="17" />
+      <module name="Bronco_for_reddit.search.search-domain.test" target="17" />
+      <module name="Bronco_for_reddit.subreddits.subreddit-data.main" target="17" />
+      <module name="Bronco_for_reddit.subreddits.subreddit-data.test" target="17" />
+      <module name="Bronco_for_reddit.subreddits.subreddit-domain.main" target="17" />
+      <module name="Bronco_for_reddit.subreddits.subreddit-domain.test" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

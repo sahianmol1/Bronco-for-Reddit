@@ -10,7 +10,7 @@ java {
 }
 
 dependencies {
-    implementation(project(":home:home-domain"))
+    implementation(project(":features:home:home-domain"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
 
     //  Ktor Client
@@ -18,6 +18,6 @@ dependencies {
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.content.negotiation)
 
-    implementation(project(":home:models"))
+    implementation(project(":features:home:models"))
 
 }

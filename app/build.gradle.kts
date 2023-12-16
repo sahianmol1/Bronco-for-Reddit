@@ -92,8 +92,8 @@ dependencies {
     // modules
     implementation(project(":core:design-system"))
     implementation(project(":core:navigation"))
-    implementation(project(":home:home-domain"))
-    implementation(project(":home:home-data"))
+    implementation(project(":features:home:home-domain"))
+    implementation(project(":features:home:home-data"))
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)

@@ -12,6 +12,6 @@ java {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
 
-    implementation(project(":home:models"))
+    implementation(project(":features:home:models"))
 
 }
