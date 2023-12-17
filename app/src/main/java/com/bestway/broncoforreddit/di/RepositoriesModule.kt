@@ -1,8 +1,8 @@
 package com.bestway.broncoforreddit.di
 
-import com.bestway.home_data.remote.api.ApiRequests
-import com.bestway.home_data.repositories.homerepository.HomeRepositoryImpl
-import com.bestway.home_domain.repositories.HomeRepository
+import com.bestway.data.remote.api.ApiRequests
+import com.bestway.data.repositories.homerepository.HomeRepositoryImpl
+import com.bestway.domain.repositories.HomeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
