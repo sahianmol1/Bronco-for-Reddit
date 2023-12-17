@@ -11,32 +11,34 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/about" />
-            <option value="$PROJECT_DIR$/about/about-data" />
-            <option value="$PROJECT_DIR$/about/about-domain" />
-            <option value="$PROJECT_DIR$/about/about-presentation" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/baselineprofile" />
-            <option value="$PROJECT_DIR$/benchmark" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/common" />
             <option value="$PROJECT_DIR$/core/data" />
             <option value="$PROJECT_DIR$/core/design-system" />
             <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/core/navigation" />
-            <option value="$PROJECT_DIR$/home" />
-            <option value="$PROJECT_DIR$/home/home-data" />
-            <option value="$PROJECT_DIR$/home/home-domain" />
-            <option value="$PROJECT_DIR$/home/home-presentation" />
-            <option value="$PROJECT_DIR$/home/models" />
-            <option value="$PROJECT_DIR$/search" />
-            <option value="$PROJECT_DIR$/search/search-data" />
-            <option value="$PROJECT_DIR$/search/search-domain" />
-            <option value="$PROJECT_DIR$/search/search-presentation" />
-            <option value="$PROJECT_DIR$/subreddits" />
-            <option value="$PROJECT_DIR$/subreddits/subreddit-data" />
-            <option value="$PROJECT_DIR$/subreddits/subreddit-domain" />
-            <option value="$PROJECT_DIR$/subreddits/subreddit-presentation" />
+            <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/about" />
+            <option value="$PROJECT_DIR$/features/about/about-data" />
+            <option value="$PROJECT_DIR$/features/about/about-domain" />
+            <option value="$PROJECT_DIR$/features/about/about-presentation" />
+            <option value="$PROJECT_DIR$/features/home" />
+            <option value="$PROJECT_DIR$/features/home/home-data" />
+            <option value="$PROJECT_DIR$/features/home/home-domain" />
+            <option value="$PROJECT_DIR$/features/home/home-presentation" />
+            <option value="$PROJECT_DIR$/features/home/models" />
+            <option value="$PROJECT_DIR$/features/search" />
+            <option value="$PROJECT_DIR$/features/search/search-data" />
+            <option value="$PROJECT_DIR$/features/search/search-domain" />
+            <option value="$PROJECT_DIR$/features/search/search-presentation" />
+            <option value="$PROJECT_DIR$/features/subreddits" />
+            <option value="$PROJECT_DIR$/features/subreddits/subreddit-data" />
+            <option value="$PROJECT_DIR$/features/subreddits/subreddit-domain" />
+            <option value="$PROJECT_DIR$/features/subreddits/subreddit-presentation" />
+            <option value="$PROJECT_DIR$/performance" />
+            <option value="$PROJECT_DIR$/performance/baselineprofile" />
+            <option value="$PROJECT_DIR$/performance/benchmark" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

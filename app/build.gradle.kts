@@ -85,15 +85,15 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.compose.junit4)
-    "baselineProfile"(project(":baselineprofile"))
+    "baselineProfile"(project(":performance:baselineprofile"))
     debugImplementation(libs.compose.debug.tooling)
     debugImplementation(libs.compose.debug.manifest)
 
     // modules
     implementation(project(":core:design-system"))
     implementation(project(":core:navigation"))
-    implementation(project(":home:home-domain"))
-    implementation(project(":home:home-data"))
+    implementation(project(":features:home:home-domain"))
+    implementation(project(":features:home:home-data"))
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)

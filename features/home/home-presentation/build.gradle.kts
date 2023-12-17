@@ -67,8 +67,8 @@ dependencies {
 
     implementation(project(":core:common"))
     implementation(project(":core:design-system"))
-    implementation(project(":home:home-domain"))
-    implementation(project(":home:models"))
+    implementation(project(":features:home:home-domain"))
+    implementation(project(":features:home:models"))
 
     // Exo Player - for media playback
     implementation(libs.androidx.media3.exoplayer)
