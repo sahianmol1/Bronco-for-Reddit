@@ -8,5 +8,5 @@ import com.bestway.presentation.ui.SubsScreen
 
 fun NavGraphBuilder.subredditNavGraph(navController: NavHostController) {
 
-    composable(route = Destinations.SubScreenDestination.route) { SubsScreen() }
+    composable(route = Destinations.SavedScreenDestination.route) { SubsScreen() }
 }
