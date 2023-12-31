@@ -7,7 +7,7 @@ private val topLevelDestinations =
     listOf(
         Destinations.HomeScreenDestination.route,
         Destinations.SearchScreenDestination.route,
-        Destinations.SubScreenDestination.route,
+        Destinations.SavedScreenDestination.route,
         Destinations.AboutUsDestination.route
     )
 

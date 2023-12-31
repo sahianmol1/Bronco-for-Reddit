@@ -10,12 +10,12 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -58,10 +58,10 @@ fun BRNavigationBar(
                     unselectedIcon = Icons.Outlined.Search
                 ),
                 BottomNavUiModel(
-                    route = Destinations.SubScreenDestination.route,
-                    title = context.getString(R.string.subs),
-                    selectedIcon = Icons.Filled.List,
-                    unselectedIcon = Icons.Outlined.List
+                    route = Destinations.SavedScreenDestination.route,
+                    title = context.getString(R.string.saved),
+                    selectedIcon = Icons.Filled.Star,
+                    unselectedIcon = Icons.Outlined.StarOutline
                 ),
                 BottomNavUiModel(
                     route = Destinations.AboutUsDestination.route,
