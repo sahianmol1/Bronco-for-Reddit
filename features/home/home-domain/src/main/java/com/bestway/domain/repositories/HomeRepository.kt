@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
 
-    suspend fun getHotPosts(): Flow<ListingsResponse>
+    fun getHotPosts(): Flow<ListingsResponse>
 
     suspend fun getTopPosts(): Flow<ListingsResponse>
 

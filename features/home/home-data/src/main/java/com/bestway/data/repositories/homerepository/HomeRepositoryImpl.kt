@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class HomeRepositoryImpl(private val apiRequests: ApiRequests) : HomeRepository {
-    override suspend fun getHotPosts(): Flow<ListingsResponse> {
+    override fun getHotPosts(): Flow<ListingsResponse> {
         return flow { emit(apiRequests.getHotListings().getOrThrow()) }
     }
 
