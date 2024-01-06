@@ -7,13 +7,13 @@ interface HomeRepository {
 
     fun getHotPosts(): Flow<ListingsResponse>
 
-    suspend fun getTopPosts(): Flow<ListingsResponse>
+    fun getTopPosts(): Flow<ListingsResponse>
 
-    suspend fun getNewPosts(): Flow<ListingsResponse>
+    fun getNewPosts(): Flow<ListingsResponse>
 
-    suspend fun getBestPosts(): Flow<ListingsResponse>
+    fun getBestPosts(): Flow<ListingsResponse>
 
-    suspend fun getRisingPosts(): Flow<ListingsResponse>
+    fun getRisingPosts(): Flow<ListingsResponse>
 
-    suspend fun getControversialPosts(): Flow<ListingsResponse>
+    fun getControversialPosts(): Flow<ListingsResponse>
 }

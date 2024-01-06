@@ -8,17 +8,14 @@ import com.bestway.models.listings.ListingsData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
@@ -43,39 +40,6 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         MutableStateFlow(PostsUiState())
     var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
 
-    // Exception Handling properties starts here
-
-    private val newPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
-
-        _newPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
-    }
-
-    private val topPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
-
-        _topPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
-    }
-
-    private val bestPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
-
-        _bestPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
-    }
-
-    private val risingPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
-
-        _risingPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
-    }
-
-    private val controversialPostsExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
-
-        _controversialPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
-    }
-    // Exception Handling properties end here
-
     fun getHotPosts() {
         repository
             .getHotPosts()
@@ -98,88 +62,101 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     }
 
     fun getNewPosts() {
-        _newPosts.update { it.copy(isLoading = true) }
-
-        viewModelScope.launch(newPostsExceptionHandler) {
-            repository.getNewPosts().collectLatest { listingsResponse ->
+        repository
+            .getNewPosts()
+            .onStart { _newPosts.update { it.copy(isLoading = true) } }
+            .onEach { listingsResponse ->
                 listingsResponse.data?.let { responseListingsData ->
                     _newPosts.update {
                         it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
                     }
                 }
             }
-
-            // stop the loading if the data is null
-            _newPosts.update { it.copy(isLoading = false) }
-        }
+            .catch { throwable ->
+                Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
+                _newPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+            }
+            .launchIn(viewModelScope)
     }
 
     fun getTopPosts() {
-        _topPosts.update { it.copy(isLoading = true) }
-
-        viewModelScope.launch(topPostsExceptionHandler) {
-            repository.getTopPosts().collectLatest { listingsResponse ->
+        repository
+            .getTopPosts()
+            .onStart { _topPosts.update { it.copy(isLoading = true) } }
+            .onEach { listingsResponse ->
                 listingsResponse.data?.let { responseListingsData ->
                     _topPosts.update {
                         it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
                     }
                 }
             }
-
-            // stop the loading if the data is null
-            _topPosts.update { it.copy(isLoading = false) }
-        }
+            .catch { throwable ->
+                Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
+                _topPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+            }
+            .launchIn(viewModelScope)
     }
 
     fun getBestPosts() {
-        _bestPosts.update { it.copy(isLoading = true) }
-
-        viewModelScope.launch(bestPostsExceptionHandler) {
-            repository.getBestPosts().collectLatest { listingsResponse ->
+        repository
+            .getBestPosts()
+            .onStart {
+                _bestPosts.update { it.copy(isLoading = true) }
+            }
+            .onEach {
+                    listingsResponse ->
                 listingsResponse.data?.let { responseListingsData ->
                     _bestPosts.update {
                         it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
                     }
                 }
             }
+            .catch {throwable ->
+                Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
 
-            // stop the loading if the data is null
-            _bestPosts.update { it.copy(isLoading = false) }
-        }
+                _bestPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+            }
+            .launchIn(viewModelScope)
     }
 
     fun getRisingsPosts() {
-        _risingPosts.update { it.copy(isLoading = true) }
-
-        viewModelScope.launch(risingPostsExceptionHandler) {
-            repository.getRisingPosts().collectLatest { listingsResponse ->
+        repository
+            .getRisingPosts()
+            .onStart {
+                _risingPosts.update { it.copy(isLoading = true) }
+            }
+            .onEach {  listingsResponse ->
                 listingsResponse.data?.let { responseListingsData ->
                     _risingPosts.update {
                         it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
                     }
                 }
             }
-
-            // stop the loading if the data is null
-            _risingPosts.update { it.copy(isLoading = false) }
-        }
+            .catch {throwable ->
+                Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
+                _risingPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+            }
+            .launchIn(viewModelScope)
     }
 
     fun getControversialPosts() {
-        _controversialPosts.update { it.copy(isLoading = true) }
-
-        viewModelScope.launch(controversialPostsExceptionHandler) {
-            repository.getControversialPosts().collectLatest { listingsResponse ->
+        repository
+            .getControversialPosts()
+            .onStart {
+                _controversialPosts.update { it.copy(isLoading = true) }
+            }
+            .onEach { listingsResponse ->
                 listingsResponse.data?.let { responseListingsData ->
                     _controversialPosts.update {
                         it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
                     }
                 }
-
-                // stop the loading if the data is null
-                _controversialPosts.update { it.copy(isLoading = false) }
             }
-        }
+            .catch {throwable ->
+                Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
+                _controversialPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+            }
+            .launchIn(viewModelScope)
     }
 }
 

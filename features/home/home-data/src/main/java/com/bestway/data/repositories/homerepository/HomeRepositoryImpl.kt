@@ -11,23 +11,23 @@ class HomeRepositoryImpl(private val apiRequests: ApiRequests) : HomeRepository 
         return flow { emit(apiRequests.getHotListings().getOrThrow()) }
     }
 
-    override suspend fun getTopPosts(): Flow<ListingsResponse> {
+    override fun getTopPosts(): Flow<ListingsResponse> {
         return flow { emit(apiRequests.getTopListings().getOrThrow()) }
     }
 
-    override suspend fun getNewPosts(): Flow<ListingsResponse> {
+    override fun getNewPosts(): Flow<ListingsResponse> {
         return flow { emit(apiRequests.getNewListings().getOrThrow()) }
     }
 
-    override suspend fun getBestPosts(): Flow<ListingsResponse> {
+    override fun getBestPosts(): Flow<ListingsResponse> {
         return flow { emit(apiRequests.getBestListings().getOrThrow()) }
     }
 
-    override suspend fun getRisingPosts(): Flow<ListingsResponse> {
+    override fun getRisingPosts(): Flow<ListingsResponse> {
         return flow { emit(apiRequests.getRisingListings().getOrThrow()) }
     }
 
-    override suspend fun getControversialPosts(): Flow<ListingsResponse> {
+    override fun getControversialPosts(): Flow<ListingsResponse> {
         return flow { emit(apiRequests.getControversialListings().getOrThrow()) }
     }
 }
