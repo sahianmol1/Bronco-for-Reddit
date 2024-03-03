@@ -3,8 +3,9 @@ package com.bestway.presentation.ui.screens.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bestway.domain.model.RedditPosts
 import com.bestway.domain.repositories.HomeRepository
+import com.bestway.presentation.model.RedditPostUiModel
+import com.bestway.presentation.model.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -49,7 +50,7 @@ class HomeViewModel @Inject constructor(
             .onEach { redditPosts ->
                 _hotPosts.update {
                     it.copy(
-                        data = redditPosts,
+                        data = redditPosts?.map { post-> post.asUiModel() },
                         isLoading = false,
                         errorMessage = if (redditPosts == null) "Data is not available" else null
                     )
@@ -69,7 +70,7 @@ class HomeViewModel @Inject constructor(
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _newPosts.update {
-                        it.copy(data = posts, isLoading = false, errorMessage = null)
+                        it.copy(data = posts.map { post -> post.asUiModel() }, isLoading = false, errorMessage = null)
                     }
                 }
             }
@@ -87,7 +88,7 @@ class HomeViewModel @Inject constructor(
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _topPosts.update {
-                        it.copy(data = posts, isLoading = false, errorMessage = null)
+                        it.copy(data = posts.map { post -> post.asUiModel() }, isLoading = false, errorMessage = null)
                     }
                 }
             }
@@ -105,7 +106,7 @@ class HomeViewModel @Inject constructor(
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _bestPosts.update {
-                        it.copy(data = posts, isLoading = false, errorMessage = null)
+                        it.copy(data = posts.map { post -> post.asUiModel() }, isLoading = false, errorMessage = null)
                     }
                 }
             }
@@ -124,7 +125,7 @@ class HomeViewModel @Inject constructor(
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _risingPosts.update {
-                        it.copy(data = posts, isLoading = false, errorMessage = null)
+                        it.copy(data = posts.map { post -> post.asUiModel() }, isLoading = false, errorMessage = null)
                     }
                 }
             }
@@ -142,7 +143,7 @@ class HomeViewModel @Inject constructor(
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _controversialPosts.update {
-                        it.copy(data = posts, isLoading = false, errorMessage = null)
+                        it.copy(data = posts.map { post -> post.asUiModel() }, isLoading = false, errorMessage = null)
                     }
                 }
             }
@@ -158,7 +159,7 @@ class HomeViewModel @Inject constructor(
 
 @Immutable
 data class PostsUiState(
-    val data: List<RedditPosts>? = null,
+    val data: List<RedditPostUiModel>? = null,
     val isLoading: Boolean = false,
     val errorMessage: String? = null
 )

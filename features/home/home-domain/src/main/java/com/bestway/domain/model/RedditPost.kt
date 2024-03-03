@@ -1,6 +1,6 @@
 package com.bestway.domain.model
 
-data class RedditPosts(
+data class RedditPost(
     val id: String,
     val subName: String = "",
     val title: String? = null,

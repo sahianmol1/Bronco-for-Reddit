@@ -44,19 +44,7 @@ fun HomeScreenListings(
                         list.size - 1 -> Modifier.navigationBarsPadding()
                         else -> Modifier
                     },
-                    redditPostUiModel =
-                    RedditPostUiModel(
-                        subName = list[index].subName,
-                        title = list[index].title,
-                        description = list[index].description,
-                        imageUrl = list[index].imageUrl,
-                        postUrl = list[index].postUrl,
-                        upVotes = list[index].upVotes,
-                        comments = list[index].comments,
-                        videoUrl = list[index].videoUrl,
-                        gifUrl = list[index].gifUrl,
-                        author = list[index].author
-                    ),
+                    redditPostUiModel = list[index],
                     onClick = onClick
                 )
             }

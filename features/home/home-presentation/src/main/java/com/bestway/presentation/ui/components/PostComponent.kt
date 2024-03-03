@@ -299,5 +299,5 @@ fun PostActionItem(icon: ImageVector, label: String, actionDescription: String) 
 @Preview
 @Composable
 fun PostPreview() {
-    PostComponent(redditPostUiModel = RedditPostUiModel(), onClick = {})
+    PostComponent(redditPostUiModel = RedditPostUiModel(id = "0"), onClick = {})
 }
