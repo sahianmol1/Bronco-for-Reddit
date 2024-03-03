@@ -1,6 +1,6 @@
 package com.bestway.broncoforreddit.di
 
-import com.bestway.data.remote.api.ApiRequests
+import com.bestway.data.remote.api.HomeService
 import com.bestway.data.repositories.homerepository.HomeRepositoryImpl
 import com.bestway.domain.repositories.HomeRepository
 import dagger.Module
@@ -14,9 +14,9 @@ import javax.inject.Singleton
 object RepositoriesModule {
     @Singleton
     @Provides
-    fun provideHomeRepository(apiRequests: ApiRequests): HomeRepository {
+    fun provideHomeRepository(homeService: HomeService): HomeRepository {
         return HomeRepositoryImpl(
-            apiRequests = apiRequests
+            homeService = homeService
         )
     }
 }

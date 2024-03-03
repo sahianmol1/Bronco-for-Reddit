@@ -1,19 +1,19 @@
 package com.bestway.domain.repositories
 
-import com.bestway.models.listings.ListingsResponse
+import com.bestway.domain.model.RedditPosts
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
 
-    fun getHotPosts(): Flow<ListingsResponse>
+    fun getHotPosts(): Flow<List<RedditPosts>?>
 
-    fun getTopPosts(): Flow<ListingsResponse>
+    fun getTopPosts(): Flow<List<RedditPosts>?>
 
-    fun getNewPosts(): Flow<ListingsResponse>
+    fun getNewPosts(): Flow<List<RedditPosts>?>
 
-    fun getBestPosts(): Flow<ListingsResponse>
+    fun getBestPosts(): Flow<List<RedditPosts>?>
 
-    fun getRisingPosts(): Flow<ListingsResponse>
+    fun getRisingPosts(): Flow<List<RedditPosts>?>
 
-    fun getControversialPosts(): Flow<ListingsResponse>
+    fun getControversialPosts(): Flow<List<RedditPosts>?>
 }

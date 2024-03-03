@@ -3,11 +3,9 @@ package com.bestway.presentation.ui.screens.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bestway.domain.model.RedditPosts
 import com.bestway.domain.repositories.HomeRepository
-import com.bestway.models.listings.ListingsData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.annotation.concurrent.Immutable
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,9 +14,13 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import javax.annotation.concurrent.Immutable
+import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val repository: HomeRepository
+) : ViewModel() {
 
     // Ui State properties
     private val _hotPosts: MutableStateFlow<PostsUiState> = MutableStateFlow(PostsUiState())
@@ -44,13 +46,12 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         repository
             .getHotPosts()
             .onStart { _hotPosts.update { it.copy(isLoading = true) } }
-            .onEach { listingsData ->
+            .onEach { redditPosts ->
                 _hotPosts.update {
                     it.copy(
-                        data = listingsData.data,
+                        data = redditPosts,
                         isLoading = false,
-                        errorMessage =
-                            if (listingsData.data == null) "Data is not available" else null
+                        errorMessage = if (redditPosts == null) "Data is not available" else null
                     )
                 }
             }
@@ -65,10 +66,10 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         repository
             .getNewPosts()
             .onStart { _newPosts.update { it.copy(isLoading = true) } }
-            .onEach { listingsResponse ->
-                listingsResponse.data?.let { responseListingsData ->
+            .onEach { redditPosts ->
+                redditPosts?.let { posts ->
                     _newPosts.update {
-                        it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
+                        it.copy(data = posts, isLoading = false, errorMessage = null)
                     }
                 }
             }
@@ -83,10 +84,10 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         repository
             .getTopPosts()
             .onStart { _topPosts.update { it.copy(isLoading = true) } }
-            .onEach { listingsResponse ->
-                listingsResponse.data?.let { responseListingsData ->
+            .onEach { redditPosts ->
+                redditPosts?.let { posts ->
                     _topPosts.update {
-                        it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
+                        it.copy(data = posts, isLoading = false, errorMessage = null)
                     }
                 }
             }
@@ -100,18 +101,15 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     fun getBestPosts() {
         repository
             .getBestPosts()
-            .onStart {
-                _bestPosts.update { it.copy(isLoading = true) }
-            }
-            .onEach {
-                    listingsResponse ->
-                listingsResponse.data?.let { responseListingsData ->
+            .onStart { _bestPosts.update { it.copy(isLoading = true) } }
+            .onEach { redditPosts ->
+                redditPosts?.let { posts ->
                     _bestPosts.update {
-                        it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
+                        it.copy(data = posts, isLoading = false, errorMessage = null)
                     }
                 }
             }
-            .catch {throwable ->
+            .catch { throwable ->
                 Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
 
                 _bestPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
@@ -122,17 +120,15 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     fun getRisingsPosts() {
         repository
             .getRisingPosts()
-            .onStart {
-                _risingPosts.update { it.copy(isLoading = true) }
-            }
-            .onEach {  listingsResponse ->
-                listingsResponse.data?.let { responseListingsData ->
+            .onStart { _risingPosts.update { it.copy(isLoading = true) } }
+            .onEach { redditPosts ->
+                redditPosts?.let { posts ->
                     _risingPosts.update {
-                        it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
+                        it.copy(data = posts, isLoading = false, errorMessage = null)
                     }
                 }
             }
-            .catch {throwable ->
+            .catch { throwable ->
                 Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
                 _risingPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
             }
@@ -142,19 +138,19 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     fun getControversialPosts() {
         repository
             .getControversialPosts()
-            .onStart {
-                _controversialPosts.update { it.copy(isLoading = true) }
-            }
-            .onEach { listingsResponse ->
-                listingsResponse.data?.let { responseListingsData ->
+            .onStart { _controversialPosts.update { it.copy(isLoading = true) } }
+            .onEach { redditPosts ->
+                redditPosts?.let { posts ->
                     _controversialPosts.update {
-                        it.copy(data = responseListingsData, isLoading = false, errorMessage = null)
+                        it.copy(data = posts, isLoading = false, errorMessage = null)
                     }
                 }
             }
-            .catch {throwable ->
+            .catch { throwable ->
                 Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
-                _controversialPosts.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+                _controversialPosts.update {
+                    it.copy(isLoading = false, errorMessage = throwable.message)
+                }
             }
             .launchIn(viewModelScope)
     }
@@ -162,7 +158,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
 
 @Immutable
 data class PostsUiState(
-    val data: ListingsData? = null,
+    val data: List<RedditPosts>? = null,
     val isLoading: Boolean = false,
     val errorMessage: String? = null
 )

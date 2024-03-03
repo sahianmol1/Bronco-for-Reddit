@@ -1,6 +1,6 @@
 package com.bestway.broncoforreddit.di
 
-import com.bestway.data.remote.api.ApiRequests
+import com.bestway.data.remote.api.HomeService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,5 +37,5 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesHomeApiRequests(client: HttpClient) = ApiRequests(client)
+    fun providesHomeApiRequests(client: HttpClient) = HomeService(client)
 }

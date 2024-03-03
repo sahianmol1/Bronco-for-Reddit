@@ -54,7 +54,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import com.bestway.home_presentation.R
-import com.bestway.presentation.models.RedditPostUiModel
+import com.bestway.presentation.model.RedditPostUiModel
 import com.bestway.presentation.utils.rememberLifecycleEvent
 
 @Composable

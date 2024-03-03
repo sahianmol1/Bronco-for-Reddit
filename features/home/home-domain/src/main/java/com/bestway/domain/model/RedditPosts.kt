@@ -1,11 +1,7 @@
-package com.bestway.presentation.models
+package com.bestway.domain.model
 
-import androidx.compose.runtime.Immutable
-import kotlinx.serialization.Serializable
-
-@Immutable
-@Serializable
-data class RedditPostUiModel(
+data class RedditPosts(
+    val id: String,
     val subName: String = "",
     val title: String? = null,
     val description: String? = null,

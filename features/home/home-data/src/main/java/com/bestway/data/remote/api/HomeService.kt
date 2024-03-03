@@ -1,11 +1,12 @@
 package com.bestway.data.remote.api
 
+import com.bestway.data.model.ListingsResponse
+import com.bestway.data.remote.api.utils.EndPoints
 import com.bestway.data.remote.api.utils.getSafeResponse
-import com.bestway.models.listings.ListingsResponse
 import io.ktor.client.HttpClient
 
 
-class ApiRequests(private val client: HttpClient) {
+class HomeService(private val client: HttpClient) {
     suspend fun getHotListings(): Result<ListingsResponse> {
         return client.getSafeResponse(EndPoints.HOT)
     }

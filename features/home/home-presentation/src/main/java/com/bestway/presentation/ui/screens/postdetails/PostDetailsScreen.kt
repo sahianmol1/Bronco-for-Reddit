@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.bestway.presentation.models.RedditPostUiModel
+import com.bestway.presentation.model.RedditPostUiModel
 import com.bestway.presentation.ui.components.CommentsView
 
 @Composable

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.bestway.design_system.ui_components.BRLinearProgressIndicator
 import com.bestway.design_system.utils.slideInFromBottomTransition
 import com.bestway.home_presentation.R
-import com.bestway.presentation.models.RedditPostUiModel
+import com.bestway.presentation.model.RedditPostUiModel
 import com.bestway.presentation.ui.screens.home.PostsUiState
 
 @Composable
@@ -33,30 +33,30 @@ fun HomeScreenListings(
     uiState: PostsUiState,
     onClick: (redditPostUiModel: RedditPostUiModel) -> Unit
 ) {
-    val list by remember(uiState) { mutableStateOf(uiState.data?.children.orEmpty()) }
+    val list by remember(uiState) { mutableStateOf(uiState.data.orEmpty()) }
 
     AnimatedVisibility(visible = list.isNotEmpty(), enter = slideInFromBottomTransition()) {
         LazyColumn {
-            items(count = list.size, key = { index -> list[index].childrenData.id }) { index ->
+            items(count = list.size, key = { index -> list[index].id }) { index ->
                 PostComponent(
                     modifier =
-                        when (index) {
-                            list.size - 1 -> Modifier.navigationBarsPadding()
-                            else -> Modifier
-                        },
+                    when (index) {
+                        list.size - 1 -> Modifier.navigationBarsPadding()
+                        else -> Modifier
+                    },
                     redditPostUiModel =
-                        RedditPostUiModel(
-                            subName = list[index].childrenData.subName.orEmpty(),
-                            title = list[index].childrenData.title,
-                            description = list[index].childrenData.description,
-                            imageUrl = list[index].childrenData.imageUrl,
-                            postUrl = list[index].childrenData.postUrl,
-                            upVotes = list[index].childrenData.upVotes ?: 0,
-                            comments = list[index].childrenData.comments ?: 0,
-                            videoUrl = list[index].childrenData.secureMedia?.redditVideo?.videoUrl,
-                            gifUrl = list[index].childrenData.gifUrl?.gifPreview?.url,
-                            author = list[index].childrenData.author.orEmpty()
-                        ),
+                    RedditPostUiModel(
+                        subName = list[index].subName,
+                        title = list[index].title,
+                        description = list[index].description,
+                        imageUrl = list[index].imageUrl,
+                        postUrl = list[index].postUrl,
+                        upVotes = list[index].upVotes,
+                        comments = list[index].comments,
+                        videoUrl = list[index].videoUrl,
+                        gifUrl = list[index].gifUrl,
+                        author = list[index].author
+                    ),
                     onClick = onClick
                 )
             }
@@ -70,7 +70,10 @@ fun HomeScreenListings(
     ) {
         var showLogs by rememberSaveable { mutableStateOf(false) }
         Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -78,10 +81,10 @@ fun HomeScreenListings(
             Text(
                 modifier = Modifier.clickable { showLogs = !showLogs },
                 text =
-                    if (!showLogs)
-                        stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
-                    else
-                        stringResource(R.string.uh_oh_something_went_wrong) +
+                if (!showLogs)
+                    stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
+                else
+                    stringResource(R.string.uh_oh_something_went_wrong) +
                             " Learn More /n ${uiState.errorMessage}",
                 textDecoration = TextDecoration.Underline
             )
