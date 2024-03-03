@@ -1,5 +1,6 @@
 package com.bestway.broncoforreddit.di
 
+import com.bestway.data.local.entity.RedditPostDao
 import com.bestway.data.remote.api.HomeService
 import com.bestway.data.repositories.homerepository.HomeRepositoryImpl
 import com.bestway.domain.repositories.HomeRepository
@@ -14,8 +15,12 @@ import javax.inject.Singleton
 object RepositoriesModule {
     @Singleton
     @Provides
-    fun provideHomeRepository(homeService: HomeService): HomeRepository {
+    fun provideHomeRepository(
+        homeService: HomeService,
+        redditPostDao: RedditPostDao
+    ): HomeRepository {
         return HomeRepositoryImpl(
+            redditPostDao = redditPostDao,
             homeService = homeService
         )
     }

@@ -46,11 +46,13 @@ class HomeViewModel @Inject constructor(
     fun getHotPosts() {
         repository
             .getHotPosts()
-            .onStart { _hotPosts.update { it.copy(isLoading = true) } }
+            .onStart {
+                _hotPosts.update { it.copy(isLoading = true) }
+            }
             .onEach { redditPosts ->
                 _hotPosts.update {
                     it.copy(
-                        data = redditPosts?.map { post-> post.asUiModel() },
+                        data = redditPosts?.map { post -> post.asUiModel() },
                         isLoading = false,
                         errorMessage = if (redditPosts == null) "Data is not available" else null
                     )
@@ -70,7 +72,11 @@ class HomeViewModel @Inject constructor(
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _newPosts.update {
-                        it.copy(data = posts.map { post -> post.asUiModel() }, isLoading = false, errorMessage = null)
+                        it.copy(
+                            data = posts.map { post -> post.asUiModel() },
+                            isLoading = false,
+                            errorMessage = null
+                        )
                     }
                 }
             }
@@ -88,7 +94,11 @@ class HomeViewModel @Inject constructor(
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _topPosts.update {
-                        it.copy(data = posts.map { post -> post.asUiModel() }, isLoading = false, errorMessage = null)
+                        it.copy(
+                            data = posts.map { post -> post.asUiModel() },
+                            isLoading = false,
+                            errorMessage = null
+                        )
                     }
                 }
             }
@@ -106,7 +116,11 @@ class HomeViewModel @Inject constructor(
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _bestPosts.update {
-                        it.copy(data = posts.map { post -> post.asUiModel() }, isLoading = false, errorMessage = null)
+                        it.copy(
+                            data = posts.map { post -> post.asUiModel() },
+                            isLoading = false,
+                            errorMessage = null
+                        )
                     }
                 }
             }
@@ -125,7 +139,11 @@ class HomeViewModel @Inject constructor(
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _risingPosts.update {
-                        it.copy(data = posts.map { post -> post.asUiModel() }, isLoading = false, errorMessage = null)
+                        it.copy(
+                            data = posts.map { post -> post.asUiModel() },
+                            isLoading = false,
+                            errorMessage = null
+                        )
                     }
                 }
             }
@@ -143,7 +161,11 @@ class HomeViewModel @Inject constructor(
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _controversialPosts.update {
-                        it.copy(data = posts.map { post -> post.asUiModel() }, isLoading = false, errorMessage = null)
+                        it.copy(
+                            data = posts.map { post -> post.asUiModel() },
+                            isLoading = false,
+                            errorMessage = null
+                        )
                     }
                 }
             }

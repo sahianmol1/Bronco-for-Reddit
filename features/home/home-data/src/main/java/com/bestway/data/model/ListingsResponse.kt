@@ -1,5 +1,6 @@
 package com.bestway.data.model
 
+import com.bestway.data.local.entity.RedditPostEntity
 import com.bestway.domain.model.RedditPost
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -10,10 +11,10 @@ data class ListingsResponse(
     @SerialName("data") val data: ListingsData? = null
 )
 
-fun ListingsResponse.asDomain(): List<RedditPost> {
+fun ListingsResponse.asEntity(): List<RedditPostEntity> {
     return this.data?.children?.map {
         it.childrenData.run {
-            RedditPost(
+            RedditPostEntity(
                 id = this.id,
                 subName = this.subName.orEmpty(),
                 title = this.title,
@@ -28,4 +29,22 @@ fun ListingsResponse.asDomain(): List<RedditPost> {
             )
         }
     }.orEmpty()
+}
+
+fun List<RedditPostEntity>.asDomain(): List<RedditPost>? {
+    return this.map {
+        RedditPost(
+            id = it.id,
+            subName = it.subName,
+            title = it.title,
+            description = it.description,
+            upVotes = it.upVotes,
+            comments = it.comments,
+            imageUrl = it.imageUrl,
+            postUrl = it.postUrl,
+            videoUrl = it.videoUrl,
+            gifUrl = it.gifUrl,
+            author = it.author
+        )
+    }
 }

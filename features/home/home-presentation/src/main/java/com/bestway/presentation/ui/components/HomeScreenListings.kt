@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -37,14 +38,22 @@ fun HomeScreenListings(
 
     AnimatedVisibility(visible = list.isNotEmpty(), enter = slideInFromBottomTransition()) {
         LazyColumn {
-            items(count = list.size, key = { index -> list[index].id }) { index ->
+            itemsIndexed(
+                items = list,
+                key = { _, item ->
+                    item.id
+                },
+                contentType = { _, _ ->
+                    "reddit_post"
+                }
+            ) {index, item ->
                 PostComponent(
                     modifier =
                     when (index) {
                         list.size - 1 -> Modifier.navigationBarsPadding()
                         else -> Modifier
                     },
-                    redditPostUiModel = list[index],
+                    redditPostUiModel = item,
                     onClick = onClick
                 )
             }
