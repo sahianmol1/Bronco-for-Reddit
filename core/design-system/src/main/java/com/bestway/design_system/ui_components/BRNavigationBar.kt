@@ -1,12 +1,6 @@
 package com.bestway.design_system.ui_components
 
 import android.content.Context
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -90,21 +84,7 @@ fun BRNavigationBarView(
     val currentDestination by
         remember(navBackStackEntry) { mutableStateOf(navBackStackEntry?.destination) }
 
-    AnimatedVisibility(
-        visible = currentDestination.isTopLevelDestination(),
-        enter =
-            slideInVertically(
-                // Enters by sliding up from offset 0 to fullHeight.
-                initialOffsetY = { fullHeight -> fullHeight },
-                animationSpec = tween(durationMillis = 400, easing = LinearOutSlowInEasing),
-            ),
-        exit =
-            slideOutVertically(
-                // Exits by sliding up from offset 0 to -fullHeight.
-                targetOffsetY = { fullHeight -> fullHeight },
-                animationSpec = tween(durationMillis = 400, easing = FastOutLinearInEasing),
-            ),
-    ) {
+    if(currentDestination.isTopLevelDestination()) {
         NavigationBar(modifier = modifier) {
             bottomNavItems.forEachIndexed { index, bottomNav ->
                 NavigationBarItem(
@@ -127,18 +107,18 @@ fun BRNavigationBarView(
                     icon = {
                         Icon(
                             imageVector =
-                                if (
-                                    getSelectedBottomNav(currentDestination, bottomNavItems, index)
-                                ) {
-                                    bottomNav.selectedIcon
-                                } else {
-                                    bottomNav.unselectedIcon
-                                },
+                            if (
+                                getSelectedBottomNav(currentDestination, bottomNavItems, index)
+                            ) {
+                                bottomNav.selectedIcon
+                            } else {
+                                bottomNav.unselectedIcon
+                            },
                             contentDescription =
-                                stringResource(
-                                    R.string.bottom_bar_content_description,
-                                    bottomNav.title
-                                )
+                            stringResource(
+                                R.string.bottom_bar_content_description,
+                                bottomNav.title
+                            )
                         )
                     },
                     label = { Text(text = bottomNav.title) }
