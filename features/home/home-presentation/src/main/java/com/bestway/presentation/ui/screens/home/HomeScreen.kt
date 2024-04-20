@@ -93,22 +93,41 @@ fun HomeScreen(
         ) { page ->
             when (page) {
                 0 -> {
-                    HomeScreenListings(uiState = hotPosts.value, onClick = onClick)
+                    HomeScreenListings(
+                        uiState = hotPosts.value,
+                        onClick = onClick,
+                        refreshData = { homeViewModel.getHotPosts(true) }
+                    )
                 }
                 1 -> {
-                    HomeScreenListings(uiState = newPosts.value, onClick = onClick)
+                    HomeScreenListings(
+                        uiState = newPosts.value,
+                        onClick = onClick,
+                        refreshData = { homeViewModel.getNewPosts(true) })
                 }
                 2 -> {
-                    HomeScreenListings(uiState = topPosts.value, onClick = onClick)
+                    HomeScreenListings(
+                        uiState = topPosts.value,
+                        onClick = onClick,
+                        refreshData = { homeViewModel.getTopPosts(true) })
                 }
                 3 -> {
-                    HomeScreenListings(uiState = bestPosts.value, onClick = onClick)
+                    HomeScreenListings(
+                        uiState = bestPosts.value,
+                        onClick = onClick,
+                        refreshData = { homeViewModel.getBestPosts(true) })
                 }
                 4 -> {
-                    HomeScreenListings(uiState = risingPosts.value, onClick = onClick)
+                    HomeScreenListings(
+                        uiState = risingPosts.value,
+                        onClick = onClick,
+                        refreshData = { homeViewModel.getRisingsPosts(true) })
                 }
                 5 -> {
-                    HomeScreenListings(uiState = controversialPosts.value, onClick = onClick)
+                    HomeScreenListings(
+                        uiState = controversialPosts.value,
+                        onClick = onClick,
+                        refreshData = { homeViewModel.getControversialPosts(true) })
                 }
                 else -> {
                     Column(

@@ -13,96 +13,174 @@ class HomeRepositoryImpl(
     private val redditPostDao: RedditPostDao,
     private val homeService: HomeService
 ) : HomeRepository {
-    override fun getHotPosts(): Flow<List<RedditPost>?> {
+    override fun getHotPosts(shouldRefreshData: Boolean): Flow<List<RedditPost>?> {
         return flow {
+            val allPostsFromDb = redditPostDao.getAllRedditPosts()
+
             emit(
-                if (redditPostDao.getAllRedditPosts().isNotEmpty()) {
-                    redditPostDao.getAllRedditPosts().asDomain()
+                if (allPostsFromDb.isNotEmpty() && !shouldRefreshData) {
+                    // If there are posts in the database and no refresh is needed, emit them directly.
+                    allPostsFromDb.asDomain()
                 } else {
-                    val listings = homeService.getControversialListings().getOrThrow().asEntity()
+                    // If a refresh is needed or there are no posts in the database, fetch new data.
+                    val listings = homeService.getHotListings().getOrThrow().asEntity()
+
+                    if (allPostsFromDb.isNotEmpty()) {
+                        // If there are existing posts in the database, delete them before inserting new ones.
+                        redditPostDao.deleteAllRedditPosts()
+                    }
+
+                    // Insert the new posts into the database.
                     listings.forEach {
                         redditPostDao.insertRedditPost(it)
                     }
+
+                    // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
                 }
             )
         }
     }
 
-    override fun getTopPosts(): Flow<List<RedditPost>?> {
+    override fun getTopPosts(shouldRefreshData: Boolean): Flow<List<RedditPost>?> {
         return flow {
+            val allPostsFromDb = redditPostDao.getAllRedditPosts()
+
             emit(
-                if (redditPostDao.getAllRedditPosts().isNotEmpty()) {
-                    redditPostDao.getAllRedditPosts().asDomain()
+                if (allPostsFromDb.isNotEmpty() && !shouldRefreshData) {
+                    // If there are posts in the database and no refresh is needed, emit them directly.
+                    allPostsFromDb.asDomain()
                 } else {
-                    val listings = homeService.getControversialListings().getOrThrow().asEntity()
+                    // If a refresh is needed or there are no posts in the database, fetch new data.
+                    val listings = homeService.getHotListings().getOrThrow().asEntity()
+
+                    if (allPostsFromDb.isNotEmpty()) {
+                        // If there are existing posts in the database, delete them before inserting new ones.
+                        redditPostDao.deleteAllRedditPosts()
+                    }
+
+                    // Insert the new posts into the database.
                     listings.forEach {
                         redditPostDao.insertRedditPost(it)
                     }
+
+                    // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
                 }
             )
         }
     }
 
-    override fun getNewPosts(): Flow<List<RedditPost>?> {
+    override fun getNewPosts(shouldRefreshData: Boolean): Flow<List<RedditPost>?> {
         return flow {
+            val allPostsFromDb = redditPostDao.getAllRedditPosts()
+
             emit(
-                if (redditPostDao.getAllRedditPosts().isNotEmpty()) {
-                    redditPostDao.getAllRedditPosts().asDomain()
+                if (allPostsFromDb.isNotEmpty() && !shouldRefreshData) {
+                    // If there are posts in the database and no refresh is needed, emit them directly.
+                    allPostsFromDb.asDomain()
                 } else {
-                    val listings = homeService.getControversialListings().getOrThrow().asEntity()
+                    // If a refresh is needed or there are no posts in the database, fetch new data.
+                    val listings = homeService.getHotListings().getOrThrow().asEntity()
+
+                    if (allPostsFromDb.isNotEmpty()) {
+                        // If there are existing posts in the database, delete them before inserting new ones.
+                        redditPostDao.deleteAllRedditPosts()
+                    }
+
+                    // Insert the new posts into the database.
                     listings.forEach {
                         redditPostDao.insertRedditPost(it)
                     }
+
+                    // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
                 }
             )
         }
     }
 
-    override fun getBestPosts(): Flow<List<RedditPost>?> {
+    override fun getBestPosts(shouldRefreshData: Boolean): Flow<List<RedditPost>?> {
         return flow {
+            val allPostsFromDb = redditPostDao.getAllRedditPosts()
+
             emit(
-                if (redditPostDao.getAllRedditPosts().isNotEmpty()) {
-                    redditPostDao.getAllRedditPosts().asDomain()
+                if (allPostsFromDb.isNotEmpty() && !shouldRefreshData) {
+                    // If there are posts in the database and no refresh is needed, emit them directly.
+                    allPostsFromDb.asDomain()
                 } else {
-                    val listings = homeService.getControversialListings().getOrThrow().asEntity()
+                    // If a refresh is needed or there are no posts in the database, fetch new data.
+                    val listings = homeService.getHotListings().getOrThrow().asEntity()
+
+                    if (allPostsFromDb.isNotEmpty()) {
+                        // If there are existing posts in the database, delete them before inserting new ones.
+                        redditPostDao.deleteAllRedditPosts()
+                    }
+
+                    // Insert the new posts into the database.
                     listings.forEach {
                         redditPostDao.insertRedditPost(it)
                     }
+
+                    // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
                 }
             )
         }
     }
 
-    override fun getRisingPosts(): Flow<List<RedditPost>?> {
+    override fun getRisingPosts(shouldRefreshData: Boolean): Flow<List<RedditPost>?> {
         return flow {
+            val allPostsFromDb = redditPostDao.getAllRedditPosts()
+
             emit(
-                if (redditPostDao.getAllRedditPosts().isNotEmpty()) {
-                    redditPostDao.getAllRedditPosts().asDomain()
+                if (allPostsFromDb.isNotEmpty() && !shouldRefreshData) {
+                    // If there are posts in the database and no refresh is needed, emit them directly.
+                    allPostsFromDb.asDomain()
                 } else {
-                    val listings = homeService.getControversialListings().getOrThrow().asEntity()
+                    // If a refresh is needed or there are no posts in the database, fetch new data.
+                    val listings = homeService.getHotListings().getOrThrow().asEntity()
+
+                    if (allPostsFromDb.isNotEmpty()) {
+                        // If there are existing posts in the database, delete them before inserting new ones.
+                        redditPostDao.deleteAllRedditPosts()
+                    }
+
+                    // Insert the new posts into the database.
                     listings.forEach {
                         redditPostDao.insertRedditPost(it)
                     }
+
+                    // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
                 }
             )
         }
     }
 
-    override fun getControversialPosts(): Flow<List<RedditPost>?> {
+    override fun getControversialPosts(shouldRefreshData: Boolean): Flow<List<RedditPost>?> {
         return flow {
+            val allPostsFromDb = redditPostDao.getAllRedditPosts()
+
             emit(
-                if (redditPostDao.getAllRedditPosts().isNotEmpty()) {
-                    redditPostDao.getAllRedditPosts().asDomain()
+                if (allPostsFromDb.isNotEmpty() && !shouldRefreshData) {
+                    // If there are posts in the database and no refresh is needed, emit them directly.
+                    allPostsFromDb.asDomain()
                 } else {
-                    val listings = homeService.getControversialListings().getOrThrow().asEntity()
+                    // If a refresh is needed or there are no posts in the database, fetch new data.
+                    val listings = homeService.getHotListings().getOrThrow().asEntity()
+
+                    if (allPostsFromDb.isNotEmpty()) {
+                        // If there are existing posts in the database, delete them before inserting new ones.
+                        redditPostDao.deleteAllRedditPosts()
+                    }
+
+                    // Insert the new posts into the database.
                     listings.forEach {
                         redditPostDao.insertRedditPost(it)
                     }
+
+                    // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
                 }
             )

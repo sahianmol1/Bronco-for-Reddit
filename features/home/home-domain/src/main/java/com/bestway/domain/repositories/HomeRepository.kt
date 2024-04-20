@@ -5,15 +5,15 @@ import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
 
-    fun getHotPosts(): Flow<List<RedditPost>?>
+    fun getHotPosts(shouldRefreshData: Boolean): Flow<List<RedditPost>?>
 
-    fun getTopPosts(): Flow<List<RedditPost>?>
+    fun getTopPosts(shouldRefreshData: Boolean): Flow<List<RedditPost>?>
 
-    fun getNewPosts(): Flow<List<RedditPost>?>
+    fun getNewPosts(shouldRefreshData: Boolean): Flow<List<RedditPost>?>
 
-    fun getBestPosts(): Flow<List<RedditPost>?>
+    fun getBestPosts(shouldRefreshData: Boolean): Flow<List<RedditPost>?>
 
-    fun getRisingPosts(): Flow<List<RedditPost>?>
+    fun getRisingPosts(shouldRefreshData: Boolean): Flow<List<RedditPost>?>
 
-    fun getControversialPosts(): Flow<List<RedditPost>?>
+    fun getControversialPosts(shouldRefreshData: Boolean): Flow<List<RedditPost>?>
 }

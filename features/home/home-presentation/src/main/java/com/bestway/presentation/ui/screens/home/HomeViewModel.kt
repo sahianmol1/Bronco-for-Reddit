@@ -43,18 +43,21 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(PostsUiState())
     var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
 
-    fun getHotPosts() {
+    fun getHotPosts(shouldRefreshData: Boolean = false) {
         repository
-            .getHotPosts()
+            .getHotPosts(shouldRefreshData)
             .onStart {
-                _hotPosts.update { it.copy(isLoading = true) }
+                if (!shouldRefreshData) {
+                    _hotPosts.update { it.copy(isLoading = true) }
+                }
             }
             .onEach { redditPosts ->
                 _hotPosts.update {
                     it.copy(
                         data = redditPosts?.map { post -> post.asUiModel() },
                         isLoading = false,
-                        errorMessage = if (redditPosts == null) "Data is not available" else null
+                        errorMessage = if (redditPosts == null) "Data is not available" else null,
+                        isDataRefreshed = shouldRefreshData
                     )
                 }
             }
@@ -65,17 +68,22 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getNewPosts() {
+    fun getNewPosts(shouldRefreshData: Boolean = false) {
         repository
-            .getNewPosts()
-            .onStart { _newPosts.update { it.copy(isLoading = true) } }
+            .getNewPosts(shouldRefreshData)
+            .onStart {
+                if (!shouldRefreshData) {
+                    _newPosts.update { it.copy(isLoading = true) }
+                }
+            }
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _newPosts.update {
                         it.copy(
                             data = posts.map { post -> post.asUiModel() },
                             isLoading = false,
-                            errorMessage = null
+                            errorMessage = null,
+                            isDataRefreshed = shouldRefreshData
                         )
                     }
                 }
@@ -87,17 +95,22 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getTopPosts() {
+    fun getTopPosts(shouldRefreshData: Boolean = false) {
         repository
-            .getTopPosts()
-            .onStart { _topPosts.update { it.copy(isLoading = true) } }
+            .getTopPosts(shouldRefreshData)
+            .onStart {
+                if (!shouldRefreshData) {
+                    _topPosts.update { it.copy(isLoading = true) }
+                }
+            }
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _topPosts.update {
                         it.copy(
                             data = posts.map { post -> post.asUiModel() },
                             isLoading = false,
-                            errorMessage = null
+                            errorMessage = null,
+                            isDataRefreshed = shouldRefreshData
                         )
                     }
                 }
@@ -109,17 +122,22 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getBestPosts() {
+    fun getBestPosts(shouldRefreshData: Boolean = false) {
         repository
-            .getBestPosts()
-            .onStart { _bestPosts.update { it.copy(isLoading = true) } }
+            .getBestPosts(shouldRefreshData)
+            .onStart {
+                if (!shouldRefreshData) {
+                    _bestPosts.update { it.copy(isLoading = true) }
+                }
+            }
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _bestPosts.update {
                         it.copy(
                             data = posts.map { post -> post.asUiModel() },
                             isLoading = false,
-                            errorMessage = null
+                            errorMessage = null,
+                            isDataRefreshed = shouldRefreshData
                         )
                     }
                 }
@@ -132,17 +150,22 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getRisingsPosts() {
+    fun getRisingsPosts(shouldRefreshData: Boolean = false) {
         repository
-            .getRisingPosts()
-            .onStart { _risingPosts.update { it.copy(isLoading = true) } }
+            .getRisingPosts(shouldRefreshData)
+            .onStart {
+                if (!shouldRefreshData) {
+                    _risingPosts.update { it.copy(isLoading = true) }
+                }
+            }
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _risingPosts.update {
                         it.copy(
                             data = posts.map { post -> post.asUiModel() },
                             isLoading = false,
-                            errorMessage = null
+                            errorMessage = null,
+                            isDataRefreshed = shouldRefreshData
                         )
                     }
                 }
@@ -154,17 +177,22 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getControversialPosts() {
+    fun getControversialPosts(shouldRefreshData: Boolean = false) {
         repository
-            .getControversialPosts()
-            .onStart { _controversialPosts.update { it.copy(isLoading = true) } }
+            .getControversialPosts(shouldRefreshData)
+            .onStart {
+                if (!shouldRefreshData) {
+                    _controversialPosts.update { it.copy(isLoading = true) }
+                }
+            }
             .onEach { redditPosts ->
                 redditPosts?.let { posts ->
                     _controversialPosts.update {
                         it.copy(
                             data = posts.map { post -> post.asUiModel() },
                             isLoading = false,
-                            errorMessage = null
+                            errorMessage = null,
+                            isDataRefreshed = shouldRefreshData
                         )
                     }
                 }
@@ -183,5 +211,6 @@ class HomeViewModel @Inject constructor(
 data class PostsUiState(
     val data: List<RedditPostUiModel>? = null,
     val isLoading: Boolean = false,
+    val isDataRefreshed: Boolean = false,
     val errorMessage: String? = null
 )
