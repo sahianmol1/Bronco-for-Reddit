@@ -18,7 +18,19 @@ import kotlinx.serialization.json.Json
 
 fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
     composable(
-        route = Destinations.HomeScreenDestination.route
+        route = Destinations.HomeScreenDestination.route,
+        popEnterTransition = {
+            slideInHorizontally(
+                initialOffsetX = { width -> -width },
+                animationSpec = tween(durationMillis = 200, easing = LinearEasing),
+            )
+        },
+        exitTransition = {
+            slideOutHorizontally(
+                targetOffsetX = { width -> -width },
+                animationSpec = tween(durationMillis = 200, easing = LinearEasing),
+            )
+        }
     ) {
         HomeScreen(
             onClick = { redditPost ->
