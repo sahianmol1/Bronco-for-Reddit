@@ -43,11 +43,11 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(PostsUiState())
     var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
 
-    fun getHotPosts(shouldRefreshData: Boolean = false) {
+    fun getHotPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
         repository
-            .getHotPosts(shouldRefreshData)
+            .getHotPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData) {
+                if (!shouldRefreshData && !nextPageKey.isNullOrEmpty()) {
                     _hotPosts.update { it.copy(isLoading = true) }
                 }
             }
@@ -212,5 +212,6 @@ data class PostsUiState(
     val data: List<RedditPostUiModel>? = null,
     val isLoading: Boolean = false,
     val isDataRefreshed: Boolean = false,
+    val pageDataLoadFinished: Boolean = true,
     val errorMessage: String? = null
 )

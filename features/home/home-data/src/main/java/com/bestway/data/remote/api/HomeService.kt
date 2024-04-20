@@ -7,8 +7,8 @@ import io.ktor.client.HttpClient
 
 
 class HomeService(private val client: HttpClient) {
-    suspend fun getHotListings(): Result<ListingsResponse> {
-        return client.getSafeResponse(EndPoints.HOT)
+    suspend fun getHotListings(nextPageKey: String? = null): Result<ListingsResponse> {
+        return client.getSafeResponse(EndPoints.HOT + "?after=$nextPageKey")
     }
 
     suspend fun getNewListings(): Result<ListingsResponse> {

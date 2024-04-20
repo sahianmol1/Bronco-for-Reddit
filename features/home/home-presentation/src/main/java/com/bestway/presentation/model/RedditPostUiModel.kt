@@ -17,7 +17,8 @@ data class RedditPostUiModel(
     val postUrl: String? = null,
     val videoUrl: String? = null,
     val gifUrl: String? = null,
-    val author: String = ""
+    val author: String = "",
+    val after: String? = null
 )
 
 fun RedditPost.asUiModel(): RedditPostUiModel {
@@ -32,6 +33,7 @@ fun RedditPost.asUiModel(): RedditPostUiModel {
         postUrl = this.postUrl,
         videoUrl = this.videoUrl,
         gifUrl = this.gifUrl,
-        author = this.author
+        author = this.author,
+        after = this.after
     )
 }

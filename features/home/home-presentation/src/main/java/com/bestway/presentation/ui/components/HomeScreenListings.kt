@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
@@ -20,7 +23,9 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -43,10 +48,13 @@ import com.bestway.presentation.ui.screens.home.PostsUiState
 fun HomeScreenListings(
     uiState: PostsUiState,
     onClick: (redditPostUiModel: RedditPostUiModel) -> Unit,
-    refreshData: () -> Unit
+    refreshData: () -> Unit,
+    loadMoreData: (nextPageKey: String?) -> Unit,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
+    val lazyListState = rememberLazyListState()
     val list by remember(uiState) { mutableStateOf(uiState.data.orEmpty()) }
+    var shouldShowPagingLoading by rememberSaveable { mutableStateOf(false) }
 
     if (pullRefreshState.isRefreshing) {
         LaunchedEffect(Unit) {
@@ -59,11 +67,26 @@ fun HomeScreenListings(
         pullRefreshState.endRefresh()
     }
 
+    val firstVisibleItemIndex by remember {
+        derivedStateOf { lazyListState.firstVisibleItemIndex }
+    }
+
+    if (lazyListState.isScrollingDown() && firstVisibleItemIndex == list.size - 5) {
+        shouldShowPagingLoading = true
+        loadMoreData(list.last().after)
+    }
+
+    if (uiState.pageDataLoadFinished) {
+        shouldShowPagingLoading = false
+    }
+
     Box(
         Modifier.nestedScroll(pullRefreshState.nestedScrollConnection)
     ) {
         AnimatedVisibility(visible = list.isNotEmpty(), enter = slideInFromBottomTransition()) {
-            LazyColumn {
+            LazyColumn(
+                state = lazyListState
+            ) {
                 itemsIndexed(
                     items = list,
                     key = { _, item ->
@@ -82,6 +105,11 @@ fun HomeScreenListings(
                         redditPostUiModel = item,
                         onClick = onClick
                     )
+                }
+                if (shouldShowPagingLoading) {
+                    item("last_item", contentType = "loading_indicator") {
+                        LinearProgressIndicator()
+                    }
                 }
             }
         }
@@ -126,6 +154,24 @@ fun HomeScreenListings(
             else PullToRefreshDefaults.containerColor
         )
     }
+}
+
+@Composable
+private fun LazyListState.isScrollingDown(): Boolean {
+    var previousIndex by remember(this) { mutableIntStateOf(firstVisibleItemIndex) }
+    var previousScrollOffset by remember(this) { mutableIntStateOf(firstVisibleItemScrollOffset) }
+    return remember(this) {
+        derivedStateOf {
+            if (previousIndex != firstVisibleItemIndex) {
+                previousIndex < firstVisibleItemIndex
+            } else {
+                previousScrollOffset < firstVisibleItemScrollOffset
+            }.also {
+                previousIndex = firstVisibleItemIndex
+                previousScrollOffset = firstVisibleItemScrollOffset
+            }
+        }
+    }.value
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
