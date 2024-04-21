@@ -9,6 +9,6 @@
     <string name="about">About</string>
     <string name="upvote">Upvote</string>
     <string name="comment">Comment</string>
-    <string name="save">Save</string>
+    <string name="save">"Save"</string>
     <string name="share">Share</string>
 </resources>

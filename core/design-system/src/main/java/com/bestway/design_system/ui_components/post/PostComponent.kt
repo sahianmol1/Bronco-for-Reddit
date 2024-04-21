@@ -1,6 +1,13 @@
 package com.bestway.design_system.ui_components.post
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Down
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Up
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.EaseIn
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.with
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -267,8 +274,11 @@ fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun PostActions(modifier: Modifier = Modifier, upVotes: Int, comments: Int, isSaved: Boolean) {
+    var isSaved by rememberSaveable { mutableStateOf(false) }
+
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         PostActionItem(
             icon = Icons.Default.ArrowUpward,
@@ -280,20 +290,49 @@ fun PostActions(modifier: Modifier = Modifier, upVotes: Int, comments: Int, isSa
             label = comments.toString(),
             actionDescription = stringResource(R.string.comment)
         )
-        PostActionItem(
-            icon = if (isSaved) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
-            label = if (isSaved) stringResource(R.string.saved) else stringResource(R.string.save),
-            actionDescription = stringResource(R.string.save)
-        )
+
+        AnimatedContent(
+            targetState = isSaved,
+            transitionSpec = {
+                slideIntoContainer(
+                    animationSpec = tween(200, easing = EaseIn),
+                    towards = Up
+                ).with(
+                    slideOutOfContainer(
+                        animationSpec = tween(200, easing = EaseIn),
+                        towards = Down
+                    )
+                )
+            },
+            label = stringResource(id = R.string.save)
+        ) { targetState ->
+            PostActionItem(
+                icon = if (targetState) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
+                label = if (targetState) stringResource(R.string.save) else stringResource(R.string.save),
+                actionDescription = stringResource(R.string.save),
+                onclick = {
+                    isSaved = !isSaved
+                }
+            )
+        }
+
     }
 }
 
 @Composable
-fun PostActionItem(icon: ImageVector, label: String, actionDescription: String) {
+fun PostActionItem(
+    modifier: Modifier = Modifier,
+    icon: ImageVector,
+    label: String,
+    actionDescription: String,
+    onclick: () -> Unit = {}
+) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .wrapContentHeight()
-            .clickable {},
+            .clickable {
+                onclick()
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
