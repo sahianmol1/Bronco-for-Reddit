@@ -69,15 +69,6 @@ dependencies {
     implementation(project(":core:design-system"))
     implementation(project(":features:home:home-domain"))
 
-    // Exo Player - for media playback
-    implementation(libs.androidx.media3.exoplayer)
-    implementation(libs.androidx.media3.exoplayer.dash)
-    implementation(libs.androidx.media3.ui)
-
-    // coil
-    implementation(libs.coil.compose)
-    implementation(libs.coil.gif)
-
     // androidx-compose-lifecycle
     implementation(libs.viewmodel.lifecycle)
     implementation(libs.compose.runtime.lifecycle)

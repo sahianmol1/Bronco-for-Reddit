@@ -2,14 +2,14 @@ package com.bestway.design_system.ui_components
 
 import android.content.Context
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Bookmarks
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -54,8 +54,8 @@ fun BRNavigationBar(
                 BottomNavUiModel(
                     route = Destinations.SavedScreenDestination.route,
                     title = context.getString(R.string.saved),
-                    selectedIcon = Icons.Filled.Star,
-                    unselectedIcon = Icons.Outlined.StarOutline
+                    selectedIcon = Icons.Filled.Bookmarks,
+                    unselectedIcon = Icons.Outlined.Bookmarks
                 ),
                 BottomNavUiModel(
                     route = Destinations.AboutUsDestination.route,

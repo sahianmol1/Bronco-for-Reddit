@@ -3,9 +3,9 @@ package com.bestway.presentation.ui.screens.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bestway.design_system.models.RedditPostUiModel
 import com.bestway.domain.repositories.HomeRepository
-import com.bestway.presentation.model.RedditPostUiModel
-import com.bestway.presentation.model.asUiModel
+import com.bestway.presentation.utils.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

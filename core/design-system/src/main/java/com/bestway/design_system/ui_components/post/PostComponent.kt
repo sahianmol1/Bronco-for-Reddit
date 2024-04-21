@@ -1,4 +1,4 @@
-package com.bestway.presentation.ui.components
+package com.bestway.design_system.ui_components.post
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
@@ -13,11 +13,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.filled.ArrowUpward
-import androidx.compose.material.icons.filled.Message
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.BookmarkAdded
 import androidx.compose.material.icons.filled.VolumeOff
 import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.outlined.BookmarkAdd
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -53,9 +54,9 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
-import com.bestway.home_presentation.R
-import com.bestway.presentation.model.RedditPostUiModel
-import com.bestway.presentation.utils.rememberLifecycleEvent
+import com.bestway.design_system.R
+import com.bestway.design_system.models.RedditPostUiModel
+import com.bestway.design_system.utils.rememberLifecycleEvent
 
 @Composable
 fun PostComponent(
@@ -65,11 +66,11 @@ fun PostComponent(
 ) {
     Column(
         modifier =
-            modifier
-                .animateContentSize()
-                .clickable { onClick(redditPostUiModel) }
-                .padding(top = 8.dp)
-                .padding(horizontal = 16.dp),
+        modifier
+            .animateContentSize()
+            .clickable { onClick(redditPostUiModel) }
+            .padding(top = 8.dp)
+            .padding(horizontal = 16.dp),
     ) {
         SubRedditName(subName = redditPostUiModel.subName)
         OriginalPosterName(opName = redditPostUiModel.author)
@@ -88,7 +89,11 @@ fun PostComponent(
             }
         }
         redditPostUiModel.videoUrl?.let { PostVideo(videoUrl = it) }
-        PostActions(upVotes = redditPostUiModel.upVotes, comments = redditPostUiModel.comments)
+        PostActions(
+            upVotes = redditPostUiModel.upVotes,
+            comments = redditPostUiModel.comments,
+            isSaved = true
+        )
         Divider(modifier = Modifier.padding(top = 8.dp))
     }
 }
@@ -96,7 +101,9 @@ fun PostComponent(
 @Composable
 fun SubRedditName(subName: String) {
     Text(
-        modifier = Modifier.clickable {}.padding(top = 8.dp, bottom = 4.dp),
+        modifier = Modifier
+            .clickable {}
+            .padding(top = 8.dp, bottom = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.onPrimaryContainer,
         text = subName,
@@ -108,7 +115,9 @@ fun SubRedditName(subName: String) {
 @Composable
 fun OriginalPosterName(opName: String) {
     Text(
-        modifier = Modifier.clickable {}.padding(vertical = 4.dp),
+        modifier = Modifier
+            .clickable {}
+            .padding(vertical = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.onPrimaryContainer,
         text = "u/$opName",
@@ -151,13 +160,14 @@ fun PostImage(imageUrl: String) {
         }
         AsyncImage(
             modifier =
-                Modifier.clickable(
-                        interactionSource = interactionSource,
-                        role = Role.Image,
-                        indication = null
-                    ) {}
-                    .padding(vertical = 4.dp)
-                    .fillMaxWidth(),
+            Modifier
+                .clickable(
+                    interactionSource = interactionSource,
+                    role = Role.Image,
+                    indication = null
+                ) {}
+                .padding(vertical = 4.dp)
+                .fillMaxWidth(),
             model = imageUrl,
             contentScale = ContentScale.FillWidth,
             onLoading = { isImageLoading = true },
@@ -195,10 +205,11 @@ fun PostVideo(videoUrl: String) {
             // TODO: Fix this lint warning and properly use a key for DisposableEffect
             AndroidView(
                 modifier =
-                    Modifier.clickable {}
-                        .padding(vertical = 4.dp)
-                        .defaultMinSize(minHeight = 250.dp)
-                        .fillMaxWidth(),
+                Modifier
+                    .clickable {}
+                    .padding(vertical = 4.dp)
+                    .defaultMinSize(minHeight = 250.dp)
+                    .fillMaxWidth(),
                 factory = {
                     PlayerView(it).apply {
                         player = exoPlayer
@@ -211,9 +222,11 @@ fun PostVideo(videoUrl: String) {
                             playerView.onPause()
                             playerView.player?.pause()
                         }
+
                         Lifecycle.Event.ON_RESUME -> {
                             playerView.onResume()
                         }
+
                         else -> Unit
                     }
                 },
@@ -240,9 +253,9 @@ fun PostVideo(videoUrl: String) {
 fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
     IconButton(
         modifier =
-            Modifier.drawBehind {
-                drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
-            },
+        Modifier.drawBehind {
+            drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
+        },
         onClick = onSoundButtonClick
     ) {
         Icon(
@@ -255,7 +268,7 @@ fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
 }
 
 @Composable
-fun PostActions(modifier: Modifier = Modifier, upVotes: Int, comments: Int) {
+fun PostActions(modifier: Modifier = Modifier, upVotes: Int, comments: Int, isSaved: Boolean) {
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         PostActionItem(
             icon = Icons.Default.ArrowUpward,
@@ -263,14 +276,14 @@ fun PostActions(modifier: Modifier = Modifier, upVotes: Int, comments: Int) {
             actionDescription = stringResource(R.string.upvote)
         )
         PostActionItem(
-            icon = Icons.Default.Message,
+            icon = Icons.AutoMirrored.Outlined.Message,
             label = comments.toString(),
             actionDescription = stringResource(R.string.comment)
         )
         PostActionItem(
-            icon = Icons.Default.Share,
-            label = stringResource(R.string.share),
-            actionDescription = stringResource(R.string.share)
+            icon = if (isSaved) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
+            label = if (isSaved) stringResource(R.string.saved) else stringResource(R.string.save),
+            actionDescription = stringResource(R.string.save)
         )
     }
 }
@@ -278,14 +291,18 @@ fun PostActions(modifier: Modifier = Modifier, upVotes: Int, comments: Int) {
 @Composable
 fun PostActionItem(icon: ImageVector, label: String, actionDescription: String) {
     Row(
-        modifier = Modifier.wrapContentHeight().clickable {},
+        modifier = Modifier
+            .wrapContentHeight()
+            .clickable {},
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.padding(start = 8.dp).padding(vertical = 8.dp),
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .padding(vertical = 8.dp),
             imageVector = icon,
             contentDescription =
-                stringResource(R.string.post_action_content_description, actionDescription)
+            stringResource(R.string.post_action_content_description, actionDescription)
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),

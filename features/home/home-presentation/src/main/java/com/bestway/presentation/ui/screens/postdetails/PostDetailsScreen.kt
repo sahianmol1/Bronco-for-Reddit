@@ -16,7 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.bestway.presentation.model.RedditPostUiModel
+import com.bestway.design_system.models.RedditPostUiModel
+import com.bestway.design_system.ui_components.post.OriginalPosterName
+import com.bestway.design_system.ui_components.post.PostActions
+import com.bestway.design_system.ui_components.post.PostImage
+import com.bestway.design_system.ui_components.post.PostVideo
+import com.bestway.design_system.ui_components.post.SubRedditName
 import com.bestway.presentation.ui.components.CommentsView
 
 @Composable
@@ -34,41 +39,42 @@ fun PostDetailsScreen(modifier: Modifier = Modifier, redditPostUiModel: RedditPo
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
-        com.bestway.presentation.ui.components.SubRedditName(subName = redditPostUiModel.subName)
+        SubRedditName(subName = redditPostUiModel.subName)
 
-        com.bestway.presentation.ui.components.OriginalPosterName(opName = redditPostUiModel.author)
+        OriginalPosterName(opName = redditPostUiModel.author)
 
         if (!redditPostUiModel.title.isNullOrBlank()) {
-            PostDetailsTitle(title = redditPostUiModel.title)
+            PostDetailsTitle(title = redditPostUiModel.title.orEmpty())
         }
 
         if (!redditPostUiModel.description.isNullOrBlank()) {
-            PostDetailsDescription(description = redditPostUiModel.description)
+            PostDetailsDescription(description = redditPostUiModel.description.orEmpty())
         }
 
         redditPostUiModel.imageUrl?.let {
             if (it.endsWith("png") || it.endsWith("jpg")) {
-                com.bestway.presentation.ui.components.PostImage(imageUrl = redditPostUiModel.imageUrl)
+                PostImage(imageUrl = redditPostUiModel.imageUrl.orEmpty())
             }
             if (it.contains(".gif")) {
                 redditPostUiModel.gifUrl?.let {
-                    com.bestway.presentation.ui.components.PostVideo(
-                        videoUrl = redditPostUiModel.gifUrl
+                    PostVideo(
+                        videoUrl = redditPostUiModel.gifUrl.orEmpty()
                     )
                 }
             }
         }
 
         redditPostUiModel.videoUrl?.let { videoUrl ->
-            com.bestway.presentation.ui.components.PostVideo(
+            PostVideo(
                 videoUrl = videoUrl
             )
         }
 
-        com.bestway.presentation.ui.components.PostActions(
+        PostActions(
             modifier = Modifier.padding(top = 8.dp),
             upVotes = redditPostUiModel.upVotes,
-            comments = redditPostUiModel.comments
+            comments = redditPostUiModel.comments,
+            isSaved = false
         )
 
         Divider()

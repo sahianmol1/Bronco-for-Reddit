@@ -10,7 +10,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.bestway.common.navigation.Destinations
-import com.bestway.presentation.model.RedditPostUiModel
+import com.bestway.design_system.models.RedditPostUiModel
 import com.bestway.presentation.ui.screens.home.HomeScreen
 import com.bestway.presentation.ui.screens.postdetails.PostDetailsScreen
 import kotlinx.serialization.encodeToString

@@ -1,4 +1,4 @@
-package com.bestway.presentation.utils
+package com.bestway.design_system.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
