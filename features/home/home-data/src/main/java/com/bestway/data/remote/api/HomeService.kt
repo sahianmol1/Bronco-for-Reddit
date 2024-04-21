@@ -11,24 +11,24 @@ class HomeService(private val client: HttpClient) {
         return client.getSafeResponse(EndPoints.HOT + "?after=$nextPageKey")
     }
 
-    suspend fun getNewListings(): Result<ListingsResponse> {
-        return client.getSafeResponse(EndPoints.NEW)
+    suspend fun getNewListings(nextPageKey: String? = null): Result<ListingsResponse> {
+        return client.getSafeResponse(EndPoints.NEW + "?after=$nextPageKey")
     }
 
-    suspend fun getTopListings(): Result<ListingsResponse> {
-        return client.getSafeResponse(EndPoints.TOP)
+    suspend fun getTopListings(nextPageKey: String? = null): Result<ListingsResponse> {
+        return client.getSafeResponse(EndPoints.TOP + "?after=$nextPageKey")
     }
 
-    suspend fun getBestListings(): Result<ListingsResponse> {
-        return client.getSafeResponse(EndPoints.BEST)
+    suspend fun getBestListings(nextPageKey: String? = null): Result<ListingsResponse> {
+        return client.getSafeResponse(EndPoints.BEST + "?after=$nextPageKey")
     }
 
-    suspend fun getRisingListings(): Result<ListingsResponse> {
-        return client.getSafeResponse(EndPoints.RISING)
+    suspend fun getRisingListings(nextPageKey: String? = null): Result<ListingsResponse> {
+        return client.getSafeResponse(EndPoints.RISING + "?after=$nextPageKey")
     }
 
-    suspend fun getControversialListings(): Result<ListingsResponse> {
-        return client.getSafeResponse(EndPoints.CONTROVERSIAL)
+    suspend fun getControversialListings(nextPageKey: String? = null): Result<ListingsResponse> {
+        return client.getSafeResponse(EndPoints.CONTROVERSIAL + "?after=$nextPageKey")
     }
 }
 

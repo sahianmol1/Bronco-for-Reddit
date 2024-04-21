@@ -110,8 +110,7 @@ fun HomeScreen(
                         uiState = newPosts.value,
                         onClick = onClick,
                         refreshData = { homeViewModel.getNewPosts(true) },
-                        loadMoreData = {}
-                    )
+                        loadMoreData = { homeViewModel.getNewPosts(nextPageKey = it) }                    )
                 }
 
                 2 -> {
@@ -119,8 +118,7 @@ fun HomeScreen(
                         uiState = topPosts.value,
                         onClick = onClick,
                         refreshData = { homeViewModel.getTopPosts(true) },
-                        loadMoreData = {}
-                    )
+                        loadMoreData = { homeViewModel.getTopPosts(nextPageKey = it) }                    )
                 }
 
                 3 -> {
@@ -128,8 +126,7 @@ fun HomeScreen(
                         uiState = bestPosts.value,
                         onClick = onClick,
                         refreshData = { homeViewModel.getBestPosts(true) },
-                        loadMoreData = {}
-                    )
+                        loadMoreData = { homeViewModel.getBestPosts(nextPageKey = it) }                    )
                 }
 
                 4 -> {
@@ -137,8 +134,7 @@ fun HomeScreen(
                         uiState = risingPosts.value,
                         onClick = onClick,
                         refreshData = { homeViewModel.getRisingsPosts(true) },
-                        loadMoreData = {}
-                    )
+                        loadMoreData = { homeViewModel.getRisingsPosts(nextPageKey = it) }                    )
                 }
 
                 5 -> {
@@ -146,7 +142,7 @@ fun HomeScreen(
                         uiState = controversialPosts.value,
                         onClick = onClick,
                         refreshData = { homeViewModel.getControversialPosts(true) },
-                        loadMoreData = {}
+                        loadMoreData = { homeViewModel.getControversialPosts(nextPageKey = it) }
                     )
                 }
 

@@ -9,13 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
@@ -23,9 +22,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -54,7 +51,6 @@ fun HomeScreenListings(
     val pullRefreshState = rememberPullToRefreshState()
     val lazyListState = rememberLazyListState()
     val list by remember(uiState) { mutableStateOf(uiState.data.orEmpty()) }
-    var shouldShowPagingLoading by rememberSaveable { mutableStateOf(false) }
 
     if (pullRefreshState.isRefreshing) {
         LaunchedEffect(Unit) {
@@ -63,21 +59,15 @@ fun HomeScreenListings(
         }
     }
 
-    if (uiState.isDataRefreshed) {
-        pullRefreshState.endRefresh()
+    LaunchedEffect(uiState.isDataRefreshed) {
+        if (uiState.isDataRefreshed) {
+            pullRefreshState.endRefresh()
+            lazyListState.animateScrollToItem(0, 0)
+        }
     }
 
-    val firstVisibleItemIndex by remember {
-        derivedStateOf { lazyListState.firstVisibleItemIndex }
-    }
-
-    if (lazyListState.isScrollingDown() && firstVisibleItemIndex == list.size - 5) {
-        shouldShowPagingLoading = true
+    if (!lazyListState.canScrollForward && uiState.data?.isNotEmpty() == true) {
         loadMoreData(list.last().after)
-    }
-
-    if (uiState.pageDataLoadFinished) {
-        shouldShowPagingLoading = false
     }
 
     Box(
@@ -85,7 +75,8 @@ fun HomeScreenListings(
     ) {
         AnimatedVisibility(visible = list.isNotEmpty(), enter = slideInFromBottomTransition()) {
             LazyColumn(
-                state = lazyListState
+                state = lazyListState,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 itemsIndexed(
                     items = list,
@@ -106,10 +97,11 @@ fun HomeScreenListings(
                         onClick = onClick
                     )
                 }
-                if (shouldShowPagingLoading) {
-                    item("last_item", contentType = "loading_indicator") {
-                        LinearProgressIndicator()
-                    }
+
+                item("paging_loading_indicator", contentType = "loading_indicator") {
+                    CircularProgressIndicator(
+                        modifier = Modifier.padding(16.dp)
+                    )
                 }
             }
         }
@@ -154,24 +146,6 @@ fun HomeScreenListings(
             else PullToRefreshDefaults.containerColor
         )
     }
-}
-
-@Composable
-private fun LazyListState.isScrollingDown(): Boolean {
-    var previousIndex by remember(this) { mutableIntStateOf(firstVisibleItemIndex) }
-    var previousScrollOffset by remember(this) { mutableIntStateOf(firstVisibleItemScrollOffset) }
-    return remember(this) {
-        derivedStateOf {
-            if (previousIndex != firstVisibleItemIndex) {
-                previousIndex < firstVisibleItemIndex
-            } else {
-                previousScrollOffset < firstVisibleItemScrollOffset
-            }.also {
-                previousIndex = firstVisibleItemIndex
-                previousScrollOffset = firstVisibleItemScrollOffset
-            }
-        }
-    }.value
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
