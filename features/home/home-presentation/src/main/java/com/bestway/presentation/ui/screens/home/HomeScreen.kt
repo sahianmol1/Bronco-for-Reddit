@@ -86,7 +86,11 @@ fun HomeScreen(
             pageCount = { tabs.size }
         )
 
-    Column(modifier = modifier.fillMaxSize().statusBarsPadding()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+    ) {
         BRScrollableTabRow(tabs = tabs, pagerState = pagerState)
         BRHorizontalPager(
             pagerState = pagerState,
@@ -96,39 +100,52 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = hotPosts.value,
                         onClick = onClick,
-                        refreshData = { homeViewModel.getHotPosts(true) }
+                        refreshData = { homeViewModel.getHotPosts(shouldRefreshData = true) },
+                        loadMoreData = { homeViewModel.getHotPosts(nextPageKey = it) }
                     )
                 }
+
                 1 -> {
                     HomeScreenListings(
                         uiState = newPosts.value,
                         onClick = onClick,
-                        refreshData = { homeViewModel.getNewPosts(true) })
+                        refreshData = { homeViewModel.getNewPosts(true) },
+                        loadMoreData = { homeViewModel.getNewPosts(nextPageKey = it) }                    )
                 }
+
                 2 -> {
                     HomeScreenListings(
                         uiState = topPosts.value,
                         onClick = onClick,
-                        refreshData = { homeViewModel.getTopPosts(true) })
+                        refreshData = { homeViewModel.getTopPosts(true) },
+                        loadMoreData = { homeViewModel.getTopPosts(nextPageKey = it) }                    )
                 }
+
                 3 -> {
                     HomeScreenListings(
                         uiState = bestPosts.value,
                         onClick = onClick,
-                        refreshData = { homeViewModel.getBestPosts(true) })
+                        refreshData = { homeViewModel.getBestPosts(true) },
+                        loadMoreData = { homeViewModel.getBestPosts(nextPageKey = it) }                    )
                 }
+
                 4 -> {
                     HomeScreenListings(
                         uiState = risingPosts.value,
                         onClick = onClick,
-                        refreshData = { homeViewModel.getRisingsPosts(true) })
+                        refreshData = { homeViewModel.getRisingsPosts(true) },
+                        loadMoreData = { homeViewModel.getRisingsPosts(nextPageKey = it) }                    )
                 }
+
                 5 -> {
                     HomeScreenListings(
                         uiState = controversialPosts.value,
                         onClick = onClick,
-                        refreshData = { homeViewModel.getControversialPosts(true) })
+                        refreshData = { homeViewModel.getControversialPosts(true) },
+                        loadMoreData = { homeViewModel.getControversialPosts(nextPageKey = it) }
+                    )
                 }
+
                 else -> {
                     Column(
                         modifier = Modifier.fillMaxSize(),

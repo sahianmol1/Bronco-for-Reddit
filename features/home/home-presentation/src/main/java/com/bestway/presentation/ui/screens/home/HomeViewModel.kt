@@ -43,11 +43,11 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(PostsUiState())
     var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
 
-    fun getHotPosts(shouldRefreshData: Boolean = false) {
+    fun getHotPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
         repository
-            .getHotPosts(shouldRefreshData)
+            .getHotPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData) {
+                if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
                     _hotPosts.update { it.copy(isLoading = true) }
                 }
             }
@@ -68,11 +68,11 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getNewPosts(shouldRefreshData: Boolean = false) {
+    fun getNewPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
         repository
-            .getNewPosts(shouldRefreshData)
+            .getNewPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData) {
+                if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
                     _newPosts.update { it.copy(isLoading = true) }
                 }
             }
@@ -95,11 +95,11 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getTopPosts(shouldRefreshData: Boolean = false) {
+    fun getTopPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
         repository
-            .getTopPosts(shouldRefreshData)
+            .getTopPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData) {
+                if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
                     _topPosts.update { it.copy(isLoading = true) }
                 }
             }
@@ -122,11 +122,11 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getBestPosts(shouldRefreshData: Boolean = false) {
+    fun getBestPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
         repository
-            .getBestPosts(shouldRefreshData)
+            .getBestPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData) {
+                if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
                     _bestPosts.update { it.copy(isLoading = true) }
                 }
             }
@@ -150,11 +150,11 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getRisingsPosts(shouldRefreshData: Boolean = false) {
+    fun getRisingsPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
         repository
-            .getRisingPosts(shouldRefreshData)
+            .getRisingPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData) {
+                if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
                     _risingPosts.update { it.copy(isLoading = true) }
                 }
             }
@@ -177,11 +177,11 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getControversialPosts(shouldRefreshData: Boolean = false) {
+    fun getControversialPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
         repository
-            .getControversialPosts(shouldRefreshData)
+            .getControversialPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData) {
+                if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
                     _controversialPosts.update { it.copy(isLoading = true) }
                 }
             }

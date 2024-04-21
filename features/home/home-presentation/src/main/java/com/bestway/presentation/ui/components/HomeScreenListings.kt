@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
@@ -43,9 +45,11 @@ import com.bestway.presentation.ui.screens.home.PostsUiState
 fun HomeScreenListings(
     uiState: PostsUiState,
     onClick: (redditPostUiModel: RedditPostUiModel) -> Unit,
-    refreshData: () -> Unit
+    refreshData: () -> Unit,
+    loadMoreData: (nextPageKey: String?) -> Unit,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
+    val lazyListState = rememberLazyListState()
     val list by remember(uiState) { mutableStateOf(uiState.data.orEmpty()) }
 
     if (pullRefreshState.isRefreshing) {
@@ -55,15 +59,25 @@ fun HomeScreenListings(
         }
     }
 
-    if (uiState.isDataRefreshed) {
-        pullRefreshState.endRefresh()
+    LaunchedEffect(uiState.isDataRefreshed) {
+        if (uiState.isDataRefreshed) {
+            pullRefreshState.endRefresh()
+            lazyListState.animateScrollToItem(0, 0)
+        }
+    }
+
+    if (!lazyListState.canScrollForward && uiState.data?.isNotEmpty() == true) {
+        loadMoreData(list.last().after)
     }
 
     Box(
         Modifier.nestedScroll(pullRefreshState.nestedScrollConnection)
     ) {
         AnimatedVisibility(visible = list.isNotEmpty(), enter = slideInFromBottomTransition()) {
-            LazyColumn {
+            LazyColumn(
+                state = lazyListState,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 itemsIndexed(
                     items = list,
                     key = { _, item ->
@@ -81,6 +95,12 @@ fun HomeScreenListings(
                         },
                         redditPostUiModel = item,
                         onClick = onClick
+                    )
+                }
+
+                item("paging_loading_indicator", contentType = "loading_indicator") {
+                    CircularProgressIndicator(
+                        modifier = Modifier.padding(16.dp)
                     )
                 }
             }
