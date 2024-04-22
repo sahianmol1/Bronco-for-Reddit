@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
@@ -204,6 +205,14 @@ class HomeViewModel @Inject constructor(
                 }
             }
             .launchIn(viewModelScope)
+    }
+
+    fun onSaveIconClick(postId: String, onPostSaved: (Boolean) -> Unit): Unit {
+        viewModelScope.launch {
+            val isPostSaved = repository.updatePost(postId)
+            getHotPosts()
+            onPostSaved(isPostSaved)
+        }
     }
 }
 

@@ -69,7 +69,8 @@ import com.bestway.design_system.utils.rememberLifecycleEvent
 fun PostComponent(
     modifier: Modifier = Modifier,
     redditPostUiModel: RedditPostUiModel,
-    onClick: (redditPostUiModel: RedditPostUiModel) -> Unit
+    onClick: (redditPostUiModel: RedditPostUiModel) -> Unit,
+    onSaveIconClick: (postId: String) -> Unit
 ) {
     Column(
         modifier =
@@ -99,7 +100,8 @@ fun PostComponent(
         PostActions(
             upVotes = redditPostUiModel.upVotes,
             comments = redditPostUiModel.comments,
-            isSaved = true
+            onSaveIconClick = { onSaveIconClick(redditPostUiModel.id) },
+            isSaved = redditPostUiModel.isSaved
         )
         Divider(modifier = Modifier.padding(top = 8.dp))
     }
@@ -276,9 +278,13 @@ fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun PostActions(modifier: Modifier = Modifier, upVotes: Int, comments: Int, isSaved: Boolean) {
-    var isSaved by rememberSaveable { mutableStateOf(false) }
-
+fun PostActions(
+    modifier: Modifier = Modifier,
+    upVotes: Int,
+    comments: Int,
+    isSaved: Boolean,
+    onSaveIconClick: () -> Unit
+) {
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         PostActionItem(
             icon = Icons.Default.ArrowUpward,
@@ -310,12 +316,9 @@ fun PostActions(modifier: Modifier = Modifier, upVotes: Int, comments: Int, isSa
                 icon = if (targetState) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
                 label = if (targetState) stringResource(R.string.save) else stringResource(R.string.save),
                 actionDescription = stringResource(R.string.save),
-                onclick = {
-                    isSaved = !isSaved
-                }
+                onclick = onSaveIconClick
             )
         }
-
     }
 }
 
@@ -355,5 +358,9 @@ fun PostActionItem(
 @Preview
 @Composable
 fun PostPreview() {
-    PostComponent(redditPostUiModel = RedditPostUiModel(id = "0"), onClick = {})
+    PostComponent(
+        redditPostUiModel = RedditPostUiModel(id = "0"),
+        onClick = {},
+        onSaveIconClick = { false }
+    )
 }

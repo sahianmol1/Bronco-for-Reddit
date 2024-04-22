@@ -47,7 +47,8 @@ fun List<RedditPostEntity>.asDomain(): List<RedditPost>? {
             videoUrl = it.videoUrl,
             gifUrl = it.gifUrl,
             author = it.author,
-            after = it.after
+            after = it.after,
+            isSaved = it.isSaved
         )
     }
 }

@@ -48,6 +48,7 @@ fun HomeScreenListings(
     onClick: (redditPostUiModel: RedditPostUiModel) -> Unit,
     refreshData: () -> Unit,
     loadMoreData: (nextPageKey: String?) -> Unit,
+    onSaveIconClick: (postId: String) -> Unit
 ) {
     val pullRefreshState = rememberPullToRefreshState()
     val lazyListState = rememberLazyListState()
@@ -95,7 +96,8 @@ fun HomeScreenListings(
                             else -> Modifier
                         },
                         redditPostUiModel = item,
-                        onClick = onClick
+                        onClick = onClick,
+                        onSaveIconClick = onSaveIconClick
                     )
                 }
 

@@ -16,6 +16,7 @@ fun RedditPost.asUiModel(): RedditPostUiModel {
         videoUrl = this.videoUrl,
         gifUrl = this.gifUrl,
         author = this.author,
-        after = this.after
+        after = this.after,
+        isSaved = this.isSaved
     )
 }

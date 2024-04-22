@@ -216,4 +216,10 @@ class HomeRepositoryImpl(
             )
         }
     }
+
+    override suspend fun updatePost(postId: String): Boolean {
+        val redditPost = redditPostDao.getRedditPostById(id = postId)
+        redditPostDao.insertRedditPost(redditPostEntity = redditPost.copy(isSaved = !redditPost.isSaved))
+        return redditPostDao.getRedditPostById(id = postId).isSaved
+    }
 }

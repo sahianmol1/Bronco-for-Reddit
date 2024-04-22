@@ -74,7 +74,8 @@ fun PostDetailsScreen(modifier: Modifier = Modifier, redditPostUiModel: RedditPo
             modifier = Modifier.padding(top = 8.dp),
             upVotes = redditPostUiModel.upVotes,
             comments = redditPostUiModel.comments,
-            isSaved = false
+            isSaved = redditPostUiModel.isSaved,
+            onSaveIconClick = {}
         )
 
         Divider()

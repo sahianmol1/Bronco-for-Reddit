@@ -12,5 +12,6 @@ data class RedditPost(
     val videoUrl: String? = null,
     val gifUrl: String? = null,
     val author: String = "",
-    val after: String? = null
+    val after: String? = null,
+    val isSaved: Boolean = false
 )

@@ -9,4 +9,5 @@
     <string name="rising">Rising</string>
     <string name="controversial">Controversial</string>
     <string name="unavailable">Unavailable</string>
+    <string name="post_saved_success">Post Saved Successfully!</string>
 </resources>
