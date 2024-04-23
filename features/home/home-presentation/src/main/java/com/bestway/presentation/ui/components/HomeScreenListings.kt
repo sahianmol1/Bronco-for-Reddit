@@ -34,7 +34,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.bestway.design_system.models.RedditPostUiModel
 import com.bestway.design_system.ui_components.BRLinearProgressIndicator
 import com.bestway.design_system.ui_components.post.PostComponent
 import com.bestway.design_system.utils.slideInFromBottomTransition
@@ -45,7 +44,7 @@ import com.bestway.presentation.ui.screens.home.PostsUiState
 @Composable
 fun HomeScreenListings(
     uiState: PostsUiState,
-    onClick: (redditPostUiModel: RedditPostUiModel) -> Unit,
+    onClick: (postId: String) -> Unit,
     refreshData: () -> Unit,
     loadMoreData: (nextPageKey: String?) -> Unit,
     onSaveIconClick: (postId: String) -> Unit

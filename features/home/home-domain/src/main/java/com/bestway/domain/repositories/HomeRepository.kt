@@ -18,4 +18,6 @@ interface HomeRepository {
     fun getControversialPosts(shouldRefreshData: Boolean, nextPageKey: String? = null): Flow<List<RedditPost>?>
 
     suspend fun updatePost(postId: String): Boolean
+
+    suspend fun getPostById(postId: String): RedditPost
 }

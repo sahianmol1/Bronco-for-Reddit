@@ -10,11 +10,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.bestway.common.navigation.Destinations
-import com.bestway.design_system.models.RedditPostUiModel
 import com.bestway.presentation.ui.screens.home.HomeScreen
 import com.bestway.presentation.ui.screens.postdetails.PostDetailsScreen
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
     composable(
@@ -33,21 +30,20 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
         }
     ) {
         HomeScreen(
-            onClick = { redditPost ->
-                val redditPostSerialized = Json.encodeToString(redditPost)
+            onClick = { postId ->
                 navController.navigate(
                     Destinations.ProfileDetailsDestinations.route +
-                            "?reddit-post=$redditPostSerialized"
+                            "?post-id=$postId"
                 )
             }
         )
     }
 
     composable(
-        route = Destinations.ProfileDetailsDestinations.route + "?reddit-post={reddit-post}",
+        route = Destinations.ProfileDetailsDestinations.route + "?post-id={post-id}",
         arguments =
         listOf(
-            navArgument("reddit-post") {
+            navArgument("post-id") {
                 type = NavType.StringType
                 nullable = true
                 defaultValue = null
@@ -66,8 +62,7 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
             )
         },
     ) { navBackStackEntry ->
-        val redditPostSerialized = navBackStackEntry.arguments?.getString("reddit-post")
-        val redditPost = Json.decodeFromString<RedditPostUiModel>(redditPostSerialized.orEmpty())
-        PostDetailsScreen(redditPostUiModel = redditPost)
+        val postId = navBackStackEntry.arguments?.getString("post-id")
+        PostDetailsScreen(postId = postId.orEmpty())
     }
 }

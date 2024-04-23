@@ -69,14 +69,14 @@ import com.bestway.design_system.utils.rememberLifecycleEvent
 fun PostComponent(
     modifier: Modifier = Modifier,
     redditPostUiModel: RedditPostUiModel,
-    onClick: (redditPostUiModel: RedditPostUiModel) -> Unit,
+    onClick: (postId: String) -> Unit,
     onSaveIconClick: (postId: String) -> Unit
 ) {
     Column(
         modifier =
         modifier
             .animateContentSize()
-            .clickable { onClick(redditPostUiModel) }
+            .clickable { onClick(redditPostUiModel.id) }
             .padding(top = 8.dp)
             .padding(horizontal = 16.dp),
     ) {

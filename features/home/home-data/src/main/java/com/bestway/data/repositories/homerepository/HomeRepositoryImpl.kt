@@ -222,4 +222,8 @@ class HomeRepositoryImpl(
         redditPostDao.insertRedditPost(redditPostEntity = redditPost.copy(isSaved = !redditPost.isSaved))
         return redditPostDao.getRedditPostById(id = postId).isSaved
     }
+
+    override suspend fun getPostById(postId: String): RedditPost {
+        return redditPostDao.getRedditPostById(id = postId).asDomain()
+    }
 }
