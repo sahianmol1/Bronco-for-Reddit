@@ -1,4 +1,4 @@
-package com.bestway.design_system.ui_components.post
+package com.anmolsahi.common_ui.components
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Down
@@ -61,9 +61,9 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
-import com.bestway.design_system.R
-import com.bestway.design_system.models.RedditPostUiModel
-import com.bestway.design_system.utils.rememberLifecycleEvent
+import com.anmolsahi.common_ui.R
+import com.anmolsahi.common_ui.models.RedditPostUiModel
+import com.anmolsahi.common_ui.utils.rememberLifecycleEvent
 
 @Composable
 fun PostComponent(

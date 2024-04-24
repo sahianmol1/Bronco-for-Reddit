@@ -28,12 +28,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.anmolsahi.common_ui.components.OriginalPosterName
+import com.anmolsahi.common_ui.components.PostActions
+import com.anmolsahi.common_ui.components.SubRedditName
 import com.bestway.design_system.ui_components.BRLinearProgressIndicator
-import com.bestway.design_system.ui_components.post.OriginalPosterName
-import com.bestway.design_system.ui_components.post.PostActions
-import com.bestway.design_system.ui_components.post.PostImage
-import com.bestway.design_system.ui_components.post.PostVideo
-import com.bestway.design_system.ui_components.post.SubRedditName
 import com.bestway.design_system.utils.slideInFromBottomTransition
 import com.bestway.home_presentation.R
 import com.bestway.presentation.ui.components.CommentsView
@@ -83,11 +81,11 @@ fun PostDetailsScreen(
 
             postDetails.value.data?.imageUrl?.let {
                 if (it.endsWith("png") || it.endsWith("jpg")) {
-                    PostImage(imageUrl = postDetails.value.data?.imageUrl.orEmpty())
+                    com.anmolsahi.common_ui.components.PostImage(imageUrl = postDetails.value.data?.imageUrl.orEmpty())
                 }
                 if (it.contains(".gif")) {
                     postDetails.value.data?.gifUrl?.let {
-                        PostVideo(
+                        com.anmolsahi.common_ui.components.PostVideo(
                             videoUrl = postDetails.value.data?.gifUrl.orEmpty()
                         )
                     }
@@ -95,7 +93,7 @@ fun PostDetailsScreen(
             }
 
             postDetails.value.data?.videoUrl?.let { videoUrl ->
-                PostVideo(
+                com.anmolsahi.common_ui.components.PostVideo(
                     videoUrl = videoUrl
                 )
             }

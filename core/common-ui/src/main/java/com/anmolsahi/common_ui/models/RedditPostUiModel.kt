@@ -1,4 +1,4 @@
-package com.bestway.design_system.models
+package com.anmolsahi.common_ui.models
 
 import androidx.compose.runtime.Immutable
 import kotlinx.serialization.Serializable

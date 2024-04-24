@@ -1,11 +1,12 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
+    kotlin("plugin.serialization")
 }
 
 android {
     namespace = "com.anmolsahi.common_ui"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         minSdk = 24
@@ -30,6 +31,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
+    }
 }
 
 dependencies {
@@ -40,4 +47,28 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.extended.icons)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.tooling.preview)
+    implementation(libs.compose.material3)
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
+    implementation(project(":core:common"))
+
+    // Compose navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // Exo Player - for media playback
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.ui)
+
+    // coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.gif)
 }

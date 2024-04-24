@@ -2,7 +2,7 @@ package com.bestway.presentation.ui.screens.postdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bestway.design_system.models.RedditPostUiModel
+import com.anmolsahi.common_ui.models.RedditPostUiModel
 import com.bestway.domain.repositories.HomeRepository
 import com.bestway.presentation.utils.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +24,7 @@ class PostDetailsViewModel @Inject constructor(
     )
     val postDetails: StateFlow<PostDetailsUiState> = _postDetails.asStateFlow()
 
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         _postDetails.update {
             it.copy(
                 isLoading = false,
@@ -34,7 +34,7 @@ class PostDetailsViewModel @Inject constructor(
     }
 
     fun getPostDetails(postId: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineExceptionHandler) {
             _postDetails.update { it.copy(isLoading = true) }
 
             val post = repository.getPostById(postId = postId)

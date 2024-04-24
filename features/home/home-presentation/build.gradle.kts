@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.extended.icons)
 
     implementation(project(":core:common"))
+    implementation(project(":core:common-ui"))
     implementation(project(":core:design-system"))
     implementation(project(":features:home:home-domain"))
 

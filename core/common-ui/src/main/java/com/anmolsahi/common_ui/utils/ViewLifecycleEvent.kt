@@ -1,4 +1,4 @@
-package com.bestway.design_system.utils
+package com.anmolsahi.common_ui.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

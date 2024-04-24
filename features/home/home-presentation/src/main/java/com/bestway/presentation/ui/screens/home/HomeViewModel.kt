@@ -3,7 +3,7 @@ package com.bestway.presentation.ui.screens.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bestway.design_system.models.RedditPostUiModel
+import com.anmolsahi.common_ui.models.RedditPostUiModel
 import com.bestway.domain.repositories.HomeRepository
 import com.bestway.presentation.utils.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: HomeRepository
+    private val repository: HomeRepository,
 ) : ViewModel() {
 
     // Ui State properties
@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(PostsUiState())
     var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
 
-    fun getHotPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
+    fun getHotPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
         repository
             .getHotPosts(shouldRefreshData, nextPageKey)
             .onStart {
@@ -69,7 +69,7 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getNewPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
+    fun getNewPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
         repository
             .getNewPosts(shouldRefreshData, nextPageKey)
             .onStart {
@@ -96,7 +96,7 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getTopPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
+    fun getTopPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
         repository
             .getTopPosts(shouldRefreshData, nextPageKey)
             .onStart {
@@ -123,7 +123,7 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getBestPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
+    fun getBestPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
         repository
             .getBestPosts(shouldRefreshData, nextPageKey)
             .onStart {
@@ -151,7 +151,7 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getRisingsPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
+    fun getRisingsPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
         repository
             .getRisingPosts(shouldRefreshData, nextPageKey)
             .onStart {
@@ -178,7 +178,7 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun getControversialPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = null) {
+    fun getControversialPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
         repository
             .getControversialPosts(shouldRefreshData, nextPageKey)
             .onStart {
@@ -207,11 +207,25 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun onSaveIconClick(postId: String, onPostSaved: (Boolean) -> Unit): Unit {
+    fun onSaveIconClick(postId: String, onPostSaved: (Boolean) -> Unit) {
         viewModelScope.launch {
             val isPostSaved = repository.updatePost(postId)
-            getHotPosts()
+            updatePostSavedUiState(postId, isPostSaved)
             onPostSaved(isPostSaved)
+        }
+    }
+
+    private fun updatePostSavedUiState(postId: String, isPostSaved: Boolean) {
+        _hotPosts.update {
+            it.copy(
+                data = it.data?.map { post ->
+                    if (post.id == postId) {
+                        post.copy(isSaved = isPostSaved)
+                    } else {
+                        post
+                    }
+                }
+            )
         }
     }
 }
@@ -221,5 +235,5 @@ data class PostsUiState(
     val data: List<RedditPostUiModel>? = null,
     val isLoading: Boolean = false,
     val isDataRefreshed: Boolean = false,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
 )
