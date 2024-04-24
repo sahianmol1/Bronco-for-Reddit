@@ -1,4 +1,4 @@
-package com.bestway.presentation.ui.components
+package com.anmolsahi.common_ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -24,8 +24,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.anmolsahi.common_ui.R
 import com.bestway.design_system.theme.BroncoForRedditTheme
-import com.bestway.home_presentation.R
 
 @Composable
 fun CommentsView(modifier: Modifier = Modifier) {
@@ -57,10 +57,11 @@ fun OPBadge() {
     val opBackgroundColor = MaterialTheme.colorScheme.secondary
     Text(
         modifier =
-            Modifier.clickable {}
-                .padding(start = 4.dp, end = 8.dp)
-                .drawBehind { drawOval(color = opBackgroundColor) }
-                .padding(4.dp),
+        Modifier
+            .clickable {}
+            .padding(start = 4.dp, end = 8.dp)
+            .drawBehind { drawOval(color = opBackgroundColor) }
+            .padding(4.dp),
         text = "OP",
         fontSize = 8.sp,
         color = MaterialTheme.colorScheme.onSecondary
@@ -87,7 +88,10 @@ fun CommentText(text: String) {
 @Composable
 fun CommentUpVotes() {
     Row(
-        modifier = Modifier.wrapContentHeight().clickable {}.padding(bottom = 8.dp),
+        modifier = Modifier
+            .wrapContentHeight()
+            .clickable {}
+            .padding(bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -107,7 +111,9 @@ fun CommentUpVotes() {
 @Composable
 fun ViewReplies() {
     Text(
-        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp).clickable {},
+        modifier = Modifier
+            .padding(start = 16.dp, bottom = 8.dp)
+            .clickable {},
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.onPrimaryContainer,
         text = "View Replies",

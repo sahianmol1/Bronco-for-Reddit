@@ -11,4 +11,6 @@
     <string name="comment">Comment</string>
     <string name="save">"Save"</string>
     <string name="share">Share</string>
+    <string name="post_saved_success">Post Saved Successfully!</string>
+    <string name="uh_oh_something_went_wrong">Uh oh! Something went wrong.</string>
 </resources>

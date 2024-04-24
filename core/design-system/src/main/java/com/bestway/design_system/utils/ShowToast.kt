@@ -1,4 +1,4 @@
-package com.bestway.presentation.utils
+package com.bestway.design_system.utils
 
 import android.content.Context
 import android.widget.Toast

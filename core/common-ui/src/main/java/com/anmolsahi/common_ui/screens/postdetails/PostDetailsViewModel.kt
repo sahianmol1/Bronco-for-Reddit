@@ -1,10 +1,9 @@
-package com.bestway.presentation.ui.screens.postdetails
+package com.anmolsahi.common_ui.screens.postdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anmolsahi.common_ui.delegate.CommonUiDelegate
 import com.anmolsahi.common_ui.models.RedditPostUiModel
-import com.bestway.domain.repositories.HomeRepository
-import com.bestway.presentation.utils.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailsViewModel @Inject constructor(
-    private val repository: HomeRepository
+    private val delegate: CommonUiDelegate
 ): ViewModel() {
 
     private val _postDetails: MutableStateFlow<PostDetailsUiState> = MutableStateFlow(
@@ -37,16 +36,16 @@ class PostDetailsViewModel @Inject constructor(
         viewModelScope.launch(coroutineExceptionHandler) {
             _postDetails.update { it.copy(isLoading = true) }
 
-            val post = repository.getPostById(postId = postId)
+            val post = delegate.getPostById(postId = postId)
             _postDetails.update {
-                it.copy(isLoading = false, data = post.asUiModel())
+                it.copy(isLoading = false, data = post)
             }
         }
     }
 
     fun onSaveIconClick(postId: String, onPostSaved: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val isPostSaved = repository.updatePost(postId)
+            val isPostSaved = delegate.updatePost(postId)
             getPostDetails(postId = postId)
             onPostSaved(isPostSaved)
         }

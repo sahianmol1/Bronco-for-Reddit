@@ -9,9 +9,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.anmolsahi.common_ui.screens.postdetails.PostDetailsScreen
 import com.bestway.common.navigation.Destinations
 import com.bestway.presentation.ui.screens.home.HomeScreen
-import com.bestway.presentation.ui.screens.postdetails.PostDetailsScreen
 
 fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
     composable(

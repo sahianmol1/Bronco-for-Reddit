@@ -20,9 +20,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bestway.design_system.ui_components.BRHorizontalPager
 import com.bestway.design_system.ui_components.BRScrollableTabRow
+import com.bestway.design_system.utils.showToast
 import com.bestway.home_presentation.R
 import com.bestway.presentation.ui.components.HomeScreenListings
-import com.bestway.presentation.utils.showToast
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

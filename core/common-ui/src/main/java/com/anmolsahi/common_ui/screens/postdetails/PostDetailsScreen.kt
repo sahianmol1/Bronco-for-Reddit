@@ -1,4 +1,4 @@
-package com.bestway.presentation.ui.screens.postdetails
+package com.anmolsahi.common_ui.screens.postdetails
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
@@ -28,14 +28,14 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.anmolsahi.common_ui.R
+import com.anmolsahi.common_ui.components.CommentsView
 import com.anmolsahi.common_ui.components.OriginalPosterName
 import com.anmolsahi.common_ui.components.PostActions
 import com.anmolsahi.common_ui.components.SubRedditName
 import com.bestway.design_system.ui_components.BRLinearProgressIndicator
+import com.bestway.design_system.utils.showToast
 import com.bestway.design_system.utils.slideInFromBottomTransition
-import com.bestway.home_presentation.R
-import com.bestway.presentation.ui.components.CommentsView
-import com.bestway.presentation.utils.showToast
 
 @Composable
 fun PostDetailsScreen(

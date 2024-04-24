@@ -94,6 +94,8 @@ dependencies {
     implementation(project(":core:navigation"))
     implementation(project(":features:home:home-domain"))
     implementation(project(":features:home:home-data"))
+    implementation(project(":features:home:home-presentation"))
+    implementation(project(":core:common-ui"))
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)
