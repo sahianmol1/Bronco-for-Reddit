@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anmolsahi.common_ui.models.RedditPostUiModel
 import com.bestway.domain.repositories.HomeRepository
+import com.bestway.presentation.delegate.HomeDelegate
 import com.bestway.presentation.utils.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: HomeRepository,
+    private val delegate: HomeDelegate
 ) : ViewModel() {
 
     // Ui State properties
@@ -210,6 +212,7 @@ class HomeViewModel @Inject constructor(
     fun onSaveIconClick(postId: String, onPostSaved: (Boolean) -> Unit) {
         viewModelScope.launch {
             val isPostSaved = repository.updatePost(postId)
+            delegate.updateSavedPosts(isPostSaved, postId)
             updatePostSavedUiState(postId, isPostSaved)
             onPostSaved(isPostSaved)
         }

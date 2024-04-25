@@ -96,6 +96,8 @@ dependencies {
     implementation(project(":features:home:home-data"))
     implementation(project(":features:home:home-presentation"))
     implementation(project(":core:common-ui"))
+    implementation(project(":features:savedposts:saved-data"))
+    implementation(project(":features:savedposts:saved-domain"))
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)

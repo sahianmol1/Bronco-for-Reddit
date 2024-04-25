@@ -2,10 +2,11 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
+    kotlin("kapt")
 }
 
 android {
-    namespace = "com.bestway.navigation"
+    namespace = "com.bestway.subreddit_presentation"
     compileSdk = 33
 
     defaultConfig {
@@ -44,6 +45,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.navigation.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -58,10 +60,16 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    implementation(project(":features:about:about-presentation"))
-    implementation(project(":features:home:home-presentation"))
-    implementation(project(":features:search:search-presentation"))
-    implementation(project(":features:savedposts:saved-presentation"))
-    implementation(project(":core:common"))
+    // androidx-compose-lifecycle
+    implementation(libs.viewmodel.lifecycle)
+    implementation(libs.compose.runtime.lifecycle)
 
+    implementation(project(":core:common"))
+    implementation(project(":core:common-ui"))
+    implementation(project(":features:savedposts:saved-domain"))
+    implementation(project(":core:design-system"))
+
+    // dagger hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 }

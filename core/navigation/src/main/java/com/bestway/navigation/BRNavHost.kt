@@ -7,8 +7,8 @@ import androidx.navigation.compose.NavHost
 import com.bestway.common.navigation.Destinations.HomeScreenDestination
 import com.bestway.presentation.navigation.aboutUsNavGraph
 import com.bestway.presentation.navigation.homeNavGraph
+import com.bestway.presentation.navigation.savedPostsNavGraph
 import com.bestway.presentation.navigation.searchNavGraph
-import com.bestway.presentation.navigation.subredditNavGraph
 
 @Composable
 fun BRNavHost(modifier: Modifier = Modifier, navController: NavHostController) {
@@ -19,7 +19,7 @@ fun BRNavHost(modifier: Modifier = Modifier, navController: NavHostController) {
     ) {
         homeNavGraph(navController = navController)
         searchNavGraph(navController = navController)
-        subredditNavGraph(navController = navController)
+        savedPostsNavGraph(navController = navController)
         aboutUsNavGraph(navController = navController)
     }
 }

@@ -1,9 +1,10 @@
 package com.bestway.presentation.utils
 
+import com.anmolsahi.common_ui.models.RedditPostUiModel
 import com.bestway.domain.model.RedditPost
 
-fun RedditPost.asUiModel(): com.anmolsahi.common_ui.models.RedditPostUiModel {
-    return com.anmolsahi.common_ui.models.RedditPostUiModel(
+fun RedditPost.asUiModel(): RedditPostUiModel {
+    return RedditPostUiModel(
         id = this.id,
         subName = this.subName,
         title = this.title,
