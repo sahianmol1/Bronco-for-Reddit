@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="bottom_bar_content_description">Bottom Bar: %1$s</string>
+    <string name="post_action_content_description">Post Action %1$s</string>
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="create">Create</string>
     <string name="saved">Saved</string>
     <string name="about">About</string>
+    <string name="upvote">Upvote</string>
+    <string name="comment">Comment</string>
+    <string name="save">"Save"</string>
+    <string name="share">Share</string>
 </resources>

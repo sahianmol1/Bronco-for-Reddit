@@ -61,7 +61,7 @@ dependencies {
     implementation(project(":features:about:about-presentation"))
     implementation(project(":features:home:home-presentation"))
     implementation(project(":features:search:search-presentation"))
-    implementation(project(":features:subreddits:subreddit-presentation"))
+    implementation(project(":features:savedposts:saved-presentation"))
     implementation(project(":core:common"))
 
 }

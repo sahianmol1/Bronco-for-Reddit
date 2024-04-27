@@ -16,5 +16,7 @@ data class RedditPostEntity(
     val postUrl: String? = null,
     val videoUrl: String? = null,
     val gifUrl: String? = null,
-    val author: String = ""
+    val author: String = "",
+    val after: String? = null,
+    val isSaved: Boolean = false
 )

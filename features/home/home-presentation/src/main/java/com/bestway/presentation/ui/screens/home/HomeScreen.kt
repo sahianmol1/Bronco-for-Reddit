@@ -20,15 +20,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bestway.design_system.ui_components.BRHorizontalPager
 import com.bestway.design_system.ui_components.BRScrollableTabRow
+import com.bestway.design_system.utils.showToast
 import com.bestway.home_presentation.R
-import com.bestway.presentation.model.RedditPostUiModel
 import com.bestway.presentation.ui.components.HomeScreenListings
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onClick: (redditPostUiModel: RedditPostUiModel) -> Unit,
+    onClick: (postId: String) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
@@ -86,30 +86,100 @@ fun HomeScreen(
             pageCount = { tabs.size }
         )
 
-    Column(modifier = modifier.fillMaxSize().statusBarsPadding()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+    ) {
         BRScrollableTabRow(tabs = tabs, pagerState = pagerState)
         BRHorizontalPager(
             pagerState = pagerState,
         ) { page ->
             when (page) {
                 0 -> {
-                    HomeScreenListings(uiState = hotPosts.value, onClick = onClick)
+                    HomeScreenListings(
+                        uiState = hotPosts.value,
+                        onClick = onClick,
+                        refreshData = { homeViewModel.getHotPosts(shouldRefreshData = true) },
+                        loadMoreData = { homeViewModel.getHotPosts(nextPageKey = it) },
+                        onSaveIconClick = { postId ->
+                            homeViewModel.onSaveIconClick(postId) { isSaved ->
+                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                            }
+                        }
+                    )
                 }
+
                 1 -> {
-                    HomeScreenListings(uiState = newPosts.value, onClick = onClick)
+                    HomeScreenListings(
+                        uiState = newPosts.value,
+                        onClick = onClick,
+                        refreshData = { homeViewModel.getNewPosts(true) },
+                        loadMoreData = { homeViewModel.getNewPosts(nextPageKey = it) },
+                        onSaveIconClick = { postId ->
+                            homeViewModel.onSaveIconClick(postId) { isSaved ->
+                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                            }
+                        }
+                    )
                 }
+
                 2 -> {
-                    HomeScreenListings(uiState = topPosts.value, onClick = onClick)
+                    HomeScreenListings(
+                        uiState = topPosts.value,
+                        onClick = onClick,
+                        refreshData = { homeViewModel.getTopPosts(true) },
+                        loadMoreData = { homeViewModel.getTopPosts(nextPageKey = it) },
+                        onSaveIconClick = { postId ->
+                            homeViewModel.onSaveIconClick(postId) { isSaved ->
+                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                            }
+                        }
+                    )
                 }
+
                 3 -> {
-                    HomeScreenListings(uiState = bestPosts.value, onClick = onClick)
+                    HomeScreenListings(
+                        uiState = bestPosts.value,
+                        onClick = onClick,
+                        refreshData = { homeViewModel.getBestPosts(true) },
+                        loadMoreData = { homeViewModel.getBestPosts(nextPageKey = it) },
+                        onSaveIconClick = { postId ->
+                            homeViewModel.onSaveIconClick(postId) { isSaved ->
+                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                            }
+                        }
+                    )
                 }
+
                 4 -> {
-                    HomeScreenListings(uiState = risingPosts.value, onClick = onClick)
+                    HomeScreenListings(
+                        uiState = risingPosts.value,
+                        onClick = onClick,
+                        refreshData = { homeViewModel.getRisingsPosts(true) },
+                        loadMoreData = { homeViewModel.getRisingsPosts(nextPageKey = it) },
+                        onSaveIconClick = { postId ->
+                            homeViewModel.onSaveIconClick(postId) { isSaved ->
+                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                            }
+                        }
+                    )
                 }
+
                 5 -> {
-                    HomeScreenListings(uiState = controversialPosts.value, onClick = onClick)
+                    HomeScreenListings(
+                        uiState = controversialPosts.value,
+                        onClick = onClick,
+                        refreshData = { homeViewModel.getControversialPosts(true) },
+                        loadMoreData = { homeViewModel.getControversialPosts(nextPageKey = it) },
+                        onSaveIconClick = { postId ->
+                            homeViewModel.onSaveIconClick(postId) { isSaved ->
+                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                            }
+                        }
+                    )
                 }
+
                 else -> {
                     Column(
                         modifier = Modifier.fillMaxSize(),

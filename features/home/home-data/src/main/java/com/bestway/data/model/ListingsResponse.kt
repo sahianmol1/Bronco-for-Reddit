@@ -12,6 +12,7 @@ data class ListingsResponse(
 )
 
 fun ListingsResponse.asEntity(): List<RedditPostEntity> {
+    val after = this.data?.after
     return this.data?.children?.map {
         it.childrenData.run {
             RedditPostEntity(
@@ -25,7 +26,8 @@ fun ListingsResponse.asEntity(): List<RedditPostEntity> {
                 postUrl = this.postUrl,
                 videoUrl = this.secureMedia?.redditVideo?.videoUrl,
                 gifUrl = this.gifUrl?.gifPreview?.url.orEmpty(),
-                author = this.author.orEmpty()
+                author = this.author.orEmpty(),
+                after = after
             )
         }
     }.orEmpty()
@@ -44,7 +46,27 @@ fun List<RedditPostEntity>.asDomain(): List<RedditPost>? {
             postUrl = it.postUrl,
             videoUrl = it.videoUrl,
             gifUrl = it.gifUrl,
-            author = it.author
+            author = it.author,
+            after = it.after,
+            isSaved = it.isSaved
         )
     }
+}
+
+fun RedditPostEntity.asDomain(): RedditPost {
+    return RedditPost(
+        id = this.id,
+        subName = this.subName,
+        title = this.title,
+        description = this.description,
+        upVotes = this.upVotes,
+        comments = this.comments,
+        imageUrl = this.imageUrl,
+        postUrl = this.postUrl,
+        videoUrl = this.videoUrl,
+        gifUrl = this.gifUrl,
+        author = this.author,
+        after = this.after,
+        isSaved = this.isSaved,
+    )
 }
