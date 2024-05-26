@@ -23,9 +23,12 @@ uiautomator = "2.3.0"
 benchmark-macro-junit4 = "1.2.4"
 kotlin = "1.8.10"
 androidx-baselineprofile = "1.2.4"
-org-jetbrains-kotlin-jvm = "1.8.10"
 appcompat = "1.6.1"
 material = "1.12.0"
+firebase-crashlytics = "3.0.1"
+google-services = "4.4.1"
+detekt = "1.23.1"
+hilt-plugin = "2.44"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -74,9 +77,13 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version = "androidx-navigation-runtime" }
 
 [plugins]
-androidTest = { id = "com.android.test", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-baselineprofile" }
-androidApplication = { id = "com.android.application", version.ref = "agp" }
-org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 com-android-library = { id = "com.android.library", version.ref = "agp" }
+com-android-application = { id = "com.android.application", version.ref = "agp" }
+androidTest = { id = "com.android.test", version.ref = "agp" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-plugin" }
