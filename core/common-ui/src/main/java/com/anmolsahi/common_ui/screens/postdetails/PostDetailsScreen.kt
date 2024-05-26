@@ -45,11 +45,12 @@ fun PostDetailsScreen(
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
-    val postDetails = viewModel.postDetails.collectAsStateWithLifecycle()
+    val postDetails =
+        viewModel.postDetails.collectAsStateWithLifecycle(
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+        )
 
-    LaunchedEffect(Unit) {
-        viewModel.getPostDetails(postId = postId)
-    }
+    LaunchedEffect(Unit) { viewModel.getPostDetails(postId = postId) }
 
     if (postDetails.value.isLoading) {
         BRLinearProgressIndicator()
@@ -58,12 +59,12 @@ fun PostDetailsScreen(
     if (!postDetails.value.isLoading) {
         Column(
             modifier =
-            modifier
-                .verticalScroll(scrollState)
-                .fillMaxSize()
-                .statusBarsPadding()
-                .navigationBarsPadding()
-                .padding(horizontal = 16.dp),
+                modifier
+                    .verticalScroll(scrollState)
+                    .fillMaxSize()
+                    .statusBarsPadding()
+                    .navigationBarsPadding()
+                    .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
@@ -81,7 +82,9 @@ fun PostDetailsScreen(
 
             postDetails.value.data?.imageUrl?.let {
                 if (it.endsWith("png") || it.endsWith("jpg")) {
-                    com.anmolsahi.common_ui.components.PostImage(imageUrl = postDetails.value.data?.imageUrl.orEmpty())
+                    com.anmolsahi.common_ui.components.PostImage(
+                        imageUrl = postDetails.value.data?.imageUrl.orEmpty()
+                    )
                 }
                 if (it.contains(".gif")) {
                     postDetails.value.data?.gifUrl?.let {
@@ -93,9 +96,7 @@ fun PostDetailsScreen(
             }
 
             postDetails.value.data?.videoUrl?.let { videoUrl ->
-                com.anmolsahi.common_ui.components.PostVideo(
-                    videoUrl = videoUrl
-                )
+                com.anmolsahi.common_ui.components.PostVideo(videoUrl = videoUrl)
             }
 
             PostActions(
@@ -105,7 +106,8 @@ fun PostDetailsScreen(
                 isSaved = postDetails.value.data?.isSaved ?: false,
                 onSaveIconClick = {
                     viewModel.onSaveIconClick(postDetails.value.data?.id.orEmpty()) { isSaved ->
-                        if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                        if (isSaved)
+                            context.showToast(context.getString(R.string.post_saved_success))
                     }
                 }
             )
@@ -124,10 +126,7 @@ fun PostDetailsScreen(
     ) {
         var showLogs by rememberSaveable { mutableStateOf(false) }
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState()),
+            modifier = Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -135,10 +134,10 @@ fun PostDetailsScreen(
             Text(
                 modifier = Modifier.clickable { showLogs = !showLogs },
                 text =
-                if (!showLogs)
-                    stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
-                else
-                    stringResource(R.string.uh_oh_something_went_wrong) +
+                    if (!showLogs)
+                        stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
+                    else
+                        stringResource(R.string.uh_oh_something_went_wrong) +
                             " Learn More /n ${postDetails.value.error}",
                 textDecoration = TextDecoration.Underline
             )

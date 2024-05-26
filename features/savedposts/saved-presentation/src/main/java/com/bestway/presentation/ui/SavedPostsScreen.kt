@@ -39,7 +39,10 @@ fun SavedPostsScreen(
     onSaveIconClick: (String) -> Unit = {},
 ) {
 
-    val uiState by viewModel.savedPostsUiState.collectAsStateWithLifecycle()
+    val uiState by
+        viewModel.savedPostsUiState.collectAsStateWithLifecycle(
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+        )
     var list by remember { mutableStateOf(emptyList<RedditPostUiModel>()) }
 
     LaunchedEffect(uiState.data) {
@@ -49,26 +52,20 @@ fun SavedPostsScreen(
 
     if (list.isNotEmpty()) {
         LazyColumn(
-            modifier = modifier
-                .statusBarsPadding()
-                .navigationBarsPadding(),
+            modifier = modifier.statusBarsPadding().navigationBarsPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             itemsIndexed(
                 items = list,
-                key = { _, item ->
-                    item.id
-                },
-                contentType = { _, _ ->
-                    "reddit_post"
-                }
+                key = { _, item -> item.id },
+                contentType = { _, _ -> "reddit_post" }
             ) { index, item ->
                 PostComponent(
                     modifier =
-                    when (index) {
-                        list.size - 1 -> Modifier.navigationBarsPadding()
-                        else -> Modifier
-                    },
+                        when (index) {
+                            list.size - 1 -> Modifier.navigationBarsPadding()
+                            else -> Modifier
+                        },
                     redditPostUiModel = item,
                     onClick = onClick,
                     onSaveIconClick = onSaveIconClick
@@ -81,10 +78,7 @@ fun SavedPostsScreen(
     if (!uiState.errorMessage.isNullOrBlank() && list.isEmpty()) {
         var showLogs by rememberSaveable { mutableStateOf(false) }
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState()),
+            modifier = Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -92,10 +86,10 @@ fun SavedPostsScreen(
             Text(
                 modifier = Modifier.clickable { showLogs = !showLogs },
                 text =
-                if (!showLogs)
-                    stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
-                else
-                    stringResource(R.string.uh_oh_something_went_wrong) +
+                    if (!showLogs)
+                        stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
+                    else
+                        stringResource(R.string.uh_oh_something_went_wrong) +
                             " Learn More /n ${uiState.errorMessage}",
                 textDecoration = TextDecoration.Underline
             )

@@ -33,12 +33,30 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
 
-    val hotPosts = homeViewModel.hotPosts.collectAsStateWithLifecycle()
-    val newPosts = homeViewModel.newPosts.collectAsStateWithLifecycle()
-    val topPosts = homeViewModel.topPosts.collectAsStateWithLifecycle()
-    val bestPosts = homeViewModel.bestPosts.collectAsStateWithLifecycle()
-    val risingPosts = homeViewModel.risingPosts.collectAsStateWithLifecycle()
-    val controversialPosts = homeViewModel.controversialPosts.collectAsStateWithLifecycle()
+    val hotPosts =
+        homeViewModel.hotPosts.collectAsStateWithLifecycle(
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+        )
+    val newPosts =
+        homeViewModel.newPosts.collectAsStateWithLifecycle(
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+        )
+    val topPosts =
+        homeViewModel.topPosts.collectAsStateWithLifecycle(
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+        )
+    val bestPosts =
+        homeViewModel.bestPosts.collectAsStateWithLifecycle(
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+        )
+    val risingPosts =
+        homeViewModel.risingPosts.collectAsStateWithLifecycle(
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+        )
+    val controversialPosts =
+        homeViewModel.controversialPosts.collectAsStateWithLifecycle(
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+        )
 
     LaunchedEffect(Unit) {
         if (hotPosts.value.data == null) {
@@ -86,11 +104,7 @@ fun HomeScreen(
             pageCount = { tabs.size }
         )
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-    ) {
+    Column(modifier = modifier.fillMaxSize().statusBarsPadding()) {
         BRScrollableTabRow(tabs = tabs, pagerState = pagerState)
         BRHorizontalPager(
             pagerState = pagerState,
@@ -104,12 +118,14 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getHotPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                                if (isSaved)
+                                    context.showToast(
+                                        context.getString(R.string.post_saved_success)
+                                    )
                             }
                         }
                     )
                 }
-
                 1 -> {
                     HomeScreenListings(
                         uiState = newPosts.value,
@@ -118,12 +134,14 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getNewPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                                if (isSaved)
+                                    context.showToast(
+                                        context.getString(R.string.post_saved_success)
+                                    )
                             }
                         }
                     )
                 }
-
                 2 -> {
                     HomeScreenListings(
                         uiState = topPosts.value,
@@ -132,12 +150,14 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getTopPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                                if (isSaved)
+                                    context.showToast(
+                                        context.getString(R.string.post_saved_success)
+                                    )
                             }
                         }
                     )
                 }
-
                 3 -> {
                     HomeScreenListings(
                         uiState = bestPosts.value,
@@ -146,12 +166,14 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getBestPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                                if (isSaved)
+                                    context.showToast(
+                                        context.getString(R.string.post_saved_success)
+                                    )
                             }
                         }
                     )
                 }
-
                 4 -> {
                     HomeScreenListings(
                         uiState = risingPosts.value,
@@ -160,12 +182,14 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getRisingsPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                                if (isSaved)
+                                    context.showToast(
+                                        context.getString(R.string.post_saved_success)
+                                    )
                             }
                         }
                     )
                 }
-
                 5 -> {
                     HomeScreenListings(
                         uiState = controversialPosts.value,
@@ -174,12 +198,14 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getControversialPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                                if (isSaved)
+                                    context.showToast(
+                                        context.getString(R.string.post_saved_success)
+                                    )
                             }
                         }
                     )
                 }
-
                 else -> {
                     Column(
                         modifier = Modifier.fillMaxSize(),
