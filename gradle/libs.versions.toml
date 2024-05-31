@@ -26,7 +26,7 @@ androidx-baselineprofile = "1.2.4"
 appcompat = "1.6.1"
 material = "1.12.0"
 firebase-crashlytics = "3.0.1"
-google-services = "4.4.1"
+google-services = "4.4.2"
 detekt = "1.23.6"
 hilt-plugin = "2.44"
 
