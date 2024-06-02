@@ -3,7 +3,6 @@ package com.anmolsahi.common_ui.components
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Down
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Up
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.tween
@@ -20,6 +19,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.VolumeOff
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.BookmarkAdded
@@ -258,14 +259,15 @@ fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
     ) {
         Icon(
             modifier = Modifier.size(16.dp),
-            imageVector = if (isVolumeOff) Icons.AutoMirrored.Filled.VolumeOff else Icons.AutoMirrored.Filled.VolumeUp,
+            imageVector =
+                if (isVolumeOff) Icons.AutoMirrored.Filled.VolumeOff
+                else Icons.AutoMirrored.Filled.VolumeUp,
             contentDescription = "Silent",
             tint = Color.White
         )
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun PostActions(
     modifier: Modifier = Modifier,
@@ -344,6 +346,6 @@ fun PostPreview() {
     PostComponent(
         redditPostUiModel = RedditPostUiModel(id = "0"),
         onClick = {},
-        onSaveIconClick = { false }
+        onSaveIconClick = {}
     )
 }
