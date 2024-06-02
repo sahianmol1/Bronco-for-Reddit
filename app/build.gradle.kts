@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.androidx.baselineprofile)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -48,12 +49,12 @@ android {
     }
     kotlinOptions { jvmTarget = JavaVersion.VERSION_17.toString() }
     buildFeatures { compose = true }
-    composeOptions { kotlinCompilerExtensionVersion = "1.4.3" }
+    composeOptions { kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get() }
     packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
 }
 
 detekt {
-    toolVersion = "1.23.6"
+    toolVersion = libs.versions.detekt.get()
     config.setFrom(file("../config/detekt/detekt.yml"))
     buildUponDefaultConfig = true
 }
@@ -97,7 +98,7 @@ dependencies {
 
     // dagger hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     // Compose navigation
     implementation(libs.androidx.navigation.compose)
@@ -115,6 +116,6 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 }

@@ -5,9 +5,10 @@ coil-compose = "2.5.0"
 core-ktx = "1.13.1"
 core-splashscreen = "1.0.1"
 espresso-core = "3.5.1"
-hilt-android = "2.48.1"
+hilt = "2.51.1"
 hilt-navigation-compose = "1.2.0"
 junit = "4.13.2"
+kotlinxCoroutinesCore = "1.6.1"
 ktor-client-version = "2.3.11"
 leakcanary-android = "2.12"
 lifecycle-runtime-ktx = "2.8.0"
@@ -28,7 +29,8 @@ material = "1.12.0"
 firebase-crashlytics = "3.0.1"
 google-services = "4.4.1"
 detekt = "1.23.6"
-hilt-plugin = "2.44"
+composeCompiler = "1.5.14"
+ksp = "1.9.24-1.0.20"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -48,9 +50,10 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-version" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
 coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil-compose" }
-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 junit = { module = "junit:junit", version.ref = "junit" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor-client-version" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-client-version" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-client-version" }
@@ -86,4 +89,5 @@ androidTest = { id = "com.android.test", version.ref = "agp" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-plugin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
