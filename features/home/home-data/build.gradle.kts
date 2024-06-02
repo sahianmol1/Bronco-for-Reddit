@@ -35,7 +35,7 @@ android {
 
 dependencies {
     implementation(project(":features:home:home-domain"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
 
     //  Ktor Client
     implementation(libs.ktor.client.cio)
