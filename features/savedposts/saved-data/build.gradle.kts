@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
     kotlin("plugin.serialization")
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -30,15 +30,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
+    kotlinOptions { jvmTarget = JavaVersion.VERSION_17.toString() }
 }
-
 
 dependencies {
     implementation(project(":features:savedposts:saved-domain"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+    implementation(libs.kotlinx.coroutines.core)
 
     //  Ktor Client
     implementation(libs.ktor.client.cio)
@@ -50,7 +47,6 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
-
 }
