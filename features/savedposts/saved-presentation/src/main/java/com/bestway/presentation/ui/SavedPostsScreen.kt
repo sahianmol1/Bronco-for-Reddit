@@ -52,7 +52,7 @@ fun SavedPostsScreen(
 
     if (list.isNotEmpty()) {
         LazyColumn(
-            modifier = modifier.statusBarsPadding().navigationBarsPadding(),
+            modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             itemsIndexed(
@@ -63,6 +63,7 @@ fun SavedPostsScreen(
                 PostComponent(
                     modifier =
                         when (index) {
+                            0 -> Modifier.statusBarsPadding()
                             list.size - 1 -> Modifier.navigationBarsPadding()
                             else -> Modifier
                         },
