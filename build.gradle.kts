@@ -2,7 +2,7 @@
 plugins {
     alias(libs.plugins.com.android.application) apply false
     alias(libs.plugins.kotlinAndroid) apply false
-    kotlin("plugin.serialization") version "1.8.10" apply false
+    kotlin("plugin.serialization") version "1.9.24" apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.google.services) apply false
@@ -11,4 +11,5 @@ plugins {
     alias(libs.plugins.androidx.baselineprofile) apply false
     alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.com.android.library) apply false
+    alias(libs.plugins.ksp) apply false
 }

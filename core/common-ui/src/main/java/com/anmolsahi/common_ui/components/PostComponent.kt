@@ -3,11 +3,10 @@ package com.anmolsahi.common_ui.components
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Down
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Up
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.with
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -20,14 +19,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.VolumeOff
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.BookmarkAdded
-import androidx.compose.material.icons.filled.VolumeOff
-import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material.icons.outlined.BookmarkAdd
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -58,6 +57,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
@@ -74,11 +74,11 @@ fun PostComponent(
 ) {
     Column(
         modifier =
-        modifier
-            .animateContentSize()
-            .clickable { onClick(redditPostUiModel.id) }
-            .padding(top = 8.dp)
-            .padding(horizontal = 16.dp),
+            modifier
+                .animateContentSize()
+                .clickable { onClick(redditPostUiModel.id) }
+                .padding(top = 8.dp)
+                .padding(horizontal = 16.dp),
     ) {
         SubRedditName(subName = redditPostUiModel.subName)
         OriginalPosterName(opName = redditPostUiModel.author)
@@ -103,16 +103,14 @@ fun PostComponent(
             onSaveIconClick = { onSaveIconClick(redditPostUiModel.id) },
             isSaved = redditPostUiModel.isSaved
         )
-        Divider(modifier = Modifier.padding(top = 8.dp))
+        HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
     }
 }
 
 @Composable
 fun SubRedditName(subName: String) {
     Text(
-        modifier = Modifier
-            .clickable {}
-            .padding(top = 8.dp, bottom = 4.dp),
+        modifier = Modifier.clickable {}.padding(top = 8.dp, bottom = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.onPrimaryContainer,
         text = subName,
@@ -124,9 +122,7 @@ fun SubRedditName(subName: String) {
 @Composable
 fun OriginalPosterName(opName: String) {
     Text(
-        modifier = Modifier
-            .clickable {}
-            .padding(vertical = 4.dp),
+        modifier = Modifier.clickable {}.padding(vertical = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.onPrimaryContainer,
         text = "u/$opName",
@@ -169,14 +165,13 @@ fun PostImage(imageUrl: String) {
         }
         AsyncImage(
             modifier =
-            Modifier
-                .clickable(
-                    interactionSource = interactionSource,
-                    role = Role.Image,
-                    indication = null
-                ) {}
-                .padding(vertical = 4.dp)
-                .fillMaxWidth(),
+                Modifier.clickable(
+                        interactionSource = interactionSource,
+                        role = Role.Image,
+                        indication = null
+                    ) {}
+                    .padding(vertical = 4.dp)
+                    .fillMaxWidth(),
             model = imageUrl,
             contentScale = ContentScale.FillWidth,
             onLoading = { isImageLoading = true },
@@ -202,47 +197,42 @@ fun PostVideo(videoUrl: String) {
 
     val exoPlayer = remember {
         ExoPlayer.Builder(context).build().apply {
-            this.setMediaItem(MediaItem.fromUri(videoUrl))
-            this.prepare()
-            this.volume = 0f
-            this.play()
+            setMediaItem(MediaItem.fromUri(videoUrl))
+            repeatMode = Player.REPEAT_MODE_ALL
+            prepare()
+            volume = 0f
+            play()
         }
     }
 
     Box(contentAlignment = Alignment.BottomEnd) {
-        DisposableEffect(
-            // TODO: Fix this lint warning and properly use a key for DisposableEffect
-            AndroidView(
-                modifier =
-                Modifier
-                    .clickable {}
+        DisposableEffect(videoUrl) { onDispose { exoPlayer.release() } }
+
+        AndroidView(
+            modifier =
+                Modifier.clickable {}
                     .padding(vertical = 4.dp)
                     .defaultMinSize(minHeight = 250.dp)
                     .fillMaxWidth(),
-                factory = {
-                    PlayerView(it).apply {
-                        player = exoPlayer
-                        useController = false
+            factory = {
+                PlayerView(it).apply {
+                    player = exoPlayer
+                    useController = false
+                }
+            },
+            update = { playerView ->
+                when (lifecycleEvent) {
+                    Lifecycle.Event.ON_PAUSE -> {
+                        playerView.onPause()
+                        playerView.player?.pause()
                     }
-                },
-                update = { playerView ->
-                    when (lifecycleEvent) {
-                        Lifecycle.Event.ON_PAUSE -> {
-                            playerView.onPause()
-                            playerView.player?.pause()
-                        }
-
-                        Lifecycle.Event.ON_RESUME -> {
-                            playerView.onResume()
-                        }
-
-                        else -> Unit
+                    Lifecycle.Event.ON_RESUME -> {
+                        playerView.onResume()
                     }
-                },
-            )
-        ) {
-            onDispose { exoPlayer.release() }
-        }
+                    else -> Unit
+                }
+            },
+        )
 
         PostVideoControls(
             isVolumeOff = isVolumeOff,
@@ -262,21 +252,22 @@ fun PostVideo(videoUrl: String) {
 fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
     IconButton(
         modifier =
-        Modifier.drawBehind {
-            drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
-        },
+            Modifier.drawBehind {
+                drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
+            },
         onClick = onSoundButtonClick
     ) {
         Icon(
             modifier = Modifier.size(16.dp),
-            imageVector = if (isVolumeOff) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
+            imageVector =
+                if (isVolumeOff) Icons.AutoMirrored.Filled.VolumeOff
+                else Icons.AutoMirrored.Filled.VolumeUp,
             contentDescription = "Silent",
             tint = Color.White
         )
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun PostActions(
     modifier: Modifier = Modifier,
@@ -300,21 +291,21 @@ fun PostActions(
         AnimatedContent(
             targetState = isSaved,
             transitionSpec = {
-                slideIntoContainer(
-                    animationSpec = tween(200, easing = EaseIn),
-                    towards = Up
-                ).with(
-                    slideOutOfContainer(
-                        animationSpec = tween(200, easing = EaseIn),
-                        towards = Down
+                slideIntoContainer(animationSpec = tween(200, easing = EaseIn), towards = Up)
+                    .togetherWith(
+                        slideOutOfContainer(
+                            animationSpec = tween(200, easing = EaseIn),
+                            towards = Down
+                        )
                     )
-                )
             },
             label = stringResource(id = R.string.save)
         ) { targetState ->
             PostActionItem(
                 icon = if (targetState) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
-                label = if (targetState) stringResource(R.string.save) else stringResource(R.string.save),
+                label =
+                    if (targetState) stringResource(R.string.save)
+                    else stringResource(R.string.save),
                 actionDescription = stringResource(R.string.save),
                 onclick = onSaveIconClick
             )
@@ -331,20 +322,14 @@ fun PostActionItem(
     onclick: () -> Unit = {}
 ) {
     Row(
-        modifier = modifier
-            .wrapContentHeight()
-            .clickable {
-                onclick()
-            },
+        modifier = modifier.wrapContentHeight().clickable { onclick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier
-                .padding(start = 8.dp)
-                .padding(vertical = 8.dp),
+            modifier = Modifier.padding(start = 8.dp).padding(vertical = 8.dp),
             imageVector = icon,
             contentDescription =
-            stringResource(R.string.post_action_content_description, actionDescription)
+                stringResource(R.string.post_action_content_description, actionDescription)
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
@@ -361,6 +346,6 @@ fun PostPreview() {
     PostComponent(
         redditPostUiModel = RedditPostUiModel(id = "0"),
         onClick = {},
-        onSaveIconClick = { false }
+        onSaveIconClick = {}
     )
 }

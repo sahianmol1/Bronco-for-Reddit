@@ -29,19 +29,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
-    }
+    kotlinOptions { jvmTarget = JavaVersion.VERSION_17.toString() }
+    buildFeatures { compose = true }
+    composeOptions { kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get() }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -56,7 +49,7 @@ dependencies {
     implementation(libs.compose.tooling.preview)
     implementation(libs.compose.material3)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
     implementation(project(":core:common"))
 
@@ -72,5 +65,4 @@ dependencies {
     // coil
     implementation(libs.coil.compose)
     implementation(libs.coil.gif)
-
 }

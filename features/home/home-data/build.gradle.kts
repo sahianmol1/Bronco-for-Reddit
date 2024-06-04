@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
     kotlin("plugin.serialization")
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -30,9 +30,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
+    kotlinOptions { jvmTarget = JavaVersion.VERSION_17.toString() }
 }
 
 dependencies {
@@ -49,7 +47,6 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
-
 }

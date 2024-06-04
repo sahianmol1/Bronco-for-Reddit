@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
     kotlin("plugin.serialization")
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -29,19 +29,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
-    }
+    kotlinOptions { jvmTarget = JavaVersion.VERSION_17.toString() }
+    buildFeatures { compose = true }
+    composeOptions { kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get() }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -56,7 +49,7 @@ dependencies {
     implementation(libs.compose.tooling.preview)
     implementation(libs.compose.material3)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
     implementation(project(":core:common"))
     implementation(project(":core:design-system"))
@@ -80,5 +73,5 @@ dependencies {
 
     // dagger hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 }
