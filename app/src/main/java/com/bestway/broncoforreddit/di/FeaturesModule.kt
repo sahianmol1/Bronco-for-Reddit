@@ -1,8 +1,8 @@
 package com.bestway.broncoforreddit.di
 
-import com.anmolsahi.common_ui.delegate.CommonUiDelegate
-import com.bestway.broncoforreddit.delegates.CommonUiModuleManager
+import com.anmolsahi.postdetailspresentation.postdetails.delegate.PostDetailsDelegate
 import com.bestway.broncoforreddit.delegates.HomeModuleManager
+import com.bestway.broncoforreddit.delegates.PostDetailsModuleManager
 import com.bestway.presentation.delegate.HomeDelegate
 import dagger.Binds
 import dagger.Module
@@ -17,8 +17,8 @@ abstract class FeaturesModule {
     @Binds
     @ViewModelScoped
     abstract fun getCommonUiDelegate(
-        commonUiModuleManager: CommonUiModuleManager
-    ): CommonUiDelegate
+        commonUiModuleManager: PostDetailsModuleManager
+    ): PostDetailsDelegate
 
     @Binds
     @ViewModelScoped

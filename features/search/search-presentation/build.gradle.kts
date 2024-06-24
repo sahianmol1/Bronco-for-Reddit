@@ -51,6 +51,6 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    implementation(project(":core:common"))
     implementation(project(":core:common-ui"))
+    implementation(project(":core:design-system"))
 }

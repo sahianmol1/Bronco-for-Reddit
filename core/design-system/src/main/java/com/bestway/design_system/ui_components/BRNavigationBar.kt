@@ -25,9 +25,9 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.bestway.common.navigation.Destinations
 import com.bestway.design_system.R
 import com.bestway.design_system.models.BottomNavUiModel
+import com.bestway.design_system.utils.Destinations
 import com.bestway.design_system.utils.isTopLevelDestination
 
 @Composable

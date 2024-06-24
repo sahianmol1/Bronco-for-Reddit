@@ -1,12 +1,12 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.bestway.about_presentation"
-    compileSdk = 33
+    namespace = "com.anmolsahi.postdetailspresentation"
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24
@@ -34,12 +34,18 @@ android {
 }
 
 dependencies {
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Modules
+    implementation(project(":core:domain"))
+    implementation(project(":core:common-ui"))
+    implementation(project(":core:design-system"))
 
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
@@ -51,6 +57,14 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    implementation(project(":core:common-ui"))
-    implementation(project(":core:design-system"))
+    // Extended material icons
+    implementation(libs.extended.icons)
+
+    // androidx-compose-lifecycle
+    implementation(libs.viewmodel.lifecycle)
+    implementation(libs.compose.runtime.lifecycle)
+
+    // dagger hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 }

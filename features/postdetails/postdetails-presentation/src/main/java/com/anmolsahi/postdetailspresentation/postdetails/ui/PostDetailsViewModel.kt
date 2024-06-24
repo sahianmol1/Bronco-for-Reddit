@@ -1,9 +1,9 @@
-package com.anmolsahi.common_ui.screens.postdetails
+package com.anmolsahi.postdetailspresentation.postdetails.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anmolsahi.common_ui.delegate.CommonUiDelegate
 import com.anmolsahi.common_ui.models.RedditPostUiModel
+import com.anmolsahi.postdetailspresentation.postdetails.delegate.PostDetailsDelegate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailsViewModel @Inject constructor(
-    private val delegate: CommonUiDelegate
+    private val delegate: PostDetailsDelegate
 ): ViewModel() {
 
     private val _postDetails: MutableStateFlow<PostDetailsUiState> = MutableStateFlow(

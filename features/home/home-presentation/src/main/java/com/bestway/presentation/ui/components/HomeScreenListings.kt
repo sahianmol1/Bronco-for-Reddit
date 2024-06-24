@@ -73,7 +73,7 @@ fun HomeScreenListings(
     Box(
         Modifier.nestedScroll(pullRefreshState.nestedScrollConnection)
     ) {
-        AnimatedVisibility(visible = list.isNotEmpty(), enter = slideInFromBottomTransition()) {
+        if(list.isNotEmpty()) {
             LazyColumn(
                 state = lazyListState,
                 horizontalAlignment = Alignment.CenterHorizontally

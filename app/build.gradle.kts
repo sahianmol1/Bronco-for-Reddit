@@ -88,6 +88,7 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":features:savedposts:saved-data"))
     implementation(project(":features:savedposts:saved-domain"))
+    implementation(project(":features:postdetails:postdetails-presentation"))
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)

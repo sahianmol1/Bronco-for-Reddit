@@ -1,7 +1,6 @@
 package com.bestway.design_system.utils
 
 import androidx.navigation.NavDestination
-import com.bestway.common.navigation.Destinations
 
 private val topLevelDestinations =
     listOf(

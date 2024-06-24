@@ -1,4 +1,4 @@
-package com.anmolsahi.common_ui.screens.postdetails
+package com.anmolsahi.postdetailspresentation.postdetails.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable

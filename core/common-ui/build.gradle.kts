@@ -50,8 +50,6 @@ dependencies {
     implementation(libs.compose.material3)
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-
-    implementation(project(":core:common"))
     implementation(project(":core:design-system"))
 
     // Compose navigation

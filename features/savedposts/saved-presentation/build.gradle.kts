@@ -57,7 +57,6 @@ dependencies {
     implementation(libs.viewmodel.lifecycle)
     implementation(libs.compose.runtime.lifecycle)
 
-    implementation(project(":core:common"))
     implementation(project(":core:common-ui"))
     implementation(project(":features:savedposts:saved-domain"))
     implementation(project(":core:design-system"))
