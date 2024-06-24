@@ -16,7 +16,7 @@ class HomeModuleManager @Inject constructor(
         if (shouldSavePost) {
             savedPostRepository.insertPost(post.asSavedPost())
         } else {
-            savedPostRepository.deleteSavedPost(post.asSavedPost())
+            savedPostRepository.deleteSavedPost(postId)
         }
     }
 }

@@ -11,7 +11,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -38,16 +41,53 @@ fun SavedPostsScreen(
     onClick: (String) -> Unit = {},
     onSaveIconClick: (String) -> Unit = {},
 ) {
-
     val uiState by
-        viewModel.savedPostsUiState.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
-        )
+    viewModel.savedPostsUiState.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    )
     var list by remember { mutableStateOf(emptyList<RedditPostUiModel>()) }
+    var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
+    var selectedPostId by rememberSaveable { mutableStateOf("") }
 
     LaunchedEffect(uiState.data) {
         viewModel.getAllSavedPosts()
         list = uiState.data.orEmpty()
+    }
+
+    if (showDeletePostAlertDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showDeletePostAlertDialog = false
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showDeletePostAlertDialog = false
+                    viewModel.deleteSavedPost(selectedPostId)
+                }) {
+                    Text(
+                        text = stringResource(id = com.anmolsahi.common_ui.R.string.delete),
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showDeletePostAlertDialog = false
+                }) {
+                    Text(text = stringResource(R.string.dismiss))
+                }
+            },
+            title = {
+                Text(
+                    text = stringResource(R.string.delete_post_dialog_title_text),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            },
+            text = {
+                Text(text = stringResource(R.string.delete_post_dialog_info_text))
+            }
+        )
     }
 
     if (list.isNotEmpty()) {
@@ -62,14 +102,19 @@ fun SavedPostsScreen(
             ) { index, item ->
                 PostComponent(
                     modifier =
-                        when (index) {
-                            0 -> Modifier.statusBarsPadding()
-                            list.size - 1 -> Modifier.navigationBarsPadding()
-                            else -> Modifier
-                        },
+                    when (index) {
+                        0 -> Modifier.statusBarsPadding()
+                        list.size - 1 -> Modifier.navigationBarsPadding()
+                        else -> Modifier
+                    },
                     redditPostUiModel = item,
                     onClick = onClick,
-                    onSaveIconClick = onSaveIconClick
+                    onSaveIconClick = onSaveIconClick,
+                    shouldShowDeleteIcon = true,
+                    onDeleteIconClick = { redditPostId ->
+                        selectedPostId = redditPostId
+                        showDeletePostAlertDialog = true
+                    }
                 )
             }
         }
@@ -79,7 +124,10 @@ fun SavedPostsScreen(
     if (!uiState.errorMessage.isNullOrBlank() && list.isEmpty()) {
         var showLogs by rememberSaveable { mutableStateOf(false) }
         Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -87,10 +135,10 @@ fun SavedPostsScreen(
             Text(
                 modifier = Modifier.clickable { showLogs = !showLogs },
                 text =
-                    if (!showLogs)
-                        stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
-                    else
-                        stringResource(R.string.uh_oh_something_went_wrong) +
+                if (!showLogs)
+                    stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
+                else
+                    stringResource(R.string.uh_oh_something_went_wrong) +
                             " Learn More /n ${uiState.errorMessage}",
                 textDecoration = TextDecoration.Underline
             )

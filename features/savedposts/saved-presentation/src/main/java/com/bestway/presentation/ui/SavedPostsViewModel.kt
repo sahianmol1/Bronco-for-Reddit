@@ -6,6 +6,7 @@ import com.anmolsahi.common_ui.models.RedditPostUiModel
 import com.bestway.domain.repositories.SavedPostRepository
 import com.bestway.presentation.utils.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
@@ -43,6 +45,17 @@ class SavedPostsViewModel @Inject constructor(
                 _savedPostState.update { it.copy(errorMessage = throwable.localizedMessage) }
             }
             .launchIn(viewModelScope)
+    }
+
+    fun deleteSavedPost(id: String) {
+        val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }
+
+        viewModelScope.launch (coroutineExceptionHandler) {
+            repository.deleteSavedPost(id)
+            getAllSavedPosts()
+        }
     }
 
 }

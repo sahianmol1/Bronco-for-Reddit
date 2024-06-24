@@ -11,5 +11,5 @@ interface SavedPostRepository {
 
     suspend fun getSavedPostById(id: String): SavedPost
 
-    suspend fun deleteSavedPost(post: SavedPost)
+    suspend fun deleteSavedPost(id: String)
 }

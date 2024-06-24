@@ -25,6 +25,7 @@ import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.BookmarkAdded
 import androidx.compose.material.icons.outlined.BookmarkAdd
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -69,16 +70,18 @@ import com.anmolsahi.common_ui.utils.rememberLifecycleEvent
 fun PostComponent(
     modifier: Modifier = Modifier,
     redditPostUiModel: RedditPostUiModel,
+    shouldShowDeleteIcon: Boolean = false,
     onClick: (postId: String) -> Unit,
-    onSaveIconClick: (postId: String) -> Unit
+    onSaveIconClick: (postId: String) -> Unit,
+    onDeleteIconClick: (postId: String) -> Unit = {},
 ) {
     Column(
         modifier =
-            modifier
-                .animateContentSize()
-                .clickable { onClick(redditPostUiModel.id) }
-                .padding(top = 8.dp)
-                .padding(horizontal = 16.dp),
+        modifier
+            .animateContentSize()
+            .clickable { onClick(redditPostUiModel.id) }
+            .padding(top = 8.dp)
+            .padding(horizontal = 16.dp),
     ) {
         SubRedditName(subName = redditPostUiModel.subName)
         OriginalPosterName(opName = redditPostUiModel.author)
@@ -100,8 +103,10 @@ fun PostComponent(
         PostActions(
             upVotes = redditPostUiModel.upVotes,
             comments = redditPostUiModel.comments,
+            isSaved = redditPostUiModel.isSaved,
+            shouldShowDeleteIcon = shouldShowDeleteIcon,
             onSaveIconClick = { onSaveIconClick(redditPostUiModel.id) },
-            isSaved = redditPostUiModel.isSaved
+            onDeleteIconClick = { onDeleteIconClick(redditPostUiModel.id) },
         )
         HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
     }
@@ -110,7 +115,9 @@ fun PostComponent(
 @Composable
 fun SubRedditName(subName: String) {
     Text(
-        modifier = Modifier.clickable {}.padding(top = 8.dp, bottom = 4.dp),
+        modifier = Modifier
+            .clickable {}
+            .padding(top = 8.dp, bottom = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.onPrimaryContainer,
         text = subName,
@@ -122,7 +129,9 @@ fun SubRedditName(subName: String) {
 @Composable
 fun OriginalPosterName(opName: String) {
     Text(
-        modifier = Modifier.clickable {}.padding(vertical = 4.dp),
+        modifier = Modifier
+            .clickable {}
+            .padding(vertical = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.onPrimaryContainer,
         text = "u/$opName",
@@ -165,13 +174,14 @@ fun PostImage(imageUrl: String) {
         }
         AsyncImage(
             modifier =
-                Modifier.clickable(
-                        interactionSource = interactionSource,
-                        role = Role.Image,
-                        indication = null
-                    ) {}
-                    .padding(vertical = 4.dp)
-                    .fillMaxWidth(),
+            Modifier
+                .clickable(
+                    interactionSource = interactionSource,
+                    role = Role.Image,
+                    indication = null
+                ) {}
+                .padding(vertical = 4.dp)
+                .fillMaxWidth(),
             model = imageUrl,
             contentScale = ContentScale.FillWidth,
             onLoading = { isImageLoading = true },
@@ -210,10 +220,11 @@ fun PostVideo(videoUrl: String) {
 
         AndroidView(
             modifier =
-                Modifier.clickable {}
-                    .padding(vertical = 4.dp)
-                    .defaultMinSize(minHeight = 250.dp)
-                    .fillMaxWidth(),
+            Modifier
+                .clickable {}
+                .padding(vertical = 4.dp)
+                .defaultMinSize(minHeight = 250.dp)
+                .fillMaxWidth(),
             factory = {
                 PlayerView(it).apply {
                     player = exoPlayer
@@ -226,9 +237,11 @@ fun PostVideo(videoUrl: String) {
                         playerView.onPause()
                         playerView.player?.pause()
                     }
+
                     Lifecycle.Event.ON_RESUME -> {
                         playerView.onResume()
                     }
+
                     else -> Unit
                 }
             },
@@ -252,16 +265,16 @@ fun PostVideo(videoUrl: String) {
 fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
     IconButton(
         modifier =
-            Modifier.drawBehind {
-                drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
-            },
+        Modifier.drawBehind {
+            drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
+        },
         onClick = onSoundButtonClick
     ) {
         Icon(
             modifier = Modifier.size(16.dp),
             imageVector =
-                if (isVolumeOff) Icons.AutoMirrored.Filled.VolumeOff
-                else Icons.AutoMirrored.Filled.VolumeUp,
+            if (isVolumeOff) Icons.AutoMirrored.Filled.VolumeOff
+            else Icons.AutoMirrored.Filled.VolumeUp,
             contentDescription = "Silent",
             tint = Color.White
         )
@@ -271,10 +284,12 @@ fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
 @Composable
 fun PostActions(
     modifier: Modifier = Modifier,
+    shouldShowDeleteIcon: Boolean = false,
     upVotes: Int,
     comments: Int,
     isSaved: Boolean,
-    onSaveIconClick: () -> Unit
+    onSaveIconClick: () -> Unit = {},
+    onDeleteIconClick: () -> Unit = {},
 ) {
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         PostActionItem(
@@ -288,28 +303,38 @@ fun PostActions(
             actionDescription = stringResource(R.string.comment)
         )
 
-        AnimatedContent(
-            targetState = isSaved,
-            transitionSpec = {
-                slideIntoContainer(animationSpec = tween(200, easing = EaseIn), towards = Up)
-                    .togetherWith(
-                        slideOutOfContainer(
-                            animationSpec = tween(200, easing = EaseIn),
-                            towards = Down
-                        )
-                    )
-            },
-            label = stringResource(id = R.string.save)
-        ) { targetState ->
+        if (shouldShowDeleteIcon) {
             PostActionItem(
-                icon = if (targetState) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
-                label =
+                icon = Icons.Outlined.Delete,
+                label = stringResource(R.string.delete),
+                actionDescription = stringResource(R.string.delete),
+                onclick = onDeleteIconClick
+            )
+        } else {
+            AnimatedContent(
+                targetState = isSaved,
+                transitionSpec = {
+                    slideIntoContainer(animationSpec = tween(200, easing = EaseIn), towards = Up)
+                        .togetherWith(
+                            slideOutOfContainer(
+                                animationSpec = tween(200, easing = EaseIn),
+                                towards = Down
+                            )
+                        )
+                },
+                label = stringResource(id = R.string.save)
+            ) { targetState ->
+                PostActionItem(
+                    icon = if (targetState) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
+                    label =
                     if (targetState) stringResource(R.string.save)
                     else stringResource(R.string.save),
-                actionDescription = stringResource(R.string.save),
-                onclick = onSaveIconClick
-            )
+                    actionDescription = stringResource(R.string.save),
+                    onclick = onSaveIconClick
+                )
+            }
         }
+
     }
 }
 
@@ -319,17 +344,21 @@ fun PostActionItem(
     icon: ImageVector,
     label: String,
     actionDescription: String,
-    onclick: () -> Unit = {}
+    onclick: () -> Unit = {},
 ) {
     Row(
-        modifier = modifier.wrapContentHeight().clickable { onclick() },
+        modifier = modifier
+            .wrapContentHeight()
+            .clickable { onclick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.padding(start = 8.dp).padding(vertical = 8.dp),
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .padding(vertical = 8.dp),
             imageVector = icon,
             contentDescription =
-                stringResource(R.string.post_action_content_description, actionDescription)
+            stringResource(R.string.post_action_content_description, actionDescription)
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),

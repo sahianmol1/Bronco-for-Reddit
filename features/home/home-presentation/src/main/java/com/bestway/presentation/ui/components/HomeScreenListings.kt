@@ -34,6 +34,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.anmolsahi.common_ui.components.PostComponent
 import com.bestway.design_system.ui_components.BRLinearProgressIndicator
 import com.bestway.design_system.utils.slideInFromBottomTransition
 import com.bestway.home_presentation.R
@@ -87,7 +88,7 @@ fun HomeScreenListings(
                         "reddit_post"
                     }
                 ) { index, item ->
-                    com.anmolsahi.common_ui.components.PostComponent(
+                    PostComponent(
                         modifier =
                         when (index) {
                             list.size - 1 -> Modifier.navigationBarsPadding()
