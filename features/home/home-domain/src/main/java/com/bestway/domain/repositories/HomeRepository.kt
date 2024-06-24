@@ -1,6 +1,6 @@
 package com.bestway.domain.repositories
 
-import com.bestway.domain.model.RedditPost
+import com.bestway.domain.models.RedditPost
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {

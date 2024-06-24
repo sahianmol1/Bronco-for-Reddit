@@ -1,7 +1,7 @@
 package com.bestway.broncoforreddit.delegates
 
-import com.bestway.domain.model.RedditPost
 import com.bestway.domain.model.SavedPost
+import com.bestway.domain.models.RedditPost
 import com.bestway.domain.repositories.HomeRepository
 import com.bestway.domain.repositories.SavedPostRepository
 import com.bestway.presentation.delegate.HomeDelegate

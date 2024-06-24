@@ -1,10 +1,10 @@
 package com.bestway.data.repositories.homerepository
 
 import com.bestway.data.local.entity.RedditPostDao
-import com.bestway.data.model.asDomain
-import com.bestway.data.model.asEntity
+import com.bestway.data.model.remote.asDomain
+import com.bestway.data.model.remote.asEntity
 import com.bestway.data.remote.api.HomeService
-import com.bestway.domain.model.RedditPost
+import com.bestway.domain.models.RedditPost
 import com.bestway.domain.repositories.HomeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

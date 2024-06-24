@@ -18,5 +18,5 @@ data class RedditPostUiModel(
     val gifUrl: String? = null,
     val author: String = "",
     val after: String? = null,
-    val isSaved: Boolean = false
+    val isSaved: Boolean = false,
 )

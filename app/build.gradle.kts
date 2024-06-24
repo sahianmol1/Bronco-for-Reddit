@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.tooling.preview)
     implementation(libs.compose.material3)
+    implementation(project(":core:data"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -84,6 +85,7 @@ dependencies {
     implementation(project(":features:home:home-data"))
     implementation(project(":features:home:home-presentation"))
     implementation(project(":core:common-ui"))
+    implementation(project(":core:domain"))
     implementation(project(":features:savedposts:saved-data"))
     implementation(project(":features:savedposts:saved-domain"))
 

@@ -1,7 +1,7 @@
-package com.bestway.data.model
+package com.bestway.data.model.remote
 
-import com.bestway.data.local.entity.RedditPostEntity
-import com.bestway.domain.model.RedditPost
+import com.bestway.data.model.local.RedditPostEntity
+import com.bestway.domain.models.RedditPost
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -33,7 +33,7 @@ fun ListingsResponse.asEntity(): List<RedditPostEntity> {
     }.orEmpty()
 }
 
-fun List<RedditPostEntity>.asDomain(): List<RedditPost>? {
+fun List<RedditPostEntity>.asDomain(): List<RedditPost> {
     return this.map {
         RedditPost(
             id = it.id,

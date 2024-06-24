@@ -1,4 +1,4 @@
-package com.bestway.data.remote.api.utils
+package com.bestway.data.apihelper
 
 object ApiConstants {
     const val UNKNOWN_ERROR = "Unknown Error"

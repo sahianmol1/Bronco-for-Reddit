@@ -1,8 +1,8 @@
 package com.bestway.data.remote.api
 
-import com.bestway.data.model.ListingsResponse
+import com.bestway.data.apihelper.getSafeResponse
+import com.bestway.data.model.remote.ListingsResponse
 import com.bestway.data.remote.api.utils.EndPoints
-import com.bestway.data.remote.api.utils.getSafeResponse
 import io.ktor.client.HttpClient
 
 

@@ -1,6 +1,11 @@
-package com.bestway.domain.model
+package com.bestway.data.model.local
 
-data class RedditPost(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "reddit_post")
+data class RedditPostEntity(
+    @PrimaryKey
     val id: String,
     val subName: String = "",
     val title: String? = null,
