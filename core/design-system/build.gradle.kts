@@ -49,7 +49,7 @@ dependencies {
     implementation(libs.compose.tooling.preview)
     implementation(libs.compose.material3)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 
     // Compose navigation
     implementation(libs.androidx.navigation.compose)
