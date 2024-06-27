@@ -14,7 +14,6 @@ import com.anmolsahi.postdetailsdomain.usecase.DeleteSavedPostUseCase as PostDet
 @Module
 @InstallIn(ViewModelComponent::class)
 object UseCaseModule {
-
     @ViewModelScoped
     @Provides
     fun provideDeleteSavedPostUseCase(
@@ -27,9 +26,8 @@ object UseCaseModule {
 
     @ViewModelScoped
     @Provides
-    fun providePostDetailsDeleteSavedPostUseCase(
-        delegate: PostDetailsDelegate,
-    ) = PostDetailsDeleteSavedPostUseCase(
-        delegate = delegate,
-    )
+    fun providePostDetailsDeleteSavedPostUseCase(delegate: PostDetailsDelegate) =
+        PostDetailsDeleteSavedPostUseCase(
+            delegate = delegate,
+        )
 }

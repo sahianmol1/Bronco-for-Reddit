@@ -5,9 +5,7 @@ import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 class DeleteSavedPostUseCase(
     private val delegate: PostDetailsDelegate,
 ) {
-    suspend operator fun invoke(
-        postId: String,
-    ) {
+    suspend operator fun invoke(postId: String) {
         delegate.deleteSavedPost(postId)
         try {
             delegate.togglePostSavedStatus(postId)

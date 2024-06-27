@@ -22,8 +22,8 @@ data class RedditPostUiModel(
     val isSaved: Boolean = false,
 )
 
-fun RedditPost.asUiModel(): RedditPostUiModel {
-    return RedditPostUiModel(
+fun RedditPost.asUiModel(): RedditPostUiModel =
+    RedditPostUiModel(
         id = this.id,
         subName = this.subName,
         title = this.title,
@@ -36,6 +36,5 @@ fun RedditPost.asUiModel(): RedditPostUiModel {
         gifUrl = this.gifUrl,
         author = this.author,
         after = this.after,
-        isSaved = this.isSaved
+        isSaved = this.isSaved,
     )
-}
