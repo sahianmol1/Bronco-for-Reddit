@@ -6,7 +6,6 @@ import androidx.room.Upsert
 
 @Dao
 interface SavedPostDao {
-
     @Upsert
     suspend fun insertPost(post: SavedPostEntity)
 
