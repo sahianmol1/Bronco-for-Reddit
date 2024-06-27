@@ -47,7 +47,7 @@ fun HomeScreenListings(
     onClick: (postId: String) -> Unit,
     refreshData: () -> Unit,
     loadMoreData: (nextPageKey: String?) -> Unit,
-    onSaveIconClick: (postId: String) -> Unit
+    onSaveIconClick: (postId: String) -> Unit,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
     val lazyListState = rememberLazyListState()
@@ -72,12 +72,12 @@ fun HomeScreenListings(
     }
 
     Box(
-        Modifier.nestedScroll(pullRefreshState.nestedScrollConnection)
+        Modifier.nestedScroll(pullRefreshState.nestedScrollConnection),
     ) {
-        if(list.isNotEmpty()) {
+        if (list.isNotEmpty()) {
             LazyColumn(
                 state = lazyListState,
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 itemsIndexed(
                     items = list,
@@ -86,23 +86,23 @@ fun HomeScreenListings(
                     },
                     contentType = { _, _ ->
                         "reddit_post"
-                    }
+                    },
                 ) { index, item ->
                     PostComponent(
                         modifier =
-                        when (index) {
-                            list.size - 1 -> Modifier.navigationBarsPadding()
-                            else -> Modifier
-                        },
+                            when (index) {
+                                list.size - 1 -> Modifier.navigationBarsPadding()
+                                else -> Modifier
+                            },
                         redditPostUiModel = item,
                         onClick = onClick,
-                        onSaveIconClick = onSaveIconClick
+                        onSaveIconClick = onSaveIconClick,
                     )
                 }
 
                 item("paging_loading_indicator", contentType = "loading_indicator") {
                     CircularProgressIndicator(
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(16.dp),
                     )
                 }
             }
@@ -111,27 +111,29 @@ fun HomeScreenListings(
         // Show error screen
         AnimatedVisibility(
             visible = !uiState.errorMessage.isNullOrBlank() && list.isEmpty(),
-            enter = slideInFromBottomTransition()
+            enter = slideInFromBottomTransition(),
         ) {
             var showLogs by rememberSaveable { mutableStateOf(false) }
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState()),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                        .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 // TODO: Code Cleanup
                 Text(
                     modifier = Modifier.clickable { showLogs = !showLogs },
                     text =
-                    if (!showLogs)
-                        stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
-                    else
-                        stringResource(R.string.uh_oh_something_went_wrong) +
-                                " Learn More /n ${uiState.errorMessage}",
-                    textDecoration = TextDecoration.Underline
+                        if (!showLogs) {
+                            stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
+                        } else {
+                            stringResource(R.string.uh_oh_something_went_wrong) +
+                                " Learn More /n ${uiState.errorMessage}"
+                        },
+                    textDecoration = TextDecoration.Underline,
                 )
             }
         }
@@ -141,15 +143,19 @@ fun HomeScreenListings(
         }
 
         PullToRefreshContainer(
-            modifier = Modifier
-                .align(Alignment.TopCenter),
+            modifier =
+                Modifier
+                    .align(Alignment.TopCenter),
             state = pullRefreshState,
-            containerColor = if (hidePullRefreshContainer(pullRefreshState)) Color.Transparent
-            else PullToRefreshDefaults.containerColor
+            containerColor =
+                if (hidePullRefreshContainer(pullRefreshState)) {
+                    Color.Transparent
+                } else {
+                    PullToRefreshDefaults.containerColor
+                },
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-private fun hidePullRefreshContainer(state: PullToRefreshState) =
-    state.progress == 0f && !state.isRefreshing
+private fun hidePullRefreshContainer(state: PullToRefreshState) = state.progress == 0f && !state.isRefreshing

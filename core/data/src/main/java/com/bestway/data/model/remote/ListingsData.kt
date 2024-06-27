@@ -16,5 +16,5 @@ data class ListingsData(
     @SerialName("children")
     val children: List<ListingsChildren>? = null,
     @SerialName("before")
-    val before: String? = null
+    val before: String? = null,
 )

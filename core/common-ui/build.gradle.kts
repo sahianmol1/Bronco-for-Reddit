@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     kotlin("plugin.serialization")
     alias(libs.plugins.ksp)
+    alias(libs.plugins.ktlint)
 }
 
 android {

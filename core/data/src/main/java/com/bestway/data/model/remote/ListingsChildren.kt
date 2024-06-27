@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ListingsChildren(
     @SerialName("data")
-    val childrenData: ChildrenData
+    val childrenData: ChildrenData,
 )
 
 @Serializable
@@ -32,29 +32,29 @@ data class ChildrenData(
     @SerialName("preview")
     val gifUrl: GifPreview? = null,
     @SerialName("author")
-    val author: String? = null
+    val author: String? = null,
 )
 
 @Serializable
 data class SecureMedia(
     @SerialName("reddit_video")
-    val redditVideo: RedditVideo? = null
+    val redditVideo: RedditVideo? = null,
 )
 
 @Serializable
 data class RedditVideo(
     @SerialName("dash_url")
-    val videoUrl: String? = null
+    val videoUrl: String? = null,
 )
 
 @Serializable
 data class GifPreview(
     @SerialName("reddit_video_preview")
-    val gifPreview: RedditGifPreview? = null
+    val gifPreview: RedditGifPreview? = null,
 )
 
 @Serializable
 data class RedditGifPreview(
     @SerialName("dash_url")
-    val url: String? = null
+    val url: String? = null,
 )

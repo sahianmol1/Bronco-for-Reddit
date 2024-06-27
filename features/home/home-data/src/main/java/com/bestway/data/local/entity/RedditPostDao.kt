@@ -8,7 +8,6 @@ import com.bestway.data.model.local.RedditPostEntity
 
 @Dao
 interface RedditPostDao {
-
     @Query("SELECT * FROM reddit_post")
     suspend fun getAllRedditPosts(): List<RedditPostEntity>
 

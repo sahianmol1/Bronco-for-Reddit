@@ -55,6 +55,7 @@ class PostDetailsViewModel
         ) {
             viewModelScope.launch {
                 val isPostSaved = delegate.togglePostSavedStatus(postId)
+                delegate.updateSavedPosts(isPostSaved, postId)
                 getPostDetails(postId = postId)
                 onPostSaved(isPostSaved)
             }

@@ -40,6 +40,6 @@ fun DeleteSavedPostAlertDialog(
         },
         text = {
             Text(text = stringResource(R.string.delete_post_dialog_info_text))
-        }
+        },
     )
 }

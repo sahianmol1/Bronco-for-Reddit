@@ -48,7 +48,7 @@ fun CommentsView(modifier: Modifier = Modifier) {
 fun UserImage() {
     Icon(
         imageVector = Icons.Rounded.Person,
-        contentDescription = "This is the comment poster's avatar."
+        contentDescription = "This is the comment poster's avatar.",
     )
 }
 
@@ -63,7 +63,7 @@ fun OPBadge() {
                 .padding(4.dp),
         text = "OP",
         fontSize = 8.sp,
-        color = MaterialTheme.colorScheme.onSecondary
+        color = MaterialTheme.colorScheme.onSecondary,
     )
 }
 
@@ -75,7 +75,7 @@ fun UserName() {
         color = MaterialTheme.colorScheme.onPrimaryContainer,
         text = "u/flyfire",
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
@@ -88,18 +88,18 @@ fun CommentText(text: String) {
 fun CommentUpVotes() {
     Row(
         modifier = Modifier.wrapContentHeight().clickable {}.padding(bottom = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             modifier = Modifier.padding(vertical = 8.dp),
             imageVector = Icons.Default.ArrowUpward,
-            contentDescription = stringResource(R.string.post_action_content_description, "UpVotes")
+            contentDescription = stringResource(R.string.post_action_content_description, "UpVotes"),
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
             text = "43",
             fontSize = 12.sp,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -112,7 +112,7 @@ fun ViewReplies() {
         color = MaterialTheme.colorScheme.onPrimaryContainer,
         text = "View Replies",
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }
 

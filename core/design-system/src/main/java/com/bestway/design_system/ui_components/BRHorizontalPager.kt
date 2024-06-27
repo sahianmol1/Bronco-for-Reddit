@@ -12,14 +12,14 @@ import androidx.compose.ui.Modifier
 @Composable
 fun BRHorizontalPager(
     pagerState: PagerState,
-    pageContent: @Composable PagerScope.(page: HomePage) -> Unit
+    pageContent: @Composable PagerScope.(page: HomePage) -> Unit,
 ) {
     HorizontalPager(
         modifier = Modifier.fillMaxSize(),
         state = pagerState,
         pageContent = {
             pageContent(HomePage.entries[it])
-        }
+        },
     )
 }
 

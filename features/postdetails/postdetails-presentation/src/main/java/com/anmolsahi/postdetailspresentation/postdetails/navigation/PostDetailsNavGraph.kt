@@ -10,20 +10,21 @@ import com.bestway.design_system.utils.Destinations
 
 fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
     composable(
-        route = Destinations.PostDetailsDestinations.route +
+        route =
+            Destinations.PostDetailsDestinations.route +
                 "?post-id={post-id}&is-saved-posts-flow={is-saved-posts-flow}",
         arguments =
-        listOf(
-            navArgument("post-id") {
-                type = NavType.StringType
-                nullable = true
-                defaultValue = null
-            },
-            navArgument("is-saved-posts-flow") {
-                type = NavType.BoolType
-                defaultValue = false
-            },
-        ),
+            listOf(
+                navArgument("post-id") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                },
+                navArgument("is-saved-posts-flow") {
+                    type = NavType.BoolType
+                    defaultValue = false
+                },
+            ),
     ) { navBackStackEntry ->
         val postId = navBackStackEntry.arguments?.getString("post-id")
         val isSavedPostsFlow = navBackStackEntry.arguments?.getBoolean("is-saved-posts-flow")
@@ -32,7 +33,7 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
             isSavedPostsFlow = isSavedPostsFlow ?: false,
             popBackStack = {
                 navController.popBackStack()
-            }
+            },
         )
     }
 }

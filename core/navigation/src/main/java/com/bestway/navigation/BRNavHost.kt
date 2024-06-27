@@ -12,11 +12,14 @@ import com.bestway.presentation.navigation.savedPostsNavGraph
 import com.bestway.presentation.navigation.searchNavGraph
 
 @Composable
-fun BRNavHost(modifier: Modifier = Modifier, navController: NavHostController) {
+fun BRNavHost(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+) {
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = HomeScreenDestination.route
+        startDestination = HomeScreenDestination.route,
     ) {
         homeNavGraph(navController = navController)
         searchNavGraph(navController = navController)

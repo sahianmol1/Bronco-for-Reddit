@@ -7,15 +7,15 @@ import com.bestway.design_system.utils.Routes.SAVED_SCREEN_ROUTE
 import com.bestway.design_system.utils.Routes.SEARCH_SCREEN_ROUTE
 
 sealed class Destinations(val route: String) {
-    data object HomeScreenDestination: Destinations(route = HOME_SCREEN_ROUTE)
+    data object HomeScreenDestination : Destinations(route = HOME_SCREEN_ROUTE)
 
-    data object SearchScreenDestination: Destinations(route = SEARCH_SCREEN_ROUTE)
+    data object SearchScreenDestination : Destinations(route = SEARCH_SCREEN_ROUTE)
 
-    data object SavedScreenDestination: Destinations(route = SAVED_SCREEN_ROUTE)
+    data object SavedScreenDestination : Destinations(route = SAVED_SCREEN_ROUTE)
 
-    data object AboutUsDestination: Destinations(route = ABOUT_SCREEN_ROUTE)
+    data object AboutUsDestination : Destinations(route = ABOUT_SCREEN_ROUTE)
 
-    data object PostDetailsDestinations: Destinations(route = POST_DETAILS_ROUTE)
+    data object PostDetailsDestinations : Destinations(route = POST_DETAILS_ROUTE)
 }
 
 object Routes {

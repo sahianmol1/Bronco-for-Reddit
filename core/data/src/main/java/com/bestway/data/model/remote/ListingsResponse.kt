@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ListingsResponse(
     @SerialName("kind") val kind: String? = null,
-    @SerialName("data") val data: ListingsData? = null
+    @SerialName("data") val data: ListingsData? = null,
 )
 
 fun ListingsResponse.asEntity(): List<RedditPostEntity> {
@@ -27,7 +27,7 @@ fun ListingsResponse.asEntity(): List<RedditPostEntity> {
                 videoUrl = this.secureMedia?.redditVideo?.videoUrl,
                 gifUrl = this.gifUrl?.gifPreview?.url.orEmpty(),
                 author = this.author.orEmpty(),
-                after = after
+                after = after,
             )
         }
     }.orEmpty()
@@ -48,7 +48,7 @@ fun List<RedditPostEntity>.asDomain(): List<RedditPost> {
             gifUrl = it.gifUrl,
             author = it.author,
             after = it.after,
-            isSaved = it.isSaved
+            isSaved = it.isSaved,
         )
     }
 }

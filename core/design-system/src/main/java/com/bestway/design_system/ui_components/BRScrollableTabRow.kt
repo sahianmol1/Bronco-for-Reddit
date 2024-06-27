@@ -21,7 +21,7 @@ fun BRScrollableTabRow(
 
     ScrollableTabRow(
         modifier = modifier,
-        selectedTabIndex = pagerState.currentPage
+        selectedTabIndex = pagerState.currentPage,
     ) {
         tabs.forEachIndexed { index, title ->
             Tab(
@@ -31,7 +31,7 @@ fun BRScrollableTabRow(
                     coroutineScope.launch {
                         pagerState.animateScrollToPage(index)
                     }
-                }
+                },
             )
         }
     }

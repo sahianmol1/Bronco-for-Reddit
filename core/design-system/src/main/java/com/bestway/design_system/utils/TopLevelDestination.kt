@@ -7,7 +7,7 @@ private val topLevelDestinations =
         Destinations.HomeScreenDestination.route,
         Destinations.SearchScreenDestination.route,
         Destinations.SavedScreenDestination.route,
-        Destinations.AboutUsDestination.route
+        Destinations.AboutUsDestination.route,
     )
 
 fun NavDestination?.isTopLevelDestination(): Boolean {

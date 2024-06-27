@@ -36,27 +36,27 @@ fun HomeScreen(
 
     val hotPosts =
         homeViewModel.hotPosts.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
         )
     val newPosts =
         homeViewModel.newPosts.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
         )
     val topPosts =
         homeViewModel.topPosts.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
         )
     val bestPosts =
         homeViewModel.bestPosts.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
         )
     val risingPosts =
         homeViewModel.risingPosts.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
         )
     val controversialPosts =
         homeViewModel.controversialPosts.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
         )
 
     LaunchedEffect(Unit) {
@@ -93,8 +93,8 @@ fun HomeScreen(
                 context.getString(R.string.top),
                 context.getString(R.string.best),
                 context.getString(R.string.rising),
-                context.getString(R.string.controversial)
-            )
+                context.getString(R.string.controversial),
+            ),
         )
     }
 
@@ -102,13 +102,14 @@ fun HomeScreen(
         rememberPagerState(
             initialPage = 0,
             initialPageOffsetFraction = 0f,
-            pageCount = { tabs.size }
+            pageCount = { tabs.size },
         )
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .statusBarsPadding()
+        modifier =
+            modifier
+                .fillMaxSize()
+                .statusBarsPadding(),
     ) {
         BRScrollableTabRow(
             tabs = tabs,
@@ -140,12 +141,13 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getNewPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved)
+                                if (isSaved) {
                                     context.showToast(
-                                        context.getString(R.string.post_saved_success)
+                                        context.getString(R.string.post_saved_success),
                                     )
+                                }
                             }
-                        }
+                        },
                     )
                 }
 
@@ -157,12 +159,13 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getTopPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved)
+                                if (isSaved) {
                                     context.showToast(
-                                        context.getString(R.string.post_saved_success)
+                                        context.getString(R.string.post_saved_success),
                                     )
+                                }
                             }
-                        }
+                        },
                     )
                 }
 
@@ -174,12 +177,13 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getBestPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved)
+                                if (isSaved) {
                                     context.showToast(
-                                        context.getString(R.string.post_saved_success)
+                                        context.getString(R.string.post_saved_success),
                                     )
+                                }
                             }
-                        }
+                        },
                     )
                 }
 
@@ -191,12 +195,13 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getRisingsPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved)
+                                if (isSaved) {
                                     context.showToast(
-                                        context.getString(R.string.post_saved_success)
+                                        context.getString(R.string.post_saved_success),
                                     )
+                                }
                             }
-                        }
+                        },
                     )
                 }
 
@@ -208,12 +213,13 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getControversialPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved)
+                                if (isSaved) {
                                     context.showToast(
-                                        context.getString(R.string.post_saved_success)
+                                        context.getString(R.string.post_saved_success),
                                     )
+                                }
                             }
-                        }
+                        },
                     )
                 }
 
@@ -221,7 +227,7 @@ fun HomeScreen(
                     Column(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text(text = stringResource(R.string.unavailable))
                     }

@@ -11,11 +11,11 @@ import kotlinx.coroutines.flow.flow
 
 class HomeRepositoryImpl(
     private val redditPostDao: RedditPostDao,
-    private val homeService: HomeService
+    private val homeService: HomeService,
 ) : HomeRepository {
     override fun getHotPosts(
         shouldRefreshData: Boolean,
-        nextPageKey: String?
+        nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
@@ -42,14 +42,14 @@ class HomeRepositoryImpl(
 
                     // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
-                }
+                },
             )
         }
     }
 
     override fun getTopPosts(
         shouldRefreshData: Boolean,
-        nextPageKey: String?
+        nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
@@ -76,14 +76,14 @@ class HomeRepositoryImpl(
 
                     // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
-                }
+                },
             )
         }
     }
 
     override fun getNewPosts(
         shouldRefreshData: Boolean,
-        nextPageKey: String?
+        nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
@@ -110,14 +110,14 @@ class HomeRepositoryImpl(
 
                     // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
-                }
+                },
             )
         }
     }
 
     override fun getBestPosts(
         shouldRefreshData: Boolean,
-        nextPageKey: String?
+        nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
@@ -144,14 +144,14 @@ class HomeRepositoryImpl(
 
                     // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
-                }
+                },
             )
         }
     }
 
     override fun getRisingPosts(
         shouldRefreshData: Boolean,
-        nextPageKey: String?
+        nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
@@ -178,14 +178,14 @@ class HomeRepositoryImpl(
 
                     // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
-                }
+                },
             )
         }
     }
 
     override fun getControversialPosts(
         shouldRefreshData: Boolean,
-        nextPageKey: String?
+        nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
@@ -212,7 +212,7 @@ class HomeRepositoryImpl(
 
                     // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
-                }
+                },
             )
         }
     }

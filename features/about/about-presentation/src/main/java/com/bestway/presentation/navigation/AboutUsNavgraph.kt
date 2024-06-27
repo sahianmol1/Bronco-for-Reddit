@@ -7,6 +7,5 @@ import com.bestway.design_system.utils.Destinations
 import com.bestway.presentation.ui.AboutUsScreen
 
 fun NavGraphBuilder.aboutUsNavGraph(navController: NavHostController) {
-
     composable(route = Destinations.AboutUsDestination.route) { AboutUsScreen() }
 }

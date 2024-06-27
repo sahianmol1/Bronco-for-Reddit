@@ -23,6 +23,6 @@ suspend inline fun <reified T> HttpClient.getSafeResponse(urlString: String): Re
     }
 
     return Result.failure(
-        Throwable(ApiConstants.UNKNOWN_ERROR)
+        Throwable(ApiConstants.UNKNOWN_ERROR),
     )
 }

@@ -50,7 +50,7 @@ fun PostDetailsScreen(
     val scrollState = rememberScrollState()
     val postDetails =
         viewModel.postDetails.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
         )
     var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -65,7 +65,7 @@ fun PostDetailsScreen(
                 viewModel.deleteSavedPost(postId)
                 showDeletePostAlertDialog = false
                 popBackStack()
-            }
+            },
         )
     }
 
@@ -83,7 +83,7 @@ fun PostDetailsScreen(
                     .navigationBarsPadding()
                     .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = Alignment.Start,
         ) {
             SubRedditName(subName = postDetails.value.data?.subName.orEmpty())
 
@@ -100,13 +100,13 @@ fun PostDetailsScreen(
             postDetails.value.data?.imageUrl?.let {
                 if (it.endsWith("png") || it.endsWith("jpg")) {
                     com.anmolsahi.common_ui.components.PostImage(
-                        imageUrl = postDetails.value.data?.imageUrl.orEmpty()
+                        imageUrl = postDetails.value.data?.imageUrl.orEmpty(),
                     )
                 }
                 if (it.contains(".gif")) {
                     postDetails.value.data?.gifUrl?.let {
                         com.anmolsahi.common_ui.components.PostVideo(
-                            videoUrl = postDetails.value.data?.gifUrl.orEmpty()
+                            videoUrl = postDetails.value.data?.gifUrl.orEmpty(),
                         )
                     }
                 }
@@ -124,8 +124,9 @@ fun PostDetailsScreen(
                 shouldShowDeleteIcon = isSavedPostsFlow,
                 onSaveIconClick = {
                     viewModel.onSaveIconClick(postDetails.value.data?.id.orEmpty()) { isSaved ->
-                        if (isSaved)
+                        if (isSaved) {
                             context.showToast(context.getString(R.string.post_saved_success))
+                        }
                     }
                 },
                 onDeleteIconClick = {
@@ -143,24 +144,25 @@ fun PostDetailsScreen(
 
     AnimatedVisibility(
         visible = !postDetails.value.error.isNullOrEmpty(),
-        enter = slideInFromBottomTransition()
+        enter = slideInFromBottomTransition(),
     ) {
         var showLogs by rememberSaveable { mutableStateOf(false) }
         Column(
             modifier = Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             // TODO: Code Cleanup
             Text(
                 modifier = Modifier.clickable { showLogs = !showLogs },
                 text =
-                    if (!showLogs)
+                    if (!showLogs) {
                         stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
-                    else
+                    } else {
                         stringResource(R.string.uh_oh_something_went_wrong) +
-                            " Learn More /n ${postDetails.value.error}",
-                textDecoration = TextDecoration.Underline
+                            " Learn More /n ${postDetails.value.error}"
+                    },
+                textDecoration = TextDecoration.Underline,
             )
         }
     }
@@ -176,6 +178,6 @@ fun PostDetailsDescription(description: String) {
     Text(
         modifier = Modifier.padding(vertical = 4.dp),
         text = description,
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.90f)
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.90f),
     )
 }

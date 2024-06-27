@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.androidTest)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.ktlint)
 }
 
 android {

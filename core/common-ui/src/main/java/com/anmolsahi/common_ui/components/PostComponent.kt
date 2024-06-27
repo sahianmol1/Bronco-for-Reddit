@@ -77,11 +77,11 @@ fun PostComponent(
 ) {
     Column(
         modifier =
-        modifier
-            .animateContentSize()
-            .clickable { onClick(redditPostUiModel.id) }
-            .padding(top = 8.dp)
-            .padding(horizontal = 16.dp),
+            modifier
+                .animateContentSize()
+                .clickable { onClick(redditPostUiModel.id) }
+                .padding(top = 8.dp)
+                .padding(horizontal = 16.dp),
     ) {
         SubRedditName(subName = redditPostUiModel.subName)
         OriginalPosterName(opName = redditPostUiModel.author)
@@ -115,28 +115,30 @@ fun PostComponent(
 @Composable
 fun SubRedditName(subName: String) {
     Text(
-        modifier = Modifier
-            .clickable {}
-            .padding(top = 8.dp, bottom = 4.dp),
+        modifier =
+            Modifier
+                .clickable {}
+                .padding(top = 8.dp, bottom = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.primary,
         text = subName,
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
 @Composable
 fun OriginalPosterName(opName: String) {
     Text(
-        modifier = Modifier
-            .clickable {}
-            .padding(vertical = 4.dp),
+        modifier =
+            Modifier
+                .clickable {}
+                .padding(vertical = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.primary,
         text = "u/$opName",
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
@@ -147,7 +149,7 @@ fun PostTitle(title: String) {
         fontWeight = FontWeight.Bold,
         text = title,
         maxLines = 3,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
@@ -158,7 +160,7 @@ fun PostDescription(description: String) {
         text = description,
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.90f),
         maxLines = 3,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
@@ -174,14 +176,14 @@ fun PostImage(imageUrl: String) {
         }
         AsyncImage(
             modifier =
-            Modifier
-                .clickable(
-                    interactionSource = interactionSource,
-                    role = Role.Image,
-                    indication = null
-                ) {}
-                .padding(vertical = 4.dp)
-                .fillMaxWidth(),
+                Modifier
+                    .clickable(
+                        interactionSource = interactionSource,
+                        role = Role.Image,
+                        indication = null,
+                    ) {}
+                    .padding(vertical = 4.dp)
+                    .fillMaxWidth(),
             model = imageUrl,
             contentScale = ContentScale.FillWidth,
             onLoading = { isImageLoading = true },
@@ -191,7 +193,7 @@ fun PostImage(imageUrl: String) {
                 isImageLoading = false
                 isImageLoadingError = true
             },
-            contentDescription = "This is a reddit post image."
+            contentDescription = "This is a reddit post image.",
         )
     }
 }
@@ -205,31 +207,32 @@ fun PostVideo(videoUrl: String) {
 
     var isVolumeOff by rememberSaveable { mutableStateOf(true) }
 
-    val exoPlayer = remember {
-        ExoPlayer.Builder(context).build().apply {
-            setMediaItem(MediaItem.fromUri(videoUrl))
-            repeatMode = Player.REPEAT_MODE_ALL
-            prepare()
-            volume = 0f
-            play()
+    val exoPlayer =
+        remember {
+            ExoPlayer.Builder(context).build().apply {
+                setMediaItem(MediaItem.fromUri(videoUrl))
+                repeatMode = Player.REPEAT_MODE_ALL
+                prepare()
+                volume = 0f
+                play()
+            }
         }
-    }
 
     Box(contentAlignment = Alignment.BottomEnd) {
         DisposableEffect(videoUrl) { onDispose { exoPlayer.release() } }
 
         AndroidView(
             modifier =
-            Modifier
-                .clickable {}
-                .padding(vertical = 4.dp)
-                .defaultMinSize(minHeight = 250.dp)
-                .fillMaxWidth(),
+                Modifier
+                    .clickable {}
+                    .padding(vertical = 4.dp)
+                    .defaultMinSize(minHeight = 250.dp)
+                    .fillMaxWidth(),
             factory = {
                 PlayerView(it).apply {
                     player = exoPlayer
                     useController = false
-                  }
+                }
             },
             update = { playerView ->
                 when (lifecycleEvent) {
@@ -256,27 +259,33 @@ fun PostVideo(videoUrl: String) {
                 } else {
                     exoPlayer.volume = 1f
                 }
-            }
+            },
         )
     }
 }
 
 @Composable
-fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
+fun PostVideoControls(
+    isVolumeOff: Boolean,
+    onSoundButtonClick: () -> Unit,
+) {
     IconButton(
         modifier =
-        Modifier.drawBehind {
-            drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
-        },
-        onClick = onSoundButtonClick
+            Modifier.drawBehind {
+                drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
+            },
+        onClick = onSoundButtonClick,
     ) {
         Icon(
             modifier = Modifier.size(16.dp),
             imageVector =
-            if (isVolumeOff) Icons.AutoMirrored.Filled.VolumeOff
-            else Icons.AutoMirrored.Filled.VolumeUp,
+                if (isVolumeOff) {
+                    Icons.AutoMirrored.Filled.VolumeOff
+                } else {
+                    Icons.AutoMirrored.Filled.VolumeUp
+                },
             contentDescription = "Silent",
-            tint = Color.White
+            tint = Color.White,
         )
     }
 }
@@ -295,12 +304,12 @@ fun PostActions(
         PostActionItem(
             icon = Icons.Default.ArrowUpward,
             label = upVotes.toString(),
-            actionDescription = stringResource(R.string.upvote)
+            actionDescription = stringResource(R.string.upvote),
         )
         PostActionItem(
             icon = Icons.AutoMirrored.Outlined.Message,
             label = comments.toString(),
-            actionDescription = stringResource(R.string.comment)
+            actionDescription = stringResource(R.string.comment),
         )
 
         if (shouldShowDeleteIcon) {
@@ -308,7 +317,7 @@ fun PostActions(
                 icon = Icons.Outlined.Delete,
                 label = stringResource(R.string.delete),
                 actionDescription = stringResource(R.string.delete),
-                onclick = onDeleteIconClick
+                onclick = onDeleteIconClick,
             )
         } else {
             AnimatedContent(
@@ -318,23 +327,25 @@ fun PostActions(
                         .togetherWith(
                             slideOutOfContainer(
                                 animationSpec = tween(200, easing = EaseIn),
-                                towards = Down
-                            )
+                                towards = Down,
+                            ),
                         )
                 },
-                label = stringResource(id = R.string.save)
+                label = stringResource(id = R.string.save),
             ) { targetState ->
                 PostActionItem(
                     icon = if (targetState) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
                     label =
-                    if (targetState) stringResource(R.string.save)
-                    else stringResource(R.string.save),
+                        if (targetState) {
+                            stringResource(R.string.save)
+                        } else {
+                            stringResource(R.string.save)
+                        },
                     actionDescription = stringResource(R.string.save),
-                    onclick = onSaveIconClick
+                    onclick = onSaveIconClick,
                 )
             }
         }
-
     }
 }
 
@@ -347,24 +358,26 @@ fun PostActionItem(
     onclick: () -> Unit = {},
 ) {
     Row(
-        modifier = modifier
-            .wrapContentHeight()
-            .clickable { onclick() },
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .wrapContentHeight()
+                .clickable { onclick() },
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            modifier = Modifier
-                .padding(start = 8.dp)
-                .padding(vertical = 8.dp),
+            modifier =
+                Modifier
+                    .padding(start = 8.dp)
+                    .padding(vertical = 8.dp),
             imageVector = icon,
             contentDescription =
-            stringResource(R.string.post_action_content_description, actionDescription)
+                stringResource(R.string.post_action_content_description, actionDescription),
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
             text = label,
             fontSize = 12.sp,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -375,6 +388,6 @@ fun PostPreview() {
     PostComponent(
         redditPostUiModel = RedditPostUiModel(id = "0"),
         onClick = {},
-        onSaveIconClick = {}
+        onSaveIconClick = {},
     )
 }
