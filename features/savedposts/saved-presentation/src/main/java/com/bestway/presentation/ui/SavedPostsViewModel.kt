@@ -3,6 +3,7 @@ package com.bestway.presentation.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anmolsahi.common_ui.models.RedditPostUiModel
+import com.anmolsahi.postdetailspresentation.postdetails.delegate.SavedPostDelegate
 import com.bestway.domain.repositories.SavedPostRepository
 import com.bestway.presentation.utils.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SavedPostsViewModel @Inject constructor(
     private val repository: SavedPostRepository,
+    private val savedPostDelegate: SavedPostDelegate,
 ) : ViewModel() {
 
     private val _savedPostState: MutableStateFlow<PostsUiState> = MutableStateFlow(PostsUiState())
@@ -54,6 +56,7 @@ class SavedPostsViewModel @Inject constructor(
 
         viewModelScope.launch (coroutineExceptionHandler) {
             repository.deleteSavedPost(id)
+            savedPostDelegate.togglePostSavedStatus(id)
             getAllSavedPosts()
         }
     }

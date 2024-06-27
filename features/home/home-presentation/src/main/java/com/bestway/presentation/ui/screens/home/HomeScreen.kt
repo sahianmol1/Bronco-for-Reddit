@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bestway.design_system.ui_components.BRHorizontalPager
 import com.bestway.design_system.ui_components.BRScrollableTabRow
+import com.bestway.design_system.ui_components.HomePage
 import com.bestway.design_system.utils.showToast
 import com.bestway.home_presentation.R
 import com.bestway.presentation.ui.components.HomeScreenListings
@@ -104,13 +105,20 @@ fun HomeScreen(
             pageCount = { tabs.size }
         )
 
-    Column(modifier = modifier.fillMaxSize().statusBarsPadding()) {
-        BRScrollableTabRow(tabs = tabs, pagerState = pagerState)
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+    ) {
+        BRScrollableTabRow(
+            tabs = tabs,
+            pagerState = pagerState,
+        )
         BRHorizontalPager(
             pagerState = pagerState,
         ) { page ->
             when (page) {
-                0 -> {
+                HomePage.HOT -> {
                     HomeScreenListings(
                         uiState = hotPosts.value,
                         onClick = onClick,
@@ -118,15 +126,13 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getHotPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved)
-                                    context.showToast(
-                                        context.getString(R.string.post_saved_success)
-                                    )
+                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
                             }
-                        }
+                        },
                     )
                 }
-                1 -> {
+
+                HomePage.NEW -> {
                     HomeScreenListings(
                         uiState = newPosts.value,
                         onClick = onClick,
@@ -142,7 +148,8 @@ fun HomeScreen(
                         }
                     )
                 }
-                2 -> {
+
+                HomePage.TOP -> {
                     HomeScreenListings(
                         uiState = topPosts.value,
                         onClick = onClick,
@@ -158,7 +165,8 @@ fun HomeScreen(
                         }
                     )
                 }
-                3 -> {
+
+                HomePage.BEST -> {
                     HomeScreenListings(
                         uiState = bestPosts.value,
                         onClick = onClick,
@@ -174,7 +182,8 @@ fun HomeScreen(
                         }
                     )
                 }
-                4 -> {
+
+                HomePage.RISING -> {
                     HomeScreenListings(
                         uiState = risingPosts.value,
                         onClick = onClick,
@@ -190,7 +199,8 @@ fun HomeScreen(
                         }
                     )
                 }
-                5 -> {
+
+                HomePage.CONTROVERSIAL -> {
                     HomeScreenListings(
                         uiState = controversialPosts.value,
                         onClick = onClick,
@@ -206,6 +216,7 @@ fun HomeScreen(
                         }
                     )
                 }
+
                 else -> {
                     Column(
                         modifier = Modifier.fillMaxSize(),

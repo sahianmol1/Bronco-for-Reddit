@@ -211,7 +211,7 @@ class HomeViewModel @Inject constructor(
 
     fun onSaveIconClick(postId: String, onPostSaved: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val isPostSaved = repository.updatePost(postId)
+            val isPostSaved = repository.togglePostSavedStatus(postId)
             delegate.updateSavedPosts(isPostSaved, postId)
             updatePostSavedUiState(postId, isPostSaved)
             onPostSaved(isPostSaved)

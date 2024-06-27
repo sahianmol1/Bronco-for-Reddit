@@ -11,10 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.common_ui.components.PostComponent
 import com.anmolsahi.common_ui.models.RedditPostUiModel
+import com.anmolsahi.common_ui.utils.DeleteSavedPostAlertDialog
 import com.bestway.design_system.ui_components.BRLinearProgressIndicator
 import com.bestway.subreddit_presentation.R
 
@@ -55,37 +53,13 @@ fun SavedPostsScreen(
     }
 
     if (showDeletePostAlertDialog) {
-        AlertDialog(
-            onDismissRequest = {
+        DeleteSavedPostAlertDialog(
+            onDismissButtonClick = {
                 showDeletePostAlertDialog = false
             },
-            confirmButton = {
-                TextButton(onClick = {
-                    showDeletePostAlertDialog = false
-                    viewModel.deleteSavedPost(selectedPostId)
-                }) {
-                    Text(
-                        text = stringResource(id = com.anmolsahi.common_ui.R.string.delete),
-                        color = MaterialTheme.colorScheme.error,
-                    )
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    showDeletePostAlertDialog = false
-                }) {
-                    Text(text = stringResource(R.string.dismiss))
-                }
-            },
-            title = {
-                Text(
-                    text = stringResource(R.string.delete_post_dialog_title_text),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.error,
-                )
-            },
-            text = {
-                Text(text = stringResource(R.string.delete_post_dialog_info_text))
+            onConfirmButtonClick = {
+                viewModel.deleteSavedPost(selectedPostId)
+                showDeletePostAlertDialog = false
             }
         )
     }

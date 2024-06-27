@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="uh_oh_something_went_wrong">Uh oh! Something went wrong.</string>
-    <string name="delete_post_dialog_info_text">This post will be permanently removed from Saved and you may not be able to find it again.</string>
-    <string name="delete_post_dialog_title_text">Are you sure?</string>
-    <string name="dismiss">Dismiss</string>
 </resources>

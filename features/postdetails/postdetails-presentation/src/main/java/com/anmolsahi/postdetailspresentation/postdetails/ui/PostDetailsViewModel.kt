@@ -45,9 +45,20 @@ class PostDetailsViewModel @Inject constructor(
 
     fun onSaveIconClick(postId: String, onPostSaved: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val isPostSaved = delegate.updatePost(postId)
+            val isPostSaved = delegate.togglePostSavedStatus(postId)
             getPostDetails(postId = postId)
             onPostSaved(isPostSaved)
+        }
+    }
+
+    fun deleteSavedPost(postId: String) {
+        val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }
+
+        viewModelScope.launch (coroutineExceptionHandler) {
+            delegate.deleteSavedPost(postId)
+            delegate.togglePostSavedStatus(postId)
         }
     }
 }

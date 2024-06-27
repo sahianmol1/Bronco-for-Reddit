@@ -12,11 +12,22 @@ import androidx.compose.ui.Modifier
 @Composable
 fun BRHorizontalPager(
     pagerState: PagerState,
-    pageContent: @Composable PagerScope.(page: Int) -> Unit
+    pageContent: @Composable PagerScope.(page: HomePage) -> Unit
 ) {
     HorizontalPager(
         modifier = Modifier.fillMaxSize(),
         state = pagerState,
-        pageContent = pageContent
+        pageContent = {
+            pageContent(HomePage.entries[it])
+        }
     )
+}
+
+enum class HomePage(val id: Int) {
+    HOT(id = 0),
+    NEW(id = 1),
+    TOP(id = 2),
+    BEST(id = 3),
+    RISING(id = 4),
+    CONTROVERSIAL(id = 5),
 }

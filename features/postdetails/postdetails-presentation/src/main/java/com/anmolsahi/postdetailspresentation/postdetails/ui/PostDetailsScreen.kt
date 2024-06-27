@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,6 +33,7 @@ import com.anmolsahi.common_ui.components.CommentsView
 import com.anmolsahi.common_ui.components.OriginalPosterName
 import com.anmolsahi.common_ui.components.PostActions
 import com.anmolsahi.common_ui.components.SubRedditName
+import com.anmolsahi.common_ui.utils.DeleteSavedPostAlertDialog
 import com.bestway.design_system.ui_components.BRLinearProgressIndicator
 import com.bestway.design_system.utils.showToast
 import com.bestway.design_system.utils.slideInFromBottomTransition
@@ -42,6 +43,8 @@ fun PostDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: PostDetailsViewModel = hiltViewModel(),
     postId: String,
+    isSavedPostsFlow: Boolean,
+    popBackStack: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
@@ -49,8 +52,22 @@ fun PostDetailsScreen(
         viewModel.postDetails.collectAsStateWithLifecycle(
             lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
         )
+    var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) { viewModel.getPostDetails(postId = postId) }
+
+    if (showDeletePostAlertDialog) {
+        DeleteSavedPostAlertDialog(
+            onDismissButtonClick = {
+                showDeletePostAlertDialog = false
+            },
+            onConfirmButtonClick = {
+                viewModel.deleteSavedPost(postId)
+                showDeletePostAlertDialog = false
+                popBackStack()
+            }
+        )
+    }
 
     if (postDetails.value.isLoading) {
         BRLinearProgressIndicator()
@@ -104,15 +121,19 @@ fun PostDetailsScreen(
                 upVotes = postDetails.value.data?.upVotes ?: 0,
                 comments = postDetails.value.data?.comments ?: 0,
                 isSaved = postDetails.value.data?.isSaved ?: false,
+                shouldShowDeleteIcon = isSavedPostsFlow,
                 onSaveIconClick = {
                     viewModel.onSaveIconClick(postDetails.value.data?.id.orEmpty()) { isSaved ->
                         if (isSaved)
                             context.showToast(context.getString(R.string.post_saved_success))
                     }
-                }
+                },
+                onDeleteIconClick = {
+                    showDeletePostAlertDialog = true
+                },
             )
 
-            Divider()
+            HorizontalDivider()
 
             for (i in 0..20) {
                 CommentsView()

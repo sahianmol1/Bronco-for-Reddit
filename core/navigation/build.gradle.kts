@@ -55,5 +55,6 @@ dependencies {
     implementation(project(":features:home:home-presentation"))
     implementation(project(":features:search:search-presentation"))
     implementation(project(":features:savedposts:saved-presentation"))
+    implementation(project(":features:postdetails:postdetails-presentation"))
     implementation(project(":core:design-system"))
 }

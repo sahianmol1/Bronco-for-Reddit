@@ -229,7 +229,7 @@ fun PostVideo(videoUrl: String) {
                 PlayerView(it).apply {
                     player = exoPlayer
                     useController = false
-                }
+                  }
             },
             update = { playerView ->
                 when (lifecycleEvent) {
