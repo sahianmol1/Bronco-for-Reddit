@@ -26,6 +26,7 @@
             <option value="$PROJECT_DIR$/features/home/home-domain" />
             <option value="$PROJECT_DIR$/features/home/home-presentation" />
             <option value="$PROJECT_DIR$/features/postdetails" />
+            <option value="$PROJECT_DIR$/features/postdetails/postdetails-domain" />
             <option value="$PROJECT_DIR$/features/postdetails/postdetails-presentation" />
             <option value="$PROJECT_DIR$/features/savedposts" />
             <option value="$PROJECT_DIR$/features/savedposts/saved-data" />

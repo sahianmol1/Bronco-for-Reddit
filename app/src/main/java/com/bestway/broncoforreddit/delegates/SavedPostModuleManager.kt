@@ -1,6 +1,6 @@
 package com.bestway.broncoforreddit.delegates
 
-import com.anmolsahi.postdetailspresentation.postdetails.delegate.SavedPostDelegate
+import com.bestway.domain.delegate.SavedPostDelegate
 import com.bestway.domain.repositories.HomeRepository
 import javax.inject.Inject
 

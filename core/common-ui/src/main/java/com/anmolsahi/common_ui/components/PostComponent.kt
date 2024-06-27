@@ -119,7 +119,7 @@ fun SubRedditName(subName: String) {
             .clickable {}
             .padding(top = 8.dp, bottom = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
-        color = MaterialTheme.colorScheme.onPrimaryContainer,
+        color = MaterialTheme.colorScheme.primary,
         text = subName,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis
@@ -133,7 +133,7 @@ fun OriginalPosterName(opName: String) {
             .clickable {}
             .padding(vertical = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
-        color = MaterialTheme.colorScheme.onPrimaryContainer,
+        color = MaterialTheme.colorScheme.primary,
         text = "u/$opName",
         maxLines = 1,
         overflow = TextOverflow.Ellipsis

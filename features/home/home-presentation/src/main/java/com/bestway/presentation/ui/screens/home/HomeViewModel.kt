@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anmolsahi.common_ui.models.RedditPostUiModel
+import com.anmolsahi.common_ui.models.asUiModel
 import com.bestway.domain.repositories.HomeRepository
 import com.bestway.presentation.delegate.HomeDelegate
-import com.bestway.presentation.utils.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: HomeRepository,
-    private val delegate: HomeDelegate
+    private val delegate: HomeDelegate,
 ) : ViewModel() {
 
     // Ui State properties

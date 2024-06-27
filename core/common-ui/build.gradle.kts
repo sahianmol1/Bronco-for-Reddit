@@ -51,6 +51,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation(project(":core:design-system"))
+    implementation(project(":core:domain"))
 
     // Compose navigation
     implementation(libs.androidx.navigation.compose)

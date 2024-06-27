@@ -1,6 +1,7 @@
 package com.anmolsahi.common_ui.models
 
 import androidx.compose.runtime.Immutable
+import com.bestway.domain.models.RedditPost
 import kotlinx.serialization.Serializable
 
 @Immutable
@@ -20,3 +21,21 @@ data class RedditPostUiModel(
     val after: String? = null,
     val isSaved: Boolean = false,
 )
+
+fun RedditPost.asUiModel(): RedditPostUiModel {
+    return RedditPostUiModel(
+        id = this.id,
+        subName = this.subName,
+        title = this.title,
+        description = this.description,
+        upVotes = this.upVotes,
+        comments = this.comments,
+        imageUrl = this.imageUrl,
+        postUrl = this.postUrl,
+        videoUrl = this.videoUrl,
+        gifUrl = this.gifUrl,
+        author = this.author,
+        after = this.after,
+        isSaved = this.isSaved
+    )
+}

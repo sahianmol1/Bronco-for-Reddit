@@ -1,10 +1,10 @@
 package com.bestway.broncoforreddit.di
 
-import com.anmolsahi.postdetailspresentation.postdetails.delegate.PostDetailsDelegate
-import com.anmolsahi.postdetailspresentation.postdetails.delegate.SavedPostDelegate
+import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 import com.bestway.broncoforreddit.delegates.HomeModuleManager
 import com.bestway.broncoforreddit.delegates.PostDetailsModuleManager
 import com.bestway.broncoforreddit.delegates.SavedPostModuleManager
+import com.bestway.domain.delegate.SavedPostDelegate
 import com.bestway.presentation.delegate.HomeDelegate
 import dagger.Binds
 import dagger.Module

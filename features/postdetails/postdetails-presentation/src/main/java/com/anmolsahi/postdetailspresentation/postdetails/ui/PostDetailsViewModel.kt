@@ -3,7 +3,9 @@ package com.anmolsahi.postdetailspresentation.postdetails.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anmolsahi.common_ui.models.RedditPostUiModel
-import com.anmolsahi.postdetailspresentation.postdetails.delegate.PostDetailsDelegate
+import com.anmolsahi.common_ui.models.asUiModel
+import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
+import com.anmolsahi.postdetailsdomain.usecase.DeleteSavedPostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailsViewModel @Inject constructor(
-    private val delegate: PostDetailsDelegate
+    private val delegate: PostDetailsDelegate,
+    private val deleteSavedPostUseCase: DeleteSavedPostUseCase,
 ): ViewModel() {
 
     private val _postDetails: MutableStateFlow<PostDetailsUiState> = MutableStateFlow(
@@ -36,7 +39,7 @@ class PostDetailsViewModel @Inject constructor(
         viewModelScope.launch(coroutineExceptionHandler) {
             _postDetails.update { it.copy(isLoading = true) }
 
-            val post = delegate.getPostById(postId = postId)
+            val post = delegate.getPostById(postId = postId).asUiModel()
             _postDetails.update {
                 it.copy(isLoading = false, data = post)
             }
@@ -57,8 +60,7 @@ class PostDetailsViewModel @Inject constructor(
         }
 
         viewModelScope.launch (coroutineExceptionHandler) {
-            delegate.deleteSavedPost(postId)
-            delegate.togglePostSavedStatus(postId)
+            deleteSavedPostUseCase(postId = postId)
         }
     }
 }
