@@ -15,22 +15,15 @@ import dagger.hilt.android.scopes.ViewModelScoped
 @Module
 @InstallIn(ViewModelComponent::class)
 abstract class FeaturesModule {
+    @Binds
+    @ViewModelScoped
+    abstract fun getCommonUiDelegate(commonUiModuleManager: PostDetailsModuleManager): PostDetailsDelegate
 
     @Binds
     @ViewModelScoped
-    abstract fun getCommonUiDelegate(
-        commonUiModuleManager: PostDetailsModuleManager,
-    ): PostDetailsDelegate
+    abstract fun getHomeDelegate(homeModuleManager: HomeModuleManager): HomeDelegate
 
     @Binds
     @ViewModelScoped
-    abstract fun getHomeDelegate(
-        homeModuleManager: HomeModuleManager,
-    ): HomeDelegate
-
-    @Binds
-    @ViewModelScoped
-    abstract fun getSavedPostDelegate(
-        savedPostModuleManager: SavedPostModuleManager,
-    ): SavedPostDelegate
+    abstract fun getSavedPostDelegate(savedPostModuleManager: SavedPostModuleManager): SavedPostDelegate
 }

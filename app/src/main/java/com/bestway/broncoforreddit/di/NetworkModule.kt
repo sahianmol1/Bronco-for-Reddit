@@ -24,7 +24,7 @@ object NetworkModule {
                 json(
                     Json {
                         ignoreUnknownKeys = true
-                    }
+                    },
                 )
             }
 
