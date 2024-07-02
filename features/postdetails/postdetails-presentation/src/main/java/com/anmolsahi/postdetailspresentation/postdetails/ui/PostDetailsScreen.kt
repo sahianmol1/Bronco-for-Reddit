@@ -54,7 +54,12 @@ fun PostDetailsScreen(
         )
     var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) { viewModel.getPostDetails(postId = postId) }
+    LaunchedEffect(Unit) {
+        viewModel.getPostDetails(
+            postId = postId,
+            isSavedPostsFlow = isSavedPostsFlow,
+        )
+    }
 
     if (showDeletePostAlertDialog) {
         DeleteSavedPostAlertDialog(
@@ -85,35 +90,68 @@ fun PostDetailsScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {
-            SubRedditName(subName = postDetails.value.data?.subName.orEmpty())
+            SubRedditName(
+                subName =
+                    postDetails.value.data
+                        ?.subName
+                        .orEmpty(),
+            )
 
-            OriginalPosterName(opName = postDetails.value.data?.author.orEmpty())
+            OriginalPosterName(
+                opName =
+                    postDetails.value.data
+                        ?.author
+                        .orEmpty(),
+            )
 
-            if (!postDetails.value.data?.title.isNullOrBlank()) {
-                PostDetailsTitle(title = postDetails.value.data?.title.orEmpty())
+            if (!postDetails.value.data
+                    ?.title
+                    .isNullOrBlank()
+            ) {
+                PostDetailsTitle(
+                    title =
+                        postDetails.value.data
+                            ?.title
+                            .orEmpty(),
+                )
             }
 
-            if (!postDetails.value.data?.description.isNullOrBlank()) {
-                PostDetailsDescription(description = postDetails.value.data?.description.orEmpty())
+            if (!postDetails.value.data
+                    ?.description
+                    .isNullOrBlank()
+            ) {
+                PostDetailsDescription(
+                    description =
+                        postDetails.value.data
+                            ?.description
+                            .orEmpty(),
+                )
             }
 
             postDetails.value.data?.imageUrl?.let {
                 if (it.endsWith("png") || it.endsWith("jpg")) {
                     com.anmolsahi.common_ui.components.PostImage(
-                        imageUrl = postDetails.value.data?.imageUrl.orEmpty(),
+                        imageUrl =
+                            postDetails.value.data
+                                ?.imageUrl
+                                .orEmpty(),
                     )
                 }
                 if (it.contains(".gif")) {
                     postDetails.value.data?.gifUrl?.let {
                         com.anmolsahi.common_ui.components.PostVideo(
-                            videoUrl = postDetails.value.data?.gifUrl.orEmpty(),
+                            videoUrl =
+                                postDetails.value.data
+                                    ?.gifUrl
+                                    .orEmpty(),
                         )
                     }
                 }
             }
 
             postDetails.value.data?.videoUrl?.let { videoUrl ->
-                com.anmolsahi.common_ui.components.PostVideo(videoUrl = videoUrl)
+                com.anmolsahi.common_ui.components
+                    .PostVideo(videoUrl = videoUrl)
             }
 
             PostActions(
@@ -123,7 +161,13 @@ fun PostDetailsScreen(
                 isSaved = postDetails.value.data?.isSaved ?: false,
                 shouldShowDeleteIcon = isSavedPostsFlow,
                 onSaveIconClick = {
-                    viewModel.onSaveIconClick(postDetails.value.data?.id.orEmpty()) { isSaved ->
+                    viewModel.onSaveIconClick(
+                        postId =
+                            postDetails.value.data
+                                ?.id
+                                .orEmpty(),
+                        isSavedPostsFlow = isSavedPostsFlow,
+                    ) { isSaved ->
                         if (isSaved) {
                             context.showToast(context.getString(R.string.post_saved_success))
                         }

@@ -13,7 +13,8 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
         HomeScreen(
             onClick = { postId ->
                 navController.navigate(
-                    Destinations.PostDetailsDestinations.route + "?post-id=$postId",
+                    Destinations.PostDetailsDestinations.route +
+                        "?post-id=$postId",
                 )
             },
         )

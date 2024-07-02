@@ -6,6 +6,7 @@ import com.anmolsahi.common_ui.models.RedditPostUiModel
 import com.anmolsahi.common_ui.models.asUiModel
 import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 import com.anmolsahi.postdetailsdomain.usecase.DeleteSavedPostUseCase
+import com.anmolsahi.postdetailsdomain.usecase.GetPostDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,7 @@ class PostDetailsViewModel
     constructor(
         private val delegate: PostDetailsDelegate,
         private val deleteSavedPostUseCase: DeleteSavedPostUseCase,
+        private val getPostDetailsUseCase: GetPostDetailsUseCase,
     ) : ViewModel() {
         private val _postDetails: MutableStateFlow<PostDetailsUiState> =
             MutableStateFlow(
@@ -38,11 +40,18 @@ class PostDetailsViewModel
                 }
             }
 
-        fun getPostDetails(postId: String) {
+        fun getPostDetails(
+            postId: String,
+            isSavedPostsFlow: Boolean,
+        ) {
             viewModelScope.launch(coroutineExceptionHandler) {
                 _postDetails.update { it.copy(isLoading = true) }
 
-                val post = delegate.getPostById(postId = postId).asUiModel()
+                val post =
+                    getPostDetailsUseCase(
+                        postId = postId,
+                        isSavedPostsFlow = isSavedPostsFlow,
+                    ).asUiModel()
                 _postDetails.update {
                     it.copy(isLoading = false, data = post)
                 }
@@ -51,12 +60,13 @@ class PostDetailsViewModel
 
         fun onSaveIconClick(
             postId: String,
+            isSavedPostsFlow: Boolean,
             onPostSaved: (Boolean) -> Unit,
         ) {
             viewModelScope.launch {
                 val isPostSaved = delegate.togglePostSavedStatus(postId)
                 delegate.updateSavedPosts(isPostSaved, postId)
-                getPostDetails(postId = postId)
+                getPostDetails(postId = postId, isSavedPostsFlow = isSavedPostsFlow)
                 onPostSaved(isPostSaved)
             }
         }

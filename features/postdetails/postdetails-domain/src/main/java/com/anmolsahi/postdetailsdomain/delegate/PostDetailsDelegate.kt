@@ -3,7 +3,10 @@ package com.anmolsahi.postdetailsdomain.delegate
 import com.bestway.domain.models.RedditPost
 
 interface PostDetailsDelegate {
-    suspend fun getPostById(postId: String): RedditPost
+    suspend fun getPostById(
+        postId: String,
+        isSavedPostsFlow: Boolean,
+    ): RedditPost
 
     suspend fun togglePostSavedStatus(postId: String): Boolean
 

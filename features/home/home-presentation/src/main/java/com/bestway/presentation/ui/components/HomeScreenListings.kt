@@ -48,6 +48,7 @@ fun HomeScreenListings(
     refreshData: () -> Unit,
     loadMoreData: (nextPageKey: String?) -> Unit,
     onSaveIconClick: (postId: String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
     val lazyListState = rememberLazyListState()
@@ -72,7 +73,7 @@ fun HomeScreenListings(
     }
 
     Box(
-        Modifier.nestedScroll(pullRefreshState.nestedScrollConnection),
+        modifier.nestedScroll(pullRefreshState.nestedScrollConnection),
     ) {
         if (list.isNotEmpty()) {
             LazyColumn(
