@@ -30,7 +30,7 @@ firebase-crashlytics = "3.0.1"
 google-services = "4.4.2"
 detekt = "1.23.6"
 composeCompiler = "1.5.14"
-ksp = "1.9.24-1.0.20"
+ksp = "2.0.0-1.0.23"
 ktlint = "12.1.1"
 
 [libraries]
