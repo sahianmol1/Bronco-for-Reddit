@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -29,6 +30,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.common_ui.components.PostComponent
 import com.anmolsahi.common_ui.models.RedditPostUiModel
 import com.anmolsahi.common_ui.utils.DeleteSavedPostAlertDialog
+import com.anmolsahi.common_ui.utils.scrollToTop
 import com.bestway.design_system.ui_components.BRLinearProgressIndicator
 import com.bestway.subreddit_presentation.R
 
@@ -43,6 +45,7 @@ fun SavedPostsScreen(
     viewModel.savedPostsUiState.collectAsStateWithLifecycle(
         lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
     )
+    val lazyListState = rememberLazyListState()
     var list by remember { mutableStateOf(emptyList<RedditPostUiModel>()) }
     var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
     var selectedPostId by rememberSaveable { mutableStateOf("") }
@@ -50,6 +53,7 @@ fun SavedPostsScreen(
     LaunchedEffect(uiState.data) {
         viewModel.getAllSavedPosts()
         list = uiState.data.orEmpty()
+        lazyListState.scrollToTop()
     }
 
     if (showDeletePostAlertDialog) {
@@ -67,7 +71,8 @@ fun SavedPostsScreen(
     if (list.isNotEmpty()) {
         LazyColumn(
             modifier = modifier,
-            horizontalAlignment = Alignment.CenterHorizontally
+            state = lazyListState,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             itemsIndexed(
                 items = list,
