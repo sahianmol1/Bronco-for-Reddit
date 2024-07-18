@@ -1,7 +1,9 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.kotlinAndroid)
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlin.serialization)
     kotlin("kapt")
     alias(libs.plugins.hilt)
     alias(libs.plugins.detekt)
@@ -10,6 +12,7 @@ plugins {
     alias(libs.plugins.androidx.baselineprofile)
     alias(libs.plugins.ksp)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.kotlin.compose.compiler)
 }
 
 android {
@@ -48,10 +51,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions { jvmTarget = JavaVersion.VERSION_17.toString() }
     buildFeatures { compose = true }
-    composeOptions { kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get() }
     packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 detekt {

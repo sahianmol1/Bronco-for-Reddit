@@ -2,7 +2,8 @@
 plugins {
     alias(libs.plugins.com.android.application) apply false
     alias(libs.plugins.kotlinAndroid) apply false
-    kotlin("plugin.serialization") version "1.9.24" apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.kotlin.compose.compiler) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.google.services) apply false
