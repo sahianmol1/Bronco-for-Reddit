@@ -41,6 +41,11 @@ kotlin {
     }
 }
 
+composeCompiler {
+    enableStrongSkippingMode = true
+    includeSourceInformation = true
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)

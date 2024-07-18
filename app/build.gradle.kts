@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kotlin.serialization)
-    kotlin("kapt")
     alias(libs.plugins.hilt)
     alias(libs.plugins.detekt)
     alias(libs.plugins.google.services)
@@ -61,6 +60,11 @@ kotlin {
     }
 }
 
+composeCompiler {
+    enableStrongSkippingMode = true
+    includeSourceInformation = true
+}
+
 detekt {
     toolVersion = libs.versions.detekt.get()
     config.setFrom(file("../config/detekt/detekt.yml"))
@@ -76,7 +80,6 @@ dependencies {
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.tooling.preview)
     implementation(libs.compose.material3)
-    implementation(project(":core:data"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -94,6 +97,7 @@ dependencies {
     implementation(project(":features:home:home-presentation"))
     implementation(project(":core:common-ui"))
     implementation(project(":core:domain"))
+    implementation(project(":core:data"))
     implementation(project(":features:savedposts:saved-data"))
     implementation(project(":features:savedposts:saved-domain"))
     implementation(project(":features:savedposts:saved-presentation"))

@@ -11,7 +11,7 @@ plugins {
 
 android {
     namespace = "com.bestway.home_presentation"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24

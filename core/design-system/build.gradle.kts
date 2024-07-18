@@ -4,14 +4,14 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.kotlin.compose.compiler)
 }
 
 android {
     namespace = "com.bestway.design_system"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24
@@ -40,6 +40,11 @@ kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
     }
+}
+
+composeCompiler {
+    enableStrongSkippingMode = true
+    includeSourceInformation = true
 }
 
 dependencies {

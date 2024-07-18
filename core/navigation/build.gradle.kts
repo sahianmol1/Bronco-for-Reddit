@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.bestway.navigation"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24
@@ -39,6 +39,11 @@ kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
     }
+}
+
+composeCompiler {
+    enableStrongSkippingMode = true
+    includeSourceInformation = true
 }
 
 dependencies {

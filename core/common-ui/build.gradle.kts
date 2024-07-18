@@ -11,7 +11,7 @@ plugins {
 
 android {
     namespace = "com.anmolsahi.common_ui"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24
@@ -40,6 +40,11 @@ kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
     }
+}
+
+composeCompiler {
+    enableStrongSkippingMode = true
+    includeSourceInformation = true
 }
 
 dependencies {
