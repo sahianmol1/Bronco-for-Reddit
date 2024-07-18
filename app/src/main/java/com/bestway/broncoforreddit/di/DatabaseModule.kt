@@ -13,15 +13,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
-
     @Provides
     @Singleton
-    fun provideRedditDatabase(@ApplicationContext context: Context) =
-        Room.databaseBuilder(
-            context = context,
-            RedditDatabase::class.java,
-            name = "reddit_db"
-        ).build()
+    fun provideRedditDatabase(
+        @ApplicationContext context: Context,
+    ) = Room.databaseBuilder(
+        context = context,
+        RedditDatabase::class.java,
+        name = "reddit_db",
+    ).build()
 
     @Provides
     @Singleton

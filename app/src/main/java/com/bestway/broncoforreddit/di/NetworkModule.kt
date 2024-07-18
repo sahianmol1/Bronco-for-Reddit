@@ -17,14 +17,14 @@ import javax.inject.Singleton
 object NetworkModule {
     @Provides
     @Singleton
-    fun provideKtorClient(): HttpClient {
-        return HttpClient(Android) {
+    fun provideKtorClient(): HttpClient =
+        HttpClient(Android) {
             expectSuccess = true
             install(ContentNegotiation) {
                 json(
                     Json {
                         ignoreUnknownKeys = true
-                    }
+                    },
                 )
             }
 
@@ -33,7 +33,6 @@ object NetworkModule {
                 socketTimeout = Constants.SOCKET_TIMEOUT_MILLIS
             }
         }
-    }
 
     @Provides
     @Singleton

@@ -7,6 +7,6 @@ fun slideInFromBottomTransition(): EnterTransition {
     return slideInVertically(
         initialOffsetY = { screenHeight ->
             screenHeight / 2
-        }
+        },
     )
 }

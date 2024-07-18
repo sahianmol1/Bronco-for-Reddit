@@ -1,10 +1,9 @@
 package com.bestway.data.remote.api
 
-import com.bestway.data.model.ListingsResponse
+import com.bestway.data.apihelper.getSafeResponse
+import com.bestway.data.model.remote.ListingsResponse
 import com.bestway.data.remote.api.utils.EndPoints
-import com.bestway.data.remote.api.utils.getSafeResponse
 import io.ktor.client.HttpClient
-
 
 class HomeService(private val client: HttpClient) {
     suspend fun getHotListings(nextPageKey: String? = null): Result<ListingsResponse> {
@@ -31,5 +30,3 @@ class HomeService(private val client: HttpClient) {
         return client.getSafeResponse(EndPoints.CONTROVERSIAL + "?after=$nextPageKey")
     }
 }
-
-

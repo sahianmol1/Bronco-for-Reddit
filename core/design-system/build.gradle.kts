@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
     kotlin("plugin.serialization")
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -21,7 +22,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -50,8 +51,6 @@ dependencies {
     implementation(libs.compose.material3)
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-
-    implementation(project(":core:common"))
 
     // Compose navigation
     implementation(libs.androidx.navigation.compose)

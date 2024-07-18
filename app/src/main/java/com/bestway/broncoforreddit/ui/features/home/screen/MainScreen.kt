@@ -38,8 +38,11 @@ fun MainScreen(navController: NavHostController) {
         SideEffect {
             val window = (view.context as Activity).window
             window.navigationBarColor =
-                if (currentDestination.isTopLevelDestination()) navigationBarColor.toArgb()
-                else Color.TRANSPARENT
+                if (currentDestination.isTopLevelDestination()) {
+                    navigationBarColor.toArgb()
+                } else {
+                    Color.TRANSPARENT
+                }
         }
     }
 
@@ -51,11 +54,11 @@ fun MainScreen(navController: NavHostController) {
                     context = context,
                 )
             },
-            contentWindowInsets = WindowInsets(left = 0.dp, top = 0.dp, right = 0.dp, bottom = 0.dp)
+            contentWindowInsets = WindowInsets(left = 0.dp, top = 0.dp, right = 0.dp, bottom = 0.dp),
         ) { scaffoldPaddingValues ->
             BRNavHost(
                 modifier = Modifier.padding(scaffoldPaddingValues),
-                navController = navController
+                navController = navController,
             )
         }
     }

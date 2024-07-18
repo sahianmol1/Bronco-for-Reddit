@@ -11,13 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun StatusBarSpacer(
-  modifier: Modifier = Modifier
-) {
-  Spacer(
-    modifier
-      .windowInsetsTopHeight(WindowInsets.statusBars)
-      .fillMaxWidth()
-      .background(Color.Transparent)
-  )
+fun StatusBarSpacer(modifier: Modifier = Modifier) {
+    Spacer(
+        modifier
+            .windowInsetsTopHeight(WindowInsets.statusBars)
+            .fillMaxWidth()
+            .background(Color.Transparent),
+    )
 }

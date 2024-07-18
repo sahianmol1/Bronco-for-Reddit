@@ -25,16 +25,16 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.bestway.common.navigation.Destinations
 import com.bestway.design_system.R
 import com.bestway.design_system.models.BottomNavUiModel
+import com.bestway.design_system.utils.Destinations
 import com.bestway.design_system.utils.isTopLevelDestination
 
 @Composable
 fun BRNavigationBar(
     modifier: Modifier = Modifier,
     context: Context,
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     val bottomNavItems by remember {
         mutableStateOf(
@@ -43,27 +43,27 @@ fun BRNavigationBar(
                     route = Destinations.HomeScreenDestination.route,
                     title = context.getString(R.string.home),
                     selectedIcon = Icons.Filled.Home,
-                    unselectedIcon = Icons.Outlined.Home
+                    unselectedIcon = Icons.Outlined.Home,
                 ),
                 BottomNavUiModel(
                     route = Destinations.SearchScreenDestination.route,
                     title = context.getString(R.string.search),
                     selectedIcon = Icons.Filled.Search,
-                    unselectedIcon = Icons.Outlined.Search
+                    unselectedIcon = Icons.Outlined.Search,
                 ),
                 BottomNavUiModel(
                     route = Destinations.SavedScreenDestination.route,
                     title = context.getString(R.string.saved),
                     selectedIcon = Icons.Filled.Bookmarks,
-                    unselectedIcon = Icons.Outlined.Bookmarks
+                    unselectedIcon = Icons.Outlined.Bookmarks,
                 ),
                 BottomNavUiModel(
                     route = Destinations.AboutUsDestination.route,
                     title = context.getString(R.string.about),
                     selectedIcon = Icons.Filled.Info,
-                    unselectedIcon = Icons.Outlined.Info
+                    unselectedIcon = Icons.Outlined.Info,
                 ),
-            )
+            ),
         )
     }
 
@@ -78,13 +78,13 @@ fun BRNavigationBar(
 fun BRNavigationBarView(
     modifier: Modifier = Modifier,
     bottomNavItems: List<BottomNavUiModel>,
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination by
         remember(navBackStackEntry) { mutableStateOf(navBackStackEntry?.destination) }
 
-    if(currentDestination.isTopLevelDestination()) {
+    if (currentDestination.isTopLevelDestination()) {
         NavigationBar(modifier = modifier) {
             bottomNavItems.forEachIndexed { index, bottomNav ->
                 NavigationBarItem(
@@ -107,21 +107,21 @@ fun BRNavigationBarView(
                     icon = {
                         Icon(
                             imageVector =
-                            if (
-                                getSelectedBottomNav(currentDestination, bottomNavItems, index)
-                            ) {
-                                bottomNav.selectedIcon
-                            } else {
-                                bottomNav.unselectedIcon
-                            },
+                                if (
+                                    getSelectedBottomNav(currentDestination, bottomNavItems, index)
+                                ) {
+                                    bottomNav.selectedIcon
+                                } else {
+                                    bottomNav.unselectedIcon
+                                },
                             contentDescription =
-                            stringResource(
-                                R.string.bottom_bar_content_description,
-                                bottomNav.title
-                            )
+                                stringResource(
+                                    R.string.bottom_bar_content_description,
+                                    bottomNav.title,
+                                ),
                         )
                     },
-                    label = { Text(text = bottomNav.title) }
+                    label = { Text(text = bottomNav.title) },
                 )
             }
         }
@@ -131,7 +131,7 @@ fun BRNavigationBarView(
 private fun getSelectedBottomNav(
     currentDestination: NavDestination?,
     bottomNavItems: List<BottomNavUiModel>,
-    index: Int
+    index: Int,
 ): Boolean {
     return currentDestination?.hierarchy?.any { it.route == bottomNavItems[index].route } == true
 }

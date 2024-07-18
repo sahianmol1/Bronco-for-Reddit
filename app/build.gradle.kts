@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.androidx.baselineprofile)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -31,7 +32,7 @@ android {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
         create("benchmark") {
@@ -68,6 +69,7 @@ dependencies {
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.tooling.preview)
     implementation(libs.compose.material3)
+    implementation(project(":core:data"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -84,8 +86,12 @@ dependencies {
     implementation(project(":features:home:home-data"))
     implementation(project(":features:home:home-presentation"))
     implementation(project(":core:common-ui"))
+    implementation(project(":core:domain"))
     implementation(project(":features:savedposts:saved-data"))
     implementation(project(":features:savedposts:saved-domain"))
+    implementation(project(":features:savedposts:saved-presentation"))
+    implementation(project(":features:postdetails:postdetails-presentation"))
+    implementation(project(":features:postdetails:postdetails-domain"))
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)

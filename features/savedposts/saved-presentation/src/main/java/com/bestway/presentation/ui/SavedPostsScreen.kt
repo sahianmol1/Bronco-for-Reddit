@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.common_ui.components.PostComponent
 import com.anmolsahi.common_ui.models.RedditPostUiModel
+import com.anmolsahi.common_ui.utils.DeleteSavedPostAlertDialog
 import com.bestway.design_system.ui_components.BRLinearProgressIndicator
 import com.bestway.subreddit_presentation.R
 
@@ -38,21 +39,34 @@ fun SavedPostsScreen(
     onClick: (String) -> Unit = {},
     onSaveIconClick: (String) -> Unit = {},
 ) {
-
     val uiState by
-        viewModel.savedPostsUiState.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
-        )
+    viewModel.savedPostsUiState.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    )
     var list by remember { mutableStateOf(emptyList<RedditPostUiModel>()) }
+    var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
+    var selectedPostId by rememberSaveable { mutableStateOf("") }
 
     LaunchedEffect(uiState.data) {
         viewModel.getAllSavedPosts()
         list = uiState.data.orEmpty()
     }
 
+    if (showDeletePostAlertDialog) {
+        DeleteSavedPostAlertDialog(
+            onDismissButtonClick = {
+                showDeletePostAlertDialog = false
+            },
+            onConfirmButtonClick = {
+                viewModel.deleteSavedPost(selectedPostId)
+                showDeletePostAlertDialog = false
+            }
+        )
+    }
+
     if (list.isNotEmpty()) {
         LazyColumn(
-            modifier = modifier.statusBarsPadding().navigationBarsPadding(),
+            modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             itemsIndexed(
@@ -62,13 +76,19 @@ fun SavedPostsScreen(
             ) { index, item ->
                 PostComponent(
                     modifier =
-                        when (index) {
-                            list.size - 1 -> Modifier.navigationBarsPadding()
-                            else -> Modifier
-                        },
+                    when (index) {
+                        0 -> Modifier.statusBarsPadding()
+                        list.size - 1 -> Modifier.navigationBarsPadding()
+                        else -> Modifier
+                    },
                     redditPostUiModel = item,
                     onClick = onClick,
-                    onSaveIconClick = onSaveIconClick
+                    onSaveIconClick = onSaveIconClick,
+                    shouldShowDeleteIcon = true,
+                    onDeleteIconClick = { redditPostId ->
+                        selectedPostId = redditPostId
+                        showDeletePostAlertDialog = true
+                    }
                 )
             }
         }
@@ -78,7 +98,10 @@ fun SavedPostsScreen(
     if (!uiState.errorMessage.isNullOrBlank() && list.isEmpty()) {
         var showLogs by rememberSaveable { mutableStateOf(false) }
         Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -86,10 +109,10 @@ fun SavedPostsScreen(
             Text(
                 modifier = Modifier.clickable { showLogs = !showLogs },
                 text =
-                    if (!showLogs)
-                        stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
-                    else
-                        stringResource(R.string.uh_oh_something_went_wrong) +
+                if (!showLogs)
+                    stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
+                else
+                    stringResource(R.string.uh_oh_something_went_wrong) +
                             " Learn More /n ${uiState.errorMessage}",
                 textDecoration = TextDecoration.Underline
             )

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     kotlin("plugin.serialization")
     alias(libs.plugins.ksp)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -22,7 +23,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -35,12 +36,11 @@ android {
 
 dependencies {
     implementation(project(":features:home:home-domain"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
 
-    //  Ktor Client
-    implementation(libs.ktor.client.cio)
-    implementation(libs.ktor.client.android)
-    implementation(libs.ktor.client.content.negotiation)
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.core)
 
     // KotlinX Serialization
     implementation(libs.ktor.serialization.kotlinx.json)
@@ -49,4 +49,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+
+    // Ktor Client
+    implementation(libs.ktor.client.cio)
 }

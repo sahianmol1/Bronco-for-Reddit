@@ -25,6 +25,7 @@ import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.BookmarkAdded
 import androidx.compose.material.icons.outlined.BookmarkAdd
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -69,8 +70,10 @@ import com.anmolsahi.common_ui.utils.rememberLifecycleEvent
 fun PostComponent(
     modifier: Modifier = Modifier,
     redditPostUiModel: RedditPostUiModel,
+    shouldShowDeleteIcon: Boolean = false,
     onClick: (postId: String) -> Unit,
-    onSaveIconClick: (postId: String) -> Unit
+    onSaveIconClick: (postId: String) -> Unit,
+    onDeleteIconClick: (postId: String) -> Unit = {},
 ) {
     Column(
         modifier =
@@ -100,8 +103,10 @@ fun PostComponent(
         PostActions(
             upVotes = redditPostUiModel.upVotes,
             comments = redditPostUiModel.comments,
+            isSaved = redditPostUiModel.isSaved,
+            shouldShowDeleteIcon = shouldShowDeleteIcon,
             onSaveIconClick = { onSaveIconClick(redditPostUiModel.id) },
-            isSaved = redditPostUiModel.isSaved
+            onDeleteIconClick = { onDeleteIconClick(redditPostUiModel.id) },
         )
         HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
     }
@@ -110,24 +115,30 @@ fun PostComponent(
 @Composable
 fun SubRedditName(subName: String) {
     Text(
-        modifier = Modifier.clickable {}.padding(top = 8.dp, bottom = 4.dp),
+        modifier =
+            Modifier
+                .clickable {}
+                .padding(top = 8.dp, bottom = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
-        color = MaterialTheme.colorScheme.onPrimaryContainer,
+        color = MaterialTheme.colorScheme.primary,
         text = subName,
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
 @Composable
 fun OriginalPosterName(opName: String) {
     Text(
-        modifier = Modifier.clickable {}.padding(vertical = 4.dp),
+        modifier =
+            Modifier
+                .clickable {}
+                .padding(vertical = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
-        color = MaterialTheme.colorScheme.onPrimaryContainer,
+        color = MaterialTheme.colorScheme.primary,
         text = "u/$opName",
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
@@ -138,7 +149,7 @@ fun PostTitle(title: String) {
         fontWeight = FontWeight.Bold,
         text = title,
         maxLines = 3,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
@@ -149,7 +160,7 @@ fun PostDescription(description: String) {
         text = description,
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.90f),
         maxLines = 3,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
@@ -165,10 +176,11 @@ fun PostImage(imageUrl: String) {
         }
         AsyncImage(
             modifier =
-                Modifier.clickable(
+                Modifier
+                    .clickable(
                         interactionSource = interactionSource,
                         role = Role.Image,
-                        indication = null
+                        indication = null,
                     ) {}
                     .padding(vertical = 4.dp)
                     .fillMaxWidth(),
@@ -181,7 +193,7 @@ fun PostImage(imageUrl: String) {
                 isImageLoading = false
                 isImageLoadingError = true
             },
-            contentDescription = "This is a reddit post image."
+            contentDescription = "This is a reddit post image.",
         )
     }
 }
@@ -195,22 +207,24 @@ fun PostVideo(videoUrl: String) {
 
     var isVolumeOff by rememberSaveable { mutableStateOf(true) }
 
-    val exoPlayer = remember {
-        ExoPlayer.Builder(context).build().apply {
-            setMediaItem(MediaItem.fromUri(videoUrl))
-            repeatMode = Player.REPEAT_MODE_ALL
-            prepare()
-            volume = 0f
-            play()
+    val exoPlayer =
+        remember {
+            ExoPlayer.Builder(context).build().apply {
+                setMediaItem(MediaItem.fromUri(videoUrl))
+                repeatMode = Player.REPEAT_MODE_ALL
+                prepare()
+                volume = 0f
+                play()
+            }
         }
-    }
 
     Box(contentAlignment = Alignment.BottomEnd) {
         DisposableEffect(videoUrl) { onDispose { exoPlayer.release() } }
 
         AndroidView(
             modifier =
-                Modifier.clickable {}
+                Modifier
+                    .clickable {}
                     .padding(vertical = 4.dp)
                     .defaultMinSize(minHeight = 250.dp)
                     .fillMaxWidth(),
@@ -226,9 +240,11 @@ fun PostVideo(videoUrl: String) {
                         playerView.onPause()
                         playerView.player?.pause()
                     }
+
                     Lifecycle.Event.ON_RESUME -> {
                         playerView.onResume()
                     }
+
                     else -> Unit
                 }
             },
@@ -243,27 +259,33 @@ fun PostVideo(videoUrl: String) {
                 } else {
                     exoPlayer.volume = 1f
                 }
-            }
+            },
         )
     }
 }
 
 @Composable
-fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
+fun PostVideoControls(
+    isVolumeOff: Boolean,
+    onSoundButtonClick: () -> Unit,
+) {
     IconButton(
         modifier =
             Modifier.drawBehind {
                 drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
             },
-        onClick = onSoundButtonClick
+        onClick = onSoundButtonClick,
     ) {
         Icon(
             modifier = Modifier.size(16.dp),
             imageVector =
-                if (isVolumeOff) Icons.AutoMirrored.Filled.VolumeOff
-                else Icons.AutoMirrored.Filled.VolumeUp,
+                if (isVolumeOff) {
+                    Icons.AutoMirrored.Filled.VolumeOff
+                } else {
+                    Icons.AutoMirrored.Filled.VolumeUp
+                },
             contentDescription = "Silent",
-            tint = Color.White
+            tint = Color.White,
         )
     }
 }
@@ -271,44 +293,58 @@ fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
 @Composable
 fun PostActions(
     modifier: Modifier = Modifier,
+    shouldShowDeleteIcon: Boolean = false,
     upVotes: Int,
     comments: Int,
     isSaved: Boolean,
-    onSaveIconClick: () -> Unit
+    onSaveIconClick: () -> Unit = {},
+    onDeleteIconClick: () -> Unit = {},
 ) {
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         PostActionItem(
             icon = Icons.Default.ArrowUpward,
             label = upVotes.toString(),
-            actionDescription = stringResource(R.string.upvote)
+            actionDescription = stringResource(R.string.upvote),
         )
         PostActionItem(
             icon = Icons.AutoMirrored.Outlined.Message,
             label = comments.toString(),
-            actionDescription = stringResource(R.string.comment)
+            actionDescription = stringResource(R.string.comment),
         )
 
-        AnimatedContent(
-            targetState = isSaved,
-            transitionSpec = {
-                slideIntoContainer(animationSpec = tween(200, easing = EaseIn), towards = Up)
-                    .togetherWith(
-                        slideOutOfContainer(
-                            animationSpec = tween(200, easing = EaseIn),
-                            towards = Down
-                        )
-                    )
-            },
-            label = stringResource(id = R.string.save)
-        ) { targetState ->
+        if (shouldShowDeleteIcon) {
             PostActionItem(
-                icon = if (targetState) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
-                label =
-                    if (targetState) stringResource(R.string.save)
-                    else stringResource(R.string.save),
-                actionDescription = stringResource(R.string.save),
-                onclick = onSaveIconClick
+                icon = Icons.Outlined.Delete,
+                label = stringResource(R.string.delete),
+                actionDescription = stringResource(R.string.delete),
+                onclick = onDeleteIconClick,
             )
+        } else {
+            AnimatedContent(
+                targetState = isSaved,
+                transitionSpec = {
+                    slideIntoContainer(animationSpec = tween(200, easing = EaseIn), towards = Up)
+                        .togetherWith(
+                            slideOutOfContainer(
+                                animationSpec = tween(200, easing = EaseIn),
+                                towards = Down,
+                            ),
+                        )
+                },
+                label = stringResource(id = R.string.save),
+            ) { targetState ->
+                PostActionItem(
+                    icon = if (targetState) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
+                    label =
+                        if (targetState) {
+                            stringResource(R.string.save)
+                        } else {
+                            stringResource(R.string.save)
+                        },
+                    actionDescription = stringResource(R.string.save),
+                    onclick = onSaveIconClick,
+                )
+            }
         }
     }
 }
@@ -319,23 +355,29 @@ fun PostActionItem(
     icon: ImageVector,
     label: String,
     actionDescription: String,
-    onclick: () -> Unit = {}
+    onclick: () -> Unit = {},
 ) {
     Row(
-        modifier = modifier.wrapContentHeight().clickable { onclick() },
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .wrapContentHeight()
+                .clickable { onclick() },
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            modifier = Modifier.padding(start = 8.dp).padding(vertical = 8.dp),
+            modifier =
+                Modifier
+                    .padding(start = 8.dp)
+                    .padding(vertical = 8.dp),
             imageVector = icon,
             contentDescription =
-                stringResource(R.string.post_action_content_description, actionDescription)
+                stringResource(R.string.post_action_content_description, actionDescription),
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
             text = label,
             fontSize = 12.sp,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -346,6 +388,6 @@ fun PostPreview() {
     PostComponent(
         redditPostUiModel = RedditPostUiModel(id = "0"),
         onClick = {},
-        onSaveIconClick = {}
+        onSaveIconClick = {},
     )
 }

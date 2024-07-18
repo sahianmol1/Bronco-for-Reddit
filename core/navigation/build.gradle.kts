@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -20,7 +21,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -55,5 +56,6 @@ dependencies {
     implementation(project(":features:home:home-presentation"))
     implementation(project(":features:search:search-presentation"))
     implementation(project(":features:savedposts:saved-presentation"))
-    implementation(project(":core:common"))
+    implementation(project(":features:postdetails:postdetails-presentation"))
+    implementation(project(":core:design-system"))
 }

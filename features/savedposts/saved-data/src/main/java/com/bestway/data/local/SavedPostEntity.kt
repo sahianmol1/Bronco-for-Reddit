@@ -34,7 +34,7 @@ fun SavedPostEntity.asDomain(): SavedPost =
         videoUrl = this.videoUrl,
         gifUrl = this.gifUrl,
         author = this.author,
-        after = this.after
+        after = this.after,
     )
 
 fun SavedPost.fromDomain(): SavedPostEntity =
@@ -50,7 +50,7 @@ fun SavedPost.fromDomain(): SavedPostEntity =
         videoUrl = this.videoUrl,
         gifUrl = this.gifUrl,
         author = this.author,
-        after = this.after
+        after = this.after,
     )
 
 fun List<SavedPostEntity>.asDomain(): List<SavedPost> {
@@ -67,7 +67,7 @@ fun List<SavedPostEntity>.asDomain(): List<SavedPost> {
             videoUrl = it.videoUrl,
             gifUrl = it.gifUrl,
             author = it.author,
-            after = it.after
+            after = it.after,
         )
     }
 }

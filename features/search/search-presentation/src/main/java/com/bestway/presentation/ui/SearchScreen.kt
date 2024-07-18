@@ -32,7 +32,7 @@ fun SearchScreen(modifier: Modifier = Modifier) {
                 .statusBarsPadding()
                 .navigationBarsPadding()
                 .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         var searchedValue by remember { mutableStateOf("") }
         SearchBar(
@@ -56,13 +56,13 @@ fun SearchBar(
             modifier = Modifier.fillMaxWidth(),
             value = value,
             onValueChange = onValueChanged,
-            label = { Text(text = hintText) }
+            label = { Text(text = hintText) },
         )
 
         Icon(
             modifier = Modifier.padding(end = 8.dp, top = 6.dp),
             imageVector = if (value.isEmpty()) Icons.Default.Search else Icons.Default.Clear,
-            contentDescription = "Click here to search"
+            contentDescription = "Click here to search",
         )
     }
 }

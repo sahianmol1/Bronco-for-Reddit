@@ -4,10 +4,10 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
+import com.bestway.data.model.local.RedditPostEntity
 
 @Dao
 interface RedditPostDao {
-
     @Query("SELECT * FROM reddit_post")
     suspend fun getAllRedditPosts(): List<RedditPostEntity>
 

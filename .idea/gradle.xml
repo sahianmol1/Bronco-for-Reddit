@@ -11,7 +11,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/core/common" />
             <option value="$PROJECT_DIR$/core/common-ui" />
             <option value="$PROJECT_DIR$/core/data" />
             <option value="$PROJECT_DIR$/core/design-system" />
@@ -26,6 +25,9 @@
             <option value="$PROJECT_DIR$/features/home/home-data" />
             <option value="$PROJECT_DIR$/features/home/home-domain" />
             <option value="$PROJECT_DIR$/features/home/home-presentation" />
+            <option value="$PROJECT_DIR$/features/postdetails" />
+            <option value="$PROJECT_DIR$/features/postdetails/postdetails-domain" />
+            <option value="$PROJECT_DIR$/features/postdetails/postdetails-presentation" />
             <option value="$PROJECT_DIR$/features/savedposts" />
             <option value="$PROJECT_DIR$/features/savedposts/saved-data" />
             <option value="$PROJECT_DIR$/features/savedposts/saved-domain" />

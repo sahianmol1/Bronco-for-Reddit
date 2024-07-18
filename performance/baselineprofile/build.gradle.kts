@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidTest)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.androidx.baselineprofile)
+    alias(libs.plugins.ktlint)
 }
 
 android {

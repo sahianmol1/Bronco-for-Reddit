@@ -1,21 +1,21 @@
 package com.bestway.data.repositories.homerepository
 
 import com.bestway.data.local.entity.RedditPostDao
-import com.bestway.data.model.asDomain
-import com.bestway.data.model.asEntity
+import com.bestway.data.model.remote.asDomain
+import com.bestway.data.model.remote.asEntity
 import com.bestway.data.remote.api.HomeService
-import com.bestway.domain.model.RedditPost
+import com.bestway.domain.models.RedditPost
 import com.bestway.domain.repositories.HomeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class HomeRepositoryImpl(
     private val redditPostDao: RedditPostDao,
-    private val homeService: HomeService
+    private val homeService: HomeService,
 ) : HomeRepository {
     override fun getHotPosts(
         shouldRefreshData: Boolean,
-        nextPageKey: String?
+        nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
@@ -42,14 +42,14 @@ class HomeRepositoryImpl(
 
                     // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
-                }
+                },
             )
         }
     }
 
     override fun getTopPosts(
         shouldRefreshData: Boolean,
-        nextPageKey: String?
+        nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
@@ -76,14 +76,14 @@ class HomeRepositoryImpl(
 
                     // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
-                }
+                },
             )
         }
     }
 
     override fun getNewPosts(
         shouldRefreshData: Boolean,
-        nextPageKey: String?
+        nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
@@ -110,14 +110,14 @@ class HomeRepositoryImpl(
 
                     // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
-                }
+                },
             )
         }
     }
 
     override fun getBestPosts(
         shouldRefreshData: Boolean,
-        nextPageKey: String?
+        nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
@@ -144,14 +144,14 @@ class HomeRepositoryImpl(
 
                     // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
-                }
+                },
             )
         }
     }
 
     override fun getRisingPosts(
         shouldRefreshData: Boolean,
-        nextPageKey: String?
+        nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
@@ -178,14 +178,14 @@ class HomeRepositoryImpl(
 
                     // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
-                }
+                },
             )
         }
     }
 
     override fun getControversialPosts(
         shouldRefreshData: Boolean,
-        nextPageKey: String?
+        nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
@@ -212,12 +212,12 @@ class HomeRepositoryImpl(
 
                     // Fetch and emit the updated posts from the database.
                     redditPostDao.getAllRedditPosts().asDomain()
-                }
+                },
             )
         }
     }
 
-    override suspend fun updatePost(postId: String): Boolean {
+    override suspend fun togglePostSavedStatus(postId: String): Boolean {
         val redditPost = redditPostDao.getRedditPostById(id = postId)
         redditPostDao.insertRedditPost(redditPostEntity = redditPost.copy(isSaved = !redditPost.isSaved))
         return redditPostDao.getRedditPostById(id = postId).isSaved

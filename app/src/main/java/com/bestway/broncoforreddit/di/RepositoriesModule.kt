@@ -20,21 +20,17 @@ object RepositoriesModule {
     @Provides
     fun provideHomeRepository(
         homeService: HomeService,
-        redditPostDao: RedditPostDao
-    ): HomeRepository {
-        return HomeRepositoryImpl(
+        redditPostDao: RedditPostDao,
+    ): HomeRepository =
+        HomeRepositoryImpl(
             redditPostDao = redditPostDao,
-            homeService = homeService
+            homeService = homeService,
         )
-    }
 
     @Singleton
     @Provides
-    fun provideSavedPostsRepository(
-        savedPostsDao: SavedPostDao
-    ): SavedPostRepository {
-        return SavedPostRepositoryImpl(
-            dao = savedPostsDao
+    fun provideSavedPostsRepository(savedPostsDao: SavedPostDao): SavedPostRepository =
+        SavedPostRepositoryImpl(
+            dao = savedPostsDao,
         )
-    }
 }

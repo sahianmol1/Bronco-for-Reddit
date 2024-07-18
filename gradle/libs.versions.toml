@@ -31,6 +31,7 @@ google-services = "4.4.2"
 detekt = "1.23.6"
 composeCompiler = "1.5.14"
 ksp = "1.9.24-1.0.20"
+ktlint = "12.1.1"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -91,3 +92,4 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
