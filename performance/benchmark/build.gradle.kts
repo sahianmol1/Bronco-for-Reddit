@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.example.benchmark"
-    compileSdk = 34
+    compileSdk = libs.versions.compile.sdk.get().toInt()
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -17,8 +17,8 @@ android {
     }
 
     defaultConfig {
-        minSdk = 24
-        targetSdk = 34
+        minSdk = libs.versions.min.sdk.get().toInt()
+        targetSdk = libs.versions.target.sdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
