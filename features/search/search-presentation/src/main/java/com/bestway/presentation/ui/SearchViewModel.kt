@@ -8,10 +8,15 @@ import com.anmolsahi.common_ui.models.asUiModel
 import com.bestway.domain.model.RecentSearch
 import com.bestway.domain.repositories.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
@@ -27,7 +32,29 @@ class SearchViewModel @Inject constructor(
     private val _searchDataUiModel = MutableStateFlow(SearchDataUiModel())
     val searchDataUiModel: StateFlow<SearchDataUiModel> = _searchDataUiModel.asStateFlow()
 
-    fun searchReddit(query: String, nextPageKey: String? = null) {
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery = _searchQuery.asStateFlow()
+
+    fun updateSearchQuery(query: String) {
+        _searchQuery.value = query
+    }
+
+    init {
+        @Suppress("OPT_IN_USAGE")
+        _searchQuery
+            .debounce(10000)
+            .filter {
+                return@filter it.trim().isNotEmpty()
+            }
+            .distinctUntilChanged()
+            .flowOn(Dispatchers.IO)
+            .onEach { query ->
+                searchReddit(query)
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun searchReddit(query: String, nextPageKey: String? = null) {
         repository.searchReddit(query, nextPageKey)
             .onStart { _searchDataUiModel.update { it.copy(isLoading = true) } }
             .onEach { redditPosts ->
@@ -65,8 +92,9 @@ class SearchViewModel @Inject constructor(
 
     fun onSearch(recentSearch: RecentSearch) {
         viewModelScope.launch {
-            searchReddit(recentSearch.value)
-            repository.insertRecentSearch(recentSearch)
+            if (!_searchDataUiModel.value.recentSearches.contains(recentSearch)) {
+                repository.insertRecentSearch(recentSearch)
+            }
         }
     }
 

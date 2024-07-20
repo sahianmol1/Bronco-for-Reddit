@@ -1,13 +1,19 @@
 package com.bestway.presentation.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.filled.ArrowUpward
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.anmolsahi.common_ui.components.PostActionItem
 import com.anmolsahi.common_ui.components.PostDescription
 import com.anmolsahi.common_ui.components.PostImage
@@ -22,8 +28,14 @@ fun SearchPostComponent(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
-    ) {
+        modifier = modifier
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .background(
+                MaterialTheme.colorScheme.primaryContainer,
+                shape = RoundedCornerShape(corner = CornerSize(16.dp)),
+            )
+            .padding(16.dp),
+        ) {
         Row {
             Column {
                 SubRedditName(subName = redditPostUiModel.subName)

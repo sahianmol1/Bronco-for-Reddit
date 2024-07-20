@@ -29,7 +29,7 @@ fun SearchScreen(
 ) {
     val lazyListState = rememberLazyListState()
     val uiState by viewModel.searchDataUiModel.collectAsStateWithLifecycle()
-    var searchedValue by remember { mutableStateOf("") }
+    val searchedValue by viewModel.searchQuery.collectAsStateWithLifecycle()
     var showErrorDialog by remember { mutableStateOf(false) }
     val searchedData by remember(uiState) { mutableStateOf(uiState.searchedData.orEmpty()) }
 
@@ -37,25 +37,21 @@ fun SearchScreen(
         viewModel.getAllRecentSearches()
     }
 
-    LaunchedEffect(searchedValue) {
-        if (searchedValue.isNotEmpty()) {
-            viewModel.searchReddit(query = searchedValue)
-        }
-    }
-
     Column {
         AnimatedVisibility(lazyListState.isScrollingUp()) {
             BRSearchBar(
                 modifier = modifier,
                 query = searchedValue,
-                onQueryChange = { searchedValue = it },
+                onQueryChange = {
+                    viewModel.updateSearchQuery(it)
+                },
                 onSearch = {
                     if (searchedValue.isNotEmpty()) {
                         viewModel.onSearch(RecentSearch(value = searchedValue))
                     }
                 },
                 onBack = {
-                    searchedValue = ""
+                    viewModel.updateSearchQuery("")
                 }
             ) {
                 if (searchedValue.isEmpty() && uiState.recentSearches.isNotEmpty() && !uiState.isLoading && uiState.errorMessage.isNullOrEmpty()) {
@@ -63,7 +59,7 @@ fun SearchScreen(
                         modifier = Modifier,
                         recentSearches = uiState.recentSearches,
                         onItemClick = { recentSearch ->
-                            searchedValue = recentSearch.value
+                            viewModel.updateSearchQuery(recentSearch.value)
                         },
                         onDeleteItemClick = { recentSearch ->
                             viewModel.onDeleteItemClick(recentSearch)

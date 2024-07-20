@@ -21,7 +21,11 @@ class SearchRepositoryImpl(
         nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
-            emit(service.searchReddit(query, nextPageKey).getOrThrow().asRedditPost())
+            if (query.isBlank()) {
+                emit(null)
+            } else {
+                emit(service.searchReddit(query, nextPageKey).getOrThrow().asRedditPost())
+            }
         }
     }
 
