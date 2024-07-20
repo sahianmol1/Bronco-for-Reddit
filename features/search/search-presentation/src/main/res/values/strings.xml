@@ -5,4 +5,8 @@
     <string name="recent_searches">Recent Searches</string>
     <string name="remove">remove %1$s</string>
     <string name="search_item">Search %1$s</string>
+    <string name="quick_results">Quick Results</string>
+    <string name="see_all_results">See All Results</string>
+    <string name="view_all_posts">View All Posts</string>
+    <string name="content_description_post_image">post image</string>
 </resources>

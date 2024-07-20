@@ -33,6 +33,8 @@ data class ChildrenData(
     val gifUrl: GifPreview? = null,
     @SerialName("author")
     val author: String? = null,
+    @SerialName("thumbnail")
+    val thumbnailUrl: String? = null,
 )
 
 @Serializable

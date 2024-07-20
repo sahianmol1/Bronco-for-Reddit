@@ -27,6 +27,7 @@ fun ListingsResponse.asEntity(): List<RedditPostEntity> {
                 videoUrl = this.secureMedia?.redditVideo?.videoUrl,
                 gifUrl = this.gifUrl?.gifPreview?.url.orEmpty(),
                 author = this.author.orEmpty(),
+                thumbnailUrl = this.thumbnailUrl,
                 after = after,
             )
         }
@@ -49,6 +50,7 @@ fun ListingsResponse.asRedditPost(): List<RedditPost> {
                 videoUrl = this.secureMedia?.redditVideo?.videoUrl,
                 gifUrl = this.gifUrl?.gifPreview?.url.orEmpty(),
                 author = this.author.orEmpty(),
+                thumbnailUrl = this.thumbnailUrl,
                 after = after,
             )
         }
@@ -71,6 +73,7 @@ fun List<RedditPostEntity>.asDomain(): List<RedditPost> {
             author = it.author,
             after = it.after,
             isSaved = it.isSaved,
+            thumbnailUrl = it.thumbnailUrl,
         )
     }
 }
@@ -90,5 +93,6 @@ fun RedditPostEntity.asDomain(): RedditPost {
         author = this.author,
         after = this.after,
         isSaved = this.isSaved,
+        thumbnailUrl = this.thumbnailUrl,
     )
 }

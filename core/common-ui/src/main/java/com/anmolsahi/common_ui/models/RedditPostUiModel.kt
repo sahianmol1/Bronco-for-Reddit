@@ -20,6 +20,7 @@ data class RedditPostUiModel(
     val author: String = "",
     val after: String? = null,
     val isSaved: Boolean = false,
+    val thumbnailUrl: String? = null,
 )
 
 fun RedditPost.asUiModel(): RedditPostUiModel =
@@ -37,4 +38,5 @@ fun RedditPost.asUiModel(): RedditPostUiModel =
         author = this.author,
         after = this.after,
         isSaved = this.isSaved,
+        thumbnailUrl = this.thumbnailUrl
     )

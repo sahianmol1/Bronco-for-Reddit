@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
@@ -42,7 +43,7 @@ class SearchViewModel @Inject constructor(
     init {
         @Suppress("OPT_IN_USAGE")
         _searchQuery
-            .debounce(10000)
+            .debounce(500)
             .filter {
                 return@filter it.trim().isNotEmpty()
             }
@@ -72,6 +73,7 @@ class SearchViewModel @Inject constructor(
     fun getAllRecentSearches() {
         repository.getRecentSearches()
             .onStart { _searchDataUiModel.update { it.copy(isLoading = true) } }
+            .map { it.reversed() }
             .onEach { recentSearches ->
                 _searchDataUiModel.update {
                     it.copy(
@@ -92,9 +94,11 @@ class SearchViewModel @Inject constructor(
 
     fun onSearch(recentSearch: RecentSearch) {
         viewModelScope.launch {
-            if (!_searchDataUiModel.value.recentSearches.contains(recentSearch)) {
-                repository.insertRecentSearch(recentSearch)
+            if (_searchDataUiModel.value.recentSearches.any { it.value == recentSearch.value }) {
+                return@launch
             }
+
+            repository.insertRecentSearch(recentSearch)
         }
     }
 

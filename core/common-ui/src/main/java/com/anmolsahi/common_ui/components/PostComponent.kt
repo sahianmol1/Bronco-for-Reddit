@@ -168,12 +168,16 @@ fun PostDescription(
 }
 
 @Composable
-fun PostImage(imageUrl: String) {
+fun PostImage(
+    imageUrl: String,
+    modifier: Modifier = Modifier,
+    onError: () -> Unit = {}
+) {
     val interactionSource = remember { MutableInteractionSource() }
     var isImageLoading by rememberSaveable { mutableStateOf(false) }
     var isImageLoadingError by rememberSaveable { mutableStateOf(false) }
 
-    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+    Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         if (isImageLoading) {
             CircularProgressIndicator(modifier = Modifier.padding(vertical = 64.dp))
         }
