@@ -47,9 +47,9 @@ fun BRSearchBar(
 
     SearchBar(
         modifier =
-        modifier
-            .fillMaxWidth()
-            .padding(horizontal = searchBarPadding),
+            modifier
+                .fillMaxWidth()
+                .padding(horizontal = searchBarPadding),
         query = query,
         onQueryChange = { newValue ->
             onQueryChange(newValue)
@@ -142,10 +142,10 @@ fun BRSearchBar(
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
         keyboardActions =
-        KeyboardActions {
-            onSearch(value)
-            keyboardController?.hide()
-        },
+            KeyboardActions {
+                onSearch(value)
+                keyboardController?.hide()
+            },
         label = { Text(text = hintText) },
         trailingIcon = {
             IconButton(onClick = { if (value.isNotEmpty()) onValueChanged("") }) {

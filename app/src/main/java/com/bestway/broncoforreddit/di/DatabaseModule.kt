@@ -33,6 +33,5 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideRecentSearchesDao(redditDatabase: RedditDatabase) =
-        redditDatabase.getRecentSearchesDao()
+    fun provideRecentSearchesDao(redditDatabase: RedditDatabase) = redditDatabase.getRecentSearchesDao()
 }
