@@ -42,11 +42,12 @@ fun BRSearchBar(
     var active by remember { mutableStateOf(false) }
     val searchBarPadding by animateDpAsState(
         targetValue = if (!active) 16.dp else 0.dp,
-        label = "searchBarPadding"
+        label = "searchBarPadding",
     )
 
     SearchBar(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .padding(horizontal = searchBarPadding),
         query = query,
@@ -82,7 +83,7 @@ fun BRSearchBar(
                 },
             )
         },
-        content = content
+        content = content,
     )
 }
 
@@ -140,7 +141,8 @@ fun BRSearchBar(
         value = value,
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        keyboardActions = KeyboardActions {
+        keyboardActions =
+        KeyboardActions {
             onSearch(value)
             keyboardController?.hide()
         },
@@ -153,6 +155,6 @@ fun BRSearchBar(
                     contentDescription = "Click here to search",
                 )
             }
-        }
+        },
     )
 }

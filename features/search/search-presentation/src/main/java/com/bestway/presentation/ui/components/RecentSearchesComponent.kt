@@ -67,7 +67,7 @@ fun RecentSearchesComponent(
                         recentSearches[index].value
                     )
                 )
-                
+
                 Text(
                     modifier = Modifier
                         .padding(vertical = 8.dp, horizontal = 16.dp),
