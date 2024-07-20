@@ -42,9 +42,7 @@ fun SearchScreen(
                     }
                 },
                 onBack = {
-                    if (searchedValue.isNotEmpty()) {
-                        viewModel.onBack(RecentSearch(value = searchedValue))
-                    }
+                    searchedValue = ""
                 }
             ) {
                 if (searchDataUiState.recentSearches.isNotEmpty()) {
@@ -62,18 +60,18 @@ fun SearchScreen(
             }
         }
 
-        if (searchDataUiState.recentSearches.isNotEmpty()) {
-            RecentSearchesComponent(
-                modifier = Modifier,
-                lazyListState = lazyListState,
-                recentSearches = searchDataUiState.recentSearches,
-                onItemClick = { recentSearch ->
-                    searchedValue = recentSearch.value
-                },
-                onDeleteItemClick = { recentSearch ->
-                    viewModel.onDeleteItemClick(recentSearch)
-                },
-            )
-        }
+//        if (searchDataUiState.recentSearches.isNotEmpty()) {
+//            RecentSearchesComponent(
+//                modifier = Modifier,
+//                lazyListState = lazyListState,
+//                recentSearches = searchDataUiState.recentSearches,
+//                onItemClick = { recentSearch ->
+//                    searchedValue = recentSearch.value
+//                },
+//                onDeleteItemClick = { recentSearch ->
+//                    viewModel.onDeleteItemClick(recentSearch)
+//                },
+//            )
+//        }
     }
 }
