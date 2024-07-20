@@ -1,10 +1,12 @@
 package com.bestway.domain.repositories
 
-import com.bestway.domain.models.RedditPost
+import com.bestway.domain.model.RecentSearch
+import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {
-    suspend fun searchReddit(
-        searchQuery: String,
-        after: String,
-    ): List<RedditPost>
+    fun getRecentSearches(): Flow<List<RecentSearch>>
+
+    suspend fun insertRecentSearch(recentSearch: RecentSearch)
+
+    suspend fun deleteRecentSearch(recentSearch: RecentSearch)
 }

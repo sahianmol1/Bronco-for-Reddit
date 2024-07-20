@@ -8,11 +8,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun BRLinearProgressIndicator() {
+fun BRLinearProgressIndicator(modifier: Modifier = Modifier) {
     Box(
-        modifier =
-            Modifier
-                .fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
         LinearProgressIndicator()

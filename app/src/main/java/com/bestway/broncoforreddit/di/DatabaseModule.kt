@@ -30,4 +30,9 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideSavedPostDao(redditDatabase: RedditDatabase) = redditDatabase.getSavedPostDao()
+
+    @Provides
+    @Singleton
+    fun provideRecentSearchesDao(redditDatabase: RedditDatabase) =
+        redditDatabase.getRecentSearchesDao()
 }

@@ -10,5 +10,8 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 dependencies {
+
+    implementation(libs.kotlinx.coroutines.core)
+
     implementation(project(":core:domain"))
 }

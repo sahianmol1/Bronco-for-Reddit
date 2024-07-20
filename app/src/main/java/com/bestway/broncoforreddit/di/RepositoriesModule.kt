@@ -1,5 +1,7 @@
 package com.bestway.broncoforreddit.di
 
+import com.bestway.data.SearchRepositoryImpl
+import com.bestway.data.local.RecentSearchesDao
 import com.bestway.data.local.SavedPostDao
 import com.bestway.data.local.entity.RedditPostDao
 import com.bestway.data.remote.api.HomeService
@@ -7,6 +9,7 @@ import com.bestway.data.repositories.SavedPostRepositoryImpl
 import com.bestway.data.repositories.homerepository.HomeRepositoryImpl
 import com.bestway.domain.repositories.HomeRepository
 import com.bestway.domain.repositories.SavedPostRepository
+import com.bestway.domain.repositories.SearchRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,4 +36,12 @@ object RepositoriesModule {
         SavedPostRepositoryImpl(
             dao = savedPostsDao,
         )
+
+    @Singleton
+    @Provides
+    fun provideSearchRepository(
+        searchesDao: RecentSearchesDao,
+    ): SearchRepository = SearchRepositoryImpl(
+        dao = searchesDao,
+    )
 }

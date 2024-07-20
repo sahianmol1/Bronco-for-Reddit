@@ -77,11 +77,11 @@ fun PostComponent(
 ) {
     Column(
         modifier =
-            modifier
-                .animateContentSize()
-                .clickable { onClick(redditPostUiModel.id) }
-                .padding(top = 8.dp)
-                .padding(horizontal = 16.dp),
+        modifier
+            .animateContentSize()
+            .clickable { onClick(redditPostUiModel.id) }
+            .padding(top = 8.dp)
+            .padding(horizontal = 16.dp),
     ) {
         SubRedditName(subName = redditPostUiModel.subName)
         OriginalPosterName(opName = redditPostUiModel.author)
@@ -116,9 +116,9 @@ fun PostComponent(
 fun SubRedditName(subName: String) {
     Text(
         modifier =
-            Modifier
-                .clickable {}
-                .padding(top = 8.dp, bottom = 4.dp),
+        Modifier
+            .clickable {}
+            .padding(top = 8.dp, bottom = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.primary,
         text = subName,
@@ -131,9 +131,9 @@ fun SubRedditName(subName: String) {
 fun OriginalPosterName(opName: String) {
     Text(
         modifier =
-            Modifier
-                .clickable {}
-                .padding(vertical = 4.dp),
+        Modifier
+            .clickable {}
+            .padding(vertical = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.primary,
         text = "u/$opName",
@@ -154,12 +154,12 @@ fun PostTitle(title: String) {
 }
 
 @Composable
-fun PostDescription(description: String) {
+fun PostDescription(description: String, maxLines: Int = 3) {
     Text(
         modifier = Modifier.padding(vertical = 4.dp),
         text = description,
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.90f),
-        maxLines = 3,
+        maxLines = maxLines,
         overflow = TextOverflow.Ellipsis,
     )
 }
@@ -176,14 +176,14 @@ fun PostImage(imageUrl: String) {
         }
         AsyncImage(
             modifier =
-                Modifier
-                    .clickable(
-                        interactionSource = interactionSource,
-                        role = Role.Image,
-                        indication = null,
-                    ) {}
-                    .padding(vertical = 4.dp)
-                    .fillMaxWidth(),
+            Modifier
+                .clickable(
+                    interactionSource = interactionSource,
+                    role = Role.Image,
+                    indication = null,
+                ) {}
+                .padding(vertical = 4.dp)
+                .fillMaxWidth(),
             model = imageUrl,
             contentScale = ContentScale.FillWidth,
             onLoading = { isImageLoading = true },

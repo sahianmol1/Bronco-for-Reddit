@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="upvote">Upvote</string>
+    <string name="comment">Comment</string>
+    <string name="recent_searches">Recent Searches</string>
+    <string name="remove">remove %1$s</string>
+</resources>

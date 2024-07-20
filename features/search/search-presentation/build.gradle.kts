@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.kotlin.compose.compiler)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -64,6 +65,25 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.gif)
+
+    // Extended Icons
+    implementation(libs.extended.icons)
+
+    // Preview
+    debugImplementation(libs.androidx.ui.tooling)
+
+    // androidx-compose-lifecycle
+    implementation(libs.viewmodel.lifecycle)
+    implementation(libs.compose.runtime.lifecycle)
+
+    // dagger hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+
     implementation(project(":core:common-ui"))
     implementation(project(":core:design-system"))
+    implementation(project(":features:search:search-domain"))
 }
