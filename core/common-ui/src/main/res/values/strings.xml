@@ -17,4 +17,6 @@
     <string name="delete_post_dialog_info_text">This post will be permanently removed from Saved and you may not be able to find it again.</string>
     <string name="delete_post_dialog_title_text">Are you sure?</string>
     <string name="dismiss">Dismiss</string>
+    <string name="error_dialog_button_text">OK</string>">
+    <string name="error_dialog_title">Uh oh! Something went wrong</string>
 </resources>

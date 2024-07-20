@@ -3,6 +3,8 @@ package com.bestway.presentation.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anmolsahi.common_ui.models.RedditPostUiModel
+import com.anmolsahi.common_ui.models.asUiModel
 import com.bestway.domain.model.RecentSearch
 import com.bestway.domain.repositories.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +27,21 @@ class SearchViewModel @Inject constructor(
     private val _searchDataUiModel = MutableStateFlow(SearchDataUiModel())
     val searchDataUiModel: StateFlow<SearchDataUiModel> = _searchDataUiModel.asStateFlow()
 
+    fun searchReddit(query: String, nextPageKey: String? = null) {
+        repository.searchReddit(query, nextPageKey)
+            .onStart { _searchDataUiModel.update { it.copy(isLoading = true) } }
+            .onEach { redditPosts ->
+                _searchDataUiModel.update {
+                    it.copy(
+                        isLoading = false,
+                        searchedData = redditPosts?.map { post -> post.asUiModel() }
+                    )
+                }
+            }
+            .catch { throwable -> handleException(throwable) }
+            .launchIn(viewModelScope)
+    }
+
     fun getAllRecentSearches() {
         repository.getRecentSearches()
             .onStart { _searchDataUiModel.update { it.copy(isLoading = true) } }
@@ -36,10 +53,7 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             }
-            .catch { throwable ->
-                Log.e(SearchViewModel::class.simpleName, throwable.message ?: "Unknown error")
-                _searchDataUiModel.update { it.copy(isLoading = false) }
-            }
+            .catch { throwable -> handleException(throwable) }
             .launchIn(viewModelScope)
     }
 
@@ -51,16 +65,20 @@ class SearchViewModel @Inject constructor(
 
     fun onSearch(recentSearch: RecentSearch) {
         viewModelScope.launch {
+            searchReddit(recentSearch.value)
             repository.insertRecentSearch(recentSearch)
         }
     }
 
-    fun onBack(recentSearch: RecentSearch) {
-        onSearch(recentSearch)
+    private fun handleException(throwable: Throwable) {
+        Log.e(SearchViewModel::class.simpleName, throwable.message ?: "Unknown error")
+        _searchDataUiModel.update { it.copy(isLoading = false, errorMessage = throwable.message) }
     }
 }
 
 data class SearchDataUiModel(
     val isLoading: Boolean = false,
     val recentSearches: List<RecentSearch> = emptyList(),
+    val searchedData: List<RedditPostUiModel>? = null,
+    val errorMessage: String? = null,
 )

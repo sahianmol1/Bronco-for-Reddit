@@ -1,8 +1,8 @@
-package com.bestway.data.remote.api
+package com.bestway.data.remote
 
 import com.bestway.data.apihelper.getSafeResponse
 import com.bestway.data.model.remote.ListingsResponse
-import com.bestway.data.remote.api.utils.EndPoints
+import com.bestway.data.remote.utils.EndPoints
 import io.ktor.client.HttpClient
 
 class HomeService(private val client: HttpClient) {

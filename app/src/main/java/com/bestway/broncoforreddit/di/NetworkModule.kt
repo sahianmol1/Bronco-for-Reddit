@@ -1,6 +1,7 @@
 package com.bestway.broncoforreddit.di
 
-import com.bestway.data.remote.api.HomeService
+import com.bestway.data.remote.HomeService
+import com.bestway.data.remote.SearchService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,4 +38,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun providesHomeApiRequests(client: HttpClient) = HomeService(client)
+
+    @Provides
+    @Singleton
+    fun providesSearchApiRequests(client: HttpClient) = SearchService(client)
 }

@@ -1,4 +1,4 @@
-package com.bestway.data.local.entity
+package com.bestway.data.local
 
 import androidx.room.Dao
 import androidx.room.Delete

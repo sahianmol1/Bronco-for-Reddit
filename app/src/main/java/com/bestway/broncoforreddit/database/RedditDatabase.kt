@@ -4,9 +4,9 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.bestway.data.local.RecentSearchEntity
 import com.bestway.data.local.RecentSearchesDao
+import com.bestway.data.local.RedditPostDao
 import com.bestway.data.local.SavedPostDao
 import com.bestway.data.local.SavedPostEntity
-import com.bestway.data.local.entity.RedditPostDao
 import com.bestway.data.model.local.RedditPostEntity
 
 @Database(

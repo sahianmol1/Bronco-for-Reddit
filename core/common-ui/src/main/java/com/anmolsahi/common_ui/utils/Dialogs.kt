@@ -43,3 +43,33 @@ fun DeleteSavedPostAlertDialog(
         },
     )
 }
+
+@Composable
+fun ErrorDialog(
+    errorMessage: String,
+    modifier: Modifier = Modifier,
+    onConfirmButtonClick: () -> Unit = {},
+) {
+    AlertDialog(
+        modifier = modifier,
+        onDismissRequest = onConfirmButtonClick,
+        confirmButton = {
+            TextButton(onClick = onConfirmButtonClick) {
+                Text(
+                    text = stringResource(id = R.string.error_dialog_button_text),
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+        },
+        title = {
+            Text(
+                text = stringResource(R.string.error_dialog_title),
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.error,
+            )
+        },
+        text = {
+            Text(text = errorMessage)
+        },
+    )
+}
