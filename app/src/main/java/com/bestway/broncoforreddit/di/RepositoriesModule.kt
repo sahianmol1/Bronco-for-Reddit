@@ -49,4 +49,3 @@ object RepositoriesModule {
             service = searchService,
         )
 }
-
