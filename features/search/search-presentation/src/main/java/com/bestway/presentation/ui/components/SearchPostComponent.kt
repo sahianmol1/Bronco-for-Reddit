@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,6 +20,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,9 +28,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.anmolsahi.common_ui.components.PostActionItem
+import androidx.compose.ui.unit.sp
 import com.anmolsahi.common_ui.components.PostDescription
 import com.anmolsahi.common_ui.components.PostImage
 import com.anmolsahi.common_ui.components.PostTitle
@@ -93,7 +97,9 @@ fun SearchPostComponent(
                                         modifier = Modifier
                                             .padding(4.dp)
                                             .background(
-                                                color = MaterialTheme.colorScheme.background.copy(alpha = 0.7f),
+                                                color = MaterialTheme.colorScheme.background.copy(
+                                                    alpha = 0.7f
+                                                ),
                                                 shape = CircleShape,
                                             ),
                                         imageVector = Icons.Default.PlayArrow,
@@ -109,17 +115,48 @@ fun SearchPostComponent(
             }
 
             Row {
-                PostActionItem(
+                SearchPostActionItem(
                     icon = Icons.Default.ArrowUpward,
                     label = redditPostUiModel.upVotes.toString(),
                     actionDescription = stringResource(R.string.upvote),
                 )
-                PostActionItem(
+                SearchPostActionItem(
+                    modifier = Modifier.padding(start = 8.dp),
                     icon = Icons.AutoMirrored.Outlined.Message,
                     label = redditPostUiModel.comments.toString(),
                     actionDescription = stringResource(R.string.comment),
                 )
             }
         }
+    }
+}
+
+@Composable
+fun SearchPostActionItem(
+    modifier: Modifier = Modifier,
+    icon: ImageVector,
+    label: String,
+    actionDescription: String,
+) {
+    Row(
+        modifier = modifier
+            .wrapContentHeight(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            modifier = Modifier,
+            imageVector = icon,
+            contentDescription =
+            stringResource(
+                com.anmolsahi.common_ui.R.string.post_action_content_description,
+                actionDescription
+            ),
+        )
+        Text(
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
+            text = label,
+            fontSize = 12.sp,
+            textAlign = TextAlign.Center,
+        )
     }
 }

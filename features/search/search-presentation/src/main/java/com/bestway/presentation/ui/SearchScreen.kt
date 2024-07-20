@@ -127,7 +127,9 @@ fun SearchScreen(
                         item(
                             contentType = { "quick_results_footer" }
                         ) {
-                            HorizontalDivider()
+                            HorizontalDivider(
+                                modifier = Modifier.padding(top = 8.dp)
+                            )
                             OutlinedButton(
                                 modifier = Modifier
                                     .padding(vertical = 8.dp, horizontal = 16.dp)
