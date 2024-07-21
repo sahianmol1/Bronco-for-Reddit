@@ -41,12 +41,12 @@ import com.bestway.search_presentation.R
 fun QuickSearchPostComponent(
     redditPostUiModel: RedditPostUiModel,
     modifier: Modifier = Modifier,
-    onPostClick: (String) -> Unit,
+    onPostClick: (postId: String, postUrl: String) -> Unit,
 ) {
     Surface(
         modifier = modifier
             .padding(horizontal = 16.dp, vertical = 4.dp)
-            .clickable { onPostClick(redditPostUiModel.id) }
+            .clickable { onPostClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty()) }
             .fillMaxWidth(),
         color = MaterialTheme.colorScheme.secondaryContainer,
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),

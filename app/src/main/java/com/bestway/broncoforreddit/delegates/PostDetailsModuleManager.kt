@@ -18,9 +18,9 @@ class PostDetailsModuleManager
         override suspend fun getPostById(
             postId: String,
             isSavedPostsFlow: Boolean,
-        ): RedditPost =
+        ): RedditPost? =
             if (isSavedPostsFlow) {
-                savedPostsRepository.getSavedPostById(postId)?.toRedditPost() ?: RedditPost(id = postId)
+                savedPostsRepository.getSavedPostById(postId)?.toRedditPost()
             } else {
                 homeRepository.getPostById(postId)
             }

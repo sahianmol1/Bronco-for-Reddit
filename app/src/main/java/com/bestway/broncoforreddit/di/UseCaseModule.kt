@@ -1,6 +1,7 @@
 package com.bestway.broncoforreddit.di
 
 import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
+import com.anmolsahi.postdetailsdomain.repositories.PostDetailsRepository
 import com.anmolsahi.postdetailsdomain.usecase.GetPostDetailsUseCase
 import com.bestway.domain.delegate.SavedPostDelegate
 import com.bestway.domain.delegate.SearchDelegate
@@ -37,8 +38,10 @@ object UseCaseModule {
 
     @ViewModelScoped
     @Provides
-    fun provideGetPostDetailsUseCase(delegate: PostDetailsDelegate) =
-        GetPostDetailsUseCase(delegate)
+    fun provideGetPostDetailsUseCase(
+        delegate: PostDetailsDelegate,
+        repository: PostDetailsRepository,
+    ) = GetPostDetailsUseCase(delegate, repository)
 
     @ViewModelScoped
     @Provides

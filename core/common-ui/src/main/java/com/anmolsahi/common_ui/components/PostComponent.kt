@@ -8,7 +8,6 @@ import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -71,17 +70,17 @@ fun PostComponent(
     modifier: Modifier = Modifier,
     redditPostUiModel: RedditPostUiModel,
     shouldShowDeleteIcon: Boolean = false,
-    onClick: (postId: String) -> Unit,
+    onClick: (postId: String, postUrl: String) -> Unit,
     onSaveIconClick: (postId: String) -> Unit,
     onDeleteIconClick: (postId: String) -> Unit = {},
 ) {
     Column(
         modifier =
-            modifier
-                .animateContentSize()
-                .clickable { onClick(redditPostUiModel.id) }
-                .padding(top = 8.dp)
-                .padding(horizontal = 16.dp),
+        modifier
+            .animateContentSize()
+            .clickable { onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty()) }
+            .padding(top = 8.dp)
+            .padding(horizontal = 16.dp),
     ) {
         SubRedditName(subName = redditPostUiModel.subName)
         OriginalPosterName(opName = redditPostUiModel.author)
@@ -96,7 +95,7 @@ fun PostComponent(
                 PostImage(
                     imageUrl = redditPostUiModel.imageUrl,
                     onImageClick = {
-                        onClick(redditPostUiModel.id)
+                        onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty())
                     },
                 )
             }
@@ -121,9 +120,9 @@ fun PostComponent(
 fun SubRedditName(subName: String) {
     Text(
         modifier =
-            Modifier
-                .clickable {}
-                .padding(top = 8.dp, bottom = 4.dp),
+        Modifier
+            .clickable {}
+            .padding(top = 8.dp, bottom = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.primary,
         text = subName,
@@ -136,9 +135,9 @@ fun SubRedditName(subName: String) {
 fun OriginalPosterName(opName: String) {
     Text(
         modifier =
-            Modifier
-                .clickable {}
-                .padding(vertical = 4.dp),
+        Modifier
+            .clickable {}
+            .padding(vertical = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.primary,
         text = "u/$opName",
@@ -178,7 +177,6 @@ fun PostImage(
     modifier: Modifier = Modifier,
     onImageClick: () -> Unit = {},
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
     var isImageLoading by rememberSaveable { mutableStateOf(false) }
     var isImageLoadingError by rememberSaveable { mutableStateOf(false) }
 
@@ -188,10 +186,10 @@ fun PostImage(
         }
         AsyncImage(
             modifier =
-                Modifier
-                    .clickable(role = Role.Image) { onImageClick() }
-                    .padding(vertical = 4.dp)
-                    .fillMaxWidth(),
+            Modifier
+                .clickable(role = Role.Image) { onImageClick() }
+                .padding(vertical = 4.dp)
+                .fillMaxWidth(),
             model = imageUrl,
             contentScale = ContentScale.FillWidth,
             onLoading = { isImageLoading = true },
@@ -231,10 +229,10 @@ fun PostVideo(videoUrl: String) {
 
         AndroidView(
             modifier =
-                Modifier
-                    .padding(vertical = 4.dp)
-                    .defaultMinSize(minHeight = 250.dp)
-                    .fillMaxWidth(),
+            Modifier
+                .padding(vertical = 4.dp)
+                .defaultMinSize(minHeight = 250.dp)
+                .fillMaxWidth(),
             factory = {
                 PlayerView(it).apply {
                     player = exoPlayer
@@ -278,19 +276,19 @@ fun PostVideoControls(
 ) {
     IconButton(
         modifier =
-            Modifier.drawBehind {
-                drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
-            },
+        Modifier.drawBehind {
+            drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
+        },
         onClick = onSoundButtonClick,
     ) {
         Icon(
             modifier = Modifier.size(16.dp),
             imageVector =
-                if (isVolumeOff) {
-                    Icons.AutoMirrored.Filled.VolumeOff
-                } else {
-                    Icons.AutoMirrored.Filled.VolumeUp
-                },
+            if (isVolumeOff) {
+                Icons.AutoMirrored.Filled.VolumeOff
+            } else {
+                Icons.AutoMirrored.Filled.VolumeUp
+            },
             contentDescription = "Silent",
             tint = Color.White,
         )
@@ -343,11 +341,11 @@ fun PostActions(
                 PostActionItem(
                     icon = if (targetState) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
                     label =
-                        if (targetState) {
-                            stringResource(R.string.save)
-                        } else {
-                            stringResource(R.string.save)
-                        },
+                    if (targetState) {
+                        stringResource(R.string.save)
+                    } else {
+                        stringResource(R.string.save)
+                    },
                     actionDescription = stringResource(R.string.save),
                     onclick = onSaveIconClick,
                 )
@@ -366,19 +364,19 @@ fun PostActionItem(
 ) {
     Row(
         modifier =
-            modifier
-                .wrapContentHeight()
-                .clickable { onclick() },
+        modifier
+            .wrapContentHeight()
+            .clickable { onclick() },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             modifier =
-                Modifier
-                    .padding(start = 8.dp)
-                    .padding(vertical = 8.dp),
+            Modifier
+                .padding(start = 8.dp)
+                .padding(vertical = 8.dp),
             imageVector = icon,
             contentDescription =
-                stringResource(R.string.post_action_content_description, actionDescription),
+            stringResource(R.string.post_action_content_description, actionDescription),
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
@@ -394,7 +392,7 @@ fun PostActionItem(
 fun PostPreview() {
     PostComponent(
         redditPostUiModel = RedditPostUiModel(id = "0"),
-        onClick = {},
+        onClick = {_, _ -> },
         onSaveIconClick = {},
     )
 }

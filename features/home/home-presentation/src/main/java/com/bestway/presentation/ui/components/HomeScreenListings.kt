@@ -44,7 +44,7 @@ import com.bestway.presentation.ui.screens.home.PostsUiState
 @Composable
 fun HomeScreenListings(
     uiState: PostsUiState,
-    onClick: (postId: String) -> Unit,
+    onClick: (postId: String, postUrl: String) -> Unit,
     refreshData: () -> Unit,
     loadMoreData: (nextPageKey: String?) -> Unit,
     onSaveIconClick: (postId: String) -> Unit,

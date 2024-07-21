@@ -106,6 +106,7 @@ dependencies {
     implementation(project(":features:search:search-data"))
     implementation(project(":features:search:search-domain"))
     implementation(project(":features:search:search-presentation"))
+    implementation(project(":features:postdetails:postdetails-data"))
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)

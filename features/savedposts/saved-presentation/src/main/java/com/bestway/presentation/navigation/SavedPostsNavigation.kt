@@ -13,10 +13,10 @@ fun NavGraphBuilder.savedPostsNavGraph(navController: NavHostController) {
     ) {
         val isSavedPostsFlow = true
         SavedPostsScreen(
-            onClick = { postId ->
+            onClick = { postId, postUrl ->
                 navController.navigate(
                     Destinations.PostDetailsDestinations.route +
-                            "?post-id=$postId&is-saved-posts-flow=$isSavedPostsFlow"
+                            "?post-id=$postId&is-saved-posts-flow=$isSavedPostsFlow&post_url=$postUrl"
                 )
             }
         )

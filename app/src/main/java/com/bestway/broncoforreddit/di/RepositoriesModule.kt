@@ -1,5 +1,8 @@
 package com.bestway.broncoforreddit.di
 
+import com.anmolsahi.postdetailsdata.remote.PostDetailsService
+import com.anmolsahi.postdetailsdata.repositories.PostDetailsRepositoryImpl
+import com.anmolsahi.postdetailsdomain.repositories.PostDetailsRepository
 import com.bestway.data.SearchRepositoryImpl
 import com.bestway.data.local.RecentSearchesDao
 import com.bestway.data.local.RedditPostDao
@@ -48,4 +51,9 @@ object RepositoriesModule {
             dao = searchesDao,
             service = searchService,
         )
+
+    @Singleton
+    @Provides
+    fun providePostDetailsRepository(service: PostDetailsService): PostDetailsRepository =
+        PostDetailsRepositoryImpl(service = service)
 }

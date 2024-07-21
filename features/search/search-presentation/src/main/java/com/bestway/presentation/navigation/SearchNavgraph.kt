@@ -9,10 +9,10 @@ import com.bestway.presentation.ui.SearchScreen
 fun NavGraphBuilder.searchNavGraph(navController: NavHostController) {
     composable(route = Destinations.SearchScreenDestination.route) {
         SearchScreen(
-            onPostClick = { postId ->
+            onPostClick = { postId, postUrl ->
                 navController.navigate(
                     Destinations.PostDetailsDestinations.route +
-                            "?post-id=$postId",
+                            "?post-id=$postId&post_url=$postUrl",
                 )
             },
         )

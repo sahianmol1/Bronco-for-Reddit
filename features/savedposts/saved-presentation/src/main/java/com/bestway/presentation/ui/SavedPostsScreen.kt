@@ -28,7 +28,7 @@ import com.bestway.design_system.ui_components.BRLinearProgressIndicator
 fun SavedPostsScreen(
     modifier: Modifier = Modifier,
     viewModel: SavedPostsViewModel = hiltViewModel(),
-    onClick: (String) -> Unit = {},
+    onClick: (postId: String, postUrl: String) -> Unit = {_, _ -> },
     onSaveIconClick: (String) -> Unit = {},
 ) {
     val uiState by
@@ -76,7 +76,7 @@ fun SavedPostsScreen(
                 items = list,
                 key = { _, item -> item.id },
                 contentType = { _, _ -> "reddit_post" }
-            ) { index, item ->
+            ) { _, item ->
                 PostComponent(
                     modifier = Modifier,
                     redditPostUiModel = item,

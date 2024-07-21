@@ -42,6 +42,7 @@ class PostDetailsViewModel
 
         fun getPostDetails(
             postId: String,
+            postUrl: String,
             isSavedPostsFlow: Boolean,
         ) {
             viewModelScope.launch(coroutineExceptionHandler) {
@@ -51,6 +52,7 @@ class PostDetailsViewModel
                     getPostDetailsUseCase(
                         postId = postId,
                         isSavedPostsFlow = isSavedPostsFlow,
+                        postUrl = postUrl,
                     ).asUiModel()
                 _postDetailsUiState.update {
                     it.copy(isLoading = false, data = post)
@@ -60,13 +62,14 @@ class PostDetailsViewModel
 
         fun onSaveIconClick(
             postId: String,
+            postUrl: String,
             isSavedPostsFlow: Boolean,
             onPostSaved: (Boolean) -> Unit,
         ) {
             viewModelScope.launch {
                 val isPostSaved = delegate.togglePostSavedStatus(postId)
                 delegate.updateSavedPosts(isPostSaved, postId)
-                getPostDetails(postId = postId, isSavedPostsFlow = isSavedPostsFlow)
+                getPostDetails(postId = postId, isSavedPostsFlow = isSavedPostsFlow, postUrl = postUrl)
                 onPostSaved(isPostSaved)
             }
         }

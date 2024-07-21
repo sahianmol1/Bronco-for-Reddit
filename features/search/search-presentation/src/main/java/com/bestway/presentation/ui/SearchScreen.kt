@@ -42,7 +42,7 @@ import com.bestway.search_presentation.R
 fun SearchScreen(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
-    onPostClick: (String) -> Unit,
+    onPostClick: (postId: String, postUrl: String) -> Unit,
 ) {
     val lazyListState = rememberLazyListState()
     val uiState by viewModel.searchDataUiState.collectAsStateWithLifecycle()
@@ -145,7 +145,9 @@ fun SearchScreen(
                         ) { index ->
                             QuickSearchPostComponent(
                                 redditPostUiModel = quickData[index],
-                                onPostClick = onPostClick,
+                                onPostClick = { id, url ->
+                                    onPostClick(id, url)
+                                },
                             )
                         }
 

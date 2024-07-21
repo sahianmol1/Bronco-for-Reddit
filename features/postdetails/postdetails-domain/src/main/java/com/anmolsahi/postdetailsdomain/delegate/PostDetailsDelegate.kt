@@ -6,7 +6,7 @@ interface PostDetailsDelegate {
     suspend fun getPostById(
         postId: String,
         isSavedPostsFlow: Boolean,
-    ): RedditPost
+    ): RedditPost?
 
     suspend fun togglePostSavedStatus(postId: String): Boolean
 

@@ -223,7 +223,11 @@ class HomeRepositoryImpl(
         return redditPostDao.getRedditPostById(id = postId).isSaved
     }
 
-    override suspend fun getPostById(postId: String): RedditPost {
-        return redditPostDao.getRedditPostById(id = postId).asDomain()
+    override suspend fun getPostById(postId: String): RedditPost? {
+        return try {
+            redditPostDao.getRedditPostById(id = postId).asDomain()
+        } catch (e: Throwable) {
+            null
+        }
     }
 }

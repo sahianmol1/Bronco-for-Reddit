@@ -1,5 +1,6 @@
 package com.bestway.broncoforreddit.di
 
+import com.anmolsahi.postdetailsdata.remote.PostDetailsService
 import com.bestway.data.remote.HomeService
 import com.bestway.data.remote.SearchService
 import dagger.Module
@@ -42,4 +43,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun providesSearchApiRequests(client: HttpClient) = SearchService(client)
+
+    @Provides
+    @Singleton
+    fun providesPostDetailsApiRequests(client: HttpClient) = PostDetailsService(client)
 }

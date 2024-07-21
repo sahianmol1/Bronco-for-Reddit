@@ -18,7 +18,7 @@ class HomeModuleManager
             postId: String,
         ) {
             val post = homeRepository.getPostById(postId = postId)
-            if (shouldSavePost) {
+            if (shouldSavePost && post != null) {
                 savedPostRepository.insertPost(post.asSavedPost())
             } else {
                 savedPostRepository.deleteSavedPost(postId)

@@ -29,7 +29,7 @@ import com.bestway.presentation.ui.components.HomeScreenListings
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onClick: (postId: String) -> Unit,
+    onClick: (postId: String, postUrl: String) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current

@@ -36,5 +36,5 @@ interface HomeRepository {
 
     suspend fun togglePostSavedStatus(postId: String): Boolean
 
-    suspend fun getPostById(postId: String): RedditPost
+    suspend fun getPostById(postId: String): RedditPost?
 }

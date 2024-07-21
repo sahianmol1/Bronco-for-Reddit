@@ -36,10 +36,11 @@ import com.bestway.design_system.utils.showToast
 
 @Composable
 fun PostDetailsScreen(
+    postId: String,
+    postUrl: String,
+    isSavedPostsFlow: Boolean,
     modifier: Modifier = Modifier,
     viewModel: PostDetailsViewModel = hiltViewModel(),
-    postId: String,
-    isSavedPostsFlow: Boolean,
     popBackStack: () -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -54,6 +55,7 @@ fun PostDetailsScreen(
         viewModel.getPostDetails(
             postId = postId,
             isSavedPostsFlow = isSavedPostsFlow,
+            postUrl = postUrl,
         )
     }
 
@@ -164,10 +166,8 @@ fun PostDetailsScreen(
                 shouldShowDeleteIcon = isSavedPostsFlow,
                 onSaveIconClick = {
                     viewModel.onSaveIconClick(
-                        postId =
-                        uiState.data
-                            ?.id
-                            .orEmpty(),
+                        postId = uiState.data?.id.orEmpty(),
+                        postUrl = postUrl,
                         isSavedPostsFlow = isSavedPostsFlow,
                     ) { isSaved ->
                         if (isSaved) {
