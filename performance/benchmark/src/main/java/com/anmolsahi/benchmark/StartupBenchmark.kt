@@ -1,4 +1,4 @@
-package com.example.benchmark
+package com.anmolsahi.benchmark
 
 import androidx.benchmark.macro.BaselineProfileMode
 import androidx.benchmark.macro.CompilationMode
