@@ -9,6 +9,7 @@ import com.anmolsahi.common_ui.models.asUiModel
 import com.bestway.domain.delegate.SearchDelegate
 import com.bestway.domain.model.RecentSearch
 import com.bestway.domain.repositories.SearchRepository
+import com.bestway.domain.usecase.SearchRedditUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +31,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val repository: SearchRepository,
     private val delegate: SearchDelegate,
+    private val searchRedditUseCase: SearchRedditUseCase,
 ) : ViewModel() {
 
     private val _searchDataUiState = MutableStateFlow(SearchDataUiModel())
@@ -58,7 +60,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun searchReddit(query: String, nextPageKey: String? = null) {
-        repository.searchReddit(query, nextPageKey)
+        searchRedditUseCase(query, nextPageKey)
             .onStart { _searchDataUiState.update { it.copy(isLoading = true) } }
             .onEach { redditPosts ->
                 _searchDataUiState.update {

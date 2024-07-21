@@ -3,7 +3,7 @@ package com.bestway.data
 import com.bestway.data.local.RecentSearchesDao
 import com.bestway.data.mapper.asDomain
 import com.bestway.data.mapper.asEntity
-import com.bestway.data.model.remote.asRedditPost
+import com.bestway.data.model.remote.asRedditPosts
 import com.bestway.data.remote.SearchService
 import com.bestway.domain.model.RecentSearch
 import com.bestway.domain.models.RedditPost
@@ -24,7 +24,7 @@ class SearchRepositoryImpl(
             if (query.isBlank()) {
                 emit(null)
             } else {
-                emit(service.searchReddit(query, nextPageKey).getOrThrow().asRedditPost())
+                emit(service.searchReddit(query, nextPageKey).getOrThrow().asRedditPosts())
             }
         }
     }

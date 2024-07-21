@@ -4,4 +4,6 @@ import com.bestway.domain.models.RedditPost
 
 interface SearchDelegate {
     suspend fun savePost(post: RedditPost)
+
+    suspend fun getSavedPosts(): List<RedditPost>
 }

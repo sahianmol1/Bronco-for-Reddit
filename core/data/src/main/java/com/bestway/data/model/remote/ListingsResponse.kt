@@ -34,7 +34,7 @@ fun ListingsResponse.asEntity(): List<RedditPostEntity> {
     }.orEmpty()
 }
 
-fun ListingsResponse.asRedditPost(): List<RedditPost> {
+fun ListingsResponse.asRedditPosts(): List<RedditPost> {
     val after = this.data?.after
     return this.data?.children?.map {
         it.childrenData.run {

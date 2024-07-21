@@ -1,5 +1,7 @@
 package com.bestway.domain.model
 
+import com.bestway.domain.models.RedditPost
+
 data class SavedPost(
     val id: String,
     val subName: String = "",
@@ -13,4 +15,21 @@ data class SavedPost(
     val gifUrl: String? = null,
     val author: String = "",
     val after: String? = null,
+    val thumbnailUrl: String? = null,
+)
+
+fun SavedPost.asRedditPost() = RedditPost(
+    id = id,
+    subName = subName,
+    title = title,
+    description = description,
+    upVotes = upVotes,
+    comments = comments,
+    imageUrl = imageUrl,
+    postUrl = postUrl,
+    videoUrl = videoUrl,
+    gifUrl = gifUrl,
+    author = author,
+    after = after,
+    thumbnailUrl = thumbnailUrl,
 )

@@ -3,8 +3,11 @@ package com.bestway.broncoforreddit.di
 import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 import com.anmolsahi.postdetailsdomain.usecase.GetPostDetailsUseCase
 import com.bestway.domain.delegate.SavedPostDelegate
+import com.bestway.domain.delegate.SearchDelegate
 import com.bestway.domain.repositories.SavedPostRepository
+import com.bestway.domain.repositories.SearchRepository
 import com.bestway.domain.usecase.DeleteSavedPostUseCase
+import com.bestway.domain.usecase.SearchRedditUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,5 +37,14 @@ object UseCaseModule {
 
     @ViewModelScoped
     @Provides
-    fun provideGetPostDetailsUseCase(delegate: PostDetailsDelegate) = GetPostDetailsUseCase(delegate)
+    fun provideGetPostDetailsUseCase(delegate: PostDetailsDelegate) =
+        GetPostDetailsUseCase(delegate)
+
+    @ViewModelScoped
+    @Provides
+    fun provideSearchRedditUseCase(repository: SearchRepository, delegate: SearchDelegate) =
+        SearchRedditUseCase(
+            searchRepository = repository,
+            searchDelegate = delegate,
+        )
 }
