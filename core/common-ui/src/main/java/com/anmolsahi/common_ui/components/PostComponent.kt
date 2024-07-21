@@ -93,7 +93,12 @@ fun PostComponent(
         }
         redditPostUiModel.imageUrl?.let {
             if (it.endsWith("png") || it.endsWith("jpg")) {
-                PostImage(imageUrl = redditPostUiModel.imageUrl)
+                PostImage(
+                    imageUrl = redditPostUiModel.imageUrl,
+                    onImageClick = {
+                        onClick(redditPostUiModel.id)
+                    },
+                )
             }
             if (it.contains(".gif")) {
                 redditPostUiModel.gifUrl?.let { PostVideo(videoUrl = redditPostUiModel.gifUrl) }
@@ -171,7 +176,7 @@ fun PostDescription(
 fun PostImage(
     imageUrl: String,
     modifier: Modifier = Modifier,
-    onError: () -> Unit = {},
+    onImageClick: () -> Unit = {},
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     var isImageLoading by rememberSaveable { mutableStateOf(false) }
@@ -184,11 +189,7 @@ fun PostImage(
         AsyncImage(
             modifier =
                 Modifier
-                    .clickable(
-                        interactionSource = interactionSource,
-                        role = Role.Image,
-                        indication = null,
-                    ) {}
+                    .clickable(role = Role.Image) { onImageClick() }
                     .padding(vertical = 4.dp)
                     .fillMaxWidth(),
             model = imageUrl,
@@ -231,7 +232,6 @@ fun PostVideo(videoUrl: String) {
         AndroidView(
             modifier =
                 Modifier
-                    .clickable {}
                     .padding(vertical = 4.dp)
                     .defaultMinSize(minHeight = 250.dp)
                     .fillMaxWidth(),

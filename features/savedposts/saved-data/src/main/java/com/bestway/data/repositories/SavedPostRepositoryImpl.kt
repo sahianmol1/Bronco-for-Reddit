@@ -20,7 +20,7 @@ class SavedPostRepositoryImpl(
         dao.insertPost(post.fromDomain())
     }
 
-    override suspend fun getSavedPostById(id: String): SavedPost = dao.getSavedPostById(id = id).asDomain()
+    override suspend fun getSavedPostById(id: String): SavedPost? = dao.getSavedPostById(id = id)?.asDomain()
 
     override suspend fun deleteSavedPost(id: String) = dao.deleteSavedPost(id)
 }

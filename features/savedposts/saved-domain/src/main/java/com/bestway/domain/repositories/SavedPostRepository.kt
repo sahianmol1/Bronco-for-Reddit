@@ -8,7 +8,7 @@ interface SavedPostRepository {
 
     suspend fun insertPost(post: SavedPost)
 
-    suspend fun getSavedPostById(id: String): SavedPost
+    suspend fun getSavedPostById(id: String): SavedPost?
 
     suspend fun deleteSavedPost(id: String)
 }

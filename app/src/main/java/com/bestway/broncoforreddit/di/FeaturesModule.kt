@@ -4,7 +4,9 @@ import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 import com.bestway.broncoforreddit.delegates.HomeModuleManager
 import com.bestway.broncoforreddit.delegates.PostDetailsModuleManager
 import com.bestway.broncoforreddit.delegates.SavedPostModuleManager
+import com.bestway.broncoforreddit.delegates.SearchModuleManager
 import com.bestway.domain.delegate.SavedPostDelegate
+import com.bestway.domain.delegate.SearchDelegate
 import com.bestway.presentation.delegate.HomeDelegate
 import dagger.Binds
 import dagger.Module
@@ -26,4 +28,8 @@ abstract class FeaturesModule {
     @Binds
     @ViewModelScoped
     abstract fun getSavedPostDelegate(savedPostModuleManager: SavedPostModuleManager): SavedPostDelegate
+
+    @Binds
+    @ViewModelScoped
+    abstract fun getSearchDelegate(searchModuleManager: SearchModuleManager): SearchDelegate
 }

@@ -42,9 +42,10 @@ import com.bestway.search_presentation.R
 fun SearchScreen(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
+    onPostClick: (String) -> Unit,
 ) {
     val lazyListState = rememberLazyListState()
-    val uiState by viewModel.searchDataUiModel.collectAsStateWithLifecycle()
+    val uiState by viewModel.searchDataUiState.collectAsStateWithLifecycle()
     val searchedValue by viewModel.searchQuery.collectAsStateWithLifecycle()
     var showErrorDialog by remember { mutableStateOf(false) }
     val searchedData by remember(uiState) { mutableStateOf(uiState.searchedData.orEmpty()) }
@@ -52,6 +53,12 @@ fun SearchScreen(
 
     LaunchedEffect(Unit) {
         viewModel.getAllRecentSearches()
+    }
+
+    LaunchedEffect(uiState.errorMessage) {
+        if (!uiState.errorMessage.isNullOrEmpty()) {
+            showErrorDialog = true
+        }
     }
 
     // TODO: Back Handler not working
@@ -76,14 +83,10 @@ fun SearchScreen(
                     viewModel.updateSearchQuery(it)
                 },
                 onSearch = {
-                    if (searchedValue.isNotEmpty()) {
-                        viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
-                    }
+                    viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
                 },
                 onBack = {
-                    if (searchedValue.isNotEmpty()) {
-                        viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
-                    }
+                    viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
                     viewModel.updateSearchQuery("")
                 }
             ) {
@@ -122,9 +125,7 @@ fun SearchScreen(
 
                                     Text(
                                         modifier = Modifier.clickable {
-                                            if (searchedValue.isNotEmpty()) {
-                                                viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
-                                            }
+                                            viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
                                             searchBarActive = false
                                         },
                                         text = stringResource(R.string.see_all_results),
@@ -143,7 +144,8 @@ fun SearchScreen(
                             contentType = { "quick_searched_post" }
                         ) { index ->
                             QuickSearchPostComponent(
-                                quickData[index]
+                                redditPostUiModel = quickData[index],
+                                onPostClick = onPostClick,
                             )
                         }
 
@@ -158,9 +160,7 @@ fun SearchScreen(
                                     .padding(vertical = 8.dp, horizontal = 16.dp)
                                     .fillMaxWidth(),
                                 onClick = {
-                                    if (searchedValue.isNotEmpty()) {
-                                        viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
-                                    }
+                                    viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
                                     searchBarActive = false
                                 },
                             ) {
@@ -172,17 +172,6 @@ fun SearchScreen(
 
                 if (uiState.isLoading) {
                     BRLinearProgressIndicator()
-                }
-
-                if (!uiState.errorMessage.isNullOrEmpty()) {
-                    showErrorDialog = true
-                }
-
-                if (showErrorDialog) {
-                    ErrorDialog(
-                        uiState.errorMessage.orEmpty(),
-                        onConfirmButtonClick = { showErrorDialog = false },
-                    )
                 }
             }
         }
@@ -198,8 +187,10 @@ fun SearchScreen(
                 ) { index ->
                     PostComponent(
                         redditPostUiModel = searchedData[index],
-                        onClick = {},
-                        onSaveIconClick = {}
+                        onClick = onPostClick,
+                        onSaveIconClick = {
+                            viewModel.onSaveIconClick(searchedData[index])
+                        },
                     )
                 }
             }
@@ -207,10 +198,6 @@ fun SearchScreen(
 
         if (uiState.isLoading) {
             BRLinearProgressIndicator()
-        }
-
-        if (!uiState.errorMessage.isNullOrEmpty()) {
-            showErrorDialog = true
         }
 
         if (showErrorDialog) {

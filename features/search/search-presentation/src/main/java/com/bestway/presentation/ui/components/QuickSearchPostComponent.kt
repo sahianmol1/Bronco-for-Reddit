@@ -2,6 +2,7 @@ package com.bestway.presentation.ui.components
 
 import android.webkit.URLUtil
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,10 +23,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -44,12 +41,12 @@ import com.bestway.search_presentation.R
 fun QuickSearchPostComponent(
     redditPostUiModel: RedditPostUiModel,
     modifier: Modifier = Modifier,
+    onPostClick: (String) -> Unit,
 ) {
-    var shouldShowPreview by rememberSaveable { mutableStateOf(true) }
-
     Surface(
         modifier = modifier
             .padding(horizontal = 16.dp, vertical = 4.dp)
+            .clickable { onPostClick(redditPostUiModel.id) }
             .fillMaxWidth(),
         color = MaterialTheme.colorScheme.secondaryContainer,
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
@@ -84,30 +81,23 @@ fun QuickSearchPostComponent(
                                 .weight(1f),
                             contentAlignment = Alignment.BottomStart,
                         ) {
-                            PostImage(
-                                imageUrl = imageUrl,
-                                onError = {
-                                    shouldShowPreview = false
-                                }
-                            )
+                            PostImage(imageUrl = imageUrl)
 
-                            if (shouldShowPreview) {
-                                if (!redditPostUiModel.videoUrl.isNullOrEmpty() || !redditPostUiModel.gifUrl.isNullOrEmpty()) {
-                                    Icon(
-                                        modifier = Modifier
-                                            .padding(4.dp)
-                                            .background(
-                                                color = MaterialTheme.colorScheme.background.copy(
-                                                    alpha = 0.7f
-                                                ),
-                                                shape = CircleShape,
+                            if (!redditPostUiModel.videoUrl.isNullOrEmpty() || !redditPostUiModel.gifUrl.isNullOrEmpty()) {
+                                Icon(
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .background(
+                                            color = MaterialTheme.colorScheme.background.copy(
+                                                alpha = 0.7f
                                             ),
-                                        imageVector = Icons.Default.PlayArrow,
-                                        contentDescription = stringResource(
-                                            R.string.content_description_post_image
+                                            shape = CircleShape,
                                         ),
-                                    )
-                                }
+                                    imageVector = Icons.Default.PlayArrow,
+                                    contentDescription = stringResource(
+                                        R.string.content_description_post_image
+                                    ),
+                                )
                             }
                         }
                     }

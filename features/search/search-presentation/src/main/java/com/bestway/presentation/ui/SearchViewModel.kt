@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anmolsahi.common_ui.models.RedditPostUiModel
+import com.anmolsahi.common_ui.models.asRedditPost
 import com.anmolsahi.common_ui.models.asUiModel
+import com.bestway.domain.delegate.SearchDelegate
 import com.bestway.domain.model.RecentSearch
 import com.bestway.domain.repositories.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,10 +29,11 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val repository: SearchRepository,
+    private val delegate: SearchDelegate,
 ) : ViewModel() {
 
-    private val _searchDataUiModel = MutableStateFlow(SearchDataUiModel())
-    val searchDataUiModel: StateFlow<SearchDataUiModel> = _searchDataUiModel.asStateFlow()
+    private val _searchDataUiState = MutableStateFlow(SearchDataUiModel())
+    val searchDataUiState: StateFlow<SearchDataUiModel> = _searchDataUiState.asStateFlow()
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
@@ -50,15 +53,15 @@ class SearchViewModel @Inject constructor(
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
         if (_searchQuery.value.isEmpty()) {
-            _searchDataUiModel.update { it.copy(searchedData = null) }
+            _searchDataUiState.update { it.copy(searchedData = null) }
         }
     }
 
     private fun searchReddit(query: String, nextPageKey: String? = null) {
         repository.searchReddit(query, nextPageKey)
-            .onStart { _searchDataUiModel.update { it.copy(isLoading = true) } }
+            .onStart { _searchDataUiState.update { it.copy(isLoading = true) } }
             .onEach { redditPosts ->
-                _searchDataUiModel.update {
+                _searchDataUiState.update {
                     it.copy(
                         isLoading = false,
                         searchedData = redditPosts?.map { post -> post.asUiModel() }
@@ -71,10 +74,10 @@ class SearchViewModel @Inject constructor(
 
     fun getAllRecentSearches() {
         repository.getRecentSearches()
-            .onStart { _searchDataUiModel.update { it.copy(isLoading = true) } }
+            .onStart { _searchDataUiState.update { it.copy(isLoading = true) } }
             .map { it.reversed() }
             .onEach { recentSearches ->
-                _searchDataUiModel.update {
+                _searchDataUiState.update {
                     it.copy(
                         isLoading = false,
                         recentSearches = recentSearches,
@@ -94,7 +97,11 @@ class SearchViewModel @Inject constructor(
     fun saveRecentSearch(recentSearch: RecentSearch) {
         val recentSearchValue = recentSearch.value.lowercase().trim()
         viewModelScope.launch {
-            if (_searchDataUiModel.value.recentSearches.any { it.value == recentSearchValue }) {
+            if (_searchDataUiState.value.recentSearches.any { it.value == recentSearchValue }) {
+                return@launch
+            }
+
+            if (recentSearchValue.isEmpty()) {
                 return@launch
             }
 
@@ -104,7 +111,24 @@ class SearchViewModel @Inject constructor(
 
     private fun handleException(throwable: Throwable) {
         Log.e(SearchViewModel::class.simpleName, throwable.message ?: "Unknown error")
-        _searchDataUiModel.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+        _searchDataUiState.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+    }
+
+    fun onSaveIconClick(post: RedditPostUiModel) {
+        viewModelScope.launch {
+            _searchDataUiState.update {
+                it.copy(
+                    searchedData = it.searchedData?.map { redditPost ->
+                        if (redditPost.id == post.id) {
+                            redditPost.copy(isSaved = !post.isSaved)
+                        } else {
+                            redditPost
+                        }
+                    }
+                )
+            }
+            delegate.savePost(post.asRedditPost())
+        }
     }
 }
 

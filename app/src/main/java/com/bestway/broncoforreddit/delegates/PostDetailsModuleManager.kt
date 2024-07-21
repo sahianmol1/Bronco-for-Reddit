@@ -20,7 +20,7 @@ class PostDetailsModuleManager
             isSavedPostsFlow: Boolean,
         ): RedditPost =
             if (isSavedPostsFlow) {
-                savedPostsRepository.getSavedPostById(postId).toRedditPost()
+                savedPostsRepository.getSavedPostById(postId)?.toRedditPost() ?: RedditPost(id = postId)
             } else {
                 homeRepository.getPostById(postId)
             }

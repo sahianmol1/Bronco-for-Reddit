@@ -13,7 +13,7 @@ interface SavedPostDao {
     suspend fun getAllSavedPosts(): List<SavedPostEntity>
 
     @Query("SELECT * FROM saved_post WHERE id=:id")
-    suspend fun getSavedPostById(id: String): SavedPostEntity
+    suspend fun getSavedPostById(id: String): SavedPostEntity?
 
     @Query("DELETE FROM saved_post WHERE id=:id")
     suspend fun deleteSavedPost(id: String)
