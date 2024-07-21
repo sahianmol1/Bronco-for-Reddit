@@ -1,6 +1,7 @@
 package com.bestway.presentation.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,8 +34,8 @@ import com.anmolsahi.common_ui.utils.isScrollingUp
 import com.bestway.design_system.ui_components.BRLinearProgressIndicator
 import com.bestway.design_system.ui_components.BRSearchBar
 import com.bestway.domain.model.RecentSearch
+import com.bestway.presentation.ui.components.QuickSearchPostComponent
 import com.bestway.presentation.ui.components.RecentSearchesComponent
-import com.bestway.presentation.ui.components.SearchPostComponent
 import com.bestway.search_presentation.R
 
 @Composable
@@ -47,26 +48,42 @@ fun SearchScreen(
     val searchedValue by viewModel.searchQuery.collectAsStateWithLifecycle()
     var showErrorDialog by remember { mutableStateOf(false) }
     val searchedData by remember(uiState) { mutableStateOf(uiState.searchedData.orEmpty()) }
+    var searchBarActive by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.getAllRecentSearches()
     }
 
-    Column(
-    ) {
+    // TODO: Back Handler not working
+//    BackHandler(searchBarActive) {
+//        if (searchedValue.isNotEmpty()) {
+//            viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
+//        }
+//        viewModel.updateSearchQuery("")
+//        searchBarActive = false
+//    }
+
+    Column {
         AnimatedVisibility(lazyListState.isScrollingUp()) {
             BRSearchBar(
                 modifier = modifier,
                 query = searchedValue,
+                active = searchBarActive,
+                onActiveChange = {
+                    searchBarActive = it
+                },
                 onQueryChange = {
                     viewModel.updateSearchQuery(it)
                 },
                 onSearch = {
                     if (searchedValue.isNotEmpty()) {
-                        viewModel.onSearch(RecentSearch(value = searchedValue))
+                        viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
                     }
                 },
                 onBack = {
+                    if (searchedValue.isNotEmpty()) {
+                        viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
+                    }
                     viewModel.updateSearchQuery("")
                 }
             ) {
@@ -104,6 +121,12 @@ fun SearchScreen(
                                     )
 
                                     Text(
+                                        modifier = Modifier.clickable {
+                                            if (searchedValue.isNotEmpty()) {
+                                                viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
+                                            }
+                                            searchBarActive = false
+                                        },
                                         text = stringResource(R.string.see_all_results),
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 12.sp,
@@ -119,7 +142,7 @@ fun SearchScreen(
                             key = { index -> quickData[index].id },
                             contentType = { "quick_searched_post" }
                         ) { index ->
-                            SearchPostComponent(
+                            QuickSearchPostComponent(
                                 quickData[index]
                             )
                         }
@@ -134,7 +157,12 @@ fun SearchScreen(
                                 modifier = Modifier
                                     .padding(vertical = 8.dp, horizontal = 16.dp)
                                     .fillMaxWidth(),
-                                onClick = { /*TODO*/ }
+                                onClick = {
+                                    if (searchedValue.isNotEmpty()) {
+                                        viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
+                                    }
+                                    searchBarActive = false
+                                },
                             ) {
                                 Text(text = stringResource(R.string.view_all_posts))
                             }

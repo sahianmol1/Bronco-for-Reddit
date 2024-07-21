@@ -41,7 +41,7 @@ import com.anmolsahi.common_ui.models.RedditPostUiModel
 import com.bestway.search_presentation.R
 
 @Composable
-fun SearchPostComponent(
+fun QuickSearchPostComponent(
     redditPostUiModel: RedditPostUiModel,
     modifier: Modifier = Modifier,
 ) {

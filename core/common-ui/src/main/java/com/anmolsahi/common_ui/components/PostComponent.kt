@@ -171,7 +171,7 @@ fun PostDescription(
 fun PostImage(
     imageUrl: String,
     modifier: Modifier = Modifier,
-    onError: () -> Unit = {}
+    onError: () -> Unit = {},
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     var isImageLoading by rememberSaveable { mutableStateOf(false) }

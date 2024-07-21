@@ -18,9 +18,6 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -32,14 +29,15 @@ import com.bestway.design_system.R
 @Composable
 fun BRSearchBar(
     query: String,
+    active: Boolean,
     modifier: Modifier = Modifier,
     onSearch: () -> Unit = {},
     onBack: () -> Unit = {},
+    onActiveChange: (active: Boolean) -> Unit,
     onQueryChange: (newValue: String) -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    var active by remember { mutableStateOf(false) }
     val searchBarPadding by animateDpAsState(
         targetValue = if (!active) 16.dp else 0.dp,
         label = "searchBarPadding",
@@ -57,17 +55,17 @@ fun BRSearchBar(
         onSearch = {
             onSearch()
             keyboardController?.hide()
-            active = false
+            onActiveChange(false)
         },
         active = active,
-        onActiveChange = { active = it },
+        onActiveChange = onActiveChange,
         placeholder = { Text(stringResource(R.string.search_reddit)) },
         leadingIcon = {
             BRSearchLeadingIcon(
                 active = active,
                 onIconButtonClick = {
                     onBack()
-                    active = false
+                    onActiveChange(false)
                 },
             )
         },
@@ -78,7 +76,7 @@ fun BRSearchBar(
                     if (query.isNotEmpty()) {
                         onQueryChange("")
                     } else {
-                        active = false
+                        onActiveChange(false)
                     }
                 },
             )

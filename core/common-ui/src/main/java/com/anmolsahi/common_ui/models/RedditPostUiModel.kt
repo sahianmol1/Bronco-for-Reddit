@@ -38,5 +38,5 @@ fun RedditPost.asUiModel(): RedditPostUiModel =
         author = this.author,
         after = this.after,
         isSaved = this.isSaved,
-        thumbnailUrl = this.thumbnailUrl
+        thumbnailUrl = this.thumbnailUrl,
     )

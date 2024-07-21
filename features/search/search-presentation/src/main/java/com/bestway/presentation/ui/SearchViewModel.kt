@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -36,23 +35,23 @@ class SearchViewModel @Inject constructor(
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
 
-    fun updateSearchQuery(query: String) {
-        _searchQuery.value = query
-    }
-
     init {
         @Suppress("OPT_IN_USAGE")
         _searchQuery
             .debounce(500)
-            .filter {
-                return@filter it.trim().isNotEmpty()
-            }
             .distinctUntilChanged()
             .flowOn(Dispatchers.IO)
             .onEach { query ->
                 searchReddit(query)
             }
             .launchIn(viewModelScope)
+    }
+
+    fun updateSearchQuery(query: String) {
+        _searchQuery.value = query
+        if (_searchQuery.value.isEmpty()) {
+            _searchDataUiModel.update { it.copy(searchedData = null) }
+        }
     }
 
     private fun searchReddit(query: String, nextPageKey: String? = null) {
@@ -92,9 +91,10 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun onSearch(recentSearch: RecentSearch) {
+    fun saveRecentSearch(recentSearch: RecentSearch) {
+        val recentSearchValue = recentSearch.value.lowercase().trim()
         viewModelScope.launch {
-            if (_searchDataUiModel.value.recentSearches.any { it.value == recentSearch.value }) {
+            if (_searchDataUiModel.value.recentSearches.any { it.value == recentSearchValue }) {
                 return@launch
             }
 
