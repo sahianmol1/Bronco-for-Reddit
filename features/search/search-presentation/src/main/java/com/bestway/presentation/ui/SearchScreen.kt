@@ -177,9 +177,7 @@ fun SearchScreen(
         }
 
         if (searchedData.isNotEmpty()) {
-            LazyColumn(
-                state = lazyListState,
-            ) {
+            LazyColumn(state = lazyListState,) {
                 items(
                     count = searchedData.size,
                     key = { index -> searchedData[index].id },

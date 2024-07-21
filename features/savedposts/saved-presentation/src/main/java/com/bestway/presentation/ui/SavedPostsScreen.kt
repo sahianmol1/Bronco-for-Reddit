@@ -1,7 +1,8 @@
 package com.bestway.presentation.ui
 
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -69,6 +70,7 @@ fun SavedPostsScreen(
             modifier = modifier,
             state = lazyListState,
             horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = WindowInsets.statusBars.asPaddingValues(),
         ) {
             itemsIndexed(
                 items = list,
@@ -76,12 +78,7 @@ fun SavedPostsScreen(
                 contentType = { _, _ -> "reddit_post" }
             ) { index, item ->
                 PostComponent(
-                    modifier =
-                    when (index) {
-                        0 -> Modifier.statusBarsPadding()
-                        list.size - 1 -> Modifier.navigationBarsPadding()
-                        else -> Modifier
-                    },
+                    modifier = Modifier,
                     redditPostUiModel = item,
                     onClick = onClick,
                     onSaveIconClick = onSaveIconClick,
