@@ -1,8 +1,8 @@
 package com.bestway.data.repositories
 
 import com.bestway.data.local.SavedPostDao
-import com.bestway.data.local.asDomain
-import com.bestway.data.local.fromDomain
+import com.bestway.data.mappers.asDomain
+import com.bestway.data.mappers.fromDomain
 import com.bestway.domain.model.SavedPost
 import com.bestway.domain.repositories.SavedPostRepository
 import kotlinx.coroutines.flow.Flow

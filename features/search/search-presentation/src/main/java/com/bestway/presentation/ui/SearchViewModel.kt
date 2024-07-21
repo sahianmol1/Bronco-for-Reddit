@@ -3,9 +3,9 @@ package com.bestway.presentation.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anmolsahi.common_ui.mappers.asRedditPost
+import com.anmolsahi.common_ui.mappers.asUiModel
 import com.anmolsahi.common_ui.models.RedditPostUiModel
-import com.anmolsahi.common_ui.models.asRedditPost
-import com.anmolsahi.common_ui.models.asUiModel
 import com.bestway.domain.delegate.SearchDelegate
 import com.bestway.domain.model.RecentSearch
 import com.bestway.domain.repositories.SearchRepository

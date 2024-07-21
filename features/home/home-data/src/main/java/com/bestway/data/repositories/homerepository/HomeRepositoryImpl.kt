@@ -1,8 +1,8 @@
 package com.bestway.data.repositories.homerepository
 
 import com.bestway.data.local.RedditPostDao
-import com.bestway.data.model.remote.asDomain
-import com.bestway.data.model.remote.asEntity
+import com.bestway.data.mappers.asDomain
+import com.bestway.data.mappers.asEntity
 import com.bestway.data.remote.HomeService
 import com.bestway.domain.models.RedditPost
 import com.bestway.domain.repositories.HomeRepository
