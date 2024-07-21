@@ -24,15 +24,15 @@ class PostDetailsViewModel
         private val deleteSavedPostUseCase: DeleteSavedPostUseCase,
         private val getPostDetailsUseCase: GetPostDetailsUseCase,
     ) : ViewModel() {
-        private val _postDetails: MutableStateFlow<PostDetailsUiState> =
+        private val _postDetailsUiState: MutableStateFlow<PostDetailsUiState> =
             MutableStateFlow(
                 PostDetailsUiState(),
             )
-        val postDetails: StateFlow<PostDetailsUiState> = _postDetails.asStateFlow()
+        val postDetailsUiState: StateFlow<PostDetailsUiState> = _postDetailsUiState.asStateFlow()
 
         private val coroutineExceptionHandler =
             CoroutineExceptionHandler { _, throwable ->
-                _postDetails.update {
+                _postDetailsUiState.update {
                     it.copy(
                         isLoading = false,
                         error = throwable.localizedMessage,
@@ -45,14 +45,14 @@ class PostDetailsViewModel
             isSavedPostsFlow: Boolean,
         ) {
             viewModelScope.launch(coroutineExceptionHandler) {
-                _postDetails.update { it.copy(isLoading = true) }
+                _postDetailsUiState.update { it.copy(isLoading = true) }
 
                 val post =
                     getPostDetailsUseCase(
                         postId = postId,
                         isSavedPostsFlow = isSavedPostsFlow,
                     ).asUiModel()
-                _postDetails.update {
+                _postDetailsUiState.update {
                     it.copy(isLoading = false, data = post)
                 }
             }

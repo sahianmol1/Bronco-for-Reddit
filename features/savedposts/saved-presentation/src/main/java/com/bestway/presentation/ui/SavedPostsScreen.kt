@@ -1,18 +1,10 @@
 package com.bestway.presentation.ui
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,17 +14,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.common_ui.components.PostComponent
 import com.anmolsahi.common_ui.models.RedditPostUiModel
 import com.anmolsahi.common_ui.utils.DeleteSavedPostAlertDialog
+import com.anmolsahi.common_ui.utils.ErrorDialog
 import com.anmolsahi.common_ui.utils.scrollToTop
 import com.bestway.design_system.ui_components.BRLinearProgressIndicator
-import com.bestway.subreddit_presentation.R
 
 @Composable
 fun SavedPostsScreen(
@@ -49,11 +38,18 @@ fun SavedPostsScreen(
     var list by remember { mutableStateOf(emptyList<RedditPostUiModel>()) }
     var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
     var selectedPostId by rememberSaveable { mutableStateOf("") }
+    var showErrorDialog by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(uiState.data) {
         viewModel.getAllSavedPosts()
         list = uiState.data.orEmpty()
         lazyListState.scrollToTop()
+    }
+
+    LaunchedEffect(uiState.errorMessage) {
+        if (!uiState.errorMessage.isNullOrBlank()) {
+            showErrorDialog = true
+        }
     }
 
     if (showDeletePostAlertDialog) {
@@ -100,28 +96,13 @@ fun SavedPostsScreen(
     }
 
     // Show error screen
-    if (!uiState.errorMessage.isNullOrBlank() && list.isEmpty()) {
-        var showLogs by rememberSaveable { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // TODO: Code Cleanup
-            Text(
-                modifier = Modifier.clickable { showLogs = !showLogs },
-                text =
-                if (!showLogs)
-                    stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
-                else
-                    stringResource(R.string.uh_oh_something_went_wrong) +
-                            " Learn More /n ${uiState.errorMessage}",
-                textDecoration = TextDecoration.Underline
-            )
-        }
+    if (showErrorDialog) {
+        ErrorDialog(
+            errorMessage = uiState.errorMessage.orEmpty(),
+            onConfirmButtonClick = {
+                showErrorDialog = false
+            }
+        )
     }
 
     if (uiState.isLoading) {
