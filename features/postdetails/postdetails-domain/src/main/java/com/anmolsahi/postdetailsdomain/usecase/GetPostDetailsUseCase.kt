@@ -14,6 +14,6 @@ class GetPostDetailsUseCase(
         isSavedPostsFlow: Boolean,
     ): RedditPost {
         return delegate.getPostById(postId, isSavedPostsFlow)
-            ?: repository.getPostFromNetwork(postUrl)
+            ?: repository.getPostDetailsFromNetwork(postUrl)
     }
 }

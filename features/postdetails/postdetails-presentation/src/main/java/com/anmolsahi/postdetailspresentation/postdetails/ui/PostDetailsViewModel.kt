@@ -17,28 +17,23 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PostDetailsViewModel
-@Inject
-constructor(
+class PostDetailsViewModel @Inject constructor(
     private val delegate: PostDetailsDelegate,
     private val deleteSavedPostUseCase: DeleteSavedPostUseCase,
     private val getPostDetailsUseCase: GetPostDetailsUseCase,
 ) : ViewModel() {
     private val _postDetailsUiState: MutableStateFlow<PostDetailsUiState> =
-        MutableStateFlow(
-            PostDetailsUiState(),
-        )
+        MutableStateFlow(PostDetailsUiState())
     val postDetailsUiState: StateFlow<PostDetailsUiState> = _postDetailsUiState.asStateFlow()
 
-    private val coroutineExceptionHandler =
-        CoroutineExceptionHandler { _, throwable ->
-            _postDetailsUiState.update {
-                it.copy(
-                    isLoading = false,
-                    error = throwable.localizedMessage,
-                )
-            }
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        _postDetailsUiState.update {
+            it.copy(
+                isLoading = false,
+                error = throwable.localizedMessage,
+            )
         }
+    }
 
     fun getPostDetails(postId: String, postUrl: String, isSavedPostsFlow: Boolean) {
         viewModelScope.launch(coroutineExceptionHandler) {
@@ -75,10 +70,9 @@ constructor(
     }
 
     fun deleteSavedPost(postId: String) {
-        val coroutineExceptionHandler =
-            CoroutineExceptionHandler { _, throwable ->
-                throwable.printStackTrace()
-            }
+        val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }
 
         viewModelScope.launch(coroutineExceptionHandler) {
             deleteSavedPostUseCase(postId = postId)

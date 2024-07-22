@@ -6,8 +6,8 @@ class DeleteSavedPostUseCase(
     private val delegate: PostDetailsDelegate,
 ) {
     suspend operator fun invoke(postId: String) {
-        delegate.deleteSavedPost(postId)
         try {
+            delegate.deleteSavedPost(postId)
             delegate.togglePostSavedStatus(postId)
         } catch (e: Exception) {
             e.printStackTrace()

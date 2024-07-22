@@ -98,10 +98,10 @@ fun HomeScreen(
     }
 
     val pagerState = rememberPagerState(
-            initialPage = 0,
-            initialPageOffsetFraction = 0f,
-            pageCount = { tabs.size },
-        )
+        initialPage = 0,
+        initialPageOffsetFraction = 0f,
+        pageCount = { tabs.size },
+    )
 
     Column(
         modifier = modifier
