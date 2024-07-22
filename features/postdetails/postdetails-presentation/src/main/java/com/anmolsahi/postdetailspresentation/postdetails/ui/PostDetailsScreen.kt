@@ -24,7 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.anmolsahi.commonui.R as commonUiR
 import com.anmolsahi.commonui.components.CommentsView
 import com.anmolsahi.commonui.components.OriginalPosterName
 import com.anmolsahi.commonui.components.PostActions
@@ -33,6 +32,7 @@ import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.designsystem.utils.showToast
+import com.anmolsahi.commonui.R as commonUiR
 
 @Composable
 fun PostDetailsScreen(

@@ -8,13 +8,13 @@ import com.anmolsahi.domain.usecase.DeleteSavedPostUseCase
 import com.anmolsahi.domain.usecase.SearchRedditUseCase
 import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 import com.anmolsahi.postdetailsdomain.repositories.PostDetailsRepository
-import com.anmolsahi.postdetailsdomain.usecase.DeleteSavedPostUseCase as PostDetailsDeleteSavedPostUseCase
 import com.anmolsahi.postdetailsdomain.usecase.GetPostDetailsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import com.anmolsahi.postdetailsdomain.usecase.DeleteSavedPostUseCase as PostDetailsDeleteSavedPostUseCase
 
 @Module
 @InstallIn(ViewModelComponent::class)

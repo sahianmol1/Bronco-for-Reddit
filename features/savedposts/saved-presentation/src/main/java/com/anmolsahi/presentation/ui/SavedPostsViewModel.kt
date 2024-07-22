@@ -7,8 +7,6 @@ import com.anmolsahi.domain.repositories.SavedPostRepository
 import com.anmolsahi.domain.usecase.DeleteSavedPostUseCase
 import com.anmolsahi.presentation.utils.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.annotation.concurrent.Immutable
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,6 +17,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.annotation.concurrent.Immutable
+import javax.inject.Inject
 
 @HiltViewModel
 class SavedPostsViewModel
