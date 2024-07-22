@@ -218,9 +218,13 @@ class HomeRepositoryImpl(
     }
 
     override suspend fun togglePostSavedStatus(postId: String): Boolean {
-        val redditPost = redditPostDao.getRedditPostById(id = postId)
-        redditPostDao.insertRedditPost(redditPostEntity = redditPost.copy(isSaved = !redditPost.isSaved))
-        return redditPostDao.getRedditPostById(id = postId).isSaved
+        return try {
+            val redditPost = redditPostDao.getRedditPostById(id = postId)
+            redditPostDao.insertRedditPost(redditPostEntity = redditPost.copy(isSaved = !redditPost.isSaved))
+            redditPostDao.getRedditPostById(id = postId).isSaved
+        } catch (e: Throwable){
+            false
+        }
     }
 
     override suspend fun getPostById(postId: String): RedditPost? {

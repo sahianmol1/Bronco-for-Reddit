@@ -40,6 +40,9 @@ class SearchViewModel @Inject constructor(
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
 
+    private val _searchBarActive = MutableStateFlow(false)
+    val searchBarActive = _searchBarActive.asStateFlow()
+
     init {
         @Suppress("OPT_IN_USAGE")
         _searchQuery
@@ -59,9 +62,13 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun updateSearchBarActive(active: Boolean) {
+        _searchBarActive.value = active
+    }
+
     private fun searchReddit(query: String, nextPageKey: String? = null) {
         searchRedditUseCase(query, nextPageKey)
-            .onStart { _searchDataUiState.update { it.copy(isLoading = true) } }
+            .onStart { _searchDataUiState.update { it.copy(isLoading = true, searchedData = null) } }
             .onEach { redditPosts ->
                 _searchDataUiState.update {
                     it.copy(
