@@ -71,6 +71,10 @@ detekt {
     buildUponDefaultConfig = true
 }
 
+ktlint {
+    android.set(true)
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
