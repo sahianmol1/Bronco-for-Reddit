@@ -3,6 +3,7 @@ package com.anmolsahi.data.repositories.homerepository
 import com.anmolsahi.data.local.RedditPostDao
 import com.anmolsahi.data.mappers.asDomain
 import com.anmolsahi.data.mappers.asEntity
+import com.anmolsahi.data.model.local.RedditPostEntity
 import com.anmolsahi.data.remote.HomeService
 import com.anmolsahi.domain.models.RedditPost
 import com.anmolsahi.domain.repositories.HomeRepository
@@ -21,7 +22,7 @@ class HomeRepositoryImpl(
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
 
             emit(
-                if (allPostsFromDb.isNotEmpty() && !shouldRefreshData && nextPageKey.isNullOrEmpty()) {
+                if (shouldReturnDataFromCache(allPostsFromDb, shouldRefreshData, nextPageKey)) {
                     // If there are posts in the database and no refresh is needed, emit them directly.
                     allPostsFromDb.asDomain()
                 } else {
@@ -55,7 +56,7 @@ class HomeRepositoryImpl(
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
 
             emit(
-                if (allPostsFromDb.isNotEmpty() && !shouldRefreshData && nextPageKey.isNullOrEmpty()) {
+                if (shouldReturnDataFromCache(allPostsFromDb, shouldRefreshData, nextPageKey)) {
                     // If there are posts in the database and no refresh is needed, emit them directly.
                     allPostsFromDb.asDomain()
                 } else {
@@ -89,7 +90,7 @@ class HomeRepositoryImpl(
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
 
             emit(
-                if (allPostsFromDb.isNotEmpty() && !shouldRefreshData && nextPageKey.isNullOrEmpty()) {
+                if (shouldReturnDataFromCache(allPostsFromDb, shouldRefreshData, nextPageKey)) {
                     // If there are posts in the database and no refresh is needed, emit them directly.
                     allPostsFromDb.asDomain()
                 } else {
@@ -123,7 +124,7 @@ class HomeRepositoryImpl(
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
 
             emit(
-                if (allPostsFromDb.isNotEmpty() && !shouldRefreshData && nextPageKey.isNullOrEmpty()) {
+                if (shouldReturnDataFromCache(allPostsFromDb, shouldRefreshData, nextPageKey)) {
                     // If there are posts in the database and no refresh is needed, emit them directly.
                     allPostsFromDb.asDomain()
                 } else {
@@ -157,7 +158,7 @@ class HomeRepositoryImpl(
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
 
             emit(
-                if (allPostsFromDb.isNotEmpty() && !shouldRefreshData && nextPageKey.isNullOrEmpty()) {
+                if (shouldReturnDataFromCache(allPostsFromDb, shouldRefreshData, nextPageKey)) {
                     // If there are posts in the database and no refresh is needed, emit them directly.
                     allPostsFromDb.asDomain()
                 } else {
@@ -191,7 +192,7 @@ class HomeRepositoryImpl(
             val allPostsFromDb = redditPostDao.getAllRedditPosts()
 
             emit(
-                if (allPostsFromDb.isNotEmpty() && !shouldRefreshData && nextPageKey.isNullOrEmpty()) {
+                if (shouldReturnDataFromCache(allPostsFromDb, shouldRefreshData, nextPageKey)) {
                     // If there are posts in the database and no refresh is needed, emit them directly.
                     allPostsFromDb.asDomain()
                 } else {
@@ -220,7 +221,9 @@ class HomeRepositoryImpl(
     override suspend fun togglePostSavedStatus(postId: String): Boolean {
         return try {
             val redditPost = redditPostDao.getRedditPostById(id = postId)
-            redditPostDao.insertRedditPost(redditPostEntity = redditPost.copy(isSaved = !redditPost.isSaved))
+            redditPostDao.insertRedditPost(
+                redditPostEntity = redditPost.copy(isSaved = !redditPost.isSaved),
+            )
             redditPostDao.getRedditPostById(id = postId).isSaved
         } catch (e: Throwable) {
             false
@@ -233,5 +236,13 @@ class HomeRepositoryImpl(
         } catch (e: Throwable) {
             null
         }
+    }
+
+    private fun shouldReturnDataFromCache(
+        allPostsFromDb: List<RedditPostEntity>,
+        shouldRefreshData: Boolean,
+        nextPageKey: String?,
+    ): Boolean {
+        return allPostsFromDb.isNotEmpty() && !shouldRefreshData && nextPageKey.isNullOrEmpty()
     }
 }

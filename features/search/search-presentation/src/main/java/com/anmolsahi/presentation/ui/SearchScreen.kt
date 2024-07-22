@@ -191,10 +191,9 @@ fun SearchBarContentView(
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Row(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -205,10 +204,9 @@ fun SearchBarContentView(
                         )
 
                         Text(
-                            modifier =
-                                Modifier.clickable {
-                                    onSeeAllResultsClick()
-                                },
+                            modifier = Modifier.clickable {
+                                onSeeAllResultsClick()
+                            },
                             text = stringResource(R.string.see_all_results),
                             fontWeight = FontWeight.Bold,
                             fontSize = 12.sp,
@@ -237,10 +235,9 @@ fun SearchBarContentView(
                     modifier = Modifier.padding(top = 8.dp),
                 )
                 OutlinedButton(
-                    modifier =
-                        Modifier
-                            .padding(vertical = 8.dp, horizontal = 16.dp)
-                            .fillMaxWidth(),
+                    modifier = Modifier
+                        .padding(vertical = 8.dp, horizontal = 16.dp)
+                        .fillMaxWidth(),
                     onClick = onViewAllPostsClick,
                 ) {
                     Text(text = stringResource(R.string.view_all_posts))

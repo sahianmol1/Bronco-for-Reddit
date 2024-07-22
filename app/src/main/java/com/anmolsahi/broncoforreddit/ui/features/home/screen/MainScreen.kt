@@ -29,7 +29,9 @@ import com.anmolsahi.navigation.BRNavHost
 fun MainScreen(navController: NavHostController) {
     val context = LocalContext.current
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination by remember(navBackStackEntry) { mutableStateOf(navBackStackEntry?.destination) }
+    val currentDestination by remember(navBackStackEntry) {
+        mutableStateOf(navBackStackEntry?.destination)
+    }
 
     val view = LocalView.current
     val navigationBarColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
@@ -54,7 +56,12 @@ fun MainScreen(navController: NavHostController) {
                     context = context,
                 )
             },
-            contentWindowInsets = WindowInsets(left = 0.dp, top = 0.dp, right = 0.dp, bottom = 0.dp),
+            contentWindowInsets = WindowInsets(
+                left = 0.dp,
+                top = 0.dp,
+                right = 0.dp,
+                bottom = 0.dp,
+            ),
         ) { scaffoldPaddingValues ->
             BRNavHost(
                 modifier = Modifier.padding(scaffoldPaddingValues),

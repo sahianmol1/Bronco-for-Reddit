@@ -91,10 +91,10 @@ fun HomeScreenListings(
                 ) { index, item ->
                     PostComponent(
                         modifier =
-                            when (index) {
-                                list.size - 1 -> Modifier.navigationBarsPadding()
-                                else -> Modifier
-                            },
+                        when (index) {
+                            list.size - 1 -> Modifier.navigationBarsPadding()
+                            else -> Modifier
+                        },
                         redditPostUiModel = item,
                         onClick = onClick,
                         onSaveIconClick = onSaveIconClick,
@@ -117,10 +117,10 @@ fun HomeScreenListings(
             var showLogs by rememberSaveable { mutableStateOf(false) }
             Column(
                 modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                        .verticalScroll(rememberScrollState()),
+                Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -128,12 +128,12 @@ fun HomeScreenListings(
                 Text(
                     modifier = Modifier.clickable { showLogs = !showLogs },
                     text =
-                        if (!showLogs) {
-                            stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
-                        } else {
-                            stringResource(R.string.uh_oh_something_went_wrong) +
-                                " Learn More /n ${uiState.errorMessage}"
-                        },
+                    if (!showLogs) {
+                        stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
+                    } else {
+                        stringResource(R.string.uh_oh_something_went_wrong) +
+                            " Learn More /n ${uiState.errorMessage}"
+                    },
                     textDecoration = TextDecoration.Underline,
                 )
             }
@@ -145,18 +145,19 @@ fun HomeScreenListings(
 
         PullToRefreshContainer(
             modifier =
-                Modifier
-                    .align(Alignment.TopCenter),
+            Modifier
+                .align(Alignment.TopCenter),
             state = pullRefreshState,
             containerColor =
-                if (hidePullRefreshContainer(pullRefreshState)) {
-                    Color.Transparent
-                } else {
-                    PullToRefreshDefaults.containerColor
-                },
+            if (hidePullRefreshContainer(pullRefreshState)) {
+                Color.Transparent
+            } else {
+                PullToRefreshDefaults.containerColor
+            },
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-private fun hidePullRefreshContainer(state: PullToRefreshState) = state.progress == 0f && !state.isRefreshing
+private fun hidePullRefreshContainer(state: PullToRefreshState) =
+    state.progress == 0f && !state.isRefreshing

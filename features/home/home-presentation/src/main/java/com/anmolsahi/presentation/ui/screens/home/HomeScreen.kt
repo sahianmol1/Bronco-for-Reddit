@@ -107,9 +107,9 @@ fun HomeScreen(
 
     Column(
         modifier =
-            modifier
-                .fillMaxSize()
-                .statusBarsPadding(),
+        modifier
+            .fillMaxSize()
+            .statusBarsPadding(),
     ) {
         BRScrollableTabRow(
             tabs = tabs,
@@ -127,7 +127,11 @@ fun HomeScreen(
                         loadMoreData = { homeViewModel.getHotPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId) { isSaved ->
-                                if (isSaved) context.showToast(context.getString(R.string.post_saved_success))
+                                if (isSaved) {
+                                    context.showToast(
+                                        context.getString(R.string.post_saved_success),
+                                    )
+                                }
                             }
                         },
                     )

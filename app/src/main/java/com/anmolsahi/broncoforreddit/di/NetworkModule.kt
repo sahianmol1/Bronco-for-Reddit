@@ -19,22 +19,21 @@ import javax.inject.Singleton
 object NetworkModule {
     @Provides
     @Singleton
-    fun provideKtorClient(): HttpClient =
-        HttpClient(Android) {
-            expectSuccess = true
-            install(ContentNegotiation) {
-                json(
-                    Json {
-                        ignoreUnknownKeys = true
-                    },
-                )
-            }
-
-            engine {
-                connectTimeout = Constants.CONNECTION_TIMEOUT_MILLIS
-                socketTimeout = Constants.SOCKET_TIMEOUT_MILLIS
-            }
+    fun provideKtorClient(): HttpClient = HttpClient(Android) {
+        expectSuccess = true
+        install(ContentNegotiation) {
+            json(
+                Json {
+                    ignoreUnknownKeys = true
+                },
+            )
         }
+
+        engine {
+            connectTimeout = Constants.CONNECTION_TIMEOUT_MILLIS
+            socketTimeout = Constants.SOCKET_TIMEOUT_MILLIS
+        }
+    }
 
     @Provides
     @Singleton

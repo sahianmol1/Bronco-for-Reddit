@@ -85,27 +85,27 @@ fun PostDetailsScreen(
     if (!uiState.isLoading) {
         Column(
             modifier =
-                modifier
-                    .verticalScroll(scrollState)
-                    .fillMaxSize()
-                    .statusBarsPadding()
-                    .navigationBarsPadding()
-                    .padding(horizontal = 16.dp),
+            modifier
+                .verticalScroll(scrollState)
+                .fillMaxSize()
+                .statusBarsPadding()
+                .navigationBarsPadding()
+                .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {
             SubRedditName(
                 subName =
-                    uiState.data
-                        ?.subName
-                        .orEmpty(),
+                uiState.data
+                    ?.subName
+                    .orEmpty(),
             )
 
             OriginalPosterName(
                 opName =
-                    uiState.data
-                        ?.author
-                        .orEmpty(),
+                uiState.data
+                    ?.author
+                    .orEmpty(),
             )
 
             if (!uiState.data
@@ -114,9 +114,9 @@ fun PostDetailsScreen(
             ) {
                 PostDetailsTitle(
                     title =
-                        uiState.data
-                            ?.title
-                            .orEmpty(),
+                    uiState.data
+                        ?.title
+                        .orEmpty(),
                 )
             }
 
@@ -126,9 +126,9 @@ fun PostDetailsScreen(
             ) {
                 PostDetailsDescription(
                     description =
-                        uiState.data
-                            ?.description
-                            .orEmpty(),
+                    uiState.data
+                        ?.description
+                        .orEmpty(),
                 )
             }
 
@@ -136,18 +136,18 @@ fun PostDetailsScreen(
                 if (it.endsWith("png") || it.endsWith("jpg")) {
                     com.anmolsahi.commonui.components.PostImage(
                         imageUrl =
-                            uiState.data
-                                ?.imageUrl
-                                .orEmpty(),
+                        uiState.data
+                            ?.imageUrl
+                            .orEmpty(),
                     )
                 }
                 if (it.contains(".gif")) {
                     uiState.data?.gifUrl?.let {
                         com.anmolsahi.commonui.components.PostVideo(
                             videoUrl =
-                                uiState.data
-                                    ?.gifUrl
-                                    .orEmpty(),
+                            uiState.data
+                                ?.gifUrl
+                                .orEmpty(),
                         )
                     }
                 }
@@ -171,7 +171,9 @@ fun PostDetailsScreen(
                         isSavedPostsFlow = isSavedPostsFlow,
                     ) { isSaved ->
                         if (isSaved) {
-                            context.showToast(context.getString(commonUiR.string.post_saved_success))
+                            context.showToast(
+                                context.getString(commonUiR.string.post_saved_success),
+                            )
                         }
                     }
                 },

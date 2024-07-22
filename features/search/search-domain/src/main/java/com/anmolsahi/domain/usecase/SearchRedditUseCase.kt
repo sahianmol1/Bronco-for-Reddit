@@ -12,10 +12,7 @@ class SearchRedditUseCase(
     private val searchRepository: SearchRepository,
     private val searchDelegate: SearchDelegate,
 ) {
-    operator fun invoke(
-        query: String,
-        nextPageKey: String? = null,
-    ): Flow<List<RedditPost>?> =
+    operator fun invoke(query: String, nextPageKey: String? = null): Flow<List<RedditPost>?> =
         flow {
             if (query.isBlank()) {
                 emit(null)

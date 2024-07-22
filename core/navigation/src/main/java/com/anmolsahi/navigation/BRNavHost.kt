@@ -12,10 +12,7 @@ import com.anmolsahi.presentation.navigation.savedPostsNavGraph
 import com.anmolsahi.presentation.navigation.searchNavGraph
 
 @Composable
-fun BRNavHost(
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-) {
+fun BRNavHost(modifier: Modifier = Modifier, navController: NavHostController) {
     NavHost(
         modifier = modifier,
         navController = navController,

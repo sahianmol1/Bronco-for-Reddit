@@ -13,10 +13,7 @@ class PostDetailsModuleManager @Inject constructor(
     private val savedPostsRepository: SavedPostRepository,
     private val homeDelegate: HomeDelegate,
 ) : PostDetailsDelegate {
-    override suspend fun getPostById(
-        postId: String,
-        isSavedPostsFlow: Boolean,
-    ): RedditPost? =
+    override suspend fun getPostById(postId: String, isSavedPostsFlow: Boolean): RedditPost? =
         if (isSavedPostsFlow) {
             savedPostsRepository.getSavedPostById(postId)?.toRedditPost()
         } else {
@@ -29,26 +26,22 @@ class PostDetailsModuleManager @Inject constructor(
     override suspend fun deleteSavedPost(postId: String) =
         savedPostsRepository.deleteSavedPost(postId)
 
-    override suspend fun updateSavedPosts(
-        shouldSavePost: Boolean,
-        postId: String,
-    ) {
+    override suspend fun updateSavedPosts(shouldSavePost: Boolean, postId: String) {
         homeDelegate.updateSavedPosts(shouldSavePost, postId)
     }
 
-    private fun SavedPost.toRedditPost(): RedditPost =
-        RedditPost(
-            id = id,
-            subName = subName,
-            title = title,
-            description = description,
-            upVotes = upVotes,
-            comments = comments,
-            imageUrl = imageUrl,
-            postUrl = postUrl,
-            videoUrl = videoUrl,
-            gifUrl = gifUrl,
-            author = author,
-            after = after,
-        )
+    private fun SavedPost.toRedditPost(): RedditPost = RedditPost(
+        id = id,
+        subName = subName,
+        title = title,
+        description = description,
+        upVotes = upVotes,
+        comments = comments,
+        imageUrl = imageUrl,
+        postUrl = postUrl,
+        videoUrl = videoUrl,
+        gifUrl = gifUrl,
+        author = author,
+        after = after,
+    )
 }

@@ -28,11 +28,10 @@ object RepositoriesModule {
     fun provideHomeRepository(
         homeService: HomeService,
         redditPostDao: RedditPostDao,
-    ): HomeRepository =
-        HomeRepositoryImpl(
-            redditPostDao = redditPostDao,
-            homeService = homeService,
-        )
+    ): HomeRepository = HomeRepositoryImpl(
+        redditPostDao = redditPostDao,
+        homeService = homeService,
+    )
 
     @Singleton
     @Provides
@@ -46,13 +45,13 @@ object RepositoriesModule {
     fun provideSearchRepository(
         searchesDao: RecentSearchesDao,
         searchService: SearchService,
-    ): SearchRepository =
-        SearchRepositoryImpl(
-            dao = searchesDao,
-            service = searchService,
-        )
+    ): SearchRepository = SearchRepositoryImpl(
+        dao = searchesDao,
+        service = searchService,
+    )
 
     @Singleton
     @Provides
-    fun providePostDetailsRepository(service: PostDetailsService): PostDetailsRepository = PostDetailsRepositoryImpl(service = service)
+    fun providePostDetailsRepository(service: PostDetailsService): PostDetailsRepository =
+        PostDetailsRepositoryImpl(service = service)
 }

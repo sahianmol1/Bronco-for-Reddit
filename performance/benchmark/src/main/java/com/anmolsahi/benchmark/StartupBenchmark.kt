@@ -36,15 +36,14 @@ class StartupBenchmark {
     @Test
     fun startupWarm() = startup(StartupMode.WARM)
 
-    private fun startup(startupMode: StartupMode) =
-        benchmarkRule.measureRepeated(
-            packageName = "com.bestway.broncoforreddit",
-            metrics = listOf(StartupTimingMetric()),
-            iterations = 5,
-            startupMode = startupMode,
-            compilationMode = CompilationMode.Partial(BaselineProfileMode.Require),
-        ) {
-            pressHome()
-            startActivityAndWait()
-        }
+    private fun startup(startupMode: StartupMode) = benchmarkRule.measureRepeated(
+        packageName = "com.bestway.broncoforreddit",
+        metrics = listOf(StartupTimingMetric()),
+        iterations = 5,
+        startupMode = startupMode,
+        compilationMode = CompilationMode.Partial(BaselineProfileMode.Require),
+    ) {
+        pressHome()
+        startActivityAndWait()
+    }
 }

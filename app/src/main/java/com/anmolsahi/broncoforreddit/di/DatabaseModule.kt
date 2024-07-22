@@ -15,9 +15,7 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun provideRedditDatabase(
-        @ApplicationContext context: Context,
-    ) = Room.databaseBuilder(
+    fun provideRedditDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
         context = context,
         RedditDatabase::class.java,
         name = "reddit_db",
@@ -33,5 +31,6 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideRecentSearchesDao(redditDatabase: RedditDatabase) = redditDatabase.getRecentSearchesDao()
+    fun provideRecentSearchesDao(redditDatabase: RedditDatabase) =
+        redditDatabase.getRecentSearchesDao()
 }

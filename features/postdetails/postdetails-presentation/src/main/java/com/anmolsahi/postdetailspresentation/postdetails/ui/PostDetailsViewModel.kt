@@ -18,73 +18,73 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailsViewModel
-    @Inject
-    constructor(
-        private val delegate: PostDetailsDelegate,
-        private val deleteSavedPostUseCase: DeleteSavedPostUseCase,
-        private val getPostDetailsUseCase: GetPostDetailsUseCase,
-    ) : ViewModel() {
-        private val _postDetailsUiState: MutableStateFlow<PostDetailsUiState> =
-            MutableStateFlow(
-                PostDetailsUiState(),
-            )
-        val postDetailsUiState: StateFlow<PostDetailsUiState> = _postDetailsUiState.asStateFlow()
+@Inject
+constructor(
+    private val delegate: PostDetailsDelegate,
+    private val deleteSavedPostUseCase: DeleteSavedPostUseCase,
+    private val getPostDetailsUseCase: GetPostDetailsUseCase,
+) : ViewModel() {
+    private val _postDetailsUiState: MutableStateFlow<PostDetailsUiState> =
+        MutableStateFlow(
+            PostDetailsUiState(),
+        )
+    val postDetailsUiState: StateFlow<PostDetailsUiState> = _postDetailsUiState.asStateFlow()
 
-        private val coroutineExceptionHandler =
-            CoroutineExceptionHandler { _, throwable ->
-                _postDetailsUiState.update {
-                    it.copy(
-                        isLoading = false,
-                        error = throwable.localizedMessage,
-                    )
-                }
-            }
-
-        fun getPostDetails(
-            postId: String,
-            postUrl: String,
-            isSavedPostsFlow: Boolean,
-        ) {
-            viewModelScope.launch(coroutineExceptionHandler) {
-                _postDetailsUiState.update { it.copy(isLoading = true) }
-
-                val post =
-                    getPostDetailsUseCase(
-                        postId = postId,
-                        isSavedPostsFlow = isSavedPostsFlow,
-                        postUrl = postUrl,
-                    ).asUiModel()
-                _postDetailsUiState.update {
-                    it.copy(isLoading = false, data = post)
-                }
+    private val coroutineExceptionHandler =
+        CoroutineExceptionHandler { _, throwable ->
+            _postDetailsUiState.update {
+                it.copy(
+                    isLoading = false,
+                    error = throwable.localizedMessage,
+                )
             }
         }
 
-        fun onSaveIconClick(
-            postId: String,
-            postUrl: String,
-            isSavedPostsFlow: Boolean,
-            onPostSaved: (Boolean) -> Unit,
-        ) {
-            viewModelScope.launch {
-                val isPostSaved = delegate.togglePostSavedStatus(postId)
-                delegate.updateSavedPosts(isPostSaved, postId)
-                getPostDetails(postId = postId, isSavedPostsFlow = isSavedPostsFlow, postUrl = postUrl)
-                onPostSaved(isPostSaved)
-            }
-        }
+    fun getPostDetails(postId: String, postUrl: String, isSavedPostsFlow: Boolean) {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            _postDetailsUiState.update { it.copy(isLoading = true) }
 
-        fun deleteSavedPost(postId: String) {
-            val coroutineExceptionHandler =
-                CoroutineExceptionHandler { _, throwable ->
-                    throwable.printStackTrace()
-                }
-
-            viewModelScope.launch(coroutineExceptionHandler) {
-                deleteSavedPostUseCase(postId = postId)
+            val post =
+                getPostDetailsUseCase(
+                    postId = postId,
+                    isSavedPostsFlow = isSavedPostsFlow,
+                    postUrl = postUrl,
+                ).asUiModel()
+            _postDetailsUiState.update {
+                it.copy(isLoading = false, data = post)
             }
         }
     }
+
+    fun onSaveIconClick(
+        postId: String,
+        postUrl: String,
+        isSavedPostsFlow: Boolean,
+        onPostSaved: (Boolean) -> Unit,
+    ) {
+        viewModelScope.launch {
+            val isPostSaved = delegate.togglePostSavedStatus(postId)
+            delegate.updateSavedPosts(isPostSaved, postId)
+            getPostDetails(
+                postId = postId,
+                isSavedPostsFlow = isSavedPostsFlow,
+                postUrl = postUrl,
+            )
+            onPostSaved(isPostSaved)
+        }
+    }
+
+    fun deleteSavedPost(postId: String) {
+        val coroutineExceptionHandler =
+            CoroutineExceptionHandler { _, throwable ->
+                throwable.printStackTrace()
+            }
+
+        viewModelScope.launch(coroutineExceptionHandler) {
+            deleteSavedPostUseCase(postId = postId)
+        }
+    }
+}
 
 data class PostDetailsUiState(
     val data: RedditPostUiModel? = null,

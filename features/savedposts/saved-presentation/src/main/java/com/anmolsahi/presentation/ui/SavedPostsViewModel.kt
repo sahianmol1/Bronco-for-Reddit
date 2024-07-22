@@ -22,45 +22,45 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SavedPostsViewModel
-    @Inject
-    constructor(
-        private val repository: SavedPostRepository,
-        private val deleteSavedPostUseCase: DeleteSavedPostUseCase,
-    ) : ViewModel() {
-        private val _savedPostsUiState: MutableStateFlow<PostsUiState> =
-            MutableStateFlow(PostsUiState())
-        val savedPostsUiState: StateFlow<PostsUiState> = _savedPostsUiState.asStateFlow()
+@Inject
+constructor(
+    private val repository: SavedPostRepository,
+    private val deleteSavedPostUseCase: DeleteSavedPostUseCase,
+) : ViewModel() {
+    private val _savedPostsUiState: MutableStateFlow<PostsUiState> =
+        MutableStateFlow(PostsUiState())
+    val savedPostsUiState: StateFlow<PostsUiState> = _savedPostsUiState.asStateFlow()
 
-        fun getAllSavedPosts() {
-            repository
-                .getAllSavedPosts()
-                .onStart {
-                    _savedPostsUiState.update { it.copy(isLoading = true) }
-                }.onEach { redditPosts ->
-                    _savedPostsUiState.update {
-                        it.copy(
-                            data = redditPosts.asUiModel(),
-                            isLoading = false,
-                            errorMessage = null,
-                        )
-                    }
-                }.catch { throwable ->
-                    _savedPostsUiState.update { it.copy(errorMessage = throwable.localizedMessage) }
-                }.launchIn(viewModelScope)
-        }
-
-        fun deleteSavedPost(id: String) {
-            val coroutineExceptionHandler =
-                CoroutineExceptionHandler { _, throwable ->
-                    throwable.printStackTrace()
+    fun getAllSavedPosts() {
+        repository
+            .getAllSavedPosts()
+            .onStart {
+                _savedPostsUiState.update { it.copy(isLoading = true) }
+            }.onEach { redditPosts ->
+                _savedPostsUiState.update {
+                    it.copy(
+                        data = redditPosts.asUiModel(),
+                        isLoading = false,
+                        errorMessage = null,
+                    )
                 }
+            }.catch { throwable ->
+                _savedPostsUiState.update { it.copy(errorMessage = throwable.localizedMessage) }
+            }.launchIn(viewModelScope)
+    }
 
-            viewModelScope.launch(coroutineExceptionHandler) {
-                deleteSavedPostUseCase(postId = id)
-                getAllSavedPosts()
+    fun deleteSavedPost(id: String) {
+        val coroutineExceptionHandler =
+            CoroutineExceptionHandler { _, throwable ->
+                throwable.printStackTrace()
             }
+
+        viewModelScope.launch(coroutineExceptionHandler) {
+            deleteSavedPostUseCase(postId = id)
+            getAllSavedPosts()
         }
     }
+}
 
 @Immutable
 data class PostsUiState(

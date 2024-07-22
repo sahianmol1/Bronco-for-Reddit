@@ -11,10 +11,7 @@ class HomeModuleManager @Inject constructor(
     private val savedPostRepository: SavedPostRepository,
     private val homeRepository: HomeRepository,
 ) : HomeDelegate {
-    override suspend fun updateSavedPosts(
-        shouldSavePost: Boolean,
-        postId: String,
-    ) {
+    override suspend fun updateSavedPosts(shouldSavePost: Boolean, postId: String) {
         val post = homeRepository.getPostById(postId = postId)
         if (shouldSavePost && post != null) {
             savedPostRepository.insertPost(post.asSavedPost())
@@ -24,18 +21,17 @@ class HomeModuleManager @Inject constructor(
     }
 }
 
-fun RedditPost.asSavedPost() =
-    SavedPost(
-        id = this.id,
-        subName = this.subName,
-        title = this.title,
-        description = this.description,
-        upVotes = this.upVotes,
-        comments = this.comments,
-        imageUrl = this.imageUrl,
-        postUrl = this.postUrl,
-        videoUrl = this.videoUrl,
-        gifUrl = this.gifUrl,
-        author = this.author,
-        after = this.after,
-    )
+fun RedditPost.asSavedPost() = SavedPost(
+    id = this.id,
+    subName = this.subName,
+    title = this.title,
+    description = this.description,
+    upVotes = this.upVotes,
+    comments = this.comments,
+    imageUrl = this.imageUrl,
+    postUrl = this.postUrl,
+    videoUrl = this.videoUrl,
+    gifUrl = this.gifUrl,
+    author = this.author,
+    after = this.after,
+)

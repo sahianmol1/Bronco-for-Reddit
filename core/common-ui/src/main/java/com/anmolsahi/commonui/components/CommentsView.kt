@@ -57,10 +57,10 @@ fun OPBadge() {
     val opBackgroundColor = MaterialTheme.colorScheme.secondary
     Text(
         modifier =
-            Modifier.clickable {}
-                .padding(start = 4.dp, end = 8.dp)
-                .drawBehind { drawCircle(color = opBackgroundColor) }
-                .padding(4.dp),
+        Modifier.clickable {}
+            .padding(start = 4.dp, end = 8.dp)
+            .drawBehind { drawCircle(color = opBackgroundColor) }
+            .padding(4.dp),
         text = "OP",
         fontSize = 8.sp,
         color = MaterialTheme.colorScheme.onSecondary,
@@ -93,7 +93,10 @@ fun CommentUpVotes() {
         Icon(
             modifier = Modifier.padding(vertical = 8.dp),
             imageVector = Icons.Default.ArrowUpward,
-            contentDescription = stringResource(R.string.post_action_content_description, "UpVotes"),
+            contentDescription = stringResource(
+                R.string.post_action_content_description,
+                "UpVotes",
+            ),
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),

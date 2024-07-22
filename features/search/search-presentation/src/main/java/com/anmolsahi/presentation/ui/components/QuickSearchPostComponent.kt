@@ -44,29 +44,30 @@ fun QuickSearchPostComponent(
     onPostClick: (postId: String, postUrl: String) -> Unit,
 ) {
     Surface(
-        modifier =
-            modifier
-                .padding(horizontal = 16.dp, vertical = 4.dp)
-                .clickable { onPostClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty()) }
-                .fillMaxWidth(),
+        modifier = modifier
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .clickable {
+                onPostClick(
+                    redditPostUiModel.id,
+                    redditPostUiModel.postUrl.orEmpty(),
+                )
+            }
+            .fillMaxWidth(),
         color = MaterialTheme.colorScheme.secondaryContainer,
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
     ) {
         Column(
-            modifier =
-                modifier
-                    .padding(horizontal = 16.dp),
+            modifier = modifier
+                .padding(horizontal = 16.dp),
         ) {
             Row(
-                modifier =
-                    Modifier
-                        .fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(
-                    modifier =
-                        Modifier
-                            .weight(2.5f),
+                    modifier = Modifier
+                        .weight(2.5f),
                 ) {
                     SubRedditName(subName = redditPostUiModel.subName)
                     redditPostUiModel.title?.let { title -> PostTitle(title = title) }
@@ -79,32 +80,33 @@ fun QuickSearchPostComponent(
                 redditPostUiModel.thumbnailUrl?.let { imageUrl ->
                     if (URLUtil.isValidUrl(imageUrl)) {
                         Box(
-                            modifier =
-                                Modifier
-                                    .padding(start = 16.dp)
-                                    .size(100.dp)
-                                    .weight(1f),
+                            modifier = Modifier
+                                .padding(start = 16.dp)
+                                .size(100.dp)
+                                .weight(1f),
                             contentAlignment = Alignment.BottomStart,
                         ) {
                             PostImage(imageUrl = imageUrl)
 
-                            if (!redditPostUiModel.videoUrl.isNullOrEmpty() || !redditPostUiModel.gifUrl.isNullOrEmpty()) {
+                            if (!redditPostUiModel.videoUrl.isNullOrEmpty() ||
+                                !redditPostUiModel.gifUrl.isNullOrEmpty()
+                            ) {
                                 Icon(
                                     modifier =
-                                        Modifier
-                                            .padding(4.dp)
-                                            .background(
-                                                color =
-                                                    MaterialTheme.colorScheme.background.copy(
-                                                        alpha = 0.7f,
-                                                    ),
-                                                shape = CircleShape,
+                                    Modifier
+                                        .padding(4.dp)
+                                        .background(
+                                            color =
+                                            MaterialTheme.colorScheme.background.copy(
+                                                alpha = 0.7f,
                                             ),
+                                            shape = CircleShape,
+                                        ),
                                     imageVector = Icons.Default.PlayArrow,
                                     contentDescription =
-                                        stringResource(
-                                            R.string.content_description_post_image,
-                                        ),
+                                    stringResource(
+                                        R.string.content_description_post_image,
+                                    ),
                                 )
                             }
                         }
@@ -137,19 +139,18 @@ fun SearchPostActionItem(
     actionDescription: String,
 ) {
     Row(
-        modifier =
-            modifier
-                .wrapContentHeight(),
+        modifier = modifier
+            .wrapContentHeight(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             modifier = Modifier,
             imageVector = icon,
             contentDescription =
-                stringResource(
-                    com.anmolsahi.commonui.R.string.post_action_content_description,
-                    actionDescription,
-                ),
+            stringResource(
+                com.anmolsahi.commonui.R.string.post_action_content_description,
+                actionDescription,
+            ),
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),

@@ -75,12 +75,11 @@ fun PostComponent(
     onDeleteIconClick: (postId: String) -> Unit = {},
 ) {
     Column(
-        modifier =
-            modifier
-                .animateContentSize()
-                .clickable { onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty()) }
-                .padding(top = 8.dp)
-                .padding(horizontal = 16.dp),
+        modifier = modifier
+            .animateContentSize()
+            .clickable { onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty()) }
+            .padding(top = 8.dp)
+            .padding(horizontal = 16.dp),
     ) {
         SubRedditName(subName = redditPostUiModel.subName)
         OriginalPosterName(opName = redditPostUiModel.author)
@@ -119,10 +118,9 @@ fun PostComponent(
 @Composable
 fun SubRedditName(subName: String) {
     Text(
-        modifier =
-            Modifier
-                .clickable {}
-                .padding(top = 8.dp, bottom = 4.dp),
+        modifier = Modifier
+            .clickable {}
+            .padding(top = 8.dp, bottom = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.primary,
         text = subName,
@@ -134,10 +132,9 @@ fun SubRedditName(subName: String) {
 @Composable
 fun OriginalPosterName(opName: String) {
     Text(
-        modifier =
-            Modifier
-                .clickable {}
-                .padding(vertical = 4.dp),
+        modifier = Modifier
+            .clickable {}
+            .padding(vertical = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.primary,
         text = "u/$opName",
@@ -158,10 +155,7 @@ fun PostTitle(title: String) {
 }
 
 @Composable
-fun PostDescription(
-    description: String,
-    maxLines: Int = 3,
-) {
+fun PostDescription(description: String, maxLines: Int = 3) {
     Text(
         modifier = Modifier.padding(vertical = 4.dp),
         text = description,
@@ -172,11 +166,7 @@ fun PostDescription(
 }
 
 @Composable
-fun PostImage(
-    imageUrl: String,
-    modifier: Modifier = Modifier,
-    onImageClick: () -> Unit = {},
-) {
+fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () -> Unit = {}) {
     var isImageLoading by rememberSaveable { mutableStateOf(false) }
     var isImageLoadingError by rememberSaveable { mutableStateOf(false) }
 
@@ -185,11 +175,10 @@ fun PostImage(
             CircularProgressIndicator(modifier = Modifier.padding(vertical = 64.dp))
         }
         AsyncImage(
-            modifier =
-                Modifier
-                    .clickable(role = Role.Image) { onImageClick() }
-                    .padding(vertical = 4.dp)
-                    .fillMaxWidth(),
+            modifier = Modifier
+                .clickable(role = Role.Image) { onImageClick() }
+                .padding(vertical = 4.dp)
+                .fillMaxWidth(),
             model = imageUrl,
             contentScale = ContentScale.FillWidth,
             onLoading = { isImageLoading = true },
@@ -213,26 +202,24 @@ fun PostVideo(videoUrl: String) {
 
     var isVolumeOff by rememberSaveable { mutableStateOf(true) }
 
-    val exoPlayer =
-        remember {
-            ExoPlayer.Builder(context).build().apply {
-                setMediaItem(MediaItem.fromUri(videoUrl))
-                repeatMode = Player.REPEAT_MODE_ALL
-                prepare()
-                volume = 0f
-                play()
-            }
+    val exoPlayer = remember {
+        ExoPlayer.Builder(context).build().apply {
+            setMediaItem(MediaItem.fromUri(videoUrl))
+            repeatMode = Player.REPEAT_MODE_ALL
+            prepare()
+            volume = 0f
+            play()
         }
+    }
 
     Box(contentAlignment = Alignment.BottomEnd) {
         DisposableEffect(videoUrl) { onDispose { exoPlayer.release() } }
 
         AndroidView(
-            modifier =
-                Modifier
-                    .padding(vertical = 4.dp)
-                    .defaultMinSize(minHeight = 250.dp)
-                    .fillMaxWidth(),
+            modifier = Modifier
+                .padding(vertical = 4.dp)
+                .defaultMinSize(minHeight = 250.dp)
+                .fillMaxWidth(),
             factory = {
                 PlayerView(it).apply {
                     player = exoPlayer
@@ -270,25 +257,21 @@ fun PostVideo(videoUrl: String) {
 }
 
 @Composable
-fun PostVideoControls(
-    isVolumeOff: Boolean,
-    onSoundButtonClick: () -> Unit,
-) {
+fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
     IconButton(
-        modifier =
-            Modifier.drawBehind {
-                drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
-            },
+        modifier = Modifier.drawBehind {
+            drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
+        },
         onClick = onSoundButtonClick,
     ) {
         Icon(
             modifier = Modifier.size(16.dp),
             imageVector =
-                if (isVolumeOff) {
-                    Icons.AutoMirrored.Filled.VolumeOff
-                } else {
-                    Icons.AutoMirrored.Filled.VolumeUp
-                },
+            if (isVolumeOff) {
+                Icons.AutoMirrored.Filled.VolumeOff
+            } else {
+                Icons.AutoMirrored.Filled.VolumeUp
+            },
             contentDescription = "Silent",
             tint = Color.White,
         )
@@ -339,13 +322,16 @@ fun PostActions(
                 label = stringResource(id = R.string.save),
             ) { targetState ->
                 PostActionItem(
-                    icon = if (targetState) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
-                    label =
-                        if (targetState) {
-                            stringResource(R.string.save)
-                        } else {
-                            stringResource(R.string.save)
-                        },
+                    icon = if (targetState) {
+                        Icons.Default.BookmarkAdded
+                    } else {
+                        Icons.Outlined.BookmarkAdd
+                    },
+                    label = if (targetState) {
+                        stringResource(R.string.save)
+                    } else {
+                        stringResource(R.string.save)
+                    },
                     actionDescription = stringResource(R.string.save),
                     onclick = onSaveIconClick,
                 )
@@ -363,20 +349,18 @@ fun PostActionItem(
     onclick: () -> Unit = {},
 ) {
     Row(
-        modifier =
-            modifier
-                .wrapContentHeight()
-                .clickable { onclick() },
+        modifier = modifier
+            .wrapContentHeight()
+            .clickable { onclick() },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            modifier =
-                Modifier
-                    .padding(start = 8.dp)
-                    .padding(vertical = 8.dp),
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .padding(vertical = 8.dp),
             imageVector = icon,
             contentDescription =
-                stringResource(R.string.post_action_content_description, actionDescription),
+            stringResource(R.string.post_action_content_description, actionDescription),
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),

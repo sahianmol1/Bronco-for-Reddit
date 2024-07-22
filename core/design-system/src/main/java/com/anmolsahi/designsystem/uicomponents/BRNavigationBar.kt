@@ -107,18 +107,18 @@ fun BRNavigationBarView(
                     icon = {
                         Icon(
                             imageVector =
-                                if (
-                                    getSelectedBottomNav(currentDestination, bottomNavItems, index)
-                                ) {
-                                    bottomNav.selectedIcon
-                                } else {
-                                    bottomNav.unselectedIcon
-                                },
+                            if (
+                                getSelectedBottomNav(currentDestination, bottomNavItems, index)
+                            ) {
+                                bottomNav.selectedIcon
+                            } else {
+                                bottomNav.unselectedIcon
+                            },
                             contentDescription =
-                                stringResource(
-                                    R.string.bottom_bar_content_description,
-                                    bottomNav.title,
-                                ),
+                            stringResource(
+                                R.string.bottom_bar_content_description,
+                                bottomNav.title,
+                            ),
                         )
                     },
                     label = { Text(text = bottomNav.title) },

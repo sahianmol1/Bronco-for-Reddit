@@ -16,10 +16,7 @@ class SearchRepositoryImpl(
     private val dao: RecentSearchesDao,
     private val service: SearchService,
 ) : SearchRepository {
-    override fun searchReddit(
-        query: String,
-        nextPageKey: String?,
-    ): Flow<List<RedditPost>?> {
+    override fun searchReddit(query: String, nextPageKey: String?): Flow<List<RedditPost>?> {
         return flow {
             if (query.isBlank()) {
                 emit(null)
