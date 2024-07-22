@@ -28,3 +28,11 @@ fun LazyListState.isScrollingUp(): Boolean {
         }
     }.value
 }
+
+suspend fun LazyListState.scrollToTop() {
+    scrollToItem(0)
+}
+
+suspend fun LazyListState.animateScrollToTop() {
+    animateScrollToItem(0)
+}

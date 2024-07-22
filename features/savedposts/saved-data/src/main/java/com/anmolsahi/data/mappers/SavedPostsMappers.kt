@@ -3,7 +3,6 @@ package com.anmolsahi.data.mappers
 import com.anmolsahi.data.local.SavedPostEntity
 import com.anmolsahi.domain.model.SavedPost
 
-
 fun SavedPostEntity.asDomain(): SavedPost =
     SavedPost(
         id = this.id,

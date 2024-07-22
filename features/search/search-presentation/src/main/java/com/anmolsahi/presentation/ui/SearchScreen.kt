@@ -101,7 +101,7 @@ fun SearchScreen(
                 onBack = {
                     viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
                     viewModel.updateSearchQuery("")
-                }
+                },
             ) {
                 SearchBarContentView(
                     uiState = uiState,
@@ -123,7 +123,7 @@ fun SearchScreen(
                     onQuickSearchPostClick = { id, url ->
                         viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
                         onPostClick(id, url)
-                    }
+                    },
                 )
             }
         }
@@ -133,7 +133,7 @@ fun SearchScreen(
                 items(
                     count = searchedData.size,
                     key = { index -> searchedData[index].id },
-                    contentType = { REDDIT_POST }
+                    contentType = { REDDIT_POST },
                 ) { index ->
                     PostComponent(
                         redditPostUiModel = searchedData[index],
@@ -187,13 +187,14 @@ fun SearchBarContentView(
         val quickData = searchedData.take(10)
         LazyColumn {
             item(
-                contentType = { QUICK_RESULTS_HEADER }
+                contentType = { QUICK_RESULTS_HEADER },
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -204,9 +205,10 @@ fun SearchBarContentView(
                         )
 
                         Text(
-                            modifier = Modifier.clickable {
-                                onSeeAllResultsClick()
-                            },
+                            modifier =
+                                Modifier.clickable {
+                                    onSeeAllResultsClick()
+                                },
                             text = stringResource(R.string.see_all_results),
                             fontWeight = FontWeight.Bold,
                             fontSize = 12.sp,
@@ -220,7 +222,7 @@ fun SearchBarContentView(
             items(
                 count = quickData.size,
                 key = { index -> quickData[index].id },
-                contentType = { QUICK_SEARCH_POST }
+                contentType = { QUICK_SEARCH_POST },
             ) { index ->
                 QuickSearchPostComponent(
                     redditPostUiModel = quickData[index],
@@ -229,15 +231,16 @@ fun SearchBarContentView(
             }
 
             item(
-                contentType = { QUICK_RESULTS_FOOTER }
+                contentType = { QUICK_RESULTS_FOOTER },
             ) {
                 HorizontalDivider(
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = 8.dp),
                 )
                 OutlinedButton(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp, horizontal = 16.dp)
-                        .fillMaxWidth(),
+                    modifier =
+                        Modifier
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
+                            .fillMaxWidth(),
                     onClick = onViewAllPostsClick,
                 ) {
                     Text(text = stringResource(R.string.view_all_posts))

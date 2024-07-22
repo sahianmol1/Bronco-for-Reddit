@@ -1,4 +1,4 @@
-package com.anmolsahi.common_ui
+package com.anmolsahi.designsystem
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry

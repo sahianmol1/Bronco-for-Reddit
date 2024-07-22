@@ -7,10 +7,10 @@ internal fun shouldShowRecentSearches(
     searchedValue: String,
     uiState: SearchDataUiModel,
 ): Boolean {
-    return searchedValue.isEmpty()
-            && uiState.recentSearches.isNotEmpty()
-            && !uiState.isLoading
-            && uiState.errorMessage.isNullOrEmpty()
+    return searchedValue.isEmpty() &&
+        uiState.recentSearches.isNotEmpty() &&
+        !uiState.isLoading &&
+        uiState.errorMessage.isNullOrEmpty()
 }
 
 internal fun shouldShowQuickResults(

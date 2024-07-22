@@ -8,20 +8,19 @@ import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class SearchModuleManager
-@Inject
-constructor(
-    private val savePostRepository: SavedPostRepository,
-) : SearchDelegate {
-    override suspend fun savePost(post: RedditPost) {
-        val savedPost = savePostRepository.getSavedPostById(post.id)
+    @Inject
+    constructor(
+        private val savePostRepository: SavedPostRepository,
+    ) : SearchDelegate {
+        override suspend fun savePost(post: RedditPost) {
+            val savedPost = savePostRepository.getSavedPostById(post.id)
 
-        if (savedPost == null) {
-            savePostRepository.insertPost(post.asSavedPost())
-        } else {
-            savePostRepository.deleteSavedPost(post.id)
+            if (savedPost == null) {
+                savePostRepository.insertPost(post.asSavedPost())
+            } else {
+                savePostRepository.deleteSavedPost(post.id)
+            }
         }
-    }
 
-    override suspend fun getSavedPosts(): List<RedditPost> =
-        savePostRepository.getAllSavedPosts().first().map { it.asRedditPost() }
-}
+        override suspend fun getSavedPosts(): List<RedditPost> = savePostRepository.getAllSavedPosts().first().map { it.asRedditPost() }
+    }

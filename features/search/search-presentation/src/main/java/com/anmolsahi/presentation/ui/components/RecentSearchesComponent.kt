@@ -54,41 +54,46 @@ fun RecentSearchesComponent(
             contentType = { "recent_searches_item" },
         ) { index ->
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onItemClick(recentSearches[index]) },
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable { onItemClick(recentSearches[index]) },
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
                     modifier = Modifier.padding(start = 16.dp),
                     imageVector = Icons.Default.History,
-                    contentDescription = stringResource(
-                        R.string.search_item,
-                        recentSearches[index].value
-                    )
+                    contentDescription =
+                        stringResource(
+                            R.string.search_item,
+                            recentSearches[index].value,
+                        ),
                 )
 
                 Text(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp, horizontal = 16.dp),
+                    modifier =
+                        Modifier
+                            .padding(vertical = 8.dp, horizontal = 16.dp),
                     text = recentSearches[index].value,
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
 
                 IconButton(
-                    modifier = Modifier
-                        .padding(end = 8.dp),
-                    onClick = { onDeleteItemClick(recentSearches[index]) }
+                    modifier =
+                        Modifier
+                            .padding(end = 8.dp),
+                    onClick = { onDeleteItemClick(recentSearches[index]) },
                 ) {
                     Icon(
                         modifier = Modifier,
                         imageVector = Icons.Default.Close,
-                        contentDescription = stringResource(
-                            R.string.remove,
-                            recentSearches[index].value
-                        ),
+                        contentDescription =
+                            stringResource(
+                                R.string.remove,
+                                recentSearches[index].value,
+                            ),
                     )
                 }
             }
@@ -100,12 +105,13 @@ fun RecentSearchesComponent(
 @Composable
 private fun RecentSearchesPreview() {
     RecentSearchesComponent(
-        recentSearches = listOf(
-            RecentSearch(0, "cat"),
-            RecentSearch(1, "dog"),
-            RecentSearch(2, "bird"),
-            RecentSearch(3, "funny"),
-        ),
+        recentSearches =
+            listOf(
+                RecentSearch(0, "cat"),
+                RecentSearch(1, "dog"),
+                RecentSearch(2, "bird"),
+                RecentSearch(3, "funny"),
+            ),
         onItemClick = {},
         onDeleteItemClick = {},
     )

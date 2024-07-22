@@ -222,7 +222,7 @@ class HomeRepositoryImpl(
             val redditPost = redditPostDao.getRedditPostById(id = postId)
             redditPostDao.insertRedditPost(redditPostEntity = redditPost.copy(isSaved = !redditPost.isSaved))
             redditPostDao.getRedditPostById(id = postId).isSaved
-        } catch (e: Throwable){
+        } catch (e: Throwable) {
             false
         }
     }

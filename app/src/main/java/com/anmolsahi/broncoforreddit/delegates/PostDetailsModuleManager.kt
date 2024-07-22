@@ -25,8 +25,7 @@ class PostDetailsModuleManager
                 homeRepository.getPostById(postId)
             }
 
-        override suspend fun togglePostSavedStatus(postId: String): Boolean =
-            homeRepository.togglePostSavedStatus(postId)
+        override suspend fun togglePostSavedStatus(postId: String): Boolean = homeRepository.togglePostSavedStatus(postId)
 
         override suspend fun deleteSavedPost(postId: String) = savedPostsRepository.deleteSavedPost(postId)
 

@@ -54,6 +54,5 @@ object RepositoriesModule {
 
     @Singleton
     @Provides
-    fun providePostDetailsRepository(service: PostDetailsService): PostDetailsRepository =
-        PostDetailsRepositoryImpl(service = service)
+    fun providePostDetailsRepository(service: PostDetailsService): PostDetailsRepository = PostDetailsRepositoryImpl(service = service)
 }

@@ -45,9 +45,11 @@ object UseCaseModule {
 
     @ViewModelScoped
     @Provides
-    fun provideSearchRedditUseCase(repository: SearchRepository, delegate: SearchDelegate) =
-        SearchRedditUseCase(
-            searchRepository = repository,
-            searchDelegate = delegate,
-        )
+    fun provideSearchRedditUseCase(
+        repository: SearchRepository,
+        delegate: SearchDelegate,
+    ) = SearchRedditUseCase(
+        searchRepository = repository,
+        searchDelegate = delegate,
+    )
 }

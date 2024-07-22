@@ -17,7 +17,7 @@ fun List<SavedPost>.asUiModel(): List<RedditPostUiModel> {
             videoUrl = it.videoUrl,
             gifUrl = it.gifUrl,
             author = it.author,
-            after = it.after
+            after = it.after,
         )
     }
 }

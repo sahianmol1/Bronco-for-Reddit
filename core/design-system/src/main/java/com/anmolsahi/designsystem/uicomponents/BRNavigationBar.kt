@@ -82,7 +82,7 @@ fun BRNavigationBarView(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination by
-    remember(navBackStackEntry) { mutableStateOf(navBackStackEntry?.destination) }
+        remember(navBackStackEntry) { mutableStateOf(navBackStackEntry?.destination) }
 
     if (currentDestination.isTopLevelDestination()) {
         NavigationBar(modifier = modifier) {
@@ -107,18 +107,18 @@ fun BRNavigationBarView(
                     icon = {
                         Icon(
                             imageVector =
-                            if (
-                                getSelectedBottomNav(currentDestination, bottomNavItems, index)
-                            ) {
-                                bottomNav.selectedIcon
-                            } else {
-                                bottomNav.unselectedIcon
-                            },
+                                if (
+                                    getSelectedBottomNav(currentDestination, bottomNavItems, index)
+                                ) {
+                                    bottomNav.selectedIcon
+                                } else {
+                                    bottomNav.unselectedIcon
+                                },
                             contentDescription =
-                            stringResource(
-                                R.string.bottom_bar_content_description,
-                                bottomNav.title,
-                            ),
+                                stringResource(
+                                    R.string.bottom_bar_content_description,
+                                    bottomNav.title,
+                                ),
                         )
                     },
                     label = { Text(text = bottomNav.title) },

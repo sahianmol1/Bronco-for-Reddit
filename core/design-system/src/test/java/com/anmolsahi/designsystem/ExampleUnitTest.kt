@@ -1,4 +1,4 @@
-package com.anmolsahi.common_ui
+package com.anmolsahi.designsystem
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

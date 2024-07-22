@@ -18,18 +18,19 @@ data class SavedPost(
     val thumbnailUrl: String? = null,
 )
 
-fun SavedPost.asRedditPost() = RedditPost(
-    id = id,
-    subName = subName,
-    title = title,
-    description = description,
-    upVotes = upVotes,
-    comments = comments,
-    imageUrl = imageUrl,
-    postUrl = postUrl,
-    videoUrl = videoUrl,
-    gifUrl = gifUrl,
-    author = author,
-    after = after,
-    thumbnailUrl = thumbnailUrl,
-)
+fun SavedPost.asRedditPost() =
+    RedditPost(
+        id = id,
+        subName = subName,
+        title = title,
+        description = description,
+        upVotes = upVotes,
+        comments = comments,
+        imageUrl = imageUrl,
+        postUrl = postUrl,
+        videoUrl = videoUrl,
+        gifUrl = gifUrl,
+        author = author,
+        after = after,
+        thumbnailUrl = thumbnailUrl,
+    )

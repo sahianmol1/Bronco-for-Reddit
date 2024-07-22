@@ -7,7 +7,6 @@ import com.anmolsahi.designsystem.utils.Destinations
 import com.anmolsahi.presentation.ui.SavedPostsScreen
 
 fun NavGraphBuilder.savedPostsNavGraph(navController: NavHostController) {
-
     composable(
         route = Destinations.SavedScreenDestination.route,
     ) {
@@ -16,9 +15,9 @@ fun NavGraphBuilder.savedPostsNavGraph(navController: NavHostController) {
             onClick = { postId, postUrl ->
                 navController.navigate(
                     Destinations.PostDetailsDestinations.route +
-                            "?post-id=$postId&is-saved-posts-flow=$isSavedPostsFlow&post_url=$postUrl"
+                        "?post-id=$postId&is-saved-posts-flow=$isSavedPostsFlow&post_url=$postUrl",
                 )
-            }
+            },
         )
     }
 }

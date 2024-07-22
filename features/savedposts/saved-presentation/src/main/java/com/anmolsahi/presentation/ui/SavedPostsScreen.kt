@@ -28,13 +28,13 @@ import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 fun SavedPostsScreen(
     modifier: Modifier = Modifier,
     viewModel: SavedPostsViewModel = hiltViewModel(),
-    onClick: (postId: String, postUrl: String) -> Unit = {_, _ -> },
+    onClick: (postId: String, postUrl: String) -> Unit = { _, _ -> },
     onSaveIconClick: (String) -> Unit = {},
 ) {
     val uiState by
-    viewModel.savedPostsUiState.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
-    )
+        viewModel.savedPostsUiState.collectAsStateWithLifecycle(
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
+        )
     val lazyListState = rememberLazyListState()
     var list by remember { mutableStateOf(emptyList<RedditPostUiModel>()) }
     var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
@@ -61,7 +61,7 @@ fun SavedPostsScreen(
             onConfirmButtonClick = {
                 viewModel.deleteSavedPost(selectedPostId)
                 showDeletePostAlertDialog = false
-            }
+            },
         )
     }
 
@@ -75,7 +75,7 @@ fun SavedPostsScreen(
             itemsIndexed(
                 items = list,
                 key = { _, item -> item.id },
-                contentType = { _, _ -> "reddit_post" }
+                contentType = { _, _ -> "reddit_post" },
             ) { _, item ->
                 PostComponent(
                     modifier = Modifier,
@@ -86,7 +86,7 @@ fun SavedPostsScreen(
                     onDeleteIconClick = { redditPostId ->
                         selectedPostId = redditPostId
                         showDeletePostAlertDialog = true
-                    }
+                    },
                 )
             }
         }
@@ -98,7 +98,7 @@ fun SavedPostsScreen(
             errorMessage = uiState.errorMessage.orEmpty(),
             onConfirmButtonClick = {
                 showErrorDialog = false
-            }
+            },
         )
     }
 

@@ -28,118 +28,123 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
-    private val repository: SearchRepository,
-    private val delegate: SearchDelegate,
-    private val searchRedditUseCase: SearchRedditUseCase,
-) : ViewModel() {
+class SearchViewModel
+    @Inject
+    constructor(
+        private val repository: SearchRepository,
+        private val delegate: SearchDelegate,
+        private val searchRedditUseCase: SearchRedditUseCase,
+    ) : ViewModel() {
+        private val _searchDataUiState = MutableStateFlow(SearchDataUiModel())
+        val searchDataUiState: StateFlow<SearchDataUiModel> = _searchDataUiState.asStateFlow()
 
-    private val _searchDataUiState = MutableStateFlow(SearchDataUiModel())
-    val searchDataUiState: StateFlow<SearchDataUiModel> = _searchDataUiState.asStateFlow()
+        private val _searchQuery = MutableStateFlow("")
+        val searchQuery = _searchQuery.asStateFlow()
 
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery = _searchQuery.asStateFlow()
+        private val _searchBarActive = MutableStateFlow(false)
+        val searchBarActive = _searchBarActive.asStateFlow()
 
-    private val _searchBarActive = MutableStateFlow(false)
-    val searchBarActive = _searchBarActive.asStateFlow()
-
-    init {
-        @Suppress("OPT_IN_USAGE")
-        _searchQuery
-            .debounce(500)
-            .distinctUntilChanged()
-            .flowOn(Dispatchers.IO)
-            .onEach { query ->
-                searchReddit(query)
-            }
-            .launchIn(viewModelScope)
-    }
-
-    fun updateSearchQuery(query: String) {
-        _searchQuery.value = query
-        if (_searchQuery.value.isEmpty()) {
-            _searchDataUiState.update { it.copy(searchedData = null) }
-        }
-    }
-
-    fun updateSearchBarActive(active: Boolean) {
-        _searchBarActive.value = active
-    }
-
-    private fun searchReddit(query: String, nextPageKey: String? = null) {
-        searchRedditUseCase(query, nextPageKey)
-            .onStart { _searchDataUiState.update { it.copy(isLoading = true, searchedData = null) } }
-            .onEach { redditPosts ->
-                _searchDataUiState.update {
-                    it.copy(
-                        isLoading = false,
-                        searchedData = redditPosts?.map { post -> post.asUiModel() }
-                    )
+        init {
+            @Suppress("OPT_IN_USAGE")
+            _searchQuery
+                .debounce(500)
+                .distinctUntilChanged()
+                .flowOn(Dispatchers.IO)
+                .onEach { query ->
+                    searchReddit(query)
                 }
-            }
-            .catch { throwable -> handleException(throwable) }
-            .launchIn(viewModelScope)
-    }
-
-    fun getAllRecentSearches() {
-        repository.getRecentSearches()
-            .onStart { _searchDataUiState.update { it.copy(isLoading = true) } }
-            .map { it.reversed() }
-            .onEach { recentSearches ->
-                _searchDataUiState.update {
-                    it.copy(
-                        isLoading = false,
-                        recentSearches = recentSearches,
-                    )
-                }
-            }
-            .catch { throwable -> handleException(throwable) }
-            .launchIn(viewModelScope)
-    }
-
-    fun onDeleteItemClick(recentSearch: RecentSearch) {
-        viewModelScope.launch {
-            repository.deleteRecentSearch(recentSearch)
+                .launchIn(viewModelScope)
         }
-    }
 
-    fun saveRecentSearch(recentSearch: RecentSearch) {
-        val recentSearchValue = recentSearch.value.lowercase().trim()
-        viewModelScope.launch {
-            if (_searchDataUiState.value.recentSearches.any { it.value == recentSearchValue }) {
-                return@launch
+        fun updateSearchQuery(query: String) {
+            _searchQuery.value = query
+            if (_searchQuery.value.isEmpty()) {
+                _searchDataUiState.update { it.copy(searchedData = null) }
             }
-
-            if (recentSearchValue.isEmpty()) {
-                return@launch
-            }
-
-            repository.insertRecentSearch(recentSearch)
         }
-    }
 
-    private fun handleException(throwable: Throwable) {
-        Log.e(SearchViewModel::class.simpleName, throwable.message ?: "Unknown error")
-        _searchDataUiState.update { it.copy(isLoading = false, errorMessage = throwable.message) }
-    }
+        fun updateSearchBarActive(active: Boolean) {
+            _searchBarActive.value = active
+        }
 
-    fun onSaveIconClick(post: RedditPostUiModel) {
-        viewModelScope.launch {
-            _searchDataUiState.update {
-                it.copy(
-                    searchedData = it.searchedData?.map { redditPost ->
-                        if (redditPost.id == post.id) {
-                            redditPost.copy(isSaved = !post.isSaved)
-                        } else {
-                            redditPost
-                        }
+        private fun searchReddit(
+            query: String,
+            nextPageKey: String? = null,
+        ) {
+            searchRedditUseCase(query, nextPageKey)
+                .onStart { _searchDataUiState.update { it.copy(isLoading = true, searchedData = null) } }
+                .onEach { redditPosts ->
+                    _searchDataUiState.update {
+                        it.copy(
+                            isLoading = false,
+                            searchedData = redditPosts?.map { post -> post.asUiModel() },
+                        )
                     }
-                )
+                }
+                .catch { throwable -> handleException(throwable) }
+                .launchIn(viewModelScope)
+        }
+
+        fun getAllRecentSearches() {
+            repository.getRecentSearches()
+                .onStart { _searchDataUiState.update { it.copy(isLoading = true) } }
+                .map { it.reversed() }
+                .onEach { recentSearches ->
+                    _searchDataUiState.update {
+                        it.copy(
+                            isLoading = false,
+                            recentSearches = recentSearches,
+                        )
+                    }
+                }
+                .catch { throwable -> handleException(throwable) }
+                .launchIn(viewModelScope)
+        }
+
+        fun onDeleteItemClick(recentSearch: RecentSearch) {
+            viewModelScope.launch {
+                repository.deleteRecentSearch(recentSearch)
             }
-            delegate.savePost(post.asRedditPost())
+        }
+
+        fun saveRecentSearch(recentSearch: RecentSearch) {
+            val recentSearchValue = recentSearch.value.lowercase().trim()
+            viewModelScope.launch {
+                if (_searchDataUiState.value.recentSearches.any { it.value == recentSearchValue }) {
+                    return@launch
+                }
+
+                if (recentSearchValue.isEmpty()) {
+                    return@launch
+                }
+
+                repository.insertRecentSearch(recentSearch)
+            }
+        }
+
+        private fun handleException(throwable: Throwable) {
+            Log.e(SearchViewModel::class.simpleName, throwable.message ?: "Unknown error")
+            _searchDataUiState.update { it.copy(isLoading = false, errorMessage = throwable.message) }
+        }
+
+        fun onSaveIconClick(post: RedditPostUiModel) {
+            viewModelScope.launch {
+                _searchDataUiState.update {
+                    it.copy(
+                        searchedData =
+                            it.searchedData?.map { redditPost ->
+                                if (redditPost.id == post.id) {
+                                    redditPost.copy(isSaved = !post.isSaved)
+                                } else {
+                                    redditPost
+                                }
+                            },
+                    )
+                }
+                delegate.savePost(post.asRedditPost())
+            }
         }
     }
-}
 
 data class SearchDataUiModel(
     val isLoading: Boolean = false,

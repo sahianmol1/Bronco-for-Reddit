@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecentSearchesDao {
-
     @Upsert
     suspend fun insert(recentSearch: RecentSearchEntity)
 

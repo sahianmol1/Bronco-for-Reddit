@@ -12,7 +12,7 @@ fun NavGraphBuilder.searchNavGraph(navController: NavHostController) {
             onPostClick = { postId, postUrl ->
                 navController.navigate(
                     Destinations.PostDetailsDestinations.route +
-                            "?post-id=$postId&post_url=$postUrl",
+                        "?post-id=$postId&post_url=$postUrl",
                 )
             },
         )
