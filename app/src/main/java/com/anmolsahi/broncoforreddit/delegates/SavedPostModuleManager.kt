@@ -4,9 +4,7 @@ import com.anmolsahi.domain.delegate.SavedPostDelegate
 import com.anmolsahi.domain.repositories.HomeRepository
 import javax.inject.Inject
 
-class SavedPostModuleManager
-    @Inject
-    constructor(
+class SavedPostModuleManager @Inject constructor(
         private val homeRepository: HomeRepository,
     ) : SavedPostDelegate {
         override suspend fun togglePostSavedStatus(postId: String): Boolean {
