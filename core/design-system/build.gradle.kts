@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "com.bestway.designsystem"
+    namespace = "com.anmolsahi.designsystem"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {

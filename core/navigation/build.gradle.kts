@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.bestway.navigation"
+    namespace = "com.anmolsahi.navigation"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {

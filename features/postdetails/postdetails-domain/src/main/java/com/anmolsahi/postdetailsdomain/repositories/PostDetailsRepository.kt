@@ -1,6 +1,6 @@
 package com.anmolsahi.postdetailsdomain.repositories
 
-import com.bestway.domain.models.RedditPost
+import com.anmolsahi.domain.models.RedditPost
 
 interface PostDetailsRepository {
     suspend fun getPostFromNetwork(postUrl: String): RedditPost

@@ -15,11 +15,11 @@ plugins {
 }
 
 android {
-    namespace = "com.bestway.broncoforreddit"
+    namespace = "com.anmolsahi.broncoforreddit"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.bestway.broncoforreddit"
+        applicationId = "com.anmolsahi.broncoforreddit"
         minSdk = libs.versions.min.sdk.get().toInt()
         targetSdk = libs.versions.target.sdk.get().toInt()
         versionCode = 1

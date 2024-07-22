@@ -1,7 +1,7 @@
 package com.anmolsahi.commonui.mappers
 
 import com.anmolsahi.commonui.models.RedditPostUiModel
-import com.bestway.domain.models.RedditPost
+import com.anmolsahi.domain.models.RedditPost
 
 fun RedditPost.asUiModel(): RedditPostUiModel =
     RedditPostUiModel(

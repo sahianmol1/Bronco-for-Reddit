@@ -5,8 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.anmolsahi.designsystem.utils.Destinations
 import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreen
-import com.bestway.designsystem.utils.Destinations
 
 fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
     composable(

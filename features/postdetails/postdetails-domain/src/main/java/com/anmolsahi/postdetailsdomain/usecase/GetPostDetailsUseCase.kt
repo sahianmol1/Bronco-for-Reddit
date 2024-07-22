@@ -1,8 +1,8 @@
 package com.anmolsahi.postdetailsdomain.usecase
 
+import com.anmolsahi.domain.models.RedditPost
 import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 import com.anmolsahi.postdetailsdomain.repositories.PostDetailsRepository
-import com.bestway.domain.models.RedditPost
 
 class GetPostDetailsUseCase(
     private val delegate: PostDetailsDelegate,

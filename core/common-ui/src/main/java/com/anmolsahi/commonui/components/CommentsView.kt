@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.anmolsahi.commonui.R
-import com.bestway.designsystem.theme.BroncoForRedditTheme
+import com.anmolsahi.designsystem.theme.BroncoForRedditTheme
 
 @Composable
 fun CommentsView(modifier: Modifier = Modifier) {

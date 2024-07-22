@@ -20,11 +20,11 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.bestway.broncoforreddit.data.models.** {
+-keep class com.anmolsahi.broncoforreddit.data.models.** {
     <init>();
 }
 
--keep class com.bestway.broncoforreddit.ui.models.** {
+-keep class com.anmolsahi.broncoforreddit.ui.models.** {
     <init>();
 }
 

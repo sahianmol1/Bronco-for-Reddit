@@ -1,6 +1,6 @@
 package com.anmolsahi.postdetailsdomain.delegate
 
-import com.bestway.domain.models.RedditPost
+import com.anmolsahi.domain.models.RedditPost
 
 interface PostDetailsDelegate {
     suspend fun getPostById(

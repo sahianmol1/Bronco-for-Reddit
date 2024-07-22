@@ -30,8 +30,8 @@ import com.anmolsahi.commonui.components.PostActions
 import com.anmolsahi.commonui.components.SubRedditName
 import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
-import com.bestway.designsystem.uicomponents.BRLinearProgressIndicator
-import com.bestway.designsystem.utils.showToast
+import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
+import com.anmolsahi.designsystem.utils.showToast
 import com.anmolsahi.commonui.R as commonUiR
 
 @Composable
