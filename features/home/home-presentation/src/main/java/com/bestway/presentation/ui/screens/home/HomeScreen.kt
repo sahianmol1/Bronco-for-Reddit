@@ -18,11 +18,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.bestway.design_system.ui_components.BRHorizontalPager
-import com.bestway.design_system.ui_components.BRScrollableTabRow
-import com.bestway.design_system.ui_components.HomePage
-import com.bestway.design_system.utils.showToast
-import com.bestway.home_presentation.R
+import com.anmolsahi.homepresentation.R
+import com.bestway.designsystem.uicomponents.BRHorizontalPager
+import com.bestway.designsystem.uicomponents.BRScrollableTabRow
+import com.bestway.designsystem.uicomponents.HomePage
+import com.bestway.designsystem.utils.showToast
 import com.bestway.presentation.ui.components.HomeScreenListings
 
 @OptIn(ExperimentalFoundationApi::class)

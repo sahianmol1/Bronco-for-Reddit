@@ -30,12 +30,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.anmolsahi.common_ui.components.PostDescription
-import com.anmolsahi.common_ui.components.PostImage
-import com.anmolsahi.common_ui.components.PostTitle
-import com.anmolsahi.common_ui.components.SubRedditName
-import com.anmolsahi.common_ui.models.RedditPostUiModel
-import com.bestway.search_presentation.R
+import com.anmolsahi.commonui.components.PostDescription
+import com.anmolsahi.commonui.components.PostImage
+import com.anmolsahi.commonui.components.PostTitle
+import com.anmolsahi.commonui.components.SubRedditName
+import com.anmolsahi.commonui.models.RedditPostUiModel
+import com.anmolsahi.searchpresentation.R
 
 @Composable
 fun QuickSearchPostComponent(
@@ -138,7 +138,7 @@ fun SearchPostActionItem(
             imageVector = icon,
             contentDescription =
             stringResource(
-                com.anmolsahi.common_ui.R.string.post_action_content_description,
+                com.anmolsahi.commonui.R.string.post_action_content_description,
                 actionDescription
             ),
         )

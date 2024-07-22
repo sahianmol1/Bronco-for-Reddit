@@ -24,15 +24,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.anmolsahi.common_ui.R
-import com.anmolsahi.common_ui.components.CommentsView
-import com.anmolsahi.common_ui.components.OriginalPosterName
-import com.anmolsahi.common_ui.components.PostActions
-import com.anmolsahi.common_ui.components.SubRedditName
-import com.anmolsahi.common_ui.utils.DeleteSavedPostAlertDialog
-import com.anmolsahi.common_ui.utils.ErrorDialog
-import com.bestway.design_system.ui_components.BRLinearProgressIndicator
-import com.bestway.design_system.utils.showToast
+import com.anmolsahi.commonui.components.CommentsView
+import com.anmolsahi.commonui.components.OriginalPosterName
+import com.anmolsahi.commonui.components.PostActions
+import com.anmolsahi.commonui.components.SubRedditName
+import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
+import com.anmolsahi.commonui.utils.ErrorDialog
+import com.bestway.designsystem.uicomponents.BRLinearProgressIndicator
+import com.bestway.designsystem.utils.showToast
+import com.anmolsahi.commonui.R as commonUiR
 
 @Composable
 fun PostDetailsScreen(
@@ -134,7 +134,7 @@ fun PostDetailsScreen(
 
             uiState.data?.imageUrl?.let {
                 if (it.endsWith("png") || it.endsWith("jpg")) {
-                    com.anmolsahi.common_ui.components.PostImage(
+                    com.anmolsahi.commonui.components.PostImage(
                         imageUrl =
                         uiState.data
                             ?.imageUrl
@@ -143,7 +143,7 @@ fun PostDetailsScreen(
                 }
                 if (it.contains(".gif")) {
                     uiState.data?.gifUrl?.let {
-                        com.anmolsahi.common_ui.components.PostVideo(
+                        com.anmolsahi.commonui.components.PostVideo(
                             videoUrl =
                             uiState.data
                                 ?.gifUrl
@@ -154,7 +154,7 @@ fun PostDetailsScreen(
             }
 
             uiState.data?.videoUrl?.let { videoUrl ->
-                com.anmolsahi.common_ui.components
+                com.anmolsahi.commonui.components
                     .PostVideo(videoUrl = videoUrl)
             }
 
@@ -171,7 +171,7 @@ fun PostDetailsScreen(
                         isSavedPostsFlow = isSavedPostsFlow,
                     ) { isSaved ->
                         if (isSaved) {
-                            context.showToast(context.getString(R.string.post_saved_success))
+                            context.showToast(context.getString(commonUiR.string.post_saved_success))
                         }
                     }
                 },

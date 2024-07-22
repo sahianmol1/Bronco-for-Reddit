@@ -2,8 +2,8 @@ package com.anmolsahi.postdetailspresentation.postdetails.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anmolsahi.common_ui.mappers.asUiModel
-import com.anmolsahi.common_ui.models.RedditPostUiModel
+import com.anmolsahi.commonui.mappers.asUiModel
+import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 import com.anmolsahi.postdetailsdomain.usecase.DeleteSavedPostUseCase
 import com.anmolsahi.postdetailsdomain.usecase.GetPostDetailsUseCase

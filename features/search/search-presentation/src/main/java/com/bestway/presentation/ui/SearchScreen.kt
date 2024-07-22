@@ -28,11 +28,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.anmolsahi.common_ui.components.PostComponent
-import com.anmolsahi.common_ui.utils.ErrorDialog
-import com.anmolsahi.common_ui.utils.isScrollingUp
-import com.bestway.design_system.ui_components.BRLinearProgressIndicator
-import com.bestway.design_system.ui_components.BRSearchBar
+import com.anmolsahi.commonui.components.PostComponent
+import com.anmolsahi.commonui.utils.ErrorDialog
+import com.anmolsahi.commonui.utils.isScrollingUp
+import com.anmolsahi.searchpresentation.R
+import com.bestway.designsystem.uicomponents.BRLinearProgressIndicator
+import com.bestway.designsystem.uicomponents.BRSearchBar
 import com.bestway.domain.model.RecentSearch
 import com.bestway.presentation.ui.SearchScreenDefaults.QUICK_RESULTS_FOOTER
 import com.bestway.presentation.ui.SearchScreenDefaults.QUICK_RESULTS_HEADER
@@ -42,7 +43,6 @@ import com.bestway.presentation.ui.components.QuickSearchPostComponent
 import com.bestway.presentation.ui.components.RecentSearchesComponent
 import com.bestway.presentation.utils.shouldShowQuickResults
 import com.bestway.presentation.utils.shouldShowRecentSearches
-import com.bestway.search_presentation.R
 
 private object SearchScreenDefaults {
     const val QUICK_RESULTS_HEADER = "quick_results_header"

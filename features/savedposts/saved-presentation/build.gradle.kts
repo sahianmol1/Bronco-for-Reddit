@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "com.bestway.subreddit_presentation"
+    namespace = "com.anmolsahi.subredditpresentation"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {

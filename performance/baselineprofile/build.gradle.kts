@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.baselineprofile"
+    namespace = "com.anmolsahi.baselineprofile"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     compileOptions {

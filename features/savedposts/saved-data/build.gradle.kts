@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "com.bestway.home_presentation"
+    namespace = "com.anmolsahi.homepresentation"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {

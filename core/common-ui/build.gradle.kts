@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "com.anmolsahi.common_ui"
+    namespace = "com.anmolsahi.commonui"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {

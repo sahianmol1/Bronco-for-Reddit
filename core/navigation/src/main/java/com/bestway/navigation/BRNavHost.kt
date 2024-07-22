@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.anmolsahi.postdetailspresentation.postdetails.navigation.postDetailsNavGraph
-import com.bestway.design_system.utils.Destinations.HomeScreenDestination
+import com.bestway.designsystem.utils.Destinations.HomeScreenDestination
 import com.bestway.presentation.navigation.aboutUsNavGraph
 import com.bestway.presentation.navigation.homeNavGraph
 import com.bestway.presentation.navigation.savedPostsNavGraph

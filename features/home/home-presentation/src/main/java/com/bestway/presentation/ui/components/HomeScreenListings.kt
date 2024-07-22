@@ -34,10 +34,10 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.anmolsahi.common_ui.components.PostComponent
-import com.bestway.design_system.ui_components.BRLinearProgressIndicator
-import com.bestway.design_system.utils.slideInFromBottomTransition
-import com.bestway.home_presentation.R
+import com.anmolsahi.commonui.components.PostComponent
+import com.anmolsahi.homepresentation.R
+import com.bestway.designsystem.uicomponents.BRLinearProgressIndicator
+import com.bestway.designsystem.utils.slideInFromBottomTransition
 import com.bestway.presentation.ui.screens.home.PostsUiState
 
 @OptIn(ExperimentalMaterial3Api::class)

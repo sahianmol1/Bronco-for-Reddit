@@ -3,8 +3,8 @@ package com.bestway.presentation.ui.screens.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anmolsahi.common_ui.mappers.asUiModel
-import com.anmolsahi.common_ui.models.RedditPostUiModel
+import com.anmolsahi.commonui.mappers.asUiModel
+import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.bestway.domain.repositories.HomeRepository
 import com.bestway.presentation.delegate.HomeDelegate
 import dagger.hilt.android.lifecycle.HiltViewModel

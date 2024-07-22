@@ -2,7 +2,7 @@ package com.bestway.presentation.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anmolsahi.common_ui.models.RedditPostUiModel
+import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.bestway.domain.repositories.SavedPostRepository
 import com.bestway.domain.usecase.DeleteSavedPostUseCase
 import com.bestway.presentation.utils.asUiModel

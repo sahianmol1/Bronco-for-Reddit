@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "com.bestway.search_data"
+    namespace = "com.anmolsahi.searchdata"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {

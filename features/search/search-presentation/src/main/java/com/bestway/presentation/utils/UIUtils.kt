@@ -1,6 +1,6 @@
 package com.bestway.presentation.utils
 
-import com.anmolsahi.common_ui.models.RedditPostUiModel
+import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.bestway.presentation.ui.SearchDataUiModel
 
 internal fun shouldShowRecentSearches(

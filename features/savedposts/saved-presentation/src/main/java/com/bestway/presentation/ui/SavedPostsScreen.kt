@@ -17,12 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.anmolsahi.common_ui.components.PostComponent
-import com.anmolsahi.common_ui.models.RedditPostUiModel
-import com.anmolsahi.common_ui.utils.DeleteSavedPostAlertDialog
-import com.anmolsahi.common_ui.utils.ErrorDialog
-import com.anmolsahi.common_ui.utils.scrollToTop
-import com.bestway.design_system.ui_components.BRLinearProgressIndicator
+import com.anmolsahi.commonui.components.PostComponent
+import com.anmolsahi.commonui.models.RedditPostUiModel
+import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
+import com.anmolsahi.commonui.utils.ErrorDialog
+import com.anmolsahi.commonui.utils.scrollToTop
+import com.bestway.designsystem.uicomponents.BRLinearProgressIndicator
 
 @Composable
 fun SavedPostsScreen(

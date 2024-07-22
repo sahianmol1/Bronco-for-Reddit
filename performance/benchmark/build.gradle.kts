@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.benchmark"
+    namespace = "com.anmolsahi.benchmark"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     compileOptions {
