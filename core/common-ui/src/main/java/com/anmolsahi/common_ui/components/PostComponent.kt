@@ -76,11 +76,11 @@ fun PostComponent(
 ) {
     Column(
         modifier =
-        modifier
-            .animateContentSize()
-            .clickable { onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty()) }
-            .padding(top = 8.dp)
-            .padding(horizontal = 16.dp),
+            modifier
+                .animateContentSize()
+                .clickable { onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty()) }
+                .padding(top = 8.dp)
+                .padding(horizontal = 16.dp),
     ) {
         SubRedditName(subName = redditPostUiModel.subName)
         OriginalPosterName(opName = redditPostUiModel.author)
@@ -120,9 +120,9 @@ fun PostComponent(
 fun SubRedditName(subName: String) {
     Text(
         modifier =
-        Modifier
-            .clickable {}
-            .padding(top = 8.dp, bottom = 4.dp),
+            Modifier
+                .clickable {}
+                .padding(top = 8.dp, bottom = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.primary,
         text = subName,
@@ -135,9 +135,9 @@ fun SubRedditName(subName: String) {
 fun OriginalPosterName(opName: String) {
     Text(
         modifier =
-        Modifier
-            .clickable {}
-            .padding(vertical = 4.dp),
+            Modifier
+                .clickable {}
+                .padding(vertical = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.primary,
         text = "u/$opName",
@@ -186,10 +186,10 @@ fun PostImage(
         }
         AsyncImage(
             modifier =
-            Modifier
-                .clickable(role = Role.Image) { onImageClick() }
-                .padding(vertical = 4.dp)
-                .fillMaxWidth(),
+                Modifier
+                    .clickable(role = Role.Image) { onImageClick() }
+                    .padding(vertical = 4.dp)
+                    .fillMaxWidth(),
             model = imageUrl,
             contentScale = ContentScale.FillWidth,
             onLoading = { isImageLoading = true },
@@ -229,10 +229,10 @@ fun PostVideo(videoUrl: String) {
 
         AndroidView(
             modifier =
-            Modifier
-                .padding(vertical = 4.dp)
-                .defaultMinSize(minHeight = 250.dp)
-                .fillMaxWidth(),
+                Modifier
+                    .padding(vertical = 4.dp)
+                    .defaultMinSize(minHeight = 250.dp)
+                    .fillMaxWidth(),
             factory = {
                 PlayerView(it).apply {
                     player = exoPlayer
@@ -276,19 +276,19 @@ fun PostVideoControls(
 ) {
     IconButton(
         modifier =
-        Modifier.drawBehind {
-            drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
-        },
+            Modifier.drawBehind {
+                drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
+            },
         onClick = onSoundButtonClick,
     ) {
         Icon(
             modifier = Modifier.size(16.dp),
             imageVector =
-            if (isVolumeOff) {
-                Icons.AutoMirrored.Filled.VolumeOff
-            } else {
-                Icons.AutoMirrored.Filled.VolumeUp
-            },
+                if (isVolumeOff) {
+                    Icons.AutoMirrored.Filled.VolumeOff
+                } else {
+                    Icons.AutoMirrored.Filled.VolumeUp
+                },
             contentDescription = "Silent",
             tint = Color.White,
         )
@@ -341,11 +341,11 @@ fun PostActions(
                 PostActionItem(
                     icon = if (targetState) Icons.Default.BookmarkAdded else Icons.Outlined.BookmarkAdd,
                     label =
-                    if (targetState) {
-                        stringResource(R.string.save)
-                    } else {
-                        stringResource(R.string.save)
-                    },
+                        if (targetState) {
+                            stringResource(R.string.save)
+                        } else {
+                            stringResource(R.string.save)
+                        },
                     actionDescription = stringResource(R.string.save),
                     onclick = onSaveIconClick,
                 )
@@ -364,19 +364,19 @@ fun PostActionItem(
 ) {
     Row(
         modifier =
-        modifier
-            .wrapContentHeight()
-            .clickable { onclick() },
+            modifier
+                .wrapContentHeight()
+                .clickable { onclick() },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             modifier =
-            Modifier
-                .padding(start = 8.dp)
-                .padding(vertical = 8.dp),
+                Modifier
+                    .padding(start = 8.dp)
+                    .padding(vertical = 8.dp),
             imageVector = icon,
             contentDescription =
-            stringResource(R.string.post_action_content_description, actionDescription),
+                stringResource(R.string.post_action_content_description, actionDescription),
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
@@ -392,7 +392,7 @@ fun PostActionItem(
 fun PostPreview() {
     PostComponent(
         redditPostUiModel = RedditPostUiModel(id = "0"),
-        onClick = {_, _ -> },
+        onClick = { _, _ -> },
         onSaveIconClick = {},
     )
 }
