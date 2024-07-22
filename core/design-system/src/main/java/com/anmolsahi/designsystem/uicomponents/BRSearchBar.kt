@@ -44,8 +44,7 @@ fun BRSearchBar(
     )
 
     SearchBar(
-        modifier =
-        modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = searchBarPadding),
         query = query,
@@ -139,8 +138,7 @@ fun BRSearchBar(
         value = value,
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        keyboardActions =
-        KeyboardActions {
+        keyboardActions = KeyboardActions {
             onSearch(value)
             keyboardController?.hide()
         },

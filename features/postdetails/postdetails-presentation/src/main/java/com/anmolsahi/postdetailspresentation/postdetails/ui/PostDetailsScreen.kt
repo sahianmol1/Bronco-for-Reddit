@@ -27,6 +27,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.commonui.components.CommentsView
 import com.anmolsahi.commonui.components.OriginalPosterName
 import com.anmolsahi.commonui.components.PostActions
+import com.anmolsahi.commonui.components.PostImage
+import com.anmolsahi.commonui.components.PostVideo
 import com.anmolsahi.commonui.components.SubRedditName
 import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
@@ -84,8 +86,7 @@ fun PostDetailsScreen(
 
     if (!uiState.isLoading) {
         Column(
-            modifier =
-            modifier
+            modifier = modifier
                 .verticalScroll(scrollState)
                 .fillMaxSize()
                 .statusBarsPadding()
@@ -95,68 +96,37 @@ fun PostDetailsScreen(
             horizontalAlignment = Alignment.Start,
         ) {
             SubRedditName(
-                subName =
-                uiState.data
-                    ?.subName
-                    .orEmpty(),
+                subName = uiState.data?.subName.orEmpty(),
             )
 
             OriginalPosterName(
-                opName =
-                uiState.data
-                    ?.author
-                    .orEmpty(),
+                opName = uiState.data?.author.orEmpty(),
             )
 
-            if (!uiState.data
-                    ?.title
-                    .isNullOrBlank()
-            ) {
-                PostDetailsTitle(
-                    title =
-                    uiState.data
-                        ?.title
-                        .orEmpty(),
-                )
+            if (!uiState.data?.title.isNullOrBlank()) {
+                PostDetailsTitle(title = uiState.data?.title.orEmpty())
             }
 
-            if (!uiState.data
-                    ?.description
-                    .isNullOrBlank()
-            ) {
+            if (!uiState.data?.description.isNullOrBlank()) {
                 PostDetailsDescription(
-                    description =
-                    uiState.data
-                        ?.description
-                        .orEmpty(),
+                    description = uiState.data?.description.orEmpty(),
                 )
             }
 
             uiState.data?.imageUrl?.let {
                 if (it.endsWith("png") || it.endsWith("jpg")) {
-                    com.anmolsahi.commonui.components.PostImage(
-                        imageUrl =
-                        uiState.data
-                            ?.imageUrl
-                            .orEmpty(),
+                    PostImage(
+                        imageUrl = uiState.data?.imageUrl.orEmpty(),
                     )
                 }
                 if (it.contains(".gif")) {
                     uiState.data?.gifUrl?.let {
-                        com.anmolsahi.commonui.components.PostVideo(
-                            videoUrl =
-                            uiState.data
-                                ?.gifUrl
-                                .orEmpty(),
-                        )
+                        PostVideo(videoUrl = uiState.data?.gifUrl.orEmpty())
                     }
                 }
             }
 
-            uiState.data?.videoUrl?.let { videoUrl ->
-                com.anmolsahi.commonui.components
-                    .PostVideo(videoUrl = videoUrl)
-            }
+            uiState.data?.videoUrl?.let { videoUrl -> PostVideo(videoUrl = videoUrl) }
 
             PostActions(
                 modifier = Modifier.padding(top = 8.dp),

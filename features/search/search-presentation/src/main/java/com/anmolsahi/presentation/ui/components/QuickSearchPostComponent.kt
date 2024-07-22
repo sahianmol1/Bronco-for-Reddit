@@ -92,8 +92,7 @@ fun QuickSearchPostComponent(
                                 !redditPostUiModel.gifUrl.isNullOrEmpty()
                             ) {
                                 Icon(
-                                    modifier =
-                                    Modifier
+                                    modifier = Modifier
                                         .padding(4.dp)
                                         .background(
                                             color =

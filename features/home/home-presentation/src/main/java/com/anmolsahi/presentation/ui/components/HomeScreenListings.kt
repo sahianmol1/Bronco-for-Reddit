@@ -90,8 +90,7 @@ fun HomeScreenListings(
                     },
                 ) { index, item ->
                     PostComponent(
-                        modifier =
-                        when (index) {
+                        modifier = when (index) {
                             list.size - 1 -> Modifier.navigationBarsPadding()
                             else -> Modifier
                         },
@@ -116,8 +115,7 @@ fun HomeScreenListings(
         ) {
             var showLogs by rememberSaveable { mutableStateOf(false) }
             Column(
-                modifier =
-                Modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp)
                     .verticalScroll(rememberScrollState()),
@@ -144,8 +142,7 @@ fun HomeScreenListings(
         }
 
         PullToRefreshContainer(
-            modifier =
-            Modifier
+            modifier = Modifier
                 .align(Alignment.TopCenter),
             state = pullRefreshState,
             containerColor =

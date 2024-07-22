@@ -34,30 +34,29 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
 
-    val hotPosts =
-        homeViewModel.hotPosts.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-        )
-    val newPosts =
-        homeViewModel.newPosts.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-        )
-    val topPosts =
-        homeViewModel.topPosts.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-        )
-    val bestPosts =
-        homeViewModel.bestPosts.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-        )
-    val risingPosts =
-        homeViewModel.risingPosts.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-        )
-    val controversialPosts =
-        homeViewModel.controversialPosts.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-        )
+    val hotPosts = homeViewModel.hotPosts.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
+    )
+
+    val newPosts = homeViewModel.newPosts.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
+    )
+
+    val topPosts = homeViewModel.topPosts.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
+    )
+
+    val bestPosts = homeViewModel.bestPosts.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
+    )
+
+    val risingPosts = homeViewModel.risingPosts.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
+    )
+
+    val controversialPosts = homeViewModel.controversialPosts.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
+    )
 
     LaunchedEffect(Unit) {
         if (hotPosts.value.data == null) {
@@ -98,16 +97,14 @@ fun HomeScreen(
         )
     }
 
-    val pagerState =
-        rememberPagerState(
+    val pagerState = rememberPagerState(
             initialPage = 0,
             initialPageOffsetFraction = 0f,
             pageCount = { tabs.size },
         )
 
     Column(
-        modifier =
-        modifier
+        modifier = modifier
             .fillMaxSize()
             .statusBarsPadding(),
     ) {

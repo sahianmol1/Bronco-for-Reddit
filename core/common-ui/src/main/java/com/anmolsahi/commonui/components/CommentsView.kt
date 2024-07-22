@@ -56,8 +56,7 @@ fun UserImage() {
 fun OPBadge() {
     val opBackgroundColor = MaterialTheme.colorScheme.secondary
     Text(
-        modifier =
-        Modifier.clickable {}
+        modifier = Modifier.clickable {}
             .padding(start = 4.dp, end = 8.dp)
             .drawBehind { drawCircle(color = opBackgroundColor) }
             .padding(4.dp),
