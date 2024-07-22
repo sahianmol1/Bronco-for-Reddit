@@ -8,6 +8,8 @@ import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.domain.repositories.HomeRepository
 import com.anmolsahi.presentation.delegate.HomeDelegate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.annotation.concurrent.Immutable
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,8 +19,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.annotation.concurrent.Immutable
-import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel

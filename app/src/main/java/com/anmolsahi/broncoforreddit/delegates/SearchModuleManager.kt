@@ -4,8 +4,8 @@ import com.anmolsahi.domain.delegate.SearchDelegate
 import com.anmolsahi.domain.model.asRedditPost
 import com.anmolsahi.domain.models.RedditPost
 import com.anmolsahi.domain.repositories.SavedPostRepository
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
+import kotlinx.coroutines.flow.first
 
 class SearchModuleManager @Inject constructor(
     private val savePostRepository: SavedPostRepository,
