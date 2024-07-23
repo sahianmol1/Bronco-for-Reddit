@@ -21,9 +21,7 @@ import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
 @HiltViewModel
-class SavedPostsViewModel
-@Inject
-constructor(
+class SavedPostsViewModel @Inject constructor(
     private val repository: SavedPostRepository,
     private val deleteSavedPostUseCase: DeleteSavedPostUseCase,
 ) : ViewModel() {

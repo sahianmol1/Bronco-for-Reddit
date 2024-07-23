@@ -21,9 +21,7 @@ import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel
-@Inject
-constructor(
+class HomeViewModel @Inject constructor(
     private val repository: HomeRepository,
     private val delegate: HomeDelegate,
 ) : ViewModel() {
