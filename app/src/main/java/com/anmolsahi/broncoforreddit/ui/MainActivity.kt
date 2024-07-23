@@ -21,6 +21,5 @@ class MainActivity : ComponentActivity() {
             BroncoForRedditTheme {
                 val navController = rememberNavController()
                 MainScreen(navController = navController)
-            }
-        } }
+            } } }
 }
