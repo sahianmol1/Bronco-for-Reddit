@@ -10,4 +10,7 @@ function exitIfFailed() {
 }
 
 exitIfFailed
+./gradlew clean
+
+exitIfFailed
 ./gradlew ktlintcheck
