@@ -8,9 +8,7 @@ fun List<SavedPost>.asUiModel(): List<RedditPostUiModel> {
         RedditPostUiModel(
             id = it.id,
             subName = it.subName,
-            title = it.title,
-            description = it.description,
-            upVotes = it.upVotes,
+            title = it.title, description = it.description, upVotes = it.upVotes,
             comments = it.comments,
             imageUrl = it.imageUrl,
             postUrl = it.postUrl,
