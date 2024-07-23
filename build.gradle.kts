@@ -15,3 +15,10 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.ktlint) apply false
 }
+
+tasks.register<Copy>("installGitHooks"){
+    from("scripts/pre-commit")
+    into(".git/hooks")
+}
+
+tasks.getByPath(":app:preBuild").dependsOn(":installGitHooks")

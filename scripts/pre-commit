@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Running git pre-commit hook"
+
+function exitIfFailed() {
+    if [ $? -ne 0 ]; then
+        echo "Error: $result"
+        exit 1
+    fi
+}
+
+exitIfFailed
+./gradlew app:ktlintformat
