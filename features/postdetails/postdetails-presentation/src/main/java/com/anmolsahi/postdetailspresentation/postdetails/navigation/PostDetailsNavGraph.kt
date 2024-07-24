@@ -12,7 +12,7 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
     composable(
         route =
         Destinations.PostDetailsDestinations.route +
-            "?post-id={post-id}&is-saved-posts-flow={is-saved-posts-flow}&post_url={post_url}",
+            "?post-id={post-id}&is-from-saved-posts={is-from-saved-posts}&post_url={post_url}",
         arguments =
         listOf(
             navArgument("post-id") {
@@ -20,7 +20,7 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
                 nullable = true
                 defaultValue = null
             },
-            navArgument("is-saved-posts-flow") {
+            navArgument("is-from-saved-posts") {
                 type = NavType.BoolType
                 defaultValue = false
             },
@@ -31,11 +31,11 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
         ),
     ) { navBackStackEntry ->
         val postId = navBackStackEntry.arguments?.getString("post-id")
-        val isSavedPostsFlow = navBackStackEntry.arguments?.getBoolean("is-saved-posts-flow")
+        val isFromSavedPosts = navBackStackEntry.arguments?.getBoolean("is-from-saved-posts")
         val postUrl = navBackStackEntry.arguments?.getString("post_url")
         PostDetailsScreen(
             postId = postId.orEmpty(),
-            isSavedPostsFlow = isSavedPostsFlow ?: false,
+            isFromSavedPosts = isFromSavedPosts ?: false,
             postUrl = postUrl.orEmpty(),
             popBackStack = {
                 navController.popBackStack()

@@ -2,6 +2,7 @@ package com.anmolsahi.postdetailspresentation.postdetails.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anmolsahi.commonui.mappers.asRedditPost
 import com.anmolsahi.commonui.mappers.asUiModel
 import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
@@ -35,37 +36,23 @@ class PostDetailsViewModel @Inject constructor(
         }
     }
 
-    fun getPostDetails(postId: String, postUrl: String, isSavedPostsFlow: Boolean) {
+    fun getPostDetails(postId: String, postUrl: String) {
         viewModelScope.launch(coroutineExceptionHandler) {
             _postDetailsUiState.update { it.copy(isLoading = true) }
 
-            val post =
-                getPostDetailsUseCase(
-                    postId = postId,
-                    isSavedPostsFlow = isSavedPostsFlow,
-                    postUrl = postUrl,
-                ).asUiModel()
+            val post = getPostDetailsUseCase(postId = postId, postUrl = postUrl).asUiModel()
+
             _postDetailsUiState.update {
                 it.copy(isLoading = false, data = post)
             }
         }
     }
 
-    fun onSaveIconClick(
-        postId: String,
-        postUrl: String,
-        isSavedPostsFlow: Boolean,
-        onPostSaved: (Boolean) -> Unit,
-    ) {
+    fun onSaveIconClick(post: RedditPostUiModel?, onPostSaved: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val isPostSaved = delegate.togglePostSavedStatus(postId)
-            delegate.updateSavedPosts(isPostSaved, postId)
-            getPostDetails(
-                postId = postId,
-                isSavedPostsFlow = isSavedPostsFlow,
-                postUrl = postUrl,
-            )
-            onPostSaved(isPostSaved)
+            val isPostSavedAfterToggle = delegate.togglePostSavedStatusInDb(post?.asRedditPost())
+            updatePostSavedUiState(isPostSavedAfterToggle)
+            onPostSaved(isPostSavedAfterToggle)
         }
     }
 
@@ -76,6 +63,16 @@ class PostDetailsViewModel @Inject constructor(
 
         viewModelScope.launch(coroutineExceptionHandler) {
             deleteSavedPostUseCase(postId = postId)
+        }
+    }
+
+    private fun updatePostSavedUiState(isSaved: Boolean) {
+        _postDetailsUiState.update {
+            it.copy(
+                data = it.data?.copy(
+                    isSaved = isSaved,
+                ),
+            )
         }
     }
 }

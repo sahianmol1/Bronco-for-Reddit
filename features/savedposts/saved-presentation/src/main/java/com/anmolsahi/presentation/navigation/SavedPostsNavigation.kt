@@ -15,7 +15,7 @@ fun NavGraphBuilder.savedPostsNavGraph(navController: NavHostController) {
             onClick = { postId, postUrl ->
                 navController.navigate(
                     Destinations.PostDetailsDestinations.route +
-                        "?post-id=$postId&is-saved-posts-flow=$isSavedPostsFlow&post_url=$postUrl",
+                        "?post-id=$postId&is-from-saved-posts=$isSavedPostsFlow&post_url=$postUrl",
                 )
             },
         )

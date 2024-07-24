@@ -40,7 +40,7 @@ import com.anmolsahi.commonui.R as commonUiR
 fun PostDetailsScreen(
     postId: String,
     postUrl: String,
-    isSavedPostsFlow: Boolean,
+    isFromSavedPosts: Boolean,
     modifier: Modifier = Modifier,
     viewModel: PostDetailsViewModel = hiltViewModel(),
     popBackStack: () -> Unit = {},
@@ -56,7 +56,6 @@ fun PostDetailsScreen(
     LaunchedEffect(Unit) {
         viewModel.getPostDetails(
             postId = postId,
-            isSavedPostsFlow = isSavedPostsFlow,
             postUrl = postUrl,
         )
     }
@@ -133,12 +132,10 @@ fun PostDetailsScreen(
                 upVotes = uiState.data?.upVotes ?: 0,
                 comments = uiState.data?.comments ?: 0,
                 isSaved = uiState.data?.isSaved ?: false,
-                shouldShowDeleteIcon = isSavedPostsFlow,
+                shouldShowDeleteIcon = isFromSavedPosts,
                 onSaveIconClick = {
                     viewModel.onSaveIconClick(
-                        postId = uiState.data?.id.orEmpty(),
-                        postUrl = postUrl,
-                        isSavedPostsFlow = isSavedPostsFlow,
+                        post = uiState.data,
                     ) { isSaved ->
                         if (isSaved) {
                             context.showToast(

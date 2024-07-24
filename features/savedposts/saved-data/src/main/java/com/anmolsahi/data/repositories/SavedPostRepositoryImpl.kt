@@ -19,9 +19,26 @@ class SavedPostRepositoryImpl(
         dao.insertPost(post.fromDomain())
     }
 
-    override suspend fun getSavedPostById(id: String): SavedPost? = dao.getSavedPostById(
-        id = id,
-    )?.asDomain()
+    override suspend fun getSavedPostById(id: String): SavedPost? {
+        return try {
+            dao.getSavedPostById(id)?.asDomain()
+        } catch (e: Throwable) {
+            null
+        }
+    }
 
     override suspend fun deleteSavedPost(id: String) = dao.deleteSavedPost(id)
+
+    override suspend fun togglePostSavedStatusInDb(post: SavedPost?): Boolean {
+        post?.let {
+            val postFromDb = getSavedPostById(post.id)
+            return if (postFromDb != null) {
+                deleteSavedPost(postFromDb.id)
+                false
+            } else {
+                insertPost(post)
+                true
+            }
+        } ?: return false
+    }
 }

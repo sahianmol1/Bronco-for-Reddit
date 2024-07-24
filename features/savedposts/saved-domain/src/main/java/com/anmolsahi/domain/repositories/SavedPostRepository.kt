@@ -11,4 +11,6 @@ interface SavedPostRepository {
     suspend fun getSavedPostById(id: String): SavedPost?
 
     suspend fun deleteSavedPost(id: String)
+
+    suspend fun togglePostSavedStatusInDb(post: SavedPost?): Boolean
 }

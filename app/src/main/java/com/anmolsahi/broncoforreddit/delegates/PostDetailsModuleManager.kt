@@ -13,12 +13,9 @@ class PostDetailsModuleManager @Inject constructor(
     private val savedPostsRepository: SavedPostRepository,
     private val homeDelegate: HomeDelegate,
 ) : PostDetailsDelegate {
-    override suspend fun getPostById(postId: String, isSavedPostsFlow: Boolean): RedditPost? =
-        if (isSavedPostsFlow) {
-            savedPostsRepository.getSavedPostById(postId)?.toRedditPost()
-        } else {
-            homeRepository.getPostById(postId)
-        }
+    override suspend fun getPostById(postId: String): RedditPost? =
+        savedPostsRepository.getSavedPostById(postId)?.toRedditPost()
+            ?: homeRepository.getPostById(postId)
 
     override suspend fun togglePostSavedStatus(postId: String): Boolean =
         homeRepository.togglePostSavedStatus(postId)
@@ -28,6 +25,16 @@ class PostDetailsModuleManager @Inject constructor(
 
     override suspend fun updateSavedPosts(shouldSavePost: Boolean, postId: String) {
         homeDelegate.updateSavedPosts(shouldSavePost, postId)
+    }
+
+    override suspend fun togglePostSavedStatusInDb(post: RedditPost?): Boolean {
+        // try to update the post saved status in the home database
+        // It will handle the required exceptions if the post is not available in the home database,
+        // For example, if the post details were reached from Search Posts screen, this will fail and handle the exception internally
+        homeRepository.togglePostSavedStatus(post?.id.orEmpty())
+
+        // Toggle the post saved status in the saved posts database
+        return savedPostsRepository.togglePostSavedStatusInDb(post?.asSavedPost())
     }
 
     private fun SavedPost.toRedditPost(): RedditPost = RedditPost(
