@@ -14,7 +14,7 @@ class PostDetailsModuleManager @Inject constructor(
     private val homeDelegate: HomeDelegate,
 ) : PostDetailsDelegate {
     override suspend fun getPostById(postId: String): RedditPost? =
-        savedPostsRepository.getSavedPostById(postId)?.toRedditPost()
+        savedPostsRepository.getSavedPostById(postId)?.toRedditPost()?.copy(isSaved = true)
             ?: homeRepository.getPostById(postId)
 
     override suspend fun togglePostSavedStatus(postId: String): Boolean =
