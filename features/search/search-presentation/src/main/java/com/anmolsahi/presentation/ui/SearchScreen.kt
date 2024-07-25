@@ -1,5 +1,6 @@
 package com.anmolsahi.presentation.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.commonui.utils.isScrollingUp
+import com.anmolsahi.commonui.utils.scrollToTop
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.designsystem.uicomponents.BRSearchBar
 import com.anmolsahi.domain.model.RecentSearch
@@ -74,14 +76,18 @@ fun SearchScreen(
         }
     }
 
-    // TODO: Back Handler not working
-//    BackHandler(searchBarActive) {
-//        if (searchedValue.isNotEmpty()) {
-//            viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
-//        }
-//        viewModel.updateSearchQuery("")
-//        searchBarActive = false
-//    }
+    LaunchedEffect(uiState.isLoading) {
+        if (uiState.isLoading && uiState.searchedData.isNullOrEmpty()) {
+            lazyListState.scrollToTop()
+        }
+    }
+
+    if (searchBarActive) {
+        BackHandler {
+            viewModel.onBackClick(searchedValue)
+            viewModel.updateSearchBarActive(false)
+        }
+    }
 
     Column {
         AnimatedVisibility(lazyListState.isScrollingUp()) {
@@ -99,8 +105,7 @@ fun SearchScreen(
                     viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
                 },
                 onBack = {
-                    viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
-                    viewModel.updateSearchQuery("")
+                    viewModel.onBackClick(searchedValue)
                 },
             ) {
                 SearchBarContentView(

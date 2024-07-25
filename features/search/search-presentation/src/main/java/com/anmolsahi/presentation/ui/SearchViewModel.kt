@@ -136,6 +136,11 @@ constructor(
         }
     }
 
+    fun onBackClick(searchedValue: String) {
+        saveRecentSearch(RecentSearch(value = searchedValue))
+        updateSearchQuery("")
+    }
+
     fun onSaveIconClick(post: RedditPostUiModel) {
         viewModelScope.launch {
             _searchDataUiState.update {

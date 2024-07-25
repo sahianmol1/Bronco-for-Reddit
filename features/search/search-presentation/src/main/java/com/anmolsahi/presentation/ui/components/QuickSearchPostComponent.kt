@@ -86,7 +86,15 @@ fun QuickSearchPostComponent(
                                 .weight(1f),
                             contentAlignment = Alignment.BottomStart,
                         ) {
-                            PostImage(imageUrl = imageUrl)
+                            PostImage(
+                                imageUrl = imageUrl,
+                                onImageClick = {
+                                    onPostClick(
+                                        redditPostUiModel.id,
+                                        redditPostUiModel.postUrl.orEmpty(),
+                                    )
+                                },
+                            )
 
                             if (!redditPostUiModel.videoUrl.isNullOrEmpty() ||
                                 !redditPostUiModel.gifUrl.isNullOrEmpty()
