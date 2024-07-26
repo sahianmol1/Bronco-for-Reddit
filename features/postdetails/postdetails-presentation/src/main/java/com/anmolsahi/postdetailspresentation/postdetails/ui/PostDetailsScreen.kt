@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.commonui.components.CommentsView
@@ -115,17 +116,26 @@ fun PostDetailsScreen(
             uiState.data?.imageUrl?.let {
                 if (it.endsWith("png") || it.endsWith("jpg")) {
                     PostImage(
+                        modifier = Modifier.zIndex(1f),
                         imageUrl = uiState.data?.imageUrl.orEmpty(),
                     )
                 }
                 if (it.contains(".gif")) {
                     uiState.data?.gifUrl?.let {
-                        PostVideo(videoUrl = uiState.data?.gifUrl.orEmpty())
+                        PostVideo(
+                            modifier = Modifier.zIndex(1f),
+                            videoUrl = uiState.data?.gifUrl.orEmpty(),
+                        )
                     }
                 }
             }
 
-            uiState.data?.videoUrl?.let { videoUrl -> PostVideo(videoUrl = videoUrl) }
+            uiState.data?.videoUrl?.let { videoUrl ->
+                PostVideo(
+                    modifier = Modifier.zIndex(1f),
+                    videoUrl = videoUrl,
+                )
+            }
 
             PostActions(
                 modifier = Modifier.padding(top = 8.dp),

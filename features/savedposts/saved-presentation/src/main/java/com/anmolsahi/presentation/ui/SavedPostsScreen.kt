@@ -1,5 +1,6 @@
 package com.anmolsahi.presentation.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.statusBars
@@ -24,6 +25,7 @@ import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.commonui.utils.scrollToTop
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SavedPostsScreen(
     modifier: Modifier = Modifier,
@@ -78,7 +80,8 @@ fun SavedPostsScreen(
                 contentType = { _, _ -> "reddit_post" },
             ) { _, item ->
                 PostComponent(
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .animateItemPlacement(),
                     redditPostUiModel = item,
                     onClick = onClick,
                     onSaveIconClick = onSaveIconClick,

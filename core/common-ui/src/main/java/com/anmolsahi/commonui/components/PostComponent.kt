@@ -100,6 +100,8 @@ fun PostComponent(
         redditPostUiModel.imageUrl?.let {
             if (it.endsWith("png") || it.endsWith("jpg")) {
                 PostImage(
+                    modifier = Modifier
+                        .zIndex(1f),
                     imageUrl = redditPostUiModel.imageUrl,
                     onImageClick = {
                         onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty())
@@ -107,10 +109,15 @@ fun PostComponent(
                 )
             }
             if (it.contains(".gif")) {
-                redditPostUiModel.gifUrl?.let { PostVideo(videoUrl = redditPostUiModel.gifUrl) }
+                redditPostUiModel.gifUrl?.let {
+                    PostVideo(
+                        modifier = Modifier.zIndex(1f),
+                        videoUrl = redditPostUiModel.gifUrl,
+                    )
+                }
             }
         }
-        redditPostUiModel.videoUrl?.let { PostVideo(videoUrl = it) }
+        redditPostUiModel.videoUrl?.let { PostVideo(modifier = Modifier.zIndex(1f), videoUrl = it) }
         PostActions(
             upVotes = redditPostUiModel.upVotes,
             comments = redditPostUiModel.comments,
@@ -203,7 +210,6 @@ fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () 
                 .clickable(role = Role.Image) {
                     onImageClick()
                 }
-                .zIndex(1f)
                 .padding(vertical = 4.dp)
                 .fillMaxWidth()
                 .graphicsLayer {
@@ -235,7 +241,7 @@ fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () 
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
-fun PostVideo(videoUrl: String) {
+fun PostVideo(videoUrl: String, modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     val lifecycleEvent = rememberLifecycleEvent()
@@ -245,7 +251,7 @@ fun PostVideo(videoUrl: String) {
     var scale by remember { mutableFloatStateOf(1f) }
     var offset by remember { mutableStateOf(Offset.Zero) }
 
-    val transformableState = rememberTransformableState { zoomChange, panChange, rotationChange ->
+    val transformableState = rememberTransformableState { zoomChange, panChange, _ ->
         scale = (scale * zoomChange).coerceIn(0.5f, 5f)
         offset += panChange
     }
@@ -267,7 +273,7 @@ fun PostVideo(videoUrl: String) {
         }
     }
 
-    Box(contentAlignment = Alignment.BottomEnd) {
+    Box(modifier = modifier, contentAlignment = Alignment.BottomEnd) {
         DisposableEffect(videoUrl) { onDispose { exoPlayer.release() } }
 
         AndroidView(
@@ -310,17 +316,19 @@ fun PostVideo(videoUrl: String) {
             },
         )
 
-        PostVideoControls(
-            isVolumeOff = isVolumeOff,
-            onSoundButtonClick = {
-                isVolumeOff = !isVolumeOff
-                if (isVolumeOff) {
-                    exoPlayer.volume = 0f
-                } else {
-                    exoPlayer.volume = 1f
-                }
-            },
-        )
+        if (scale == 1f && offset == Offset.Zero) {
+            PostVideoControls(
+                isVolumeOff = isVolumeOff,
+                onSoundButtonClick = {
+                    isVolumeOff = !isVolumeOff
+                    if (isVolumeOff) {
+                        exoPlayer.volume = 0f
+                    } else {
+                        exoPlayer.volume = 1f
+                    }
+                },
+            )
+        }
     }
 }
 
