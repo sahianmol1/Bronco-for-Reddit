@@ -7,7 +7,10 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.rememberTransformableState
+import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,7 +36,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -41,7 +46,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -55,6 +62,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.Lifecycle
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
@@ -165,10 +173,26 @@ fun PostDescription(description: String, maxLines: Int = 3) {
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () -> Unit = {}) {
     var isImageLoading by rememberSaveable { mutableStateOf(false) }
     var isImageLoadingError by rememberSaveable { mutableStateOf(false) }
+
+    var scale by remember { mutableFloatStateOf(1f) }
+    var offset by remember { mutableStateOf(Offset.Zero) }
+
+    val transformableState = rememberTransformableState { zoomChange, panChange, rotationChange ->
+        scale = (scale * zoomChange).coerceIn(0.5f, 5f)
+        offset += panChange
+    }
+
+    LaunchedEffect(transformableState.isTransformInProgress) {
+        if (!transformableState.isTransformInProgress) {
+            scale = 1f
+            offset = Offset.Zero
+        }
+    }
 
     Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         if (isImageLoading) {
@@ -176,15 +200,31 @@ fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () 
         }
         AsyncImage(
             modifier = Modifier
-                .clickable(role = Role.Image) { onImageClick() }
+                .clickable(role = Role.Image) {
+                    onImageClick()
+                }
+                .zIndex(1f)
                 .padding(vertical = 4.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                    translationX = offset.x
+                    translationY = offset.y
+                }
+                .transformable(
+                    state = transformableState,
+                    lockRotationOnZoomPan = false,
+                    canPan = { currentOffset ->
+                        currentOffset == Offset.Zero
+                    },
+                ),
             model = imageUrl,
             contentScale = ContentScale.FillWidth,
             onLoading = { isImageLoading = true },
             onSuccess = { isImageLoading = false },
             onError = {
-                // Fix this and use a proper error image
+                // TODO: Fix this and use a proper error image
                 isImageLoading = false
                 isImageLoadingError = true
             },
@@ -194,13 +234,28 @@ fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () 
 }
 
 @Composable
-@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 fun PostVideo(videoUrl: String) {
     val context = LocalContext.current
 
     val lifecycleEvent = rememberLifecycleEvent()
 
     var isVolumeOff by rememberSaveable { mutableStateOf(true) }
+
+    var scale by remember { mutableFloatStateOf(1f) }
+    var offset by remember { mutableStateOf(Offset.Zero) }
+
+    val transformableState = rememberTransformableState { zoomChange, panChange, rotationChange ->
+        scale = (scale * zoomChange).coerceIn(0.5f, 5f)
+        offset += panChange
+    }
+
+    LaunchedEffect(transformableState.isTransformInProgress) {
+        if (!transformableState.isTransformInProgress) {
+            scale = 1f
+            offset = Offset.Zero
+        }
+    }
 
     val exoPlayer = remember {
         ExoPlayer.Builder(context).build().apply {
@@ -219,7 +274,20 @@ fun PostVideo(videoUrl: String) {
             modifier = Modifier
                 .padding(vertical = 4.dp)
                 .defaultMinSize(minHeight = 250.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                    translationX = offset.x
+                    translationY = offset.y
+                }
+                .transformable(
+                    state = transformableState,
+                    lockRotationOnZoomPan = false,
+                    canPan = { currentOffset ->
+                        currentOffset == Offset.Zero
+                    },
+                ),
             factory = {
                 PlayerView(it).apply {
                     player = exoPlayer
