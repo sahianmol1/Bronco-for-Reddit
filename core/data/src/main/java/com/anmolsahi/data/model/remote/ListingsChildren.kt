@@ -1,5 +1,6 @@
 package com.anmolsahi.data.model.remote
 
+import com.anmolsahi.data.serializer.RepliesDeserializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -35,6 +36,9 @@ data class ChildrenData(
     val author: String? = null,
     @SerialName("thumbnail")
     val thumbnailUrl: String? = null,
+    @SerialName("replies")
+    @Serializable(with = RepliesDeserializer::class)
+    val replies: List<ListingsResponse>? = null,
 )
 
 @Serializable

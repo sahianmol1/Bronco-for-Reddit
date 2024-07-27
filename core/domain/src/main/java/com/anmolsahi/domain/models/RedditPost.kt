@@ -15,4 +15,5 @@ data class RedditPost(
     val after: String? = null,
     val isSaved: Boolean = false,
     val thumbnailUrl: String? = null,
+    val replies: List<RedditPost>? = null,
 )

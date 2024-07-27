@@ -3,7 +3,7 @@ package com.anmolsahi.data
 import com.anmolsahi.data.local.RecentSearchesDao
 import com.anmolsahi.data.mapper.asDomain
 import com.anmolsahi.data.mapper.asEntity
-import com.anmolsahi.data.mappers.asRedditPostsList
+import com.anmolsahi.data.mappers.asDomain
 import com.anmolsahi.data.remote.SearchService
 import com.anmolsahi.domain.model.RecentSearch
 import com.anmolsahi.domain.models.RedditPost
@@ -21,7 +21,7 @@ class SearchRepositoryImpl(
             if (query.isBlank()) {
                 emit(null)
             } else {
-                emit(service.searchReddit(query, nextPageKey).getOrThrow().asRedditPostsList())
+                emit(service.searchReddit(query, nextPageKey).getOrThrow().asDomain())
             }
         }
     }

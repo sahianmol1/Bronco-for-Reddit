@@ -9,6 +9,6 @@ class PostDetailsService(
     private val client: HttpClient,
 ) {
     suspend fun getPost(postUrl: String): Result<List<ListingsResponse>> {
-        return client.getSafeResponse("$BASE_URL$postUrl.json")
+        return client.getSafeResponse("$BASE_URL$postUrl.json?raw_json=1")
     }
 }
