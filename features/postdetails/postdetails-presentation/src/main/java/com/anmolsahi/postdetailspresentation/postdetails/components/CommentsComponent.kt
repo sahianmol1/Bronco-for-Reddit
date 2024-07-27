@@ -49,7 +49,7 @@ fun CommentsComponent(commentDetails: RedditPostUiModel, modifier: Modifier = Mo
                         DEFAULT_MAX_LINES
                     }
                 }
-                .padding(top = 16.dp),
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 UserImage()
