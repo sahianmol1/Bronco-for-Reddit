@@ -1,5 +1,6 @@
 package com.anmolsahi.postdetailspresentation.postdetails.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -25,17 +30,33 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.anmolsahi.commonui.R
 import com.anmolsahi.commonui.models.RedditPostUiModel
+import com.anmolsahi.postdetailspresentation.postdetails.components.CommentsComponentDefaults.DEFAULT_MAX_LINES
+
+object CommentsComponentDefaults {
+    const val DEFAULT_MAX_LINES = 3
+}
 
 @Composable
 fun CommentsComponent(commentDetails: RedditPostUiModel, modifier: Modifier = Modifier) {
+    var maxLines by rememberSaveable { mutableIntStateOf(DEFAULT_MAX_LINES) }
     if (!commentDetails.author.contains("mod", true)) {
-        Column(modifier = modifier.padding(top = 16.dp)) {
+        Column(
+            modifier = modifier
+                .clickable {
+                    maxLines = if (maxLines == DEFAULT_MAX_LINES) {
+                        Int.MAX_VALUE
+                    } else {
+                        DEFAULT_MAX_LINES
+                    }
+                }
+                .padding(top = 16.dp),
+        ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 UserImage()
                 OPBadge()
                 UserName(commentDetails.author)
             }
-            CommentText(commentDetails.body.orEmpty())
+            CommentText(text = commentDetails.body.orEmpty(), maxLines = maxLines)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 CommentUpVotes(count = commentDetails.upVotes)
                 if (commentDetails.replies?.isNotEmpty() == true) {
@@ -83,8 +104,15 @@ fun UserName(authorName: String) {
 }
 
 @Composable
-fun CommentText(text: String) {
-    Text(modifier = Modifier.padding(top = 8.dp), text = text)
+fun CommentText(text: String, maxLines: Int) {
+    Text(
+        modifier = Modifier
+            .padding(top = 8.dp)
+            .animateContentSize(),
+        text = text,
+        maxLines = maxLines,
+        overflow = TextOverflow.Ellipsis,
+    )
 }
 
 @Composable
