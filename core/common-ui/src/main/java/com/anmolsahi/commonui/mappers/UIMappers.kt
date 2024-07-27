@@ -18,9 +18,11 @@ fun RedditPost.asUiModel(): RedditPostUiModel = RedditPostUiModel(
     after = this.after,
     isSaved = this.isSaved,
     thumbnailUrl = this.thumbnailUrl,
+    replies = this.replies?.map { it.map { post -> post.asUiModel() } },
+    body = this.body,
 )
 
-fun RedditPostUiModel.asRedditPost() = RedditPost(
+fun RedditPostUiModel.asDomain() = RedditPost(
     id = this.id,
     subName = this.subName,
     title = this.title,
@@ -35,4 +37,5 @@ fun RedditPostUiModel.asRedditPost() = RedditPost(
     after = this.after,
     isSaved = this.isSaved,
     thumbnailUrl = this.thumbnailUrl,
+    body = this.body,
 )

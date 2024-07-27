@@ -20,4 +20,6 @@ data class RedditPostUiModel(
     val after: String? = null,
     val isSaved: Boolean = false,
     val thumbnailUrl: String? = null,
+    val replies: List<List<RedditPostUiModel>>? = null,
+    val body: String? = null,
 )

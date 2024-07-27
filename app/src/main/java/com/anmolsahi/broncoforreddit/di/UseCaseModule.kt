@@ -8,6 +8,7 @@ import com.anmolsahi.domain.usecase.DeleteSavedPostUseCase
 import com.anmolsahi.domain.usecase.SearchRedditUseCase
 import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 import com.anmolsahi.postdetailsdomain.repositories.PostDetailsRepository
+import com.anmolsahi.postdetailsdomain.usecase.GetPostCommentsUseCase
 import com.anmolsahi.postdetailsdomain.usecase.GetPostDetailsUseCase
 import dagger.Module
 import dagger.Provides
@@ -42,6 +43,13 @@ object UseCaseModule {
         delegate: PostDetailsDelegate,
         repository: PostDetailsRepository,
     ) = GetPostDetailsUseCase(delegate, repository)
+
+    @ViewModelScoped
+    @Provides
+    fun provideGetPostCommentsUseCase(
+        delegate: PostDetailsDelegate,
+        repository: PostDetailsRepository,
+    ) = GetPostCommentsUseCase(delegate, repository)
 
     @ViewModelScoped
     @Provides

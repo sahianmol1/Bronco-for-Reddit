@@ -2,11 +2,12 @@ package com.anmolsahi.postdetailspresentation.postdetails.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anmolsahi.commonui.mappers.asRedditPost
+import com.anmolsahi.commonui.mappers.asDomain
 import com.anmolsahi.commonui.mappers.asUiModel
 import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 import com.anmolsahi.postdetailsdomain.usecase.DeleteSavedPostUseCase
+import com.anmolsahi.postdetailsdomain.usecase.GetPostCommentsUseCase
 import com.anmolsahi.postdetailsdomain.usecase.GetPostDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -22,6 +23,7 @@ class PostDetailsViewModel @Inject constructor(
     private val delegate: PostDetailsDelegate,
     private val deleteSavedPostUseCase: DeleteSavedPostUseCase,
     private val getPostDetailsUseCase: GetPostDetailsUseCase,
+    private val getPostCommentsUseCase: GetPostCommentsUseCase,
 ) : ViewModel() {
     private val _postDetailsUiState: MutableStateFlow<PostDetailsUiState> =
         MutableStateFlow(PostDetailsUiState())
@@ -48,9 +50,24 @@ class PostDetailsViewModel @Inject constructor(
         }
     }
 
+    fun getPostComments(postId: String, postUrl: String) {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            _postDetailsUiState.update { it.copy(isCommentsLoading = true) }
+
+            val comments = getPostCommentsUseCase(
+                postId = postId,
+                postUrl = postUrl,
+            ).map { it.asUiModel() }
+
+            _postDetailsUiState.update {
+                it.copy(isCommentsLoading = false, postComments = comments)
+            }
+        }
+    }
+
     fun onSaveIconClick(post: RedditPostUiModel?, onPostSaved: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val isPostSavedAfterToggle = delegate.togglePostSavedStatusInDb(post?.asRedditPost())
+            val isPostSavedAfterToggle = delegate.togglePostSavedStatusInDb(post?.asDomain())
             updatePostSavedUiState(isPostSavedAfterToggle)
             onPostSaved(isPostSavedAfterToggle)
         }
@@ -79,6 +96,8 @@ class PostDetailsViewModel @Inject constructor(
 
 data class PostDetailsUiState(
     val data: RedditPostUiModel? = null,
+    val postComments: List<RedditPostUiModel>? = null,
     val isLoading: Boolean = false,
+    val isCommentsLoading: Boolean = false,
     val error: String? = null,
 )

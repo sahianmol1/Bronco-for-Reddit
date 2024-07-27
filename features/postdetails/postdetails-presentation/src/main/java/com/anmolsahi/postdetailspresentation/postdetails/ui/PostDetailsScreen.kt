@@ -1,13 +1,12 @@
 package com.anmolsahi.postdetailspresentation.postdetails.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -15,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -25,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.anmolsahi.commonui.components.CommentsView
 import com.anmolsahi.commonui.components.OriginalPosterName
 import com.anmolsahi.commonui.components.PostActions
 import com.anmolsahi.commonui.components.PostImage
@@ -35,6 +33,7 @@ import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.designsystem.utils.showToast
+import com.anmolsahi.postdetailspresentation.postdetails.components.CommentsComponent
 import com.anmolsahi.commonui.R as commonUiR
 
 @Composable
@@ -47,15 +46,22 @@ fun PostDetailsScreen(
     popBackStack: () -> Unit = {},
 ) {
     val context = LocalContext.current
-    val scrollState = rememberScrollState()
     val uiState by viewModel.postDetailsUiState.collectAsStateWithLifecycle(
         lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
     )
     var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
     var showErrorDialog by rememberSaveable { mutableStateOf(false) }
+    val comments by remember(uiState) { mutableStateOf(uiState.postComments.orEmpty()) }
 
     LaunchedEffect(Unit) {
         viewModel.getPostDetails(
+            postId = postId,
+            postUrl = postUrl,
+        )
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.getPostComments(
             postId = postId,
             postUrl = postUrl,
         )
@@ -85,99 +91,121 @@ fun PostDetailsScreen(
     }
 
     if (!uiState.isLoading) {
-        Column(
+        LazyColumn(
             modifier = modifier
-                .verticalScroll(scrollState)
                 .fillMaxSize()
-                .statusBarsPadding()
-                .navigationBarsPadding()
                 .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start,
+            contentPadding = WindowInsets.systemBars.asPaddingValues(),
         ) {
-            SubRedditName(
-                subName = uiState.data?.subName.orEmpty(),
-            )
-
-            OriginalPosterName(
-                opName = uiState.data?.author.orEmpty(),
-            )
-
-            if (!uiState.data?.title.isNullOrBlank()) {
-                PostDetailsTitle(title = uiState.data?.title.orEmpty())
-            }
-
-            if (!uiState.data?.description.isNullOrBlank()) {
-                PostDetailsDescription(
-                    description = uiState.data?.description.orEmpty(),
+            item {
+                SubRedditName(
+                    subName = uiState.data?.subName.orEmpty(),
                 )
-            }
 
-            uiState.data?.imageUrl?.let {
-                if (it.endsWith("png") || it.endsWith("jpg")) {
-                    PostImage(
-                        modifier = Modifier.zIndex(1f),
-                        imageUrl = uiState.data?.imageUrl.orEmpty(),
+                OriginalPosterName(
+                    opName = uiState.data?.author.orEmpty(),
+                )
+
+                if (!uiState.data?.title.isNullOrBlank()) {
+                    PostDetailsTitle(title = uiState.data?.title.orEmpty())
+                }
+
+                if (!uiState.data?.description.isNullOrBlank()) {
+                    PostDetailsDescription(
+                        description = uiState.data?.description.orEmpty(),
                     )
                 }
-                if (it.contains(".gif")) {
-                    uiState.data?.gifUrl?.let {
-                        PostVideo(
+
+                uiState.data?.imageUrl?.let {
+                    if (it.endsWith("png") || it.endsWith("jpg")) {
+                        PostImage(
                             modifier = Modifier.zIndex(1f),
-                            videoUrl = uiState.data?.gifUrl.orEmpty(),
+                            imageUrl = uiState.data?.imageUrl.orEmpty(),
                         )
                     }
-                }
-            }
-
-            uiState.data?.videoUrl?.let { videoUrl ->
-                PostVideo(
-                    modifier = Modifier.zIndex(1f),
-                    videoUrl = videoUrl,
-                )
-            }
-
-            PostActions(
-                modifier = Modifier.padding(top = 8.dp),
-                upVotes = uiState.data?.upVotes ?: 0,
-                comments = uiState.data?.comments ?: 0,
-                isSaved = uiState.data?.isSaved ?: false,
-                shouldShowDeleteIcon = isFromSavedPosts,
-                onSaveIconClick = {
-                    viewModel.onSaveIconClick(
-                        post = uiState.data,
-                    ) { isSaved ->
-                        if (isSaved) {
-                            context.showToast(
-                                context.getString(commonUiR.string.post_saved_success),
+                    if (it.contains(".gif")) {
+                        uiState.data?.gifUrl?.let {
+                            PostVideo(
+                                modifier = Modifier.zIndex(1f),
+                                videoUrl = uiState.data?.gifUrl.orEmpty(),
                             )
                         }
                     }
-                },
-                onDeleteIconClick = {
-                    showDeletePostAlertDialog = true
-                },
-            )
+                }
 
-            HorizontalDivider()
+                uiState.data?.videoUrl?.let { videoUrl ->
+                    PostVideo(
+                        modifier = Modifier.zIndex(1f),
+                        videoUrl = videoUrl,
+                    )
+                }
 
-            for (i in 0..20) {
-                CommentsView()
+                PostActions(
+                    modifier = Modifier.padding(top = 8.dp),
+                    upVotes = uiState.data?.upVotes ?: 0,
+                    comments = uiState.data?.comments ?: 0,
+                    isSaved = uiState.data?.isSaved ?: false,
+                    shouldShowDeleteIcon = isFromSavedPosts,
+                    onSaveIconClick = {
+                        viewModel.onSaveIconClick(
+                            post = uiState.data,
+                        ) { isSaved ->
+                            if (isSaved) {
+                                context.showToast(
+                                    context.getString(commonUiR.string.post_saved_success),
+                                )
+                            }
+                        }
+                    },
+                    onDeleteIconClick = {
+                        showDeletePostAlertDialog = true
+                    },
+                )
+            }
+
+            item {
+                HorizontalDivider()
+            }
+
+            item {
+                if (uiState.isCommentsLoading) {
+                    BRLinearProgressIndicator(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 48.dp),
+                    )
+                }
+            }
+
+            if (comments.isNotEmpty()) {
+                itemsIndexed(
+                    items = comments,
+                    key = { _, item ->
+                        item.id
+                    },
+                    contentType = { _, _ ->
+                        "comments"
+                    },
+                ) { _, item ->
+                    CommentsComponent(item)
+                }
             }
         }
-    }
 
-    if (showErrorDialog) {
-        ErrorDialog(
-            errorMessage = uiState.error.orEmpty(),
-            onConfirmButtonClick = { showErrorDialog = false },
-        )
+        if (showErrorDialog) {
+            ErrorDialog(
+                errorMessage = uiState.error.orEmpty(),
+                onConfirmButtonClick = { showErrorDialog = false },
+            )
+        }
     }
 }
 
 @Composable
 fun PostDetailsTitle(title: String) {
-    Text(modifier = Modifier.padding(vertical = 4.dp), fontWeight = FontWeight.Bold, text = title)
+    Text(
+        modifier = Modifier.padding(vertical = 4.dp),
+        fontWeight = FontWeight.Bold,
+        text = title,
+    )
 }
 
 @Composable

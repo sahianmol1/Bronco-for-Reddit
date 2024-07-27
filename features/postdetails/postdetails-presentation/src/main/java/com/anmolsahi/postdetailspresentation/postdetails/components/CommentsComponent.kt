@@ -1,4 +1,4 @@
-package com.anmolsahi.commonui.components
+package com.anmolsahi.postdetailspresentation.postdetails.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -21,26 +21,29 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.anmolsahi.commonui.R
-import com.anmolsahi.designsystem.theme.BroncoForRedditTheme
+import com.anmolsahi.commonui.models.RedditPostUiModel
 
 @Composable
-fun CommentsView(modifier: Modifier = Modifier) {
-    Column(modifier = modifier.padding(top = 16.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            UserImage()
-            OPBadge()
-            UserName()
+fun CommentsComponent(commentDetails: RedditPostUiModel, modifier: Modifier = Modifier) {
+    if (!commentDetails.author.contains("mod", true)) {
+        Column(modifier = modifier.padding(top = 16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                UserImage()
+                OPBadge()
+                UserName(commentDetails.author)
+            }
+            CommentText(commentDetails.body.orEmpty())
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                CommentUpVotes(count = commentDetails.upVotes)
+                if (commentDetails.replies?.isNotEmpty() == true) {
+                    ViewReplies()
+                }
+            }
+            HorizontalDivider()
         }
-        CommentText("Hello World! This is a comment.")
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            CommentUpVotes()
-            ViewReplies()
-        }
-        HorizontalDivider()
     }
 }
 
@@ -54,25 +57,26 @@ fun UserImage() {
 
 @Composable
 fun OPBadge() {
-    val opBackgroundColor = MaterialTheme.colorScheme.secondary
+    val opBackgroundColor = MaterialTheme.colorScheme.primary
     Text(
-        modifier = Modifier.clickable {}
+        modifier = Modifier
+            .clickable {}
             .padding(start = 4.dp, end = 8.dp)
             .drawBehind { drawCircle(color = opBackgroundColor) }
             .padding(4.dp),
         text = "OP",
         fontSize = 8.sp,
-        color = MaterialTheme.colorScheme.onSecondary,
+        color = MaterialTheme.colorScheme.onPrimary,
     )
 }
 
 @Composable
-fun UserName() {
+fun UserName(authorName: String) {
     Text(
         modifier = Modifier.clickable {},
         style = TextStyle(fontWeight = FontWeight.Bold),
-        color = MaterialTheme.colorScheme.onPrimaryContainer,
-        text = "u/flyfire",
+        color = MaterialTheme.colorScheme.primary,
+        text = "u/$authorName",
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
     )
@@ -84,9 +88,12 @@ fun CommentText(text: String) {
 }
 
 @Composable
-fun CommentUpVotes() {
+fun CommentUpVotes(count: Int) {
     Row(
-        modifier = Modifier.wrapContentHeight().clickable {}.padding(bottom = 8.dp),
+        modifier = Modifier
+            .wrapContentHeight()
+            .clickable {}
+            .padding(bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
@@ -99,7 +106,7 @@ fun CommentUpVotes() {
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
-            text = "43",
+            text = "$count",
             fontSize = 12.sp,
             textAlign = TextAlign.Center,
         )
@@ -109,17 +116,13 @@ fun CommentUpVotes() {
 @Composable
 fun ViewReplies() {
     Text(
-        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp).clickable {},
+        modifier = Modifier
+            .padding(start = 16.dp, bottom = 8.dp)
+            .clickable {},
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.onPrimaryContainer,
         text = "View Replies",
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
     )
-}
-
-@Preview
-@Composable
-fun CommentsViewPreview() {
-    BroncoForRedditTheme { CommentsView() }
 }

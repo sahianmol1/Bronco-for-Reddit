@@ -3,7 +3,7 @@ package com.anmolsahi.presentation.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anmolsahi.commonui.mappers.asRedditPost
+import com.anmolsahi.commonui.mappers.asDomain
 import com.anmolsahi.commonui.mappers.asUiModel
 import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.domain.delegate.SearchDelegate
@@ -155,7 +155,7 @@ constructor(
                     },
                 )
             }
-            delegate.savePost(post.asRedditPost())
+            delegate.savePost(post.asDomain())
         }
     }
 }

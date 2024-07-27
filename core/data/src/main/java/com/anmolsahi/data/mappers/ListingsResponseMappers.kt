@@ -44,6 +44,8 @@ fun ListingsResponse.asDomain(): List<RedditPost> {
                 gifUrl = this.gifUrl?.gifPreview?.url.orEmpty(),
                 author = this.author.orEmpty(),
                 thumbnailUrl = this.thumbnailUrl,
+                replies = this.replies?.map { listingsResponse -> listingsResponse.asDomain() },
+                body = this.body,
                 after = after,
             )
         }
