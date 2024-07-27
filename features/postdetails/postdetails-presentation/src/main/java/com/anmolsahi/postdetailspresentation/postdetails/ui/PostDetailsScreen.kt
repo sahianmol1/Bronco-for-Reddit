@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,7 +33,20 @@ import com.anmolsahi.designsystem.utils.showToast
 import com.anmolsahi.postdetailspresentation.R
 import com.anmolsahi.postdetailspresentation.postdetails.components.CommentsComponent
 import com.anmolsahi.postdetailspresentation.postdetails.components.PostDetailsComponent
+import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_COMMENTS_HEADING
+import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_COMMENTS_SECTION
+import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_DIVIDER
+import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_LOADING
+import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_POST_DETAILS
 import com.anmolsahi.commonui.R as commonUiR
+
+private object PostDetailsScreenValues {
+    const val TYPE_POST_DETAILS = "post_details"
+    const val TYPE_DIVIDER = "divider"
+    const val TYPE_LOADING = "loading"
+    const val TYPE_COMMENTS_HEADING = "comments_heading"
+    const val TYPE_COMMENTS_SECTION = "comments_section"
+}
 
 @Composable
 fun PostDetailsScreen(
@@ -96,7 +108,9 @@ fun PostDetailsScreen(
                 .fillMaxSize(),
             contentPadding = WindowInsets.systemBars.asPaddingValues(),
         ) {
-            item {
+            item(
+                contentType = { TYPE_POST_DETAILS },
+            ) {
                 PostDetailsComponent(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     uiState = uiState,
@@ -118,13 +132,17 @@ fun PostDetailsScreen(
                 )
             }
 
-            item {
+            item(
+                contentType = { TYPE_DIVIDER },
+            ) {
                 HorizontalDivider(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                 )
             }
 
-            item {
+            item(
+                contentType = { TYPE_LOADING },
+            ) {
                 AnimatedVisibility(uiState.isCommentsLoading, enter = fadeIn(), exit = fadeOut()) {
                     BRLinearProgressIndicator(
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 48.dp),
@@ -132,7 +150,9 @@ fun PostDetailsScreen(
                 }
             }
 
-            item {
+            item(
+                contentType = { TYPE_COMMENTS_HEADING },
+            ) {
                 AnimatedVisibility(visible = comments.isNotEmpty()) {
                     Text(
                         text = stringResource(R.string.comments),
@@ -144,17 +164,13 @@ fun PostDetailsScreen(
             }
 
             if (comments.isNotEmpty()) {
-                itemsIndexed(
-                    items = comments,
-                    key = { _, item ->
-                        item.id
-                    },
-                    contentType = { _, _ ->
-                        "comments"
-                    },
-                ) { _, item ->
-                    if (item.author.isNotEmpty()) {
-                        CommentsComponent(item, uiState.data?.author == item.author)
+                items(
+                    count = comments.size,
+                    key = { index -> comments[index].id },
+                    contentType = { _ -> TYPE_COMMENTS_SECTION },
+                ) {
+                    if (comments[it].author.isNotEmpty()) {
+                        CommentsComponent(comments[it], uiState.data?.author == comments[it].author)
                     }
                 }
             }
