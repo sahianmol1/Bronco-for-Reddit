@@ -38,7 +38,7 @@ data class ChildrenData(
     val thumbnailUrl: String? = null,
     @SerialName("replies")
     @Serializable(with = RepliesDeserializer::class)
-    val replies: List<ListingsResponse>? = null,
+    val replies: ListingsResponse? = null,
     @SerialName("body")
     val body: String? = null,
 )

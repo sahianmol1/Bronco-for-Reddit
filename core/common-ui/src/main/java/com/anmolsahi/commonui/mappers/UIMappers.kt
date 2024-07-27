@@ -18,7 +18,7 @@ fun RedditPost.asUiModel(): RedditPostUiModel = RedditPostUiModel(
     after = this.after,
     isSaved = this.isSaved,
     thumbnailUrl = this.thumbnailUrl,
-    replies = this.replies?.map { it.map { post -> post.asUiModel() } },
+    replies = this.replies?.map { it.asUiModel() },
     body = this.body,
 )
 
