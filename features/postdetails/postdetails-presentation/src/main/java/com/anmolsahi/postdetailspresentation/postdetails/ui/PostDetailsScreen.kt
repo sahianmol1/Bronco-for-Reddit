@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -20,6 +22,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,6 +31,7 @@ import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.designsystem.utils.showToast
+import com.anmolsahi.postdetailspresentation.R
 import com.anmolsahi.postdetailspresentation.postdetails.components.CommentsComponent
 import com.anmolsahi.postdetailspresentation.postdetails.components.PostDetailsComponent
 import com.anmolsahi.commonui.R as commonUiR
@@ -115,7 +120,7 @@ fun PostDetailsScreen(
 
             item {
                 HorizontalDivider(
-                    modifier = Modifier.padding(horizontal = 16.dp),
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                 )
             }
 
@@ -123,6 +128,17 @@ fun PostDetailsScreen(
                 AnimatedVisibility(uiState.isCommentsLoading, enter = fadeIn(), exit = fadeOut()) {
                     BRLinearProgressIndicator(
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 48.dp),
+                    )
+                }
+            }
+
+            item {
+                AnimatedVisibility(visible = comments.isNotEmpty()) {
+                    Text(
+                        text = stringResource(R.string.comments),
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp),
                     )
                 }
             }

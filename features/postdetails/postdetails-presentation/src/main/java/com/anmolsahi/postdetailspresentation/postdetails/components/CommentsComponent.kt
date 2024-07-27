@@ -112,6 +112,7 @@ fun CommentText(text: String, maxLines: Int) {
         text = text,
         maxLines = maxLines,
         overflow = TextOverflow.Ellipsis,
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.90f),
     )
 }
 
