@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="comments">Comments</string>
+    <string name="view_replies">View Replies</string>
 </resources>

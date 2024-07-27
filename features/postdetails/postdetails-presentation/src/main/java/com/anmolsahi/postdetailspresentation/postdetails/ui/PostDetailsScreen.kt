@@ -137,23 +137,25 @@ fun PostDetailsScreen(
                     Text(
                         text = stringResource(R.string.comments),
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp),
                     )
                 }
             }
 
-            itemsIndexed(
-                items = comments,
-                key = { _, item ->
-                    item.id
-                },
-                contentType = { _, _ ->
-                    "comments"
-                },
-            ) { _, item ->
-                AnimatedVisibility(visible = comments.isNotEmpty()) {
-                    CommentsComponent(item)
+            if (comments.isNotEmpty()) {
+                itemsIndexed(
+                    items = comments,
+                    key = { _, item ->
+                        item.id
+                    },
+                    contentType = { _, _ ->
+                        "comments"
+                    },
+                ) { _, item ->
+                    if (item.author.isNotEmpty()) {
+                        CommentsComponent(item, uiState.data?.author == item.author)
+                    }
                 }
             }
         }

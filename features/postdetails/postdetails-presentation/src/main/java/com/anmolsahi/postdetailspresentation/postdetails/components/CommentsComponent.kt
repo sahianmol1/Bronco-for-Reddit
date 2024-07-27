@@ -37,7 +37,11 @@ object CommentsComponentDefaults {
 }
 
 @Composable
-fun CommentsComponent(commentDetails: RedditPostUiModel, modifier: Modifier = Modifier) {
+fun CommentsComponent(
+    commentDetails: RedditPostUiModel,
+    isOriginalPoster: Boolean,
+    modifier: Modifier = Modifier,
+) {
     var maxLines by rememberSaveable { mutableIntStateOf(DEFAULT_MAX_LINES) }
     if (!commentDetails.author.contains("mod", true)) {
         Column(
@@ -49,11 +53,11 @@ fun CommentsComponent(commentDetails: RedditPostUiModel, modifier: Modifier = Mo
                         DEFAULT_MAX_LINES
                     }
                 }
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                .padding(top = 12.dp, start = 16.dp, end = 16.dp),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 UserImage()
-                OPBadge()
+                if (isOriginalPoster) OPBadge()
                 UserName(commentDetails.author)
             }
             CommentText(text = commentDetails.body.orEmpty(), maxLines = maxLines)
@@ -150,7 +154,7 @@ fun ViewReplies() {
             .clickable {},
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.onPrimaryContainer,
-        text = "View Replies",
+        text = stringResource(com.anmolsahi.postdetailspresentation.R.string.view_replies),
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
     )
