@@ -54,7 +54,9 @@ fun BRSearchBar(
         onSearch = {
             onSearch()
             keyboardController?.hide()
-            onActiveChange(false)
+            if (query.trim().isEmpty()) {
+                onActiveChange(false)
+            }
         },
         active = active,
         onActiveChange = onActiveChange,

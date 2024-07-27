@@ -189,7 +189,7 @@ fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () 
     var scale by remember { mutableFloatStateOf(1f) }
     var offset by remember { mutableStateOf(Offset.Zero) }
 
-    val transformableState = rememberTransformableState { zoomChange, panChange, rotationChange ->
+    val transformableState = rememberTransformableState { zoomChange, panChange, _ ->
         scale = (scale * zoomChange).coerceIn(0.5f, 5f)
         offset += panChange
     }
