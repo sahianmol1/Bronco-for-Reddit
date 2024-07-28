@@ -112,7 +112,7 @@ fun CommentsComponent(
                     ) {
                         VerticalDivider()
                         CommentsComponent(
-                            modifier = Modifier,
+                            modifier = Modifier.fillMaxWidth(),
                             commentDetails = reply,
                             originalPosterName = originalPosterName,
                         )
