@@ -1,8 +1,6 @@
 package com.anmolsahi.postdetailspresentation.postdetails.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -160,11 +158,7 @@ fun PostDetailsScreen(
                 item(
                     contentType = { TYPE_LOADING },
                 ) {
-                    AnimatedVisibility(
-                        uiState.isCommentsLoading,
-                        enter = fadeIn(),
-                        exit = fadeOut(),
-                    ) {
+                    if (uiState.isCommentsLoading) {
                         BRLinearProgressIndicator(
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 48.dp),
                         )
@@ -174,7 +168,7 @@ fun PostDetailsScreen(
                 item(
                     contentType = { TYPE_COMMENTS_HEADING },
                 ) {
-                    AnimatedVisibility(visible = comments.isNotEmpty()) {
+                    if (comments.isNotEmpty()) {
                         Text(
                             text = stringResource(R.string.comments),
                             fontWeight = FontWeight.Bold,
@@ -190,8 +184,8 @@ fun PostDetailsScreen(
                         key = { index -> comments[index].id },
                         contentType = { _ -> TYPE_COMMENTS_SECTION },
                     ) {
-                        Column {
-                            if (shouldShowCommentsComponent(comments[it])) {
+                        if (shouldShowCommentsComponent(comments[it])) {
+                            Column {
                                 CommentsComponent(
                                     modifier = Modifier.fillMaxWidth(),
                                     commentDetails = comments[it],
