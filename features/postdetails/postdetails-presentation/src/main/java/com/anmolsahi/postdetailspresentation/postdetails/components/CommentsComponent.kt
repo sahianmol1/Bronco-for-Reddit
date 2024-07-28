@@ -3,8 +3,10 @@ package com.anmolsahi.postdetailspresentation.postdetails.components
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
@@ -14,6 +16,7 @@ import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -57,7 +60,6 @@ fun CommentsComponent(
 
     Column(
         modifier = modifier
-            .fillMaxWidth()
             .clickable {
                 maxLines = if (maxLines == DEFAULT_MAX_LINES) {
                     Int.MAX_VALUE
@@ -74,10 +76,12 @@ fun CommentsComponent(
             UserName(commentDetails.author)
         }
         CommentText(text = commentDetails.body.orEmpty(), maxLines = maxLines)
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             CommentUpVotes(
                 modifier = Modifier.padding(
-                    vertical = if (commentDetails.replies?.isEmpty() == true) 12.dp else 0.dp,
+                    vertical = if (commentsCount == 0) 12.dp else 0.dp,
                 ),
                 count = commentDetails.upVotes,
             )
@@ -101,10 +105,18 @@ fun CommentsComponent(
         if (showReplies) {
             commentDetails.replies?.forEach { reply ->
                 if (reply.author.isNotEmpty()) {
-                    CommentsComponent(
-                        commentDetails = reply,
-                        originalPosterName = originalPosterName,
-                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(IntrinsicSize.Min),
+                    ) {
+                        VerticalDivider()
+                        CommentsComponent(
+                            modifier = Modifier,
+                            commentDetails = reply,
+                            originalPosterName = originalPosterName,
+                        )
+                    }
                 }
             }
         }
@@ -150,7 +162,7 @@ fun UserName(authorName: String) {
 fun CommentText(text: String, maxLines: Int) {
     Text(
         modifier = Modifier
-            .padding(top = 8.dp)
+            .padding(top = 8.dp, end = 16.dp)
             .animateContentSize(),
         text = text,
         maxLines = maxLines,

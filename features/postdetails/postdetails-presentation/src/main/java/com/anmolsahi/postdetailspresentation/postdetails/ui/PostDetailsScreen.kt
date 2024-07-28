@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
@@ -174,7 +175,7 @@ fun PostDetailsScreen(
                     Column {
                         if (shouldShowCommentsComponent(comments[it])) {
                             CommentsComponent(
-                                modifier = Modifier.padding(end = 16.dp),
+                                modifier = Modifier.fillMaxWidth(),
                                 commentDetails = comments[it],
                                 originalPosterName = uiState.data?.author.orEmpty(),
                             )
