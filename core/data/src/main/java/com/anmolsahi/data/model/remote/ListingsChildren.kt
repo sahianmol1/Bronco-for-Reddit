@@ -1,5 +1,6 @@
 package com.anmolsahi.data.model.remote
 
+import com.anmolsahi.data.model.remote.preview.Preview
 import com.anmolsahi.data.serializer.RepliesDeserializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -24,18 +25,16 @@ data class ChildrenData(
     val upVotes: Int? = null,
     @SerialName("num_comments")
     val comments: Int? = null,
-    @SerialName("url_overridden_by_dest")
-    val imageUrl: String? = null,
     @SerialName("permalink")
     val postUrl: String? = null,
     @SerialName("secure_media")
     val secureMedia: SecureMedia? = null,
-    @SerialName("preview")
-    val gifUrl: GifPreview? = null,
     @SerialName("author")
     val author: String? = null,
     @SerialName("thumbnail")
     val thumbnailUrl: String? = null,
+    @SerialName("preview")
+    val preview: Preview? = null,
     @SerialName("replies")
     @Serializable(with = RepliesDeserializer::class)
     val replies: ListingsResponse? = null,

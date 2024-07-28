@@ -98,7 +98,16 @@ fun PostComponent(
             }
         }
         redditPostUiModel.imageUrl?.let {
-            if (it.endsWith("png") || it.endsWith("jpg")) {
+            if (it.contains(".gif")) {
+                redditPostUiModel.gifUrl?.let {
+                    PostVideo(
+                        modifier = Modifier.zIndex(1f),
+                        videoUrl = redditPostUiModel.gifUrl,
+                    )
+                }
+            }
+
+            if (redditPostUiModel.videoUrl == null) {
                 PostImage(
                     modifier = Modifier
                         .zIndex(1f),
@@ -107,14 +116,6 @@ fun PostComponent(
                         onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty())
                     },
                 )
-            }
-            if (it.contains(".gif")) {
-                redditPostUiModel.gifUrl?.let {
-                    PostVideo(
-                        modifier = Modifier.zIndex(1f),
-                        videoUrl = redditPostUiModel.gifUrl,
-                    )
-                }
             }
         }
         redditPostUiModel.videoUrl?.let { PostVideo(modifier = Modifier.zIndex(1f), videoUrl = it) }

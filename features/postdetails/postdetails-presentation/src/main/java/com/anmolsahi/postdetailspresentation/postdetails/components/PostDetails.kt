@@ -46,7 +46,7 @@ fun PostDetailsComponent(
         }
 
         uiState?.data?.imageUrl?.let {
-            if (it.endsWith("png") || it.endsWith("jpg")) {
+            if (uiState.data.videoUrl == null) {
                 PostImage(
                     modifier = Modifier.zIndex(1f),
                     imageUrl = uiState.data.imageUrl.orEmpty(),
