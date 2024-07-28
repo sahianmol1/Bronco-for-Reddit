@@ -23,6 +23,7 @@ fun PostDetailsComponent(
     modifier: Modifier = Modifier,
     onSaveIconClick: () -> Unit,
     onDeleteIconClick: () -> Unit,
+    onShareIconClick: () -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -77,6 +78,7 @@ fun PostDetailsComponent(
             shouldShowDeleteIcon = isFromSavedPosts,
             onSaveIconClick = onSaveIconClick,
             onDeleteIconClick = onDeleteIconClick,
+            onShareIconClick = onShareIconClick,
         )
     }
 }

@@ -48,6 +48,7 @@ fun HomeScreenListings(
     refreshData: () -> Unit,
     loadMoreData: (nextPageKey: String?) -> Unit,
     onSaveIconClick: (postId: String) -> Unit,
+    onShareIconClick: (postUrl: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
@@ -97,6 +98,7 @@ fun HomeScreenListings(
                         redditPostUiModel = item,
                         onClick = onClick,
                         onSaveIconClick = onSaveIconClick,
+                        onShareIconClick = onShareIconClick,
                     )
                 }
 

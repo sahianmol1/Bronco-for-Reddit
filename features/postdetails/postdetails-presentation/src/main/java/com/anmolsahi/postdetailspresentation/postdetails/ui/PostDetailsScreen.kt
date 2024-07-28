@@ -33,6 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.commonui.utils.animateScrollToTop
+import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.designsystem.uicomponents.BRScrollToTop
 import com.anmolsahi.designsystem.utils.showToast
@@ -144,6 +145,7 @@ fun PostDetailsScreen(
                         onDeleteIconClick = {
                             showDeletePostAlertDialog = true
                         },
+                        onShareIconClick = { shareRedditPost(postUrl, context) },
                     )
                 }
 

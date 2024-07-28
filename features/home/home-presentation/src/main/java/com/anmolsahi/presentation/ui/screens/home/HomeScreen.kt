@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRHorizontalPager
 import com.anmolsahi.designsystem.uicomponents.BRScrollableTabRow
 import com.anmolsahi.designsystem.uicomponents.HomePage
@@ -131,6 +132,7 @@ fun HomeScreen(
                                 }
                             }
                         },
+                        onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                     )
                 }
 
@@ -149,6 +151,7 @@ fun HomeScreen(
                                 }
                             }
                         },
+                        onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                     )
                 }
 
@@ -167,6 +170,7 @@ fun HomeScreen(
                                 }
                             }
                         },
+                        onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                     )
                 }
 
@@ -185,6 +189,7 @@ fun HomeScreen(
                                 }
                             }
                         },
+                        onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                     )
                 }
 
@@ -203,6 +208,7 @@ fun HomeScreen(
                                 }
                             }
                         },
+                        onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                     )
                 }
 
@@ -221,6 +227,7 @@ fun HomeScreen(
                                 }
                             }
                         },
+                        onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                     )
                 }
 

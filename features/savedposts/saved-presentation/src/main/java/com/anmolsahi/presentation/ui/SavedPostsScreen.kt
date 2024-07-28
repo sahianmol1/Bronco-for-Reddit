@@ -16,6 +16,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.commonui.components.PostComponent
@@ -23,6 +24,7 @@ import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.commonui.utils.scrollToTop
+import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -33,6 +35,7 @@ fun SavedPostsScreen(
     onClick: (postId: String, postUrl: String) -> Unit = { _, _ -> },
     onSaveIconClick: (String) -> Unit = {},
 ) {
+    val context = LocalContext.current
     val uiState by
         viewModel.savedPostsUiState.collectAsStateWithLifecycle(
             lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
@@ -90,6 +93,7 @@ fun SavedPostsScreen(
                         selectedPostId = redditPostId
                         showDeletePostAlertDialog = true
                     },
+                    onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                 )
             }
         }

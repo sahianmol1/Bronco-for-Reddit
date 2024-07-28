@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -35,6 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.commonui.utils.scrollToTop
+import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.designsystem.uicomponents.BRSearchBar
 import com.anmolsahi.domain.model.RecentSearch
@@ -62,6 +64,7 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
     onPostClick: (postId: String, postUrl: String) -> Unit,
 ) {
+    val context = LocalContext.current
     val lazyListState = rememberLazyListState()
     val uiState by viewModel.searchDataUiState.collectAsStateWithLifecycle()
     val searchedValue by viewModel.searchQuery.collectAsStateWithLifecycle()
@@ -155,6 +158,7 @@ fun SearchScreen(
                             onSaveIconClick = {
                                 viewModel.onSaveIconClick(searchedData[index])
                             },
+                            onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                         )
                     }
                 }

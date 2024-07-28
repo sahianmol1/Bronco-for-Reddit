@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.BookmarkAdded
 import androidx.compose.material.icons.outlined.BookmarkAdd
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -81,6 +82,7 @@ fun PostComponent(
     onClick: (postId: String, postUrl: String) -> Unit,
     onSaveIconClick: (postId: String) -> Unit,
     onDeleteIconClick: (postId: String) -> Unit = {},
+    onShareIconClick: (postUrl: String) -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -120,12 +122,14 @@ fun PostComponent(
         }
         redditPostUiModel.videoUrl?.let { PostVideo(modifier = Modifier.zIndex(1f), videoUrl = it) }
         PostActions(
+            modifier = Modifier.padding(top = 8.dp),
             upVotes = redditPostUiModel.upVotes,
             comments = redditPostUiModel.comments,
             isSaved = redditPostUiModel.isSaved,
             shouldShowDeleteIcon = shouldShowDeleteIcon,
             onSaveIconClick = { onSaveIconClick(redditPostUiModel.id) },
             onDeleteIconClick = { onDeleteIconClick(redditPostUiModel.id) },
+            onShareIconClick = { onShareIconClick(redditPostUiModel.postUrl.orEmpty()) },
         )
         HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
     }
@@ -364,6 +368,7 @@ fun PostActions(
     isSaved: Boolean,
     onSaveIconClick: () -> Unit = {},
     onDeleteIconClick: () -> Unit = {},
+    onShareIconClick: () -> Unit = {},
 ) {
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         PostActionItem(
@@ -375,6 +380,13 @@ fun PostActions(
             icon = Icons.AutoMirrored.Outlined.Message,
             label = comments.toString(),
             actionDescription = stringResource(R.string.comment),
+        )
+
+        PostActionItem(
+            icon = Icons.Outlined.Share,
+            label = stringResource(id = R.string.share),
+            actionDescription = stringResource(id = R.string.share),
+            onclick = onShareIconClick,
         )
 
         if (shouldShowDeleteIcon) {
@@ -419,10 +431,10 @@ fun PostActions(
 
 @Composable
 fun PostActionItem(
-    modifier: Modifier = Modifier,
     icon: ImageVector,
     label: String,
     actionDescription: String,
+    modifier: Modifier = Modifier,
     onclick: () -> Unit = {},
 ) {
     Row(
@@ -436,8 +448,10 @@ fun PostActionItem(
                 .padding(start = 8.dp)
                 .padding(vertical = 8.dp),
             imageVector = icon,
-            contentDescription =
-            stringResource(R.string.post_action_content_description, actionDescription),
+            contentDescription = stringResource(
+                R.string.post_action_content_description,
+                actionDescription,
+            ),
         )
         Text(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
