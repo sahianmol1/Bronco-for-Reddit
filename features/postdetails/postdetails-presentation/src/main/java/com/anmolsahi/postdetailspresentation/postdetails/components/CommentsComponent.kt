@@ -4,19 +4,20 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Comment
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -29,9 +30,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.anmolsahi.commonui.R
 import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.commonui.utils.orZero
+import com.anmolsahi.postdetailspresentation.R
 import com.anmolsahi.postdetailspresentation.postdetails.components.CommentsComponentDefaults.DEFAULT_MAX_LINES
 
 object CommentsComponentDefaults {
@@ -41,39 +42,71 @@ object CommentsComponentDefaults {
 @Composable
 fun CommentsComponent(
     commentDetails: RedditPostUiModel,
-    isOriginalPoster: Boolean,
+    originalPosterName: String,
     modifier: Modifier = Modifier,
 ) {
     var maxLines by rememberSaveable { mutableIntStateOf(DEFAULT_MAX_LINES) }
-    if (!commentDetails.author.contains("mod", true)) {
-        Column(
-            modifier = modifier
-                .clickable {
-                    maxLines = if (maxLines == DEFAULT_MAX_LINES) {
-                        Int.MAX_VALUE
+    var showReplies by rememberSaveable { mutableStateOf(false) }
+    val commentsCount by rememberSaveable {
+        mutableIntStateOf(
+            commentDetails.replies?.filter {
+                it.author.isNotEmpty() && !it.author.contains("mod", true)
+            }?.size.orZero(),
+        )
+    }
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable {
+                maxLines = if (maxLines == DEFAULT_MAX_LINES) {
+                    Int.MAX_VALUE
+                } else {
+                    DEFAULT_MAX_LINES
+                }
+            }
+            .padding(top = 12.dp, start = 16.dp, bottom = 4.dp)
+            .animateContentSize(),
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            UserImage()
+            if (originalPosterName == commentDetails.author) OPBadge()
+            UserName(commentDetails.author)
+        }
+        CommentText(text = commentDetails.body.orEmpty(), maxLines = maxLines)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            CommentUpVotes(
+                modifier = Modifier.padding(
+                    vertical = if (commentDetails.replies?.isEmpty() == true) 12.dp else 0.dp,
+                ),
+                count = commentDetails.upVotes,
+            )
+            if (commentsCount != 0) {
+                CommentReplies(
+                    modifier = Modifier.padding(start = 16.dp),
+                    count = commentsCount,
+                )
+                ViewReplies(
+                    title = if (!showReplies) {
+                        stringResource(R.string.view_replies)
                     } else {
-                        DEFAULT_MAX_LINES
-                    }
-                }
-                .padding(top = 12.dp, start = 16.dp, end = 16.dp),
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                UserImage()
-                if (isOriginalPoster) OPBadge()
-                UserName(commentDetails.author)
+                        stringResource(R.string.hide_replies)
+                    },
+                    onClick = {
+                        showReplies = !showReplies
+                    },
+                )
             }
-            CommentText(text = commentDetails.body.orEmpty(), maxLines = maxLines)
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                CommentUpVotes(count = commentDetails.upVotes)
-                if (commentDetails.replies?.isNotEmpty() == true) {
-                    CommentReplies(
-                        modifier = Modifier.padding(start = 16.dp),
-                        count = commentDetails.replies?.size.orZero(),
+        }
+        if (showReplies) {
+            commentDetails.replies?.forEach { reply ->
+                if (reply.author.isNotEmpty()) {
+                    CommentsComponent(
+                        commentDetails = reply,
+                        originalPosterName = originalPosterName,
                     )
-                    ViewReplies()
                 }
             }
-            HorizontalDivider()
         }
     }
 }
@@ -129,7 +162,7 @@ fun CommentText(text: String, maxLines: Int) {
 @Composable
 fun CommentUpVotes(count: Int, modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier.wrapContentHeight(),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
@@ -171,14 +204,14 @@ fun CommentReplies(count: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ViewReplies() {
+fun ViewReplies(title: String = stringResource(R.string.view_replies), onClick: () -> Unit = {}) {
     Text(
         modifier = Modifier
-            .clickable {}
+            .clickable { onClick() }
             .padding(16.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
         color = MaterialTheme.colorScheme.primary,
-        text = stringResource(com.anmolsahi.postdetailspresentation.R.string.view_replies),
+        text = title,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
     )

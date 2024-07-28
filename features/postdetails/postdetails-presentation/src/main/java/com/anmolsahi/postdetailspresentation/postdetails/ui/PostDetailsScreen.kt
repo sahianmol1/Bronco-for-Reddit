@@ -3,6 +3,7 @@ package com.anmolsahi.postdetailspresentation.postdetails.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,6 +39,7 @@ import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenVal
 import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_DIVIDER
 import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_LOADING
 import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_POST_DETAILS
+import com.anmolsahi.postdetailspresentation.postdetails.utils.shouldShowCommentsComponent
 import com.anmolsahi.commonui.R as commonUiR
 
 private object PostDetailsScreenValues {
@@ -169,8 +171,17 @@ fun PostDetailsScreen(
                     key = { index -> comments[index].id },
                     contentType = { _ -> TYPE_COMMENTS_SECTION },
                 ) {
-                    if (comments[it].author.isNotEmpty()) {
-                        CommentsComponent(comments[it], uiState.data?.author == comments[it].author)
+                    Column {
+                        if (shouldShowCommentsComponent(comments[it])) {
+                            CommentsComponent(
+                                modifier = Modifier.padding(end = 16.dp),
+                                commentDetails = comments[it],
+                                originalPosterName = uiState.data?.author.orEmpty(),
+                            )
+                            HorizontalDivider(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                            )
+                        }
                     }
                 }
             }

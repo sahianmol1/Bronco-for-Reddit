@@ -2,4 +2,6 @@
 <resources>
     <string name="comments">Comments</string>
     <string name="view_replies">View Replies</string>
+    <string name="hide_replies">Hide Replies</string>
+    <string name="post_action_content_description">Post Action %1$s</string>
 </resources>
