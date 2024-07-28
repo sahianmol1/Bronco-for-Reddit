@@ -24,7 +24,7 @@ fun slideInFromTopTransition(): EnterTransition {
 fun slideOutToBottomTransition(): ExitTransition {
     return slideOutVertically(
         targetOffsetY = { screenHeight ->
-            -screenHeight
+            screenHeight
         },
     )
 }
@@ -32,7 +32,7 @@ fun slideOutToBottomTransition(): ExitTransition {
 fun slideOutToTopTransition(): ExitTransition {
     return slideOutVertically(
         targetOffsetY = { screenHeight ->
-            screenHeight
+            -screenHeight
         },
     )
 }

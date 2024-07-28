@@ -3,6 +3,7 @@ package com.anmolsahi.postdetailspresentation.postdetails.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,8 +21,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -30,8 +34,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
+import com.anmolsahi.commonui.utils.animateScrollToTop
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
+import com.anmolsahi.designsystem.uicomponents.BRScrollToTop
 import com.anmolsahi.designsystem.utils.showToast
+import com.anmolsahi.designsystem.utils.slideInFromBottomTransition
+import com.anmolsahi.designsystem.utils.slideOutToBottomTransition
 import com.anmolsahi.postdetailspresentation.R
 import com.anmolsahi.postdetailspresentation.postdetails.components.CommentsComponent
 import com.anmolsahi.postdetailspresentation.postdetails.components.PostDetailsComponent
@@ -41,6 +49,7 @@ import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenVal
 import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_LOADING
 import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_POST_DETAILS
 import com.anmolsahi.postdetailspresentation.postdetails.utils.shouldShowCommentsComponent
+import kotlinx.coroutines.launch
 import com.anmolsahi.commonui.R as commonUiR
 
 private object PostDetailsScreenValues {
@@ -61,6 +70,8 @@ fun PostDetailsScreen(
     popBackStack: () -> Unit = {},
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val lazyListState = rememberLazyListState()
     val uiState by viewModel.postDetailsUiState.collectAsStateWithLifecycle(
         lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
     )
@@ -106,84 +117,102 @@ fun PostDetailsScreen(
     }
 
     if (!uiState.isLoading) {
-        LazyColumn(
-            modifier = modifier
-                .fillMaxSize(),
-            contentPadding = WindowInsets.systemBars.asPaddingValues(),
+        Box(
+            contentAlignment = Alignment.BottomEnd,
         ) {
-            item(
-                contentType = { TYPE_POST_DETAILS },
+            LazyColumn(
+                modifier = modifier.fillMaxSize(),
+                state = lazyListState,
+                contentPadding = WindowInsets.systemBars.asPaddingValues(),
             ) {
-                PostDetailsComponent(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    uiState = uiState,
-                    isFromSavedPosts = isFromSavedPosts,
-                    onSaveIconClick = {
-                        viewModel.onSaveIconClick(
-                            post = uiState.data,
-                        ) { isSaved ->
-                            if (isSaved) {
-                                context.showToast(
-                                    context.getString(commonUiR.string.post_saved_success),
+                item(
+                    contentType = { TYPE_POST_DETAILS },
+                ) {
+                    PostDetailsComponent(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        uiState = uiState,
+                        isFromSavedPosts = isFromSavedPosts,
+                        onSaveIconClick = {
+                            viewModel.onSaveIconClick(
+                                post = uiState.data,
+                            ) { isSaved ->
+                                if (isSaved) {
+                                    context.showToast(
+                                        context.getString(commonUiR.string.post_saved_success),
+                                    )
+                                }
+                            }
+                        },
+                        onDeleteIconClick = {
+                            showDeletePostAlertDialog = true
+                        },
+                    )
+                }
+
+                item(
+                    contentType = { TYPE_DIVIDER },
+                ) {
+                    HorizontalDivider(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                    )
+                }
+
+                item(
+                    contentType = { TYPE_LOADING },
+                ) {
+                    AnimatedVisibility(
+                        uiState.isCommentsLoading,
+                        enter = fadeIn(),
+                        exit = fadeOut(),
+                    ) {
+                        BRLinearProgressIndicator(
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 48.dp),
+                        )
+                    }
+                }
+
+                item(
+                    contentType = { TYPE_COMMENTS_HEADING },
+                ) {
+                    AnimatedVisibility(visible = comments.isNotEmpty()) {
+                        Text(
+                            text = stringResource(R.string.comments),
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.secondary,
+                            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp),
+                        )
+                    }
+                }
+
+                if (comments.isNotEmpty()) {
+                    items(
+                        count = comments.size,
+                        key = { index -> comments[index].id },
+                        contentType = { _ -> TYPE_COMMENTS_SECTION },
+                    ) {
+                        Column {
+                            if (shouldShowCommentsComponent(comments[it])) {
+                                CommentsComponent(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    commentDetails = comments[it],
+                                    originalPosterName = uiState.data?.author.orEmpty(),
+                                )
+                                HorizontalDivider(
+                                    modifier = Modifier.padding(horizontal = 16.dp),
                                 )
                             }
                         }
-                    },
-                    onDeleteIconClick = {
-                        showDeletePostAlertDialog = true
-                    },
-                )
-            }
-
-            item(
-                contentType = { TYPE_DIVIDER },
-            ) {
-                HorizontalDivider(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                )
-            }
-
-            item(
-                contentType = { TYPE_LOADING },
-            ) {
-                AnimatedVisibility(uiState.isCommentsLoading, enter = fadeIn(), exit = fadeOut()) {
-                    BRLinearProgressIndicator(
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 48.dp),
-                    )
-                }
-            }
-
-            item(
-                contentType = { TYPE_COMMENTS_HEADING },
-            ) {
-                AnimatedVisibility(visible = comments.isNotEmpty()) {
-                    Text(
-                        text = stringResource(R.string.comments),
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.secondary,
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp),
-                    )
-                }
-            }
-
-            if (comments.isNotEmpty()) {
-                items(
-                    count = comments.size,
-                    key = { index -> comments[index].id },
-                    contentType = { _ -> TYPE_COMMENTS_SECTION },
-                ) {
-                    Column {
-                        if (shouldShowCommentsComponent(comments[it])) {
-                            CommentsComponent(
-                                modifier = Modifier.fillMaxWidth(),
-                                commentDetails = comments[it],
-                                originalPosterName = uiState.data?.author.orEmpty(),
-                            )
-                            HorizontalDivider(
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                            )
-                        }
                     }
+                }
+            }
+
+            AnimatedVisibility(
+                visible = lazyListState.canScrollBackward,
+                enter = slideInFromBottomTransition(),
+                exit = slideOutToBottomTransition(),
+            ) {
+                BRScrollToTop {
+                    coroutineScope.launch { lazyListState.animateScrollToTop() }
                 }
             }
         }
