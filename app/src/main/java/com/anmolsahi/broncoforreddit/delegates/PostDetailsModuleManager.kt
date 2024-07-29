@@ -30,7 +30,8 @@ class PostDetailsModuleManager @Inject constructor(
     override suspend fun togglePostSavedStatusInDb(post: RedditPost?): Boolean {
         // try to update the post saved status in the home database
         // It will handle the required exceptions if the post is not available in the home database,
-        // For example, if the post details were reached from Search Posts screen, this will fail and handle the exception internally
+        // For example, if the post details were reached from Search Posts screen,
+        // this will fail and handle the exception internally
         homeRepository.togglePostSavedStatus(post?.id.orEmpty())
 
         // Toggle the post saved status in the saved posts database
