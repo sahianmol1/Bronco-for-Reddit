@@ -298,10 +298,10 @@ fun PostVideo(videoUrl: String, modifier: Modifier = Modifier, onFullScreenIconC
         }
     }
 
-    val exoPlayer = remember {
+    val exoPlayer = remember(videoUrl) {
         ExoPlayer.Builder(context).build().apply {
             setMediaItem(MediaItem.fromUri(videoUrl))
-            repeatMode = Player.REPEAT_MODE_ALL
+            repeatMode = Player.REPEAT_MODE_ONE
             prepare()
             volume = 0f
             play()
@@ -309,7 +309,12 @@ fun PostVideo(videoUrl: String, modifier: Modifier = Modifier, onFullScreenIconC
     }
 
     Box(modifier = modifier, contentAlignment = Alignment.BottomStart) {
-        DisposableEffect(videoUrl) { onDispose { exoPlayer.release() } }
+        DisposableEffect(videoUrl) {
+            onDispose {
+                exoPlayer.stop()
+                exoPlayer.release()
+            }
+        }
 
         AndroidView(
             modifier = Modifier
