@@ -305,6 +305,7 @@ fun PostVideo(videoUrl: String, modifier: Modifier = Modifier, onFullScreenIconC
             prepare()
             volume = 0f
             play()
+            playWhenReady = true
         }
     }
 
@@ -348,6 +349,7 @@ fun PostVideo(videoUrl: String, modifier: Modifier = Modifier, onFullScreenIconC
                     }
 
                     Lifecycle.Event.ON_RESUME -> {
+                        playerView.player?.play()
                         playerView.onResume()
                     }
 
