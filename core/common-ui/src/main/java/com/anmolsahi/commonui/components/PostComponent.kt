@@ -133,6 +133,12 @@ fun PostComponent(
             onSaveIconClick = { onSaveIconClick(redditPostUiModel.id) },
             onDeleteIconClick = { onDeleteIconClick(redditPostUiModel.id) },
             onShareIconClick = { onShareIconClick(redditPostUiModel.postUrl.orEmpty()) },
+            onUpvoteIconClick = {
+                onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty())
+            },
+            onCommentIconClick = {
+                onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty())
+            },
         )
         HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
     }
@@ -370,6 +376,8 @@ fun PostActions(
     upVotes: Int,
     comments: Int,
     isSaved: Boolean,
+    onUpvoteIconClick: () -> Unit = {},
+    onCommentIconClick: () -> Unit = {},
     onSaveIconClick: () -> Unit = {},
     onDeleteIconClick: () -> Unit = {},
     onShareIconClick: () -> Unit = {},
@@ -379,11 +387,13 @@ fun PostActions(
             icon = Icons.Default.ArrowUpward,
             label = upVotes.toString(),
             actionDescription = stringResource(R.string.upvote),
+            onclick = onUpvoteIconClick,
         )
         PostActionItem(
             icon = Icons.AutoMirrored.Outlined.Message,
             label = comments.toString(),
             actionDescription = stringResource(R.string.comment),
+            onclick = onCommentIconClick,
         )
 
         PostActionItem(
