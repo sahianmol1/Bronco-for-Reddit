@@ -1,4 +1,4 @@
-package com.anmolsahi.postdetailspresentation.postdetails.ui
+package com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

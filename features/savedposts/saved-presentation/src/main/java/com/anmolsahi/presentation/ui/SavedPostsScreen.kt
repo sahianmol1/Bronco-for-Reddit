@@ -34,6 +34,7 @@ fun SavedPostsScreen(
     viewModel: SavedPostsViewModel = hiltViewModel(),
     onClick: (postId: String, postUrl: String) -> Unit = { _, _ -> },
     onSaveIconClick: (String) -> Unit = {},
+    onFullScreenIconClick: (videoUrl: String?) -> Unit,
 ) {
     val context = LocalContext.current
     val uiState by
@@ -94,7 +95,7 @@ fun SavedPostsScreen(
                         showDeletePostAlertDialog = true
                     },
                     onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
-                    onFullScreenIconClick = { _, _ -> },
+                    onFullScreenIconClick = onFullScreenIconClick,
                 )
             }
         }

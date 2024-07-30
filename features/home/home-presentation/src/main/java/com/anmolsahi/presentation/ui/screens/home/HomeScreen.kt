@@ -31,6 +31,7 @@ import com.anmolsahi.presentation.ui.components.HomeScreenListings
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onClick: (postId: String, postUrl: String) -> Unit,
+    onFullScreenIconClick: (videoUrl: String?) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
@@ -121,6 +122,7 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = hotPosts.value,
                         onClick = onClick,
+                        onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getHotPosts(shouldRefreshData = true) },
                         loadMoreData = { homeViewModel.getHotPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
@@ -140,6 +142,7 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = newPosts.value,
                         onClick = onClick,
+                        onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getNewPosts(true) },
                         loadMoreData = { homeViewModel.getNewPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
@@ -159,6 +162,7 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = topPosts.value,
                         onClick = onClick,
+                        onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getTopPosts(true) },
                         loadMoreData = { homeViewModel.getTopPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
@@ -178,6 +182,7 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = bestPosts.value,
                         onClick = onClick,
+                        onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getBestPosts(true) },
                         loadMoreData = { homeViewModel.getBestPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
@@ -197,6 +202,7 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = risingPosts.value,
                         onClick = onClick,
+                        onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getRisingsPosts(true) },
                         loadMoreData = { homeViewModel.getRisingsPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->
@@ -216,6 +222,7 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = controversialPosts.value,
                         onClick = onClick,
+                        onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getControversialPosts(true) },
                         loadMoreData = { homeViewModel.getControversialPosts(nextPageKey = it) },
                         onSaveIconClick = { postId ->

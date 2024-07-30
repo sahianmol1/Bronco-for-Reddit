@@ -14,7 +14,7 @@ import com.anmolsahi.commonui.components.PostActions
 import com.anmolsahi.commonui.components.PostImage
 import com.anmolsahi.commonui.components.PostVideo
 import com.anmolsahi.commonui.components.SubRedditName
-import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsUiState
+import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsUiState
 
 @Composable
 fun PostDetailsComponent(

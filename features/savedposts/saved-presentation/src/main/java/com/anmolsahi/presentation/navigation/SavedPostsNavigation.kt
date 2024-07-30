@@ -18,6 +18,11 @@ fun NavGraphBuilder.savedPostsNavGraph(navController: NavHostController) {
                         "?post-id=$postId&is-from-saved-posts=$isSavedPostsFlow&post_url=$postUrl",
                 )
             },
+            onFullScreenIconClick = { videoUrl ->
+                navController.navigate(
+                    Destinations.VideoPlayerDestination.route + "?video-url=$videoUrl",
+                )
+            },
         )
     }
 }

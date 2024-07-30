@@ -88,7 +88,7 @@ fun PostComponent(
     onSaveIconClick: (postId: String) -> Unit,
     onDeleteIconClick: (postId: String) -> Unit = {},
     onShareIconClick: (postUrl: String) -> Unit = {},
-    onFullScreenIconClick: (postId: String, postUrl: String) -> Unit,
+    onFullScreenIconClick: (videoUrl: String?) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -107,21 +107,6 @@ fun PostComponent(
         }
 
         redditPostUiModel.imageUrl?.let {
-            if (it.contains(".gif")) {
-                redditPostUiModel.gifUrl?.let {
-                    PostVideo(
-                        modifier = Modifier.zIndex(1f),
-                        videoUrl = redditPostUiModel.gifUrl,
-                        onFullScreenIconClick = {
-                            onFullScreenIconClick(
-                                redditPostUiModel.id,
-                                redditPostUiModel.postUrl.orEmpty(),
-                            )
-                        },
-                    )
-                }
-            }
-
             if (redditPostUiModel.videoUrl == null) {
                 PostImage(
                     modifier = Modifier
@@ -139,7 +124,7 @@ fun PostComponent(
                 modifier = Modifier.zIndex(1f),
                 videoUrl = it,
                 onFullScreenIconClick = {
-                    onFullScreenIconClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty())
+                    onFullScreenIconClick(redditPostUiModel.videoUrl)
                 },
             )
         }
@@ -537,7 +522,7 @@ fun PostPreview() {
         redditPostUiModel = RedditPostUiModel(id = "0"),
         onClick = { _, _ -> },
         onSaveIconClick = {},
-        onFullScreenIconClick = { _, _ -> },
+        onFullScreenIconClick = { _ -> },
     )
 }
 

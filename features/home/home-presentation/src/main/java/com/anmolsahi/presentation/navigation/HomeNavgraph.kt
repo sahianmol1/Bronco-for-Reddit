@@ -17,6 +17,11 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
                         "?post-id=$postId&post_url=$postUrl",
                 )
             },
+            onFullScreenIconClick = { videoUrl ->
+                navController.navigate(
+                    Destinations.VideoPlayerDestination.route + "?video-url=$videoUrl",
+                )
+            },
         )
     }
 }

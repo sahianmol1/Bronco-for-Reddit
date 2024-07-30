@@ -1,4 +1,4 @@
-package com.anmolsahi.postdetailspresentation.postdetails.ui
+package com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
@@ -42,11 +42,11 @@ import com.anmolsahi.designsystem.utils.slideOutToBottomTransition
 import com.anmolsahi.postdetailspresentation.R
 import com.anmolsahi.postdetailspresentation.postdetails.components.CommentsComponent
 import com.anmolsahi.postdetailspresentation.postdetails.components.PostDetailsComponent
-import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_COMMENTS_HEADING
-import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_COMMENTS_SECTION
-import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_DIVIDER
-import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_LOADING
-import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreenValues.TYPE_POST_DETAILS
+import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsScreenValues.TYPE_COMMENTS_HEADING
+import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsScreenValues.TYPE_COMMENTS_SECTION
+import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsScreenValues.TYPE_DIVIDER
+import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsScreenValues.TYPE_LOADING
+import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsScreenValues.TYPE_POST_DETAILS
 import com.anmolsahi.postdetailspresentation.postdetails.utils.shouldShowCommentsComponent
 import kotlinx.coroutines.launch
 import com.anmolsahi.commonui.R as commonUiR

@@ -6,7 +6,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.anmolsahi.designsystem.utils.Destinations
-import com.anmolsahi.postdetailspresentation.postdetails.ui.PostDetailsScreen
+import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsScreen
+import com.anmolsahi.postdetailspresentation.postdetails.ui.videoplayer.VideoPlayerScreen
 
 fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
     composable(
@@ -41,5 +42,17 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
                 navController.popBackStack()
             },
         )
+    }
+
+    composable(
+        route = Destinations.VideoPlayerDestination.route + "?video-url={video-url}",
+        arguments = listOf(
+            navArgument("video-url") {
+                type = NavType.StringType
+            },
+        ),
+    ) { navBackStackEntry ->
+        val videoUrl = navBackStackEntry.arguments?.getString("video-url")
+        VideoPlayerScreen(videoUrl = videoUrl)
     }
 }
