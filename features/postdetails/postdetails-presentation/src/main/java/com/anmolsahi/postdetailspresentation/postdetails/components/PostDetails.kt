@@ -58,6 +58,7 @@ fun PostDetailsComponent(
                     PostVideo(
                         modifier = Modifier.zIndex(1f),
                         videoUrl = uiState.data.gifUrl.orEmpty(),
+                        onFullScreenIconClick = {},
                     )
                 }
             }
@@ -67,6 +68,7 @@ fun PostDetailsComponent(
             PostVideo(
                 modifier = Modifier.zIndex(1f),
                 videoUrl = videoUrl,
+                onFullScreenIconClick = {},
             )
         }
 

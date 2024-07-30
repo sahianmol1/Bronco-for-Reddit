@@ -28,6 +28,7 @@ import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.BookmarkAdded
+import androidx.compose.material.icons.filled.Fullscreen
 import androidx.compose.material.icons.outlined.BookmarkAdd
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Share
@@ -70,6 +71,7 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.Lifecycle
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
@@ -86,6 +88,7 @@ fun PostComponent(
     onSaveIconClick: (postId: String) -> Unit,
     onDeleteIconClick: (postId: String) -> Unit = {},
     onShareIconClick: (postUrl: String) -> Unit = {},
+    onFullScreenIconClick: (postId: String, postUrl: String) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -102,12 +105,19 @@ fun PostComponent(
                 PostDescription(description = it)
             }
         }
+
         redditPostUiModel.imageUrl?.let {
             if (it.contains(".gif")) {
                 redditPostUiModel.gifUrl?.let {
                     PostVideo(
                         modifier = Modifier.zIndex(1f),
                         videoUrl = redditPostUiModel.gifUrl,
+                        onFullScreenIconClick = {
+                            onFullScreenIconClick(
+                                redditPostUiModel.id,
+                                redditPostUiModel.postUrl.orEmpty(),
+                            )
+                        },
                     )
                 }
             }
@@ -123,7 +133,17 @@ fun PostComponent(
                 )
             }
         }
-        redditPostUiModel.videoUrl?.let { PostVideo(modifier = Modifier.zIndex(1f), videoUrl = it) }
+
+        redditPostUiModel.videoUrl?.let {
+            PostVideo(
+                modifier = Modifier.zIndex(1f),
+                videoUrl = it,
+                onFullScreenIconClick = {
+                    onFullScreenIconClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty())
+                },
+            )
+        }
+
         PostActions(
             modifier = Modifier.padding(top = 8.dp),
             upVotes = redditPostUiModel.upVotes,
@@ -253,9 +273,10 @@ fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () 
     }
 }
 
+@androidx.annotation.OptIn(UnstableApi::class)
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
-fun PostVideo(videoUrl: String, modifier: Modifier = Modifier) {
+fun PostVideo(videoUrl: String, modifier: Modifier = Modifier, onFullScreenIconClick: () -> Unit) {
     val context = LocalContext.current
 
     val lifecycleEvent = rememberLifecycleEvent()
@@ -287,7 +308,7 @@ fun PostVideo(videoUrl: String, modifier: Modifier = Modifier) {
         }
     }
 
-    Box(modifier = modifier, contentAlignment = Alignment.BottomEnd) {
+    Box(modifier = modifier, contentAlignment = Alignment.BottomStart) {
         DisposableEffect(videoUrl) { onDispose { exoPlayer.release() } }
 
         AndroidView(
@@ -333,7 +354,7 @@ fun PostVideo(videoUrl: String, modifier: Modifier = Modifier) {
         if (scale == 1f && offset == Offset.Zero) {
             PostVideoControls(
                 isVolumeOff = isVolumeOff,
-                onSoundButtonClick = {
+                onSoundIconClick = {
                     isVolumeOff = !isVolumeOff
                     if (isVolumeOff) {
                         exoPlayer.volume = 0f
@@ -341,30 +362,56 @@ fun PostVideo(videoUrl: String, modifier: Modifier = Modifier) {
                         exoPlayer.volume = 1f
                     }
                 },
+                onFullScreenIconClick = onFullScreenIconClick,
             )
         }
     }
 }
 
 @Composable
-fun PostVideoControls(isVolumeOff: Boolean, onSoundButtonClick: () -> Unit) {
-    IconButton(
-        modifier = Modifier.drawBehind {
-            drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
-        },
-        onClick = onSoundButtonClick,
+fun PostVideoControls(
+    isVolumeOff: Boolean,
+    modifier: Modifier = Modifier,
+    onSoundIconClick: () -> Unit,
+    onFullScreenIconClick: () -> Unit,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        Icon(
-            modifier = Modifier.size(16.dp),
-            imageVector =
-            if (isVolumeOff) {
-                Icons.AutoMirrored.Filled.VolumeOff
-            } else {
-                Icons.AutoMirrored.Filled.VolumeUp
+        IconButton(
+            modifier = Modifier.drawBehind {
+                drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
             },
-            contentDescription = "Silent",
-            tint = Color.White,
-        )
+            onClick = onFullScreenIconClick,
+        ) {
+            Icon(
+                modifier = Modifier.size(20.dp),
+                imageVector = Icons.Default.Fullscreen,
+                contentDescription = stringResource(R.string.go_fullscreen),
+                tint = Color.White,
+            )
+        }
+
+        IconButton(
+            modifier = Modifier.drawBehind {
+                drawCircle(color = Color.Black.copy(alpha = 0.5f), radius = 56.0f)
+            },
+            onClick = onSoundIconClick,
+        ) {
+            Icon(
+                modifier = Modifier.size(20.dp),
+                imageVector =
+                if (isVolumeOff) {
+                    Icons.AutoMirrored.Filled.VolumeOff
+                } else {
+                    Icons.AutoMirrored.Filled.VolumeUp
+                },
+                contentDescription = stringResource(R.string.silent),
+                tint = Color.White,
+            )
+        }
     }
 }
 
@@ -483,6 +530,7 @@ fun PostPreview() {
         redditPostUiModel = RedditPostUiModel(id = "0"),
         onClick = { _, _ -> },
         onSaveIconClick = {},
+        onFullScreenIconClick = { _, _ -> },
     )
 }
 

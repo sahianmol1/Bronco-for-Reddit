@@ -159,6 +159,7 @@ fun SearchScreen(
                                 viewModel.onSaveIconClick(searchedData[index])
                             },
                             onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
+                            onFullScreenIconClick = { _, _ -> },
                         )
                     }
                 }

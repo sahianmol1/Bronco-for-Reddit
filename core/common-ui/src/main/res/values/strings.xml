@@ -19,4 +19,6 @@
     <string name="dismiss">Dismiss</string>
     <string name="error_dialog_button_text">OK</string>">
     <string name="error_dialog_title">Uh oh! Something went wrong</string>
+    <string name="silent">Silent</string>
+    <string name="go_fullscreen">go fullscreen</string>
 </resources>

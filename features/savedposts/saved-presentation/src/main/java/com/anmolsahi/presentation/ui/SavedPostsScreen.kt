@@ -94,6 +94,7 @@ fun SavedPostsScreen(
                         showDeletePostAlertDialog = true
                     },
                     onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
+                    onFullScreenIconClick = { _, _ -> },
                 )
             }
         }

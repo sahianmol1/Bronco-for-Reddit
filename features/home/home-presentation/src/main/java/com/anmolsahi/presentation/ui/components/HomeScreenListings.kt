@@ -99,6 +99,7 @@ fun HomeScreenListings(
                         onClick = onClick,
                         onSaveIconClick = onSaveIconClick,
                         onShareIconClick = onShareIconClick,
+                        onFullScreenIconClick = { _, _ -> },
                     )
                 }
 
