@@ -24,6 +24,7 @@ fun PostDetailsComponent(
     onSaveIconClick: () -> Unit,
     onDeleteIconClick: () -> Unit,
     onShareIconClick: () -> Unit,
+    onFullScreenIconClick: (videoUrl: String) -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -53,22 +54,15 @@ fun PostDetailsComponent(
                     imageUrl = uiState.data.imageUrl.orEmpty(),
                 )
             }
-            if (it.contains(".gif")) {
-                uiState.data.gifUrl?.let {
-                    PostVideo(
-                        modifier = Modifier.zIndex(1f),
-                        videoUrl = uiState.data.gifUrl.orEmpty(),
-                        onFullScreenIconClick = {},
-                    )
-                }
-            }
         }
 
         uiState?.data?.videoUrl?.let { videoUrl ->
             PostVideo(
                 modifier = Modifier.zIndex(1f),
                 videoUrl = videoUrl,
-                onFullScreenIconClick = {},
+                onFullScreenIconClick = {
+                    onFullScreenIconClick(videoUrl)
+                },
             )
         }
 

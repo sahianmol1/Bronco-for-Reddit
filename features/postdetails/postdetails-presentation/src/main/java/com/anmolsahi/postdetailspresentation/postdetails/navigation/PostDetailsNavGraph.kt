@@ -41,6 +41,11 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
             popBackStack = {
                 navController.popBackStack()
             },
+            onFullScreenIconClick = { videoUrl ->
+                navController.navigate(
+                    Destinations.VideoPlayerDestination.route + "?video-url=$videoUrl",
+                )
+            },
         )
     }
 
