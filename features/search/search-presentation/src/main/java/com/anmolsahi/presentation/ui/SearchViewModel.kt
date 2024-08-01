@@ -59,7 +59,9 @@ constructor(
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
         if (_searchQuery.value.isEmpty()) {
-            _searchDataUiState.update { it.copy(searchedData = null) }
+            _searchDataUiState.update {
+                it.copy(searchedData = null)
+            }
         }
     }
 
@@ -70,18 +72,21 @@ constructor(
     private fun searchReddit(query: String, nextPageKey: String? = null) {
         searchRedditUseCase(query, nextPageKey)
             .onStart {
-                _searchDataUiState.update {
-                    it.copy(
-                        isLoading = true,
-                        searchedData = null,
-                    )
+                if (nextPageKey.isNullOrEmpty()) {
+                    _searchDataUiState.update {
+                        it.copy(
+                            isLoading = true,
+                            searchedData = null,
+                        )
+                    }
                 }
             }
             .onEach { redditPosts ->
                 _searchDataUiState.update {
                     it.copy(
+                        searchedData = it.searchedData.orEmpty() +
+                            redditPosts.orEmpty().map { post -> post.asUiModel() },
                         isLoading = false,
-                        searchedData = redditPosts?.map { post -> post.asUiModel() },
                     )
                 }
             }
@@ -113,15 +118,15 @@ constructor(
 
     fun saveRecentSearch(recentSearch: RecentSearch) {
         val recentSearchValue = recentSearch.value.lowercase().trim()
+        if (_searchDataUiState.value.recentSearches.any { it.value == recentSearchValue }) {
+            return
+        }
+
+        if (recentSearchValue.isBlank()) {
+            return
+        }
+
         viewModelScope.launch {
-            if (_searchDataUiState.value.recentSearches.any { it.value == recentSearchValue }) {
-                return@launch
-            }
-
-            if (recentSearchValue.isEmpty()) {
-                return@launch
-            }
-
             repository.insertRecentSearch(recentSearch)
         }
     }
@@ -145,8 +150,7 @@ constructor(
         viewModelScope.launch {
             _searchDataUiState.update {
                 it.copy(
-                    searchedData =
-                    it.searchedData?.map { redditPost ->
+                    searchedData = it.searchedData?.map { redditPost ->
                         if (redditPost.id == post.id) {
                             redditPost.copy(isSaved = !post.isSaved)
                         } else {
@@ -156,6 +160,12 @@ constructor(
                 )
             }
             delegate.savePost(post.asDomain())
+        }
+    }
+
+    fun loadMoreData(nextPageKey: String?) {
+        nextPageKey?.let {
+            searchReddit(_searchQuery.value, nextPageKey)
         }
     }
 }

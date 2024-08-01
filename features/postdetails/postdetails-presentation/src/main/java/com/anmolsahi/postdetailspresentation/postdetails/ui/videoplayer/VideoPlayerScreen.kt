@@ -20,6 +20,9 @@ import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.commonui.utils.rememberLifecycleEvent
 import dagger.hilt.android.UnstableApi
 
+/**
+ * This is the full screen Video player View/Screen
+ */
 @Composable
 fun VideoPlayerScreen(modifier: Modifier = Modifier, videoUrl: String? = null) {
     if (videoUrl == null) {
