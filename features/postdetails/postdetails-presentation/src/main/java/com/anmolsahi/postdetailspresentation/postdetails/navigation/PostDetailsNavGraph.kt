@@ -6,16 +6,18 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.anmolsahi.designsystem.utils.Destinations
+import com.anmolsahi.designsystem.utils.slideInFromLeft
+import com.anmolsahi.designsystem.utils.slideInFromRight
+import com.anmolsahi.designsystem.utils.slideOutToLeft
+import com.anmolsahi.designsystem.utils.slideOutToRight
 import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsScreen
 import com.anmolsahi.postdetailspresentation.postdetails.ui.videoplayer.VideoPlayerScreen
 
 fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
     composable(
-        route =
-        Destinations.PostDetailsDestinations.route +
+        route = Destinations.PostDetailsDestinations.route +
             "?post-id={post-id}&is-from-saved-posts={is-from-saved-posts}&post_url={post_url}",
-        arguments =
-        listOf(
+        arguments = listOf(
             navArgument("post-id") {
                 type = NavType.StringType
                 nullable = true
@@ -30,6 +32,10 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
                 nullable = true
             },
         ),
+        enterTransition = { slideInFromRight() },
+        popExitTransition = { slideOutToRight() },
+        exitTransition = { slideOutToLeft() },
+        popEnterTransition = { slideInFromLeft() },
     ) { navBackStackEntry ->
         val postId = navBackStackEntry.arguments?.getString("post-id")
         val isFromSavedPosts = navBackStackEntry.arguments?.getBoolean("is-from-saved-posts")
@@ -56,6 +62,8 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
                 type = NavType.StringType
             },
         ),
+        enterTransition = { slideInFromRight() },
+        popExitTransition = { slideOutToRight() },
     ) { navBackStackEntry ->
         val videoUrl = navBackStackEntry.arguments?.getString("video-url")
         VideoPlayerScreen(videoUrl = videoUrl)

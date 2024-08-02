@@ -35,10 +35,10 @@ import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.commonui.utils.animateScrollToTop
 import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
-import com.anmolsahi.designsystem.uicomponents.BRScrollToTop
+import com.anmolsahi.designsystem.uicomponents.BRScrollToTopButton
 import com.anmolsahi.designsystem.utils.showToast
-import com.anmolsahi.designsystem.utils.slideInFromBottomTransition
-import com.anmolsahi.designsystem.utils.slideOutToBottomTransition
+import com.anmolsahi.designsystem.utils.slideInFromBottom
+import com.anmolsahi.designsystem.utils.slideOutToBottom
 import com.anmolsahi.postdetailspresentation.R
 import com.anmolsahi.postdetailspresentation.postdetails.components.CommentsComponent
 import com.anmolsahi.postdetailspresentation.postdetails.components.PostDetailsComponent
@@ -206,10 +206,10 @@ fun PostDetailsScreen(
 
             AnimatedVisibility(
                 visible = lazyListState.canScrollBackward,
-                enter = slideInFromBottomTransition(),
-                exit = slideOutToBottomTransition(),
+                enter = slideInFromBottom(),
+                exit = slideOutToBottom(),
             ) {
-                BRScrollToTop {
+                BRScrollToTopButton {
                     coroutineScope.launch { lazyListState.animateScrollToTop() }
                 }
             }

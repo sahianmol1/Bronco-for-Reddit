@@ -30,8 +30,7 @@ class SavedPostsViewModel @Inject constructor(
     val savedPostsUiState: StateFlow<PostsUiState> = _savedPostsUiState.asStateFlow()
 
     fun getAllSavedPosts() {
-        repository
-            .getAllSavedPosts()
+        repository.getAllSavedPosts()
             .onStart {
                 _savedPostsUiState.update { it.copy(isLoading = true) }
             }.onEach { redditPosts ->

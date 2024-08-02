@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.anmolsahi.designsystem.R
 
 @Composable
-fun BRScrollToTop(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun BRScrollToTopButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     IconButton(
         modifier = modifier
             .padding(16.dp)
@@ -39,7 +39,7 @@ fun BRScrollToTop(modifier: Modifier = Modifier, onClick: () -> Unit) {
 }
 
 @Composable
-fun BRScrollToTop2(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun BRScrollToTopButton2(modifier: Modifier = Modifier, onClick: () -> Unit) {
     Box(
         modifier = modifier
             .padding(16.dp)

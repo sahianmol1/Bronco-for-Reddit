@@ -36,7 +36,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
-import com.anmolsahi.designsystem.utils.slideInFromBottomTransition
+import com.anmolsahi.designsystem.utils.slideInFromBottom
 import com.anmolsahi.homepresentation.R
 import com.anmolsahi.presentation.ui.screens.home.PostsUiState
 
@@ -115,7 +115,7 @@ fun HomeScreenListings(
         // Show error screen
         AnimatedVisibility(
             visible = !uiState.errorMessage.isNullOrBlank() && list.isEmpty(),
-            enter = slideInFromBottomTransition(),
+            enter = slideInFromBottom(),
         ) {
             var showLogs by rememberSaveable { mutableStateOf(false) }
             Column(

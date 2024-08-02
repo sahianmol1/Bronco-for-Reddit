@@ -39,7 +39,7 @@ private val LightColorScheme =
     )
 
 @Composable
-fun BroncoForRedditTheme(
+fun BRTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
@@ -72,3 +72,6 @@ fun BroncoForRedditTheme(
         content = content,
     )
 }
+
+val BRTheme
+    @Composable get() = MaterialTheme

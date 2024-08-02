@@ -57,7 +57,6 @@ private object SearchScreenDefaults {
     const val QUICK_RESULTS_FOOTER = "quick_results_footer"
     const val REDDIT_POST = "reddit_post"
     const val LOADING_INDICATOR = "loading_indicator"
-    const val TAG = "SearchScreen"
     const val QUICK_SEARCH_RESULTS_MAX_ITEMS = 10
 }
 

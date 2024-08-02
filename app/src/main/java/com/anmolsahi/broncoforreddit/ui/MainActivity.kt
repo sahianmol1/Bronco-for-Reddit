@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.anmolsahi.broncoforreddit.ui.features.home.screen.MainScreen
-import com.anmolsahi.designsystem.theme.BroncoForRedditTheme
+import com.anmolsahi.designsystem.theme.BRTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            BroncoForRedditTheme {
+            BRTheme {
                 val navController = rememberNavController()
                 MainScreen(navController = navController)
             }

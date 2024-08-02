@@ -1,6 +1,5 @@
 package com.anmolsahi.presentation.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.statusBars
@@ -27,7 +26,6 @@ import com.anmolsahi.commonui.utils.scrollToTop
 import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SavedPostsScreen(
     modifier: Modifier = Modifier,
@@ -37,10 +35,9 @@ fun SavedPostsScreen(
     onFullScreenIconClick: (videoUrl: String?) -> Unit,
 ) {
     val context = LocalContext.current
-    val uiState by
-        viewModel.savedPostsUiState.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-        )
+    val uiState by viewModel.savedPostsUiState.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
+    )
     val lazyListState = rememberLazyListState()
     var list by remember { mutableStateOf(emptyList<RedditPostUiModel>()) }
     var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
@@ -84,8 +81,7 @@ fun SavedPostsScreen(
                 contentType = { _, _ -> "reddit_post" },
             ) { _, item ->
                 PostComponent(
-                    modifier = Modifier
-                        .animateItemPlacement(),
+                    modifier = Modifier,
                     redditPostUiModel = item,
                     onClick = onClick,
                     onSaveIconClick = onSaveIconClick,
