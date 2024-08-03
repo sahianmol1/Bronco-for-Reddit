@@ -2,14 +2,14 @@ package com.anmolsahi.data.repositories.homerepository
 
 import com.anmolsahi.data.local.dao.BestPostDao
 import com.anmolsahi.data.local.dao.ControversialPostDao
+import com.anmolsahi.data.local.dao.HotPostDao
 import com.anmolsahi.data.local.dao.NewPostDao
-import com.anmolsahi.data.local.dao.RedditPostDao
 import com.anmolsahi.data.local.dao.RisingPostDao
 import com.anmolsahi.data.local.dao.TopPostDao
 import com.anmolsahi.data.mappers.asBestPostEntity
 import com.anmolsahi.data.mappers.asControversialPostEntity
 import com.anmolsahi.data.mappers.asDomain
-import com.anmolsahi.data.mappers.asEntity
+import com.anmolsahi.data.mappers.asHotPostEntity
 import com.anmolsahi.data.mappers.asNewPostEntity
 import com.anmolsahi.data.mappers.asRisingPostEntity
 import com.anmolsahi.data.mappers.asTopPostEntity
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class HomeRepositoryImpl(
-    private val redditPostDao: RedditPostDao,
+    private val hotPostDao: HotPostDao,
     private val topPostDao: TopPostDao,
     private val bestPostDao: BestPostDao,
     private val risingPostDao: RisingPostDao,
@@ -33,7 +33,7 @@ class HomeRepositoryImpl(
         nextPageKey: String?,
     ): Flow<List<RedditPost>?> {
         return flow {
-            val allPostsFromDb = redditPostDao.getAllRedditPosts()
+            val allPostsFromDb = hotPostDao.getAllRedditPosts()
 
             emit(
                 if (shouldReturnDataFromCache(allPostsFromDb, shouldRefreshData, nextPageKey)) {
@@ -43,20 +43,21 @@ class HomeRepositoryImpl(
                     // If a refresh is needed or there are no posts in the database, fetch new data.
                     val listings =
                         homeService.getHotListings(nextPageKey = nextPageKey).getOrThrow()
-                            .asEntity()
+                            .asHotPostEntity()
 
                     if (allPostsFromDb.isNotEmpty() && shouldRefreshData) {
-                        // If there are existing posts in the database and refresh is needed, delete them before inserting new ones.
-                        redditPostDao.deleteAllRedditPosts()
+                        // If there are existing posts in the database and refresh is needed,
+                        // delete them before inserting new ones.
+                        hotPostDao.deleteAllRedditPosts()
                     }
 
                     // Insert the new posts into the database.
                     listings.forEach {
-                        redditPostDao.insertRedditPost(it)
+                        hotPostDao.insertRedditPost(it)
                     }
 
                     // Fetch and emit the updated posts from the database.
-                    redditPostDao.getAllRedditPosts().asDomain()
+                    hotPostDao.getAllRedditPosts().asDomain()
                 },
             )
         }
@@ -239,11 +240,11 @@ class HomeRepositoryImpl(
 
     override suspend fun togglePostSavedStatus(postId: String): Boolean {
         return try {
-            val redditPost = redditPostDao.getRedditPostById(id = postId)
-            redditPostDao.insertRedditPost(
-                redditPostEntity = redditPost.copy(isSaved = !redditPost.isSaved),
+            val redditPost = hotPostDao.getRedditPostById(id = postId)
+            hotPostDao.insertRedditPost(
+                hotPostEntity = redditPost.copy(isSaved = !redditPost.isSaved),
             )
-            redditPostDao.getRedditPostById(id = postId).isSaved
+            hotPostDao.getRedditPostById(id = postId).isSaved
         } catch (e: Throwable) {
             false
         }
@@ -251,7 +252,7 @@ class HomeRepositoryImpl(
 
     override suspend fun getPostById(postId: String): RedditPost? {
         return try {
-            redditPostDao.getRedditPostById(id = postId).asDomain()
+            hotPostDao.getRedditPostById(id = postId).asDomain()
         } catch (e: Throwable) {
             null
         }

@@ -1,10 +1,10 @@
-package com.anmolsahi.data.model.local
+package com.anmolsahi.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "reddit_post")
-data class RedditPostEntity(
+@Entity(tableName = "hot_post")
+data class HotPostEntity(
     @PrimaryKey
     val id: String,
     val subName: String = "",

@@ -5,8 +5,8 @@ import com.anmolsahi.data.local.RecentSearchesDao
 import com.anmolsahi.data.local.SavedPostDao
 import com.anmolsahi.data.local.dao.BestPostDao
 import com.anmolsahi.data.local.dao.ControversialPostDao
+import com.anmolsahi.data.local.dao.HotPostDao
 import com.anmolsahi.data.local.dao.NewPostDao
-import com.anmolsahi.data.local.dao.RedditPostDao
 import com.anmolsahi.data.local.dao.RisingPostDao
 import com.anmolsahi.data.local.dao.TopPostDao
 import com.anmolsahi.data.remote.HomeService
@@ -32,14 +32,14 @@ object RepositoriesModule {
     @Provides
     fun provideHomeRepository(
         homeService: HomeService,
-        redditPostDao: RedditPostDao,
+        hotPostDao: HotPostDao,
         topPostDao: TopPostDao,
         bestPostDao: BestPostDao,
         risingPostDao: RisingPostDao,
         controversialPostDao: ControversialPostDao,
         newPostDao: NewPostDao,
     ): HomeRepository = HomeRepositoryImpl(
-        redditPostDao = redditPostDao,
+        hotPostDao = hotPostDao,
         homeService = homeService,
         topPostDao = topPostDao,
         bestPostDao = bestPostDao,

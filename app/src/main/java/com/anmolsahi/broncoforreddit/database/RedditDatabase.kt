@@ -8,20 +8,20 @@ import com.anmolsahi.data.local.SavedPostDao
 import com.anmolsahi.data.local.SavedPostEntity
 import com.anmolsahi.data.local.dao.BestPostDao
 import com.anmolsahi.data.local.dao.ControversialPostDao
+import com.anmolsahi.data.local.dao.HotPostDao
 import com.anmolsahi.data.local.dao.NewPostDao
-import com.anmolsahi.data.local.dao.RedditPostDao
 import com.anmolsahi.data.local.dao.RisingPostDao
 import com.anmolsahi.data.local.dao.TopPostDao
 import com.anmolsahi.data.local.entities.BestPostEntity
 import com.anmolsahi.data.local.entities.ControversialPostEntity
+import com.anmolsahi.data.local.entities.HotPostEntity
 import com.anmolsahi.data.local.entities.NewPostEntity
 import com.anmolsahi.data.local.entities.RisingPostEntity
 import com.anmolsahi.data.local.entities.TopPostEntity
-import com.anmolsahi.data.model.local.RedditPostEntity
 
 @Database(
     entities = [
-        RedditPostEntity::class,
+        HotPostEntity::class,
         TopPostEntity::class,
         BestPostEntity::class,
         NewPostEntity::class,
@@ -33,7 +33,7 @@ import com.anmolsahi.data.model.local.RedditPostEntity
     version = 1,
 )
 abstract class RedditDatabase : RoomDatabase() {
-    abstract fun getRedditPostDao(): RedditPostDao
+    abstract fun getRedditPostDao(): HotPostDao
 
     abstract fun getTopPostDao(): TopPostDao
 

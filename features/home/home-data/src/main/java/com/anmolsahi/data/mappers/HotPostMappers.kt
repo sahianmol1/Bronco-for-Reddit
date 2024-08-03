@@ -1,14 +1,14 @@
 package com.anmolsahi.data.mappers
 
-import com.anmolsahi.data.local.entities.ControversialPostEntity
+import com.anmolsahi.data.local.entities.HotPostEntity
 import com.anmolsahi.data.model.remote.ListingsResponse
 import com.anmolsahi.domain.models.RedditPost
 
-fun ListingsResponse.asControversialPostEntity(): List<ControversialPostEntity> {
+fun ListingsResponse.asHotPostEntity(): List<HotPostEntity> {
     val after = this.data?.after
     return this.data?.children?.map {
         it.childrenData.run {
-            ControversialPostEntity(
+            HotPostEntity(
                 id = this.id,
                 subName = this.subName.orEmpty(),
                 title = this.title,
@@ -27,7 +27,7 @@ fun ListingsResponse.asControversialPostEntity(): List<ControversialPostEntity> 
     }.orEmpty()
 }
 
-fun List<ControversialPostEntity>.asDomain(): List<RedditPost> {
+fun List<HotPostEntity>.asDomain(): List<RedditPost> {
     return this.map {
         RedditPost(
             id = it.id,
@@ -48,7 +48,7 @@ fun List<ControversialPostEntity>.asDomain(): List<RedditPost> {
     }
 }
 
-fun ControversialPostEntity.asDomain(): RedditPost {
+fun HotPostEntity.asDomain(): RedditPost {
     return RedditPost(
         id = this.id,
         subName = this.subName,
