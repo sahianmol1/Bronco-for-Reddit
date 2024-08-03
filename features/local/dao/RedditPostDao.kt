@@ -1,4 +1,4 @@
-package com.anmolsahi.data.local
+package com.anmolsahi.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete

@@ -46,8 +46,7 @@ class HomeViewModel @Inject constructor(
     var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
 
     fun getHotPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
-        repository
-            .getHotPosts(shouldRefreshData, nextPageKey)
+        repository.getHotPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
                     _hotPosts.update { it.copy(isLoading = true) }
@@ -73,8 +72,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getNewPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
-        repository
-            .getNewPosts(shouldRefreshData, nextPageKey)
+        repository.getNewPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
                     _newPosts.update { it.copy(isLoading = true) }
@@ -102,8 +100,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getTopPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
-        repository
-            .getTopPosts(shouldRefreshData, nextPageKey)
+        repository.getTopPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
                     _topPosts.update { it.copy(isLoading = true) }
@@ -131,8 +128,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getBestPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
-        repository
-            .getBestPosts(shouldRefreshData, nextPageKey)
+        repository.getBestPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
                     _bestPosts.update { it.copy(isLoading = true) }
@@ -161,8 +157,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getRisingsPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
-        repository
-            .getRisingPosts(shouldRefreshData, nextPageKey)
+        repository.getRisingPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
                     _risingPosts.update { it.copy(isLoading = true) }
@@ -190,8 +185,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getControversialPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
-        repository
-            .getControversialPosts(shouldRefreshData, nextPageKey)
+        repository.getControversialPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
                     _controversialPosts.update { it.copy(isLoading = true) }
