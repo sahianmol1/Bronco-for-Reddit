@@ -80,17 +80,21 @@ fun PostDetailsScreen(
     val comments by remember(uiState) { mutableStateOf(uiState.postComments.orEmpty()) }
 
     LaunchedEffect(Unit) {
-        viewModel.getPostDetails(
-            postId = postId,
-            postUrl = postUrl,
-        )
+        if (uiState.data == null) {
+            viewModel.getPostDetails(
+                postId = postId,
+                postUrl = postUrl,
+            )
+        }
     }
 
     LaunchedEffect(Unit) {
-        viewModel.getPostComments(
-            postId = postId,
-            postUrl = postUrl,
-        )
+        if (comments.isEmpty()) {
+            viewModel.getPostComments(
+                postId = postId,
+                postUrl = postUrl,
+            )
+        }
     }
 
     LaunchedEffect(uiState.error) {

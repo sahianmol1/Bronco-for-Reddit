@@ -70,8 +70,10 @@ fun HomeScreenListings(
         }
     }
 
-    if (!lazyListState.canScrollForward && uiState.data?.isNotEmpty() == true) {
-        loadMoreData(list.last().after)
+    LaunchedEffect(key1 = lazyListState.canScrollForward) {
+        if (!lazyListState.canScrollForward && uiState.data?.isNotEmpty() == true) {
+            loadMoreData(list.last().after)
+        }
     }
 
     Box(
