@@ -4,10 +4,10 @@ import com.anmolsahi.broncoforreddit.delegates.HomeModuleManager
 import com.anmolsahi.broncoforreddit.delegates.PostDetailsModuleManager
 import com.anmolsahi.broncoforreddit.delegates.SavedPostModuleManager
 import com.anmolsahi.broncoforreddit.delegates.SearchModuleManager
+import com.anmolsahi.domain.delegate.HomeDelegate
 import com.anmolsahi.domain.delegate.SavedPostDelegate
 import com.anmolsahi.domain.delegate.SearchDelegate
 import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
-import com.anmolsahi.presentation.delegate.HomeDelegate
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,7 +16,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
-abstract class FeaturesModule {
+abstract class DelegateModule {
     @Binds
     @ViewModelScoped
     abstract fun getCommonUiDelegate(

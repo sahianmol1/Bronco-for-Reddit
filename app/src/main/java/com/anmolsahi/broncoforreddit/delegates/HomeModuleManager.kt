@@ -1,22 +1,21 @@
 package com.anmolsahi.broncoforreddit.delegates
 
+import com.anmolsahi.domain.delegate.HomeDelegate
 import com.anmolsahi.domain.model.SavedPost
 import com.anmolsahi.domain.models.RedditPost
-import com.anmolsahi.domain.repositories.HomeRepository
 import com.anmolsahi.domain.repositories.SavedPostRepository
-import com.anmolsahi.presentation.delegate.HomeDelegate
 import javax.inject.Inject
 
 class HomeModuleManager @Inject constructor(
     private val savedPostRepository: SavedPostRepository,
-    private val homeRepository: HomeRepository,
 ) : HomeDelegate {
-    override suspend fun updateSavedPosts(shouldSavePost: Boolean, postId: String) {
-        val post = homeRepository.getPostById(postId = postId)
+    override suspend fun updateSavedPosts(shouldSavePost: Boolean, post: RedditPost?) {
         if (shouldSavePost && post != null) {
             savedPostRepository.insertPost(post.asSavedPost())
         } else {
-            savedPostRepository.deleteSavedPost(postId)
+            post?.id?.let {
+                savedPostRepository.deleteSavedPost(it)
+            }
         }
     }
 }

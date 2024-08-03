@@ -27,6 +27,27 @@ object DatabaseModule {
 
     @Provides
     @Singleton
+    fun provideTopPostDao(redditDatabase: RedditDatabase) = redditDatabase.getTopPostDao()
+
+    @Provides
+    @Singleton
+    fun provideNewPostDao(redditDatabase: RedditDatabase) = redditDatabase.getNewPostDao()
+
+    @Provides
+    @Singleton
+    fun provideBestPostDao(redditDatabase: RedditDatabase) = redditDatabase.getBestPostDao()
+
+    @Provides
+    @Singleton
+    fun provideRisingPostDao(redditDatabase: RedditDatabase) = redditDatabase.getRisingPostDao()
+
+    @Provides
+    @Singleton
+    fun provideControversialPostDao(redditDatabase: RedditDatabase) =
+        redditDatabase.getControversialPostDao()
+
+    @Provides
+    @Singleton
     fun provideSavedPostDao(redditDatabase: RedditDatabase) = redditDatabase.getSavedPostDao()
 
     @Provides
