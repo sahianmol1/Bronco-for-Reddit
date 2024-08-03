@@ -76,6 +76,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import com.anmolsahi.commonui.R
+import com.anmolsahi.commonui.components.postimage.PostImagePager
 import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.commonui.utils.rememberLifecycleEvent
 
@@ -106,16 +107,27 @@ fun PostComponent(
             }
         }
 
-        redditPostUiModel.imageUrl?.let {
+        redditPostUiModel.imageUrlList?.apply {
             if (redditPostUiModel.videoUrl == null) {
-                PostImage(
-                    modifier = Modifier
-                        .zIndex(1f),
-                    imageUrl = redditPostUiModel.imageUrl,
-                    onImageClick = {
-                        onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty())
-                    },
-                )
+                if (this.size == 1) {
+                    PostImage(
+                        modifier = Modifier
+                            .zIndex(1f),
+                        imageUrl = this.first().orEmpty(),
+                        onImageClick = {
+                            onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty())
+                        },
+                    )
+                } else if (this.size > 1) {
+                    PostImagePager(
+                        modifier = Modifier
+                            .zIndex(1f),
+                        imageUrlList = this.filterNotNull(),
+                        onImageClick = {
+                            onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty())
+                        },
+                    )
+                }
             }
         }
 

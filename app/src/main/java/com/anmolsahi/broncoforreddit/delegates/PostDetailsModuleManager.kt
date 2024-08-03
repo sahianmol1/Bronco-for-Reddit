@@ -61,7 +61,7 @@ class PostDetailsModuleManager @Inject constructor(
         description = description,
         upVotes = upVotes,
         comments = comments,
-        imageUrl = imageUrl,
+        imageUrls = imageUrls,
         postUrl = postUrl,
         videoUrl = videoUrl,
         gifUrl = gifUrl,

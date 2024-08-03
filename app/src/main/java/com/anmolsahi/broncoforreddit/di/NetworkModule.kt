@@ -12,12 +12,14 @@ import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+    @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton
     fun provideKtorClient(): HttpClient = HttpClient(Android) {
@@ -27,6 +29,7 @@ object NetworkModule {
                 Json {
                     ignoreUnknownKeys = true
                     isLenient = true
+                    allowTrailingComma = true
                 },
             )
         }

@@ -14,7 +14,8 @@ fun ListingsResponse.asDomain(): List<RedditPost> {
                 description = this.description,
                 upVotes = this.upVotes ?: 0,
                 comments = this.comments ?: 0,
-                imageUrl = this.preview?.images?.first()?.source?.url,
+                imageUrls = this.mediaMetadata?.values?.map { mediaMetadata -> mediaMetadata?.s?.u }
+                    ?: listOf(this.preview?.images?.first()?.source?.url),
                 postUrl = this.postUrl,
                 videoUrl = this.secureMedia?.redditVideo?.videoUrl,
                 gifUrl = "",

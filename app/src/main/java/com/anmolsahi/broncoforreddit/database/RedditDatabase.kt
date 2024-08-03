@@ -2,6 +2,7 @@ package com.anmolsahi.broncoforreddit.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.anmolsahi.data.local.RecentSearchEntity
 import com.anmolsahi.data.local.RecentSearchesDao
 import com.anmolsahi.data.local.SavedPostDao
@@ -18,6 +19,7 @@ import com.anmolsahi.data.local.entities.HotPostEntity
 import com.anmolsahi.data.local.entities.NewPostEntity
 import com.anmolsahi.data.local.entities.RisingPostEntity
 import com.anmolsahi.data.local.entities.TopPostEntity
+import com.anmolsahi.data.typeconverters.ListStringConverter
 
 @Database(
     entities = [
@@ -31,7 +33,9 @@ import com.anmolsahi.data.local.entities.TopPostEntity
         RecentSearchEntity::class,
     ],
     version = 1,
+    exportSchema = false,
 )
+@TypeConverters(ListStringConverter::class)
 abstract class RedditDatabase : RoomDatabase() {
     abstract fun getRedditPostDao(): HotPostDao
 

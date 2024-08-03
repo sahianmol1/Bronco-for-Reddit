@@ -12,7 +12,7 @@ fun List<SavedPost>.asUiModel(): List<RedditPostUiModel> {
             description = it.description,
             upVotes = it.upVotes,
             comments = it.comments,
-            imageUrl = it.imageUrl,
+            imageUrlList = it.imageUrls,
             postUrl = it.postUrl,
             videoUrl = it.videoUrl,
             gifUrl = it.gifUrl,

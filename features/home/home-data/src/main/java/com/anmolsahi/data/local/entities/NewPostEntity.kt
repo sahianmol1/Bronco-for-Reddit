@@ -12,7 +12,7 @@ data class NewPostEntity(
     val description: String? = null,
     val upVotes: Int = 0,
     val comments: Int = 0,
-    val imageUrl: String? = null,
+    val imageUrls: List<String?>? = null,
     val postUrl: String? = null,
     val videoUrl: String? = null,
     val gifUrl: String? = null,

@@ -1,5 +1,6 @@
 package com.anmolsahi.data.model.remote
 
+import com.anmolsahi.data.model.remote.mediametada.MediaMetadata
 import com.anmolsahi.data.model.remote.preview.Preview
 import com.anmolsahi.data.serializer.RepliesDeserializer
 import kotlinx.serialization.SerialName
@@ -40,8 +41,8 @@ data class ChildrenData(
     val replies: ListingsResponse? = null,
     @SerialName("body")
     val body: String? = null,
-    @SerialName("gallery_data")
-    val galleryData: GalleryData? = null,
+    @SerialName("media_metadata")
+    val mediaMetadata: Map<String, MediaMetadata?>? = null,
 )
 
 @Serializable
@@ -66,18 +67,4 @@ data class GifPreview(
 data class RedditGifPreview(
     @SerialName("dash_url")
     val url: String? = null,
-)
-
-@Serializable
-data class GalleryData(
-    @SerialName("items")
-    val items: List<GalleryItem>? = null,
-)
-
-@Serializable
-data class GalleryItem(
-    @SerialName("media_id")
-    val mediaId: String? = null,
-    @SerialName("id")
-    val id: String? = null,
 )

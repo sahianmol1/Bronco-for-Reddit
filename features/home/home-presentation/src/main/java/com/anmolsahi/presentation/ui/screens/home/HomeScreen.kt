@@ -115,6 +115,7 @@ fun HomeScreen(
             pagerState = pagerState,
         )
         BRHorizontalPager(
+            modifier = Modifier.fillMaxSize(),
             pagerState = pagerState,
         ) { page ->
             when (page) {

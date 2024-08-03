@@ -1,7 +1,6 @@
 package com.anmolsahi.designsystem.uicomponents
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.PagerState
@@ -12,10 +11,11 @@ import androidx.compose.ui.Modifier
 @Composable
 fun BRHorizontalPager(
     pagerState: PagerState,
+    modifier: Modifier = Modifier,
     pageContent: @Composable PagerScope.(page: HomePage) -> Unit,
 ) {
     HorizontalPager(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         state = pagerState,
         pageContent = {
             pageContent(HomePage.entries[it])

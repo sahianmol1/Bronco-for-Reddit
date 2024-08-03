@@ -14,6 +14,7 @@ import com.anmolsahi.commonui.components.PostActions
 import com.anmolsahi.commonui.components.PostImage
 import com.anmolsahi.commonui.components.PostVideo
 import com.anmolsahi.commonui.components.SubRedditName
+import com.anmolsahi.commonui.components.postimage.PostImagePager
 import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsUiState
 
 @Composable
@@ -47,12 +48,22 @@ fun PostDetailsComponent(
             )
         }
 
-        uiState?.data?.imageUrl?.let {
+        uiState?.data?.imageUrlList?.apply {
             if (uiState.data.videoUrl == null) {
-                PostImage(
-                    modifier = Modifier.zIndex(1f),
-                    imageUrl = uiState.data.imageUrl.orEmpty(),
-                )
+                if (this.size == 1) {
+                    PostImage(
+                        modifier = Modifier
+                            .zIndex(1f),
+                        imageUrl = this.first().orEmpty(),
+
+                    )
+                } else if (this.size > 1) {
+                    PostImagePager(
+                        modifier = Modifier
+                            .zIndex(1f),
+                        imageUrlList = this.filterNotNull(),
+                    )
+                }
             }
         }
 

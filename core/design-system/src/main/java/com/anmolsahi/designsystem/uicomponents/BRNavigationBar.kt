@@ -106,16 +106,14 @@ fun BRNavigationBarView(
                     },
                     icon = {
                         Icon(
-                            imageVector =
-                            if (
+                            imageVector = if (
                                 getSelectedBottomNav(currentDestination, bottomNavItems, index)
                             ) {
                                 bottomNav.selectedIcon
                             } else {
                                 bottomNav.unselectedIcon
                             },
-                            contentDescription =
-                            stringResource(
+                            contentDescription = stringResource(
                                 R.string.bottom_bar_content_description,
                                 bottomNav.title,
                             ),
