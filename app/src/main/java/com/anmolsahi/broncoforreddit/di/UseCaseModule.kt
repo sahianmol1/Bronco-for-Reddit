@@ -1,11 +1,15 @@
 package com.anmolsahi.broncoforreddit.di
 
+import com.anmolsahi.domain.delegate.HomeDelegate
 import com.anmolsahi.domain.delegate.SavedPostDelegate
 import com.anmolsahi.domain.delegate.SearchDelegate
+import com.anmolsahi.domain.repositories.HomeRepository
 import com.anmolsahi.domain.repositories.SavedPostRepository
 import com.anmolsahi.domain.repositories.SearchRepository
 import com.anmolsahi.domain.usecase.DeleteSavedPostUseCase
 import com.anmolsahi.domain.usecase.SearchRedditUseCase
+import com.anmolsahi.domain.usecase.TogglePostSavedStatusUseCase
+import com.anmolsahi.domain.usecase.UpdateSavedPostsUseCase
 import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 import com.anmolsahi.postdetailsdomain.repositories.PostDetailsRepository
 import com.anmolsahi.postdetailsdomain.usecase.GetPostCommentsUseCase
@@ -58,4 +62,14 @@ object UseCaseModule {
             searchRepository = repository,
             searchDelegate = delegate,
         )
+
+    @ViewModelScoped
+    @Provides
+    fun provideTogglePostSavedStatusUseCase(repository: HomeRepository) =
+        TogglePostSavedStatusUseCase(repository)
+
+    @ViewModelScoped
+    @Provides
+    fun provideUpdateSavedPostsUseCase(delegate: HomeDelegate, repository: HomeRepository) =
+        UpdateSavedPostsUseCase(delegate, repository)
 }

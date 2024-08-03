@@ -5,8 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anmolsahi.commonui.mappers.asUiModel
 import com.anmolsahi.commonui.models.RedditPostUiModel
+import com.anmolsahi.designsystem.uicomponents.HomePage
 import com.anmolsahi.domain.repositories.HomeRepository
-import com.anmolsahi.presentation.delegate.HomeDelegate
+import com.anmolsahi.domain.usecase.TogglePostSavedStatusUseCase
+import com.anmolsahi.domain.usecase.UpdateSavedPostsUseCase
+import com.anmolsahi.presentation.utils.asPostType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: HomeRepository,
-    private val delegate: HomeDelegate,
+    private val togglePostSavedStatusUseCase: TogglePostSavedStatusUseCase,
+    private val updateSavedPostsUseCase: UpdateSavedPostsUseCase,
 ) : ViewModel() {
     // Ui State properties
     private val _hotPosts: MutableStateFlow<PostsUiState> = MutableStateFlow(PostsUiState())
@@ -209,28 +213,51 @@ class HomeViewModel @Inject constructor(
             }.launchIn(viewModelScope)
     }
 
-    fun onSaveIconClick(postId: String, onPostSaved: (Boolean) -> Unit) {
+    fun onSaveIconClick(postId: String, homePageType: HomePage, onPostSaved: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val isPostSaved = repository.togglePostSavedStatus(postId)
-            delegate.updateSavedPosts(isPostSaved, postId)
-            updatePostSavedUiState(postId, isPostSaved)
+            val postType = homePageType.asPostType()
+            val isPostSaved = togglePostSavedStatusUseCase(postId, postType)
+            updateSavedPostsUseCase(postId, isPostSaved, postType)
+            updatePostSavedUiState(postId, isPostSaved, homePageType)
             onPostSaved(isPostSaved)
         }
     }
 
-    private fun updatePostSavedUiState(postId: String, isPostSaved: Boolean) {
-        _hotPosts.update {
-            it.copy(
-                data =
-                it.data?.map { post ->
-                    if (post.id == postId) {
-                        post.copy(isSaved = isPostSaved)
-                    } else {
-                        post
-                    }
-                },
-            )
+    private fun updatePostSavedUiState(
+        postId: String,
+        isPostSaved: Boolean,
+        homePageType: HomePage,
+    ) {
+        when (homePageType) {
+            HomePage.HOT -> _hotPosts.updatePostSavedState(postId, isPostSaved)
+
+            HomePage.NEW -> _newPosts.updatePostSavedState(postId, isPostSaved)
+
+            HomePage.TOP -> _topPosts.updatePostSavedState(postId, isPostSaved)
+
+            HomePage.BEST -> _bestPosts.updatePostSavedState(postId, isPostSaved)
+
+            HomePage.RISING -> _risingPosts.updatePostSavedState(postId, isPostSaved)
+
+            HomePage.CONTROVERSIAL -> _controversialPosts.updatePostSavedState(postId, isPostSaved)
         }
+    }
+}
+
+internal fun MutableStateFlow<PostsUiState>.updatePostSavedState(
+    postId: String,
+    isPostSaved: Boolean,
+) {
+    update {
+        it.copy(
+            data = it.data?.map { post ->
+                if (post.id == postId) {
+                    post.copy(isSaved = isPostSaved)
+                } else {
+                    post
+                }
+            },
+        )
     }
 }
 

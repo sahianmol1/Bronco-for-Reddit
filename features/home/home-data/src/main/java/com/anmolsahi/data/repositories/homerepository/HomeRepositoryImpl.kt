@@ -238,7 +238,7 @@ class HomeRepositoryImpl(
         }
     }
 
-    override suspend fun togglePostSavedStatus(postId: String): Boolean {
+    override suspend fun toggleHotPostSavedStatus(postId: String): Boolean {
         return try {
             val redditPost = hotPostDao.getRedditPostById(id = postId)
             hotPostDao.insertRedditPost(
@@ -250,9 +250,109 @@ class HomeRepositoryImpl(
         }
     }
 
-    override suspend fun getPostById(postId: String): RedditPost? {
+    override suspend fun toggleTopPostSavedStatus(postId: String): Boolean {
+        return try {
+            val redditPost = topPostDao.getRedditPostById(id = postId)
+            topPostDao.insertRedditPost(
+                topPostEntity = redditPost.copy(isSaved = !redditPost.isSaved),
+            )
+            topPostDao.getRedditPostById(id = postId).isSaved
+        } catch (e: Throwable) {
+            false
+        }
+    }
+
+    override suspend fun toggleNewPostSavedStatus(postId: String): Boolean {
+        return try {
+            val redditPost = newPostDao.getRedditPostById(id = postId)
+            newPostDao.insertRedditPost(
+                newPostEntity = redditPost.copy(isSaved = !redditPost.isSaved),
+            )
+            newPostDao.getRedditPostById(id = postId).isSaved
+        } catch (e: Throwable) {
+            false
+        }
+    }
+
+    override suspend fun toggleBestPostSavedStatus(postId: String): Boolean {
+        return try {
+            val redditPost = bestPostDao.getRedditPostById(id = postId)
+            bestPostDao.insertRedditPost(
+                bestPostEntity = redditPost.copy(isSaved = !redditPost.isSaved),
+            )
+            bestPostDao.getRedditPostById(id = postId).isSaved
+        } catch (e: Throwable) {
+            false
+        }
+    }
+
+    override suspend fun toggleRisingPostSavedStatus(postId: String): Boolean {
+        return try {
+            val redditPost = risingPostDao.getRedditPostById(id = postId)
+            risingPostDao.insertRedditPost(
+                risingPostEntity = redditPost.copy(isSaved = !redditPost.isSaved),
+            )
+            risingPostDao.getRedditPostById(id = postId).isSaved
+        } catch (e: Throwable) {
+            false
+        }
+    }
+
+    override suspend fun toggleControversialPostSavedStatus(postId: String): Boolean {
+        return try {
+            val redditPost = controversialPostDao.getRedditPostById(id = postId)
+            controversialPostDao.insertRedditPost(
+                controversialPostEntity = redditPost.copy(isSaved = !redditPost.isSaved),
+            )
+            controversialPostDao.getRedditPostById(id = postId).isSaved
+        } catch (e: Throwable) {
+            false
+        }
+    }
+
+    override suspend fun getHotPostById(postId: String): RedditPost? {
         return try {
             hotPostDao.getRedditPostById(id = postId).asDomain()
+        } catch (e: Throwable) {
+            null
+        }
+    }
+
+    override suspend fun getTopPostById(postId: String): RedditPost? {
+        return try {
+            topPostDao.getRedditPostById(id = postId).asDomain()
+        } catch (e: Throwable) {
+            null
+        }
+    }
+
+    override suspend fun getNewPostById(postId: String): RedditPost? {
+        return try {
+            newPostDao.getRedditPostById(id = postId).asDomain()
+        } catch (e: Throwable) {
+            null
+        }
+    }
+
+    override suspend fun getBestPostById(postId: String): RedditPost? {
+        return try {
+            bestPostDao.getRedditPostById(id = postId).asDomain()
+        } catch (e: Throwable) {
+            null
+        }
+    }
+
+    override suspend fun getRisingPostById(postId: String): RedditPost? {
+        return try {
+            risingPostDao.getRedditPostById(id = postId).asDomain()
+        } catch (e: Throwable) {
+            null
+        }
+    }
+
+    override suspend fun getControversialPostById(postId: String): RedditPost? {
+        return try {
+            controversialPostDao.getRedditPostById(id = postId).asDomain()
         } catch (e: Throwable) {
             null
         }
