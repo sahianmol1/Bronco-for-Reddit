@@ -124,7 +124,11 @@ fun HomeScreen(
                         onClick = onClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getHotPosts(shouldRefreshData = true) },
-                        loadMoreData = { homeViewModel.getHotPosts(nextPageKey = it) },
+                        loadMoreData = { nextPageKey ->
+                            nextPageKey?.let {
+                                homeViewModel.getHotPosts(nextPageKey = it)
+                            }
+                        },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId, HomePage.HOT) { isSaved ->
                                 if (isSaved) {
@@ -144,7 +148,11 @@ fun HomeScreen(
                         onClick = onClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getNewPosts(true) },
-                        loadMoreData = { homeViewModel.getNewPosts(nextPageKey = it) },
+                        loadMoreData = { nextPageKey ->
+                            nextPageKey?.let {
+                                homeViewModel.getNewPosts(nextPageKey = it)
+                            }
+                        },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId, HomePage.NEW) { isSaved ->
                                 if (isSaved) {
@@ -164,7 +172,11 @@ fun HomeScreen(
                         onClick = onClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getTopPosts(true) },
-                        loadMoreData = { homeViewModel.getTopPosts(nextPageKey = it) },
+                        loadMoreData = { nextPageKey ->
+                            nextPageKey?.let {
+                                homeViewModel.getTopPosts(nextPageKey = it)
+                            }
+                        },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId, HomePage.TOP) { isSaved ->
                                 if (isSaved) {
@@ -184,7 +196,11 @@ fun HomeScreen(
                         onClick = onClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getBestPosts(true) },
-                        loadMoreData = { homeViewModel.getBestPosts(nextPageKey = it) },
+                        loadMoreData = { nextPageKey ->
+                            nextPageKey?.let {
+                                homeViewModel.getBestPosts(nextPageKey = it)
+                            }
+                        },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId, HomePage.BEST) { isSaved ->
                                 if (isSaved) {
@@ -204,7 +220,11 @@ fun HomeScreen(
                         onClick = onClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getRisingsPosts(true) },
-                        loadMoreData = { homeViewModel.getRisingsPosts(nextPageKey = it) },
+                        loadMoreData = { nextPageKey ->
+                            nextPageKey?.let {
+                                homeViewModel.getRisingsPosts(nextPageKey = it)
+                            }
+                        },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(postId, HomePage.RISING) { isSaved ->
                                 if (isSaved) {
@@ -224,7 +244,11 @@ fun HomeScreen(
                         onClick = onClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getControversialPosts(true) },
-                        loadMoreData = { homeViewModel.getControversialPosts(nextPageKey = it) },
+                        loadMoreData = { nextPageKey ->
+                            nextPageKey?.let {
+                                homeViewModel.getControversialPosts(nextPageKey = it)
+                            }
+                        },
                         onSaveIconClick = { postId ->
                             homeViewModel.onSaveIconClick(
                                 postId,
