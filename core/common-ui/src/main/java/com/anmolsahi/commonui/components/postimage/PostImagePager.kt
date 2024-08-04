@@ -1,5 +1,6 @@
 package com.anmolsahi.commonui.components.postimage
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -46,6 +47,9 @@ fun PostImagePager(
     Column {
         Box(
             modifier = modifier
+                .animateContentSize(
+                    animationSpec = tween(300, easing = LinearEasing, delayMillis = 500),
+                )
                 .fillMaxWidth()
                 .wrapContentHeight(),
             contentAlignment = Alignment.TopEnd,
@@ -59,6 +63,7 @@ fun PostImagePager(
                 Box(modifier = Modifier.wrapContentSize()) {
                     PostImage(
                         modifier = Modifier
+                            .animateContentSize()
                             .zIndex(2f),
                         imageUrl = imageUrlList[index],
                         onImageClick = onImageClick,
@@ -92,7 +97,7 @@ fun PostImagePager(
 @Composable
 fun PagerIndicator(modifier: Modifier = Modifier, count: Int, currentPage: Int) {
     val indicatorColorSelected = BRTheme.colorScheme.primary
-    val indicatorColorUnselected = BRTheme.colorScheme.surfaceDim
+    val indicatorColorUnselected = BRTheme.colorScheme.inverseSurface
 
     Row(
         modifier = Modifier.fillMaxWidth(),

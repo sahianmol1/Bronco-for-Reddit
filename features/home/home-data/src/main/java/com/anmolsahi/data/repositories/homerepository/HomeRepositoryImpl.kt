@@ -6,6 +6,7 @@ import com.anmolsahi.data.local.dao.HotPostDao
 import com.anmolsahi.data.local.dao.NewPostDao
 import com.anmolsahi.data.local.dao.RisingPostDao
 import com.anmolsahi.data.local.dao.TopPostDao
+import com.anmolsahi.data.local.dao.contract.HomePostConstants.STALE_POSTS_COUNT
 import com.anmolsahi.data.mappers.asBestPostEntity
 import com.anmolsahi.data.mappers.asControversialPostEntity
 import com.anmolsahi.data.mappers.asDomain
@@ -19,6 +20,7 @@ import com.anmolsahi.domain.repositories.HomeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
+@SuppressWarnings("LongParameterList", "TooManyFunctions")
 class HomeRepositoryImpl(
     private val hotPostDao: HotPostDao,
     private val topPostDao: TopPostDao,
@@ -358,11 +360,104 @@ class HomeRepositoryImpl(
         }
     }
 
+    override suspend fun deleteStalePosts() {
+        hotPostDao.deleteStalePosts()
+        topPostDao.deleteStalePosts()
+        bestPostDao.deleteStalePosts()
+        newPostDao.deleteStalePosts()
+        risingPostDao.deleteStalePosts()
+        controversialPostDao.deleteStalePosts()
+    }
+
     private fun <T> shouldReturnDataFromCache(
         allPostsFromDb: List<T>,
         shouldRefreshData: Boolean,
         nextPageKey: String?,
     ): Boolean {
         return allPostsFromDb.isNotEmpty() && !shouldRefreshData && nextPageKey.isNullOrEmpty()
+    }
+
+    private suspend fun HotPostDao.deleteStalePosts() {
+        val totalPostsCount = getAllRedditPosts().size
+        val postsToDeleteCount = when {
+            totalPostsCount > 2 * STALE_POSTS_COUNT -> STALE_POSTS_COUNT
+            totalPostsCount > STALE_POSTS_COUNT -> totalPostsCount - STALE_POSTS_COUNT
+            else -> 0
+        }
+
+        if (postsToDeleteCount == 0) return // Early return if no posts to delete
+
+        val idsToDelete = getLastNPosts(postsToDeleteCount)
+        deleteStalePosts(idsToDelete)
+    }
+
+    private suspend fun TopPostDao.deleteStalePosts() {
+        val totalPostsCount = getAllRedditPosts().size
+        val postsToDeleteCount = when {
+            totalPostsCount > 2 * STALE_POSTS_COUNT -> STALE_POSTS_COUNT
+            totalPostsCount > STALE_POSTS_COUNT -> totalPostsCount - STALE_POSTS_COUNT
+            else -> 0
+        }
+
+        if (postsToDeleteCount == 0) return // Early return if no posts to delete
+
+        val idsToDelete = getLastNPosts(postsToDeleteCount)
+        deleteStalePosts(idsToDelete)
+    }
+
+    private suspend fun BestPostDao.deleteStalePosts() {
+        val totalPostsCount = getAllRedditPosts().size
+        val postsToDeleteCount = when {
+            totalPostsCount > 2 * STALE_POSTS_COUNT -> STALE_POSTS_COUNT
+            totalPostsCount > STALE_POSTS_COUNT -> totalPostsCount - STALE_POSTS_COUNT
+            else -> 0
+        }
+
+        if (postsToDeleteCount == 0) return // Early return if no posts to delete
+
+        val idsToDelete = getLastNPosts(postsToDeleteCount)
+        deleteStalePosts(idsToDelete)
+    }
+
+    private suspend fun NewPostDao.deleteStalePosts() {
+        val totalPostsCount = getAllRedditPosts().size
+        val postsToDeleteCount = when {
+            totalPostsCount > 2 * STALE_POSTS_COUNT -> STALE_POSTS_COUNT
+            totalPostsCount > STALE_POSTS_COUNT -> totalPostsCount - STALE_POSTS_COUNT
+            else -> 0
+        }
+
+        if (postsToDeleteCount == 0) return // Early return if no posts to delete
+
+        val idsToDelete = getLastNPosts(postsToDeleteCount)
+        deleteStalePosts(idsToDelete)
+    }
+
+    private suspend fun RisingPostDao.deleteStalePosts() {
+        val totalPostsCount = getAllRedditPosts().size
+        val postsToDeleteCount = when {
+            totalPostsCount > 2 * STALE_POSTS_COUNT -> STALE_POSTS_COUNT
+            totalPostsCount > STALE_POSTS_COUNT -> totalPostsCount - STALE_POSTS_COUNT
+            else -> 0
+        }
+
+        if (postsToDeleteCount == 0) return // Early return if no posts to delete
+
+        val idsToDelete = getLastNPosts(postsToDeleteCount)
+        deleteStalePosts(idsToDelete)
+    }
+
+    private suspend fun ControversialPostDao.deleteStalePosts() {
+        val totalPostsCount = getAllRedditPosts().size
+        val postsToDeleteCount = when {
+            totalPostsCount > 2 * STALE_POSTS_COUNT -> STALE_POSTS_COUNT
+            totalPostsCount > STALE_POSTS_COUNT -> totalPostsCount - STALE_POSTS_COUNT
+            else -> 0
+        }
+
+        if (postsToDeleteCount == 0) return // Early return if no posts to delete
+
+        val idsToDelete = getLastNPosts(postsToDeleteCount)
+        deleteStalePosts(idsToDelete)
     }
 }

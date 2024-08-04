@@ -2,6 +2,7 @@ package com.anmolsahi.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.anmolsahi.data.local.entities.contract.IHomePostEntity
 
 @Entity(tableName = "new_post")
 data class NewPostEntity(
@@ -20,4 +21,5 @@ data class NewPostEntity(
     val after: String? = null,
     val isSaved: Boolean = false,
     val thumbnailUrl: String? = null,
-)
+    val timeStamp: Long = System.currentTimeMillis(),
+) : IHomePostEntity

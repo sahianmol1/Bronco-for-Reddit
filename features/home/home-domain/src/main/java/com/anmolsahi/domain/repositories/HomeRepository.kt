@@ -57,4 +57,6 @@ interface HomeRepository {
     suspend fun getRisingPostById(postId: String): RedditPost?
 
     suspend fun getControversialPostById(postId: String): RedditPost?
+
+    suspend fun deleteStalePosts()
 }
