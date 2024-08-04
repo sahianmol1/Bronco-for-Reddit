@@ -47,9 +47,7 @@ fun PostImagePager(
     Column {
         Box(
             modifier = modifier
-                .animateContentSize(
-                    animationSpec = tween(300, easing = LinearEasing, delayMillis = 500),
-                )
+                .animateContentSize()
                 .fillMaxWidth()
                 .wrapContentHeight(),
             contentAlignment = Alignment.TopEnd,
