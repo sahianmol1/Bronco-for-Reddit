@@ -387,7 +387,7 @@ class HomeRepositoryImpl(
 
         if (postsToDeleteCount == 0) return // Early return if no posts to delete
 
-        val idsToDelete = getLastNPosts(postsToDeleteCount)
+        val idsToDelete = getLastNPostIdList(postsToDeleteCount)
         deleteStalePosts(idsToDelete)
     }
 
@@ -401,7 +401,7 @@ class HomeRepositoryImpl(
 
         if (postsToDeleteCount == 0) return // Early return if no posts to delete
 
-        val idsToDelete = getLastNPosts(postsToDeleteCount)
+        val idsToDelete = getLastNPostIdList(postsToDeleteCount)
         deleteStalePosts(idsToDelete)
     }
 
@@ -415,7 +415,7 @@ class HomeRepositoryImpl(
 
         if (postsToDeleteCount == 0) return // Early return if no posts to delete
 
-        val idsToDelete = getLastNPosts(postsToDeleteCount)
+        val idsToDelete = getLastNPostIdList(postsToDeleteCount)
         deleteStalePosts(idsToDelete)
     }
 
@@ -429,7 +429,7 @@ class HomeRepositoryImpl(
 
         if (postsToDeleteCount == 0) return // Early return if no posts to delete
 
-        val idsToDelete = getLastNPosts(postsToDeleteCount)
+        val idsToDelete = getLastNPostIdList(postsToDeleteCount)
         deleteStalePosts(idsToDelete)
     }
 
@@ -443,7 +443,7 @@ class HomeRepositoryImpl(
 
         if (postsToDeleteCount == 0) return // Early return if no posts to delete
 
-        val idsToDelete = getLastNPosts(postsToDeleteCount)
+        val idsToDelete = getLastNPostIdList(postsToDeleteCount)
         deleteStalePosts(idsToDelete)
     }
 
@@ -457,7 +457,7 @@ class HomeRepositoryImpl(
 
         if (postsToDeleteCount == 0) return // Early return if no posts to delete
 
-        val idsToDelete = getLastNPosts(postsToDeleteCount)
+        val idsToDelete = getLastNPostIdList(postsToDeleteCount)
         deleteStalePosts(idsToDelete)
     }
 }

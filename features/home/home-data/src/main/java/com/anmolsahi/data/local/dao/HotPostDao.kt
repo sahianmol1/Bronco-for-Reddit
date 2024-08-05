@@ -23,10 +23,10 @@ interface HotPostDao {
     @Query("DELETE FROM hot_post")
     suspend fun deleteAllRedditPosts()
 
-    @Query("SELECT id FROM best_post ORDER BY createdAt ASC LIMIT :count")
+    @Query("SELECT id FROM hot_post ORDER BY createdAt ASC LIMIT :count")
     // here last means the new/latest entries that were added to the end of the list
-    suspend fun getLastNPosts(count: Int): List<String>
+    suspend fun getLastNPostIdList(count: Int): List<String>
 
-    @Query("DELETE FROM best_post WHERE id IN (:ids)")
+    @Query("DELETE FROM hot_post WHERE id IN (:ids)")
     suspend fun deleteStalePosts(ids: List<String>)
 }

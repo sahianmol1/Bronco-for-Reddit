@@ -21,5 +21,5 @@ data class RisingPostEntity(
     val after: String? = null,
     val isSaved: Boolean = false,
     val thumbnailUrl: String? = null,
-    val timeStamp: Long = System.currentTimeMillis(),
+    val createdAt: Long = System.currentTimeMillis(),
 ) : IHomePostEntity
