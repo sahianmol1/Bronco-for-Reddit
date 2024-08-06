@@ -57,6 +57,12 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            /**
+             * Force refresh if stale data is present in the database
+             *
+             * Get the timestamp from the datastore as soon as the viewmodel is launched
+             * and decide if force refresh is needed
+             */
             listOf(
                 Pair(prefsRepository.getHotPostsTimestamp(), ::getHotPosts),
                 Pair(prefsRepository.getTopPostsTimestamp(), ::getTopPosts),
