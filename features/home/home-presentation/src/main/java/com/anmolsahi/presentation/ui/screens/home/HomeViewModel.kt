@@ -49,10 +49,14 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(PostsUiState())
     var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
 
-    fun getHotPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
+    fun getHotPosts(
+        shouldRefreshData: Boolean = false,
+        nextPageKey: String? = "",
+        silentUpdate: Boolean = false,
+    ) {
         repository.getHotPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
+                if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _hotPosts.update { it.copy(isLoading = true) }
                 }
             }.onEach { redditPosts ->
@@ -75,10 +79,14 @@ class HomeViewModel @Inject constructor(
             }.launchIn(viewModelScope)
     }
 
-    fun getNewPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
+    fun getNewPosts(
+        shouldRefreshData: Boolean = false,
+        nextPageKey: String? = "",
+        silentUpdate: Boolean = false,
+    ) {
         repository.getNewPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
+                if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _newPosts.update { it.copy(isLoading = true) }
                 }
             }.onEach { redditPosts ->
@@ -103,10 +111,14 @@ class HomeViewModel @Inject constructor(
             }.launchIn(viewModelScope)
     }
 
-    fun getTopPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
+    fun getTopPosts(
+        shouldRefreshData: Boolean = false,
+        nextPageKey: String? = "",
+        silentUpdate: Boolean = false,
+    ) {
         repository.getTopPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
+                if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _topPosts.update { it.copy(isLoading = true) }
                 }
             }.onEach { redditPosts ->
@@ -131,10 +143,14 @@ class HomeViewModel @Inject constructor(
             }.launchIn(viewModelScope)
     }
 
-    fun getBestPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
+    fun getBestPosts(
+        shouldRefreshData: Boolean = false,
+        nextPageKey: String? = "",
+        silentUpdate: Boolean = false,
+    ) {
         repository.getBestPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
+                if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _bestPosts.update { it.copy(isLoading = true) }
                 }
             }.onEach { redditPosts ->
@@ -160,10 +176,14 @@ class HomeViewModel @Inject constructor(
             }.launchIn(viewModelScope)
     }
 
-    fun getRisingsPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
+    fun getRisingsPosts(
+        shouldRefreshData: Boolean = false,
+        nextPageKey: String? = "",
+        silentUpdate: Boolean = false,
+    ) {
         repository.getRisingPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
+                if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _risingPosts.update { it.copy(isLoading = true) }
                 }
             }.onEach { redditPosts ->
@@ -188,10 +208,14 @@ class HomeViewModel @Inject constructor(
             }.launchIn(viewModelScope)
     }
 
-    fun getControversialPosts(shouldRefreshData: Boolean = false, nextPageKey: String? = "") {
+    fun getControversialPosts(
+        shouldRefreshData: Boolean = false,
+        nextPageKey: String? = "",
+        silentUpdate: Boolean = false,
+    ) {
         repository.getControversialPosts(shouldRefreshData, nextPageKey)
             .onStart {
-                if (!shouldRefreshData && nextPageKey.isNullOrEmpty()) {
+                if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _controversialPosts.update { it.copy(isLoading = true) }
                 }
             }.onEach { redditPosts ->
@@ -241,6 +265,14 @@ class HomeViewModel @Inject constructor(
 
             HomePage.CONTROVERSIAL -> _controversialPosts.updatePostSavedState(postId, isPostSaved)
         }
+    }
+
+    private fun shouldShowLoadingIndicator(
+        shouldRefreshData: Boolean,
+        nextPageKey: String?,
+        silentUpdate: Boolean,
+    ): Boolean {
+        return !shouldRefreshData && nextPageKey.isNullOrEmpty() && !silentUpdate
     }
 }
 

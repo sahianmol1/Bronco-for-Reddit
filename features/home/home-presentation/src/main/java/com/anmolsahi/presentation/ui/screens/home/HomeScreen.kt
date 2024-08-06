@@ -63,26 +63,38 @@ fun HomeScreen(
     LaunchedEffect(Unit) {
         if (hotPosts.value.data == null) {
             homeViewModel.getHotPosts()
+        } else {
+            homeViewModel.getHotPosts(silentUpdate = true)
         }
 
         if (newPosts.value.data == null) {
             homeViewModel.getNewPosts()
+        } else {
+            homeViewModel.getNewPosts(silentUpdate = true)
         }
 
         if (topPosts.value.data == null) {
             homeViewModel.getTopPosts()
+        } else {
+            homeViewModel.getTopPosts(silentUpdate = true)
         }
 
         if (bestPosts.value.data == null) {
             homeViewModel.getBestPosts()
+        } else {
+            homeViewModel.getBestPosts(silentUpdate = true)
         }
 
         if (risingPosts.value.data == null) {
             homeViewModel.getRisingsPosts()
+        } else {
+            homeViewModel.getRisingsPosts(silentUpdate = true)
         }
 
         if (controversialPosts.value.data == null) {
             homeViewModel.getControversialPosts()
+        } else {
+            homeViewModel.getControversialPosts(silentUpdate = true)
         }
     }
 
