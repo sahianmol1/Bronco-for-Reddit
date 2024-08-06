@@ -7,10 +7,12 @@ import com.anmolsahi.commonui.mappers.asUiModel
 import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.designsystem.uicomponents.HomePage
 import com.anmolsahi.domain.repositories.HomeRepository
+import com.anmolsahi.domain.repository.AppPreferencesRepository
 import com.anmolsahi.domain.usecase.TogglePostSavedStatusUseCase
 import com.anmolsahi.domain.usecase.UpdateSavedPostsUseCase
 import com.anmolsahi.presentation.utils.asPostType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,6 +30,7 @@ class HomeViewModel @Inject constructor(
     private val repository: HomeRepository,
     private val togglePostSavedStatusUseCase: TogglePostSavedStatusUseCase,
     private val updateSavedPostsUseCase: UpdateSavedPostsUseCase,
+    private val prefsRepository: AppPreferencesRepository,
 ) : ViewModel() {
     // Ui State properties
     private val _hotPosts: MutableStateFlow<PostsUiState> = MutableStateFlow(PostsUiState())
@@ -48,6 +51,24 @@ class HomeViewModel @Inject constructor(
     private val _controversialPosts: MutableStateFlow<PostsUiState> =
         MutableStateFlow(PostsUiState())
     var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
+
+    private val currentTime = System.currentTimeMillis()
+    private val twelveHoursInMillis = 12 * 60 * 60 * 1000 // 12 hours in milliseconds
+
+    init {
+        viewModelScope.launch {
+            listOf(
+                Pair(prefsRepository.getHotPostsTimestamp(), ::getHotPosts),
+                Pair(prefsRepository.getTopPostsTimestamp(), ::getTopPosts),
+                Pair(prefsRepository.getNewPostsTimestamp(), ::getNewPosts),
+                Pair(prefsRepository.getBestPostsTimestamp(), ::getBestPosts),
+                Pair(prefsRepository.getRisingPostsTimestamp(), ::getRisingsPosts),
+                Pair(prefsRepository.getControversialPostsTimestamp(), ::getControversialPosts),
+            ).forEach { (timestampFlow, refreshFunction) ->
+                checkAndRefreshPosts(timestampFlow, refreshFunction)
+            }
+        }
+    }
 
     fun getHotPosts(
         shouldRefreshData: Boolean = false,
@@ -273,6 +294,23 @@ class HomeViewModel @Inject constructor(
         silentUpdate: Boolean,
     ): Boolean {
         return !shouldRefreshData && nextPageKey.isNullOrEmpty() && !silentUpdate
+    }
+
+    private fun checkAndRefreshPosts(
+        timestampFlow: Flow<Long>,
+        refreshFunction: (
+            shouldRefreshData: Boolean,
+            nextPageKey: String?,
+            silentUpdate: Boolean,
+        ) -> Unit,
+    ) {
+        viewModelScope.launch {
+            timestampFlow.collect { prefsTimestamp ->
+                if ((currentTime - prefsTimestamp) > twelveHoursInMillis) {
+                    refreshFunction(true, null, false)
+                }
+            }
+        }
     }
 }
 
