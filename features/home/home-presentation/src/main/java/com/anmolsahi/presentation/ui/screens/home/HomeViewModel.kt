@@ -54,6 +54,7 @@ class HomeViewModel @Inject constructor(
 
     private val currentTime = System.currentTimeMillis()
     private val twelveHoursInMillis = 12 * 60 * 60 * 1000 // 12 hours in milliseconds
+    private val sixHoursInMillis = 6 * 60 * 60 * 1000 // 6 hours in milliseconds
 
     init {
         viewModelScope.launch {
@@ -64,14 +65,18 @@ class HomeViewModel @Inject constructor(
              * and decide if force refresh is needed
              */
             listOf(
-                Pair(prefsRepository.getHotPostsTimestamp(), ::getHotPosts),
-                Pair(prefsRepository.getTopPostsTimestamp(), ::getTopPosts),
-                Pair(prefsRepository.getNewPostsTimestamp(), ::getNewPosts),
-                Pair(prefsRepository.getBestPostsTimestamp(), ::getBestPosts),
-                Pair(prefsRepository.getRisingPostsTimestamp(), ::getRisingsPosts),
-                Pair(prefsRepository.getControversialPostsTimestamp(), ::getControversialPosts),
-            ).forEach { (timestampFlow, refreshFunction) ->
-                checkAndRefreshPosts(timestampFlow, refreshFunction)
+                Triple(prefsRepository.getHotPostsTimestamp(), _hotPosts, ::getHotPosts),
+                Triple(prefsRepository.getTopPostsTimestamp(), _topPosts, ::getTopPosts),
+                Triple(prefsRepository.getNewPostsTimestamp(), _newPosts, ::getNewPosts),
+                Triple(prefsRepository.getBestPostsTimestamp(), _bestPosts, ::getBestPosts),
+                Triple(prefsRepository.getRisingPostsTimestamp(), _risingPosts, ::getRisingsPosts),
+                Triple(
+                    prefsRepository.getControversialPostsTimestamp(),
+                    _controversialPosts,
+                    ::getControversialPosts,
+                ),
+            ).forEach { (timestampFlow, uiStateFlow, refreshFunction) ->
+                checkAndForceRefreshPosts(timestampFlow, uiStateFlow, refreshFunction)
             }
         }
     }
@@ -84,7 +89,12 @@ class HomeViewModel @Inject constructor(
         repository.getHotPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (shouldRefreshData) {
-                    _hotPosts.update { it.copy(isPullRefreshLoading = true) }
+                    _hotPosts.update {
+                        it.copy(
+                            isPullRefreshLoading = true,
+                            areNewPostsAvailable = false,
+                        )
+                    }
                 }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _hotPosts.update { it.copy(isLoading = true) }
@@ -118,7 +128,12 @@ class HomeViewModel @Inject constructor(
         repository.getNewPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (shouldRefreshData) {
-                    _newPosts.update { it.copy(isPullRefreshLoading = true) }
+                    _newPosts.update {
+                        it.copy(
+                            isPullRefreshLoading = true,
+                            areNewPostsAvailable = false,
+                        )
+                    }
                 }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _newPosts.update { it.copy(isLoading = true) }
@@ -154,7 +169,12 @@ class HomeViewModel @Inject constructor(
         repository.getTopPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (shouldRefreshData) {
-                    _topPosts.update { it.copy(isPullRefreshLoading = true) }
+                    _topPosts.update {
+                        it.copy(
+                            isPullRefreshLoading = true,
+                            areNewPostsAvailable = false,
+                        )
+                    }
                 }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _topPosts.update { it.copy(isLoading = true) }
@@ -190,7 +210,12 @@ class HomeViewModel @Inject constructor(
         repository.getBestPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (shouldRefreshData) {
-                    _bestPosts.update { it.copy(isPullRefreshLoading = true) }
+                    _bestPosts.update {
+                        it.copy(
+                            isPullRefreshLoading = true,
+                            areNewPostsAvailable = false,
+                        )
+                    }
                 }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _bestPosts.update { it.copy(isLoading = true) }
@@ -227,7 +252,12 @@ class HomeViewModel @Inject constructor(
         repository.getRisingPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (shouldRefreshData) {
-                    _risingPosts.update { it.copy(isPullRefreshLoading = true) }
+                    _risingPosts.update {
+                        it.copy(
+                            isPullRefreshLoading = true,
+                            areNewPostsAvailable = false,
+                        )
+                    }
                 }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _risingPosts.update { it.copy(isLoading = true) }
@@ -263,7 +293,12 @@ class HomeViewModel @Inject constructor(
         repository.getControversialPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (shouldRefreshData) {
-                    _controversialPosts.update { it.copy(isPullRefreshLoading = true) }
+                    _controversialPosts.update {
+                        it.copy(
+                            isPullRefreshLoading = true,
+                            areNewPostsAvailable = false,
+                        )
+                    }
                 }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _controversialPosts.update { it.copy(isLoading = true) }
@@ -329,8 +364,9 @@ class HomeViewModel @Inject constructor(
         return !shouldRefreshData && nextPageKey.isNullOrEmpty() && !silentUpdate
     }
 
-    private fun checkAndRefreshPosts(
+    private fun checkAndForceRefreshPosts(
         timestampFlow: Flow<Long>,
+        stateFlow: MutableStateFlow<PostsUiState>,
         refreshFunction: (
             shouldRefreshData: Boolean,
             nextPageKey: String?,
@@ -339,28 +375,31 @@ class HomeViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             timestampFlow.collect { prefsTimestamp ->
-                if ((currentTime - prefsTimestamp) > twelveHoursInMillis) {
+                val timeDifference = currentTime - prefsTimestamp
+                if (timeDifference in sixHoursInMillis..twelveHoursInMillis) {
+                    stateFlow.update { it.copy(areNewPostsAvailable = true) }
+                } else if (timeDifference > twelveHoursInMillis) {
                     refreshFunction(true, null, false)
                 }
             }
         }
     }
-}
 
-internal fun MutableStateFlow<PostsUiState>.updatePostSavedState(
-    postId: String,
-    isPostSaved: Boolean,
-) {
-    update {
-        it.copy(
-            data = it.data?.map { post ->
-                if (post.id == postId) {
-                    post.copy(isSaved = isPostSaved)
-                } else {
-                    post
-                }
-            },
-        )
+    private fun MutableStateFlow<PostsUiState>.updatePostSavedState(
+        postId: String,
+        isPostSaved: Boolean,
+    ) {
+        update {
+            it.copy(
+                data = it.data?.map { post ->
+                    if (post.id == postId) {
+                        post.copy(isSaved = isPostSaved)
+                    } else {
+                        post
+                    }
+                },
+            )
+        }
     }
 }
 
@@ -369,5 +408,6 @@ data class PostsUiState(
     val data: List<RedditPostUiModel>? = null,
     val isLoading: Boolean = false,
     val isPullRefreshLoading: Boolean = false,
+    val areNewPostsAvailable: Boolean = false,
     val errorMessage: String? = null,
 )
