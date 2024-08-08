@@ -56,15 +56,16 @@ fun HomeScreenListings(
     val lazyListState = rememberLazyListState()
     val list by remember(uiState) { mutableStateOf(uiState.data.orEmpty()) }
 
-    if (pullRefreshState.isRefreshing) {
-        LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = pullRefreshState.isRefreshing, key2 = uiState.isPullRefreshLoading) {
+        if (pullRefreshState.isRefreshing || uiState.isPullRefreshLoading) {
+            lazyListState.animateScrollToItem(0, 0)
             pullRefreshState.startRefresh()
             refreshData()
         }
     }
 
-    LaunchedEffect(uiState.isDataRefreshed) {
-        if (uiState.isDataRefreshed) {
+    LaunchedEffect(uiState.isPullRefreshLoading) {
+        if (!uiState.isPullRefreshLoading) {
             pullRefreshState.endRefresh()
             lazyListState.animateScrollToItem(0, 0)
         }
