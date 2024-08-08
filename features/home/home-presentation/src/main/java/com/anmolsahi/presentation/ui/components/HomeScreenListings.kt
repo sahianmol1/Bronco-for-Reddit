@@ -34,9 +34,12 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.anmolsahi.commonui.components.NewPostsAvailableComponent
 import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.designsystem.utils.slideInFromBottom
+import com.anmolsahi.designsystem.utils.slideInFromTop
+import com.anmolsahi.designsystem.utils.slideOutToTop
 import com.anmolsahi.homepresentation.R
 import com.anmolsahi.presentation.ui.screens.home.PostsUiState
 
@@ -56,15 +59,16 @@ fun HomeScreenListings(
     val lazyListState = rememberLazyListState()
     val list by remember(uiState) { mutableStateOf(uiState.data.orEmpty()) }
 
-    if (pullRefreshState.isRefreshing) {
-        LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = pullRefreshState.isRefreshing, key2 = uiState.isPullRefreshLoading) {
+        if (pullRefreshState.isRefreshing || uiState.isPullRefreshLoading) {
+            lazyListState.animateScrollToItem(0, 0)
             pullRefreshState.startRefresh()
             refreshData()
         }
     }
 
-    LaunchedEffect(uiState.isDataRefreshed) {
-        if (uiState.isDataRefreshed) {
+    LaunchedEffect(uiState.isPullRefreshLoading) {
+        if (!uiState.isPullRefreshLoading) {
             pullRefreshState.endRefresh()
             lazyListState.animateScrollToItem(0, 0)
         }
@@ -145,6 +149,18 @@ fun HomeScreenListings(
 
         if (uiState.isLoading) {
             BRLinearProgressIndicator()
+        }
+
+        AnimatedVisibility(
+            uiState.areNewPostsAvailable,
+            enter = slideInFromTop(),
+            exit = slideOutToTop(),
+        ) {
+            NewPostsAvailableComponent(
+                modifier = Modifier
+                    .padding(top = 16.dp),
+                onClick = refreshData,
+            )
         }
 
         PullToRefreshContainer(
