@@ -7,10 +7,12 @@ import com.anmolsahi.commonui.mappers.asUiModel
 import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.designsystem.uicomponents.HomePage
 import com.anmolsahi.domain.repositories.HomeRepository
+import com.anmolsahi.domain.repository.AppPreferencesRepository
 import com.anmolsahi.domain.usecase.TogglePostSavedStatusUseCase
 import com.anmolsahi.domain.usecase.UpdateSavedPostsUseCase
 import com.anmolsahi.presentation.utils.asPostType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,6 +30,7 @@ class HomeViewModel @Inject constructor(
     private val repository: HomeRepository,
     private val togglePostSavedStatusUseCase: TogglePostSavedStatusUseCase,
     private val updateSavedPostsUseCase: UpdateSavedPostsUseCase,
+    private val prefsRepository: AppPreferencesRepository,
 ) : ViewModel() {
     // Ui State properties
     private val _hotPosts: MutableStateFlow<PostsUiState> = MutableStateFlow(PostsUiState())
@@ -49,6 +52,35 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(PostsUiState())
     var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
 
+    private val currentTime = System.currentTimeMillis()
+    private val twelveHoursInMillis = 12 * 60 * 60 * 1000 // 12 hours in milliseconds
+    private val sixHoursInMillis = 6 * 60 * 60 * 1000 // 6 hours in milliseconds
+
+    init {
+        viewModelScope.launch {
+            /**
+             * Force refresh if stale data is present in the database
+             *
+             * Get the timestamp from the datastore as soon as the viewmodel is launched
+             * and decide if force refresh is needed
+             */
+            listOf(
+                Triple(prefsRepository.getHotPostsTimestamp(), _hotPosts, ::getHotPosts),
+                Triple(prefsRepository.getTopPostsTimestamp(), _topPosts, ::getTopPosts),
+                Triple(prefsRepository.getNewPostsTimestamp(), _newPosts, ::getNewPosts),
+                Triple(prefsRepository.getBestPostsTimestamp(), _bestPosts, ::getBestPosts),
+                Triple(prefsRepository.getRisingPostsTimestamp(), _risingPosts, ::getRisingsPosts),
+                Triple(
+                    prefsRepository.getControversialPostsTimestamp(),
+                    _controversialPosts,
+                    ::getControversialPosts,
+                ),
+            ).forEach { (timestampFlow, uiStateFlow, refreshFunction) ->
+                checkAndForceRefreshPosts(timestampFlow, uiStateFlow, refreshFunction)
+            }
+        }
+    }
+
     fun getHotPosts(
         shouldRefreshData: Boolean = false,
         nextPageKey: String? = "",
@@ -56,6 +88,14 @@ class HomeViewModel @Inject constructor(
     ) {
         repository.getHotPosts(shouldRefreshData, nextPageKey)
             .onStart {
+                if (shouldRefreshData) {
+                    _hotPosts.update {
+                        it.copy(
+                            isPullRefreshLoading = true,
+                            areNewPostsAvailable = false,
+                        )
+                    }
+                }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _hotPosts.update { it.copy(isLoading = true) }
                 }
@@ -65,7 +105,7 @@ class HomeViewModel @Inject constructor(
                         data = redditPosts?.map { post -> post.asUiModel() },
                         isLoading = false,
                         errorMessage = if (redditPosts == null) "Data is not available" else null,
-                        isDataRefreshed = shouldRefreshData,
+                        isPullRefreshLoading = false,
                     )
                 }
             }.catch { throwable ->
@@ -74,6 +114,7 @@ class HomeViewModel @Inject constructor(
                     it.copy(
                         isLoading = false,
                         errorMessage = throwable.message,
+                        isPullRefreshLoading = false,
                     )
                 }
             }.launchIn(viewModelScope)
@@ -86,6 +127,14 @@ class HomeViewModel @Inject constructor(
     ) {
         repository.getNewPosts(shouldRefreshData, nextPageKey)
             .onStart {
+                if (shouldRefreshData) {
+                    _newPosts.update {
+                        it.copy(
+                            isPullRefreshLoading = true,
+                            areNewPostsAvailable = false,
+                        )
+                    }
+                }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _newPosts.update { it.copy(isLoading = true) }
                 }
@@ -96,7 +145,7 @@ class HomeViewModel @Inject constructor(
                             data = posts.map { post -> post.asUiModel() },
                             isLoading = false,
                             errorMessage = null,
-                            isDataRefreshed = shouldRefreshData,
+                            isPullRefreshLoading = false,
                         )
                     }
                 }
@@ -106,6 +155,7 @@ class HomeViewModel @Inject constructor(
                     it.copy(
                         isLoading = false,
                         errorMessage = throwable.message,
+                        isPullRefreshLoading = false,
                     )
                 }
             }.launchIn(viewModelScope)
@@ -118,6 +168,14 @@ class HomeViewModel @Inject constructor(
     ) {
         repository.getTopPosts(shouldRefreshData, nextPageKey)
             .onStart {
+                if (shouldRefreshData) {
+                    _topPosts.update {
+                        it.copy(
+                            isPullRefreshLoading = true,
+                            areNewPostsAvailable = false,
+                        )
+                    }
+                }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _topPosts.update { it.copy(isLoading = true) }
                 }
@@ -128,7 +186,7 @@ class HomeViewModel @Inject constructor(
                             data = posts.map { post -> post.asUiModel() },
                             isLoading = false,
                             errorMessage = null,
-                            isDataRefreshed = shouldRefreshData,
+                            isPullRefreshLoading = false,
                         )
                     }
                 }
@@ -138,6 +196,7 @@ class HomeViewModel @Inject constructor(
                     it.copy(
                         isLoading = false,
                         errorMessage = throwable.message,
+                        isPullRefreshLoading = false,
                     )
                 }
             }.launchIn(viewModelScope)
@@ -150,6 +209,14 @@ class HomeViewModel @Inject constructor(
     ) {
         repository.getBestPosts(shouldRefreshData, nextPageKey)
             .onStart {
+                if (shouldRefreshData) {
+                    _bestPosts.update {
+                        it.copy(
+                            isPullRefreshLoading = true,
+                            areNewPostsAvailable = false,
+                        )
+                    }
+                }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _bestPosts.update { it.copy(isLoading = true) }
                 }
@@ -160,7 +227,7 @@ class HomeViewModel @Inject constructor(
                             data = posts.map { post -> post.asUiModel() },
                             isLoading = false,
                             errorMessage = null,
-                            isDataRefreshed = shouldRefreshData,
+                            isPullRefreshLoading = false,
                         )
                     }
                 }
@@ -171,6 +238,7 @@ class HomeViewModel @Inject constructor(
                     it.copy(
                         isLoading = false,
                         errorMessage = throwable.message,
+                        isPullRefreshLoading = false,
                     )
                 }
             }.launchIn(viewModelScope)
@@ -183,6 +251,14 @@ class HomeViewModel @Inject constructor(
     ) {
         repository.getRisingPosts(shouldRefreshData, nextPageKey)
             .onStart {
+                if (shouldRefreshData) {
+                    _risingPosts.update {
+                        it.copy(
+                            isPullRefreshLoading = true,
+                            areNewPostsAvailable = false,
+                        )
+                    }
+                }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _risingPosts.update { it.copy(isLoading = true) }
                 }
@@ -193,7 +269,7 @@ class HomeViewModel @Inject constructor(
                             data = posts.map { post -> post.asUiModel() },
                             isLoading = false,
                             errorMessage = null,
-                            isDataRefreshed = shouldRefreshData,
+                            isPullRefreshLoading = false,
                         )
                     }
                 }
@@ -202,6 +278,7 @@ class HomeViewModel @Inject constructor(
                 _risingPosts.update {
                     it.copy(
                         isLoading = false,
+                        isPullRefreshLoading = false,
                         errorMessage = throwable.message,
                     )
                 }
@@ -215,6 +292,14 @@ class HomeViewModel @Inject constructor(
     ) {
         repository.getControversialPosts(shouldRefreshData, nextPageKey)
             .onStart {
+                if (shouldRefreshData) {
+                    _controversialPosts.update {
+                        it.copy(
+                            isPullRefreshLoading = true,
+                            areNewPostsAvailable = false,
+                        )
+                    }
+                }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _controversialPosts.update { it.copy(isLoading = true) }
                 }
@@ -225,14 +310,18 @@ class HomeViewModel @Inject constructor(
                             data = posts.map { post -> post.asUiModel() },
                             isLoading = false,
                             errorMessage = null,
-                            isDataRefreshed = shouldRefreshData,
+                            isPullRefreshLoading = false,
                         )
                     }
                 }
             }.catch { throwable ->
                 Log.e(HomeViewModel::class.simpleName, throwable.message ?: "Unknown error")
                 _controversialPosts.update {
-                    it.copy(isLoading = false, errorMessage = throwable.message)
+                    it.copy(
+                        isLoading = false,
+                        errorMessage = throwable.message,
+                        isPullRefreshLoading = false,
+                    )
                 }
             }.launchIn(viewModelScope)
     }
@@ -274,22 +363,43 @@ class HomeViewModel @Inject constructor(
     ): Boolean {
         return !shouldRefreshData && nextPageKey.isNullOrEmpty() && !silentUpdate
     }
-}
 
-internal fun MutableStateFlow<PostsUiState>.updatePostSavedState(
-    postId: String,
-    isPostSaved: Boolean,
-) {
-    update {
-        it.copy(
-            data = it.data?.map { post ->
-                if (post.id == postId) {
-                    post.copy(isSaved = isPostSaved)
-                } else {
-                    post
+    private fun checkAndForceRefreshPosts(
+        timestampFlow: Flow<Long>,
+        stateFlow: MutableStateFlow<PostsUiState>,
+        refreshFunction: (
+            shouldRefreshData: Boolean,
+            nextPageKey: String?,
+            silentUpdate: Boolean,
+        ) -> Unit,
+    ) {
+        viewModelScope.launch {
+            timestampFlow.collect { prefsTimestamp ->
+                val timeDifference = currentTime - prefsTimestamp
+                if (timeDifference in sixHoursInMillis..twelveHoursInMillis) {
+                    stateFlow.update { it.copy(areNewPostsAvailable = true) }
+                } else if (timeDifference > twelveHoursInMillis) {
+                    refreshFunction(true, null, false)
                 }
-            },
-        )
+            }
+        }
+    }
+
+    private fun MutableStateFlow<PostsUiState>.updatePostSavedState(
+        postId: String,
+        isPostSaved: Boolean,
+    ) {
+        update {
+            it.copy(
+                data = it.data?.map { post ->
+                    if (post.id == postId) {
+                        post.copy(isSaved = isPostSaved)
+                    } else {
+                        post
+                    }
+                },
+            )
+        }
     }
 }
 
@@ -297,6 +407,7 @@ internal fun MutableStateFlow<PostsUiState>.updatePostSavedState(
 data class PostsUiState(
     val data: List<RedditPostUiModel>? = null,
     val isLoading: Boolean = false,
-    val isDataRefreshed: Boolean = false,
+    val isPullRefreshLoading: Boolean = false,
+    val areNewPostsAvailable: Boolean = false,
     val errorMessage: String? = null,
 )

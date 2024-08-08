@@ -17,6 +17,7 @@ import com.anmolsahi.data.mappers.asTopPostEntity
 import com.anmolsahi.data.remote.HomeService
 import com.anmolsahi.domain.models.RedditPost
 import com.anmolsahi.domain.repositories.HomeRepository
+import com.anmolsahi.domain.repository.AppPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -29,6 +30,7 @@ class HomeRepositoryImpl(
     private val controversialPostDao: ControversialPostDao,
     private val newPostDao: NewPostDao,
     private val homeService: HomeService,
+    private val prefs: AppPreferencesRepository,
 ) : HomeRepository {
     override fun getHotPosts(
         shouldRefreshData: Boolean,
@@ -46,6 +48,12 @@ class HomeRepositoryImpl(
                     val listings =
                         homeService.getHotListings(nextPageKey = nextPageKey).getOrThrow()
                             .asHotPostEntity()
+
+                    // After fetching the data, update the timestamp in data store preferences
+                    // if the database is empty or a refresh is explicitly requested.
+                    if (allPostsFromDb.isEmpty() || shouldRefreshData) {
+                        prefs.saveHotPostsTimestamp(System.currentTimeMillis())
+                    }
 
                     if (allPostsFromDb.isNotEmpty() && shouldRefreshData) {
                         // If there are existing posts in the database and refresh is needed,
@@ -82,6 +90,12 @@ class HomeRepositoryImpl(
                         homeService.getTopListings(nextPageKey = nextPageKey).getOrThrow()
                             .asTopPostEntity()
 
+                    // After fetching the data, update the timestamp in data store preferences
+                    // if the database is empty or a refresh is explicitly requested.
+                    if (allPostsFromDb.isEmpty() || shouldRefreshData) {
+                        prefs.saveTopPostsTimestamp(System.currentTimeMillis())
+                    }
+
                     if (allPostsFromDb.isNotEmpty() && shouldRefreshData) {
                         // If there are existing posts in the database and refresh is needed,
                         // delete them before inserting new ones.
@@ -116,6 +130,12 @@ class HomeRepositoryImpl(
                     val listings =
                         homeService.getNewListings(nextPageKey = nextPageKey).getOrThrow()
                             .asNewPostEntity()
+
+                    // After fetching the data, update the timestamp in data store preferences
+                    // if the database is empty or a refresh is explicitly requested.
+                    if (allPostsFromDb.isEmpty() || shouldRefreshData) {
+                        prefs.saveNewPostsTimestamp(System.currentTimeMillis())
+                    }
 
                     if (allPostsFromDb.isNotEmpty() && shouldRefreshData) {
                         // If there are existing posts in the database and refresh is needed,
@@ -152,6 +172,12 @@ class HomeRepositoryImpl(
                         homeService.getBestListings(nextPageKey = nextPageKey).getOrThrow()
                             .asBestPostEntity()
 
+                    // After fetching the data, update the timestamp in data store preferences
+                    // if the database is empty or a refresh is explicitly requested.
+                    if (allPostsFromDb.isEmpty() || shouldRefreshData) {
+                        prefs.saveBestPostsTimestamp(System.currentTimeMillis())
+                    }
+
                     if (allPostsFromDb.isNotEmpty() && shouldRefreshData) {
                         // If there are existing posts in the database and refresh is needed,
                         // delete them before inserting new ones.
@@ -187,6 +213,12 @@ class HomeRepositoryImpl(
                         homeService.getRisingListings(nextPageKey = nextPageKey).getOrThrow()
                             .asRisingPostEntity()
 
+                    // After fetching the data, update the timestamp in data store preferences
+                    // if the database is empty or a refresh is explicitly requested.
+                    if (allPostsFromDb.isEmpty() || shouldRefreshData) {
+                        prefs.saveRisingPostsTimestamp(System.currentTimeMillis())
+                    }
+
                     if (allPostsFromDb.isNotEmpty() && shouldRefreshData) {
                         // If there are existing posts in the database and refresh is needed,
                         // delete them before inserting new ones.
@@ -221,6 +253,12 @@ class HomeRepositoryImpl(
                     val listings =
                         homeService.getControversialListings(nextPageKey = nextPageKey).getOrThrow()
                             .asControversialPostEntity()
+
+                    // After fetching the data, update the timestamp in data store preferences
+                    // only if the database is empty (initial call) or a refresh is explicitly requested.
+                    if (allPostsFromDb.isEmpty() || shouldRefreshData) {
+                        prefs.saveControversialPostsTimestamp(System.currentTimeMillis())
+                    }
 
                     if (allPostsFromDb.isNotEmpty() && shouldRefreshData) {
                         // If there are existing posts in the database and refresh is needed,

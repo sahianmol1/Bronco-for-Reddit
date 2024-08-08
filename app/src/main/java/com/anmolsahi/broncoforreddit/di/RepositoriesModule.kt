@@ -1,5 +1,7 @@
 package com.anmolsahi.broncoforreddit.di
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.anmolsahi.data.SearchRepositoryImpl
 import com.anmolsahi.data.local.RecentSearchesDao
 import com.anmolsahi.data.local.SavedPostDao
@@ -13,9 +15,11 @@ import com.anmolsahi.data.remote.HomeService
 import com.anmolsahi.data.remote.SearchService
 import com.anmolsahi.data.repositories.SavedPostRepositoryImpl
 import com.anmolsahi.data.repositories.homerepository.HomeRepositoryImpl
+import com.anmolsahi.data.repository.AppPreferencesRepositoryImpl
 import com.anmolsahi.domain.repositories.HomeRepository
 import com.anmolsahi.domain.repositories.SavedPostRepository
 import com.anmolsahi.domain.repositories.SearchRepository
+import com.anmolsahi.domain.repository.AppPreferencesRepository
 import com.anmolsahi.postdetailsdata.remote.PostDetailsService
 import com.anmolsahi.postdetailsdata.repositories.PostDetailsRepositoryImpl
 import com.anmolsahi.postdetailsdomain.repositories.PostDetailsRepository
@@ -38,6 +42,7 @@ object RepositoriesModule {
         risingPostDao: RisingPostDao,
         controversialPostDao: ControversialPostDao,
         newPostDao: NewPostDao,
+        appPreferencesRepository: AppPreferencesRepository,
     ): HomeRepository = HomeRepositoryImpl(
         hotPostDao = hotPostDao,
         homeService = homeService,
@@ -46,6 +51,7 @@ object RepositoriesModule {
         risingPostDao = risingPostDao,
         controversialPostDao = controversialPostDao,
         newPostDao = newPostDao,
+        prefs = appPreferencesRepository,
     )
 
     @Singleton
@@ -69,4 +75,10 @@ object RepositoriesModule {
     @Provides
     fun providePostDetailsRepository(service: PostDetailsService): PostDetailsRepository =
         PostDetailsRepositoryImpl(service = service)
+
+    @Singleton
+    @Provides
+    fun providePreferencesDataStoreRepository(
+        dataStore: DataStore<Preferences>,
+    ): AppPreferencesRepository = AppPreferencesRepositoryImpl(dataStore = dataStore)
 }

@@ -21,4 +21,6 @@
     <string name="error_dialog_title">Uh oh! Something went wrong</string>
     <string name="silent">Silent</string>
     <string name="go_fullscreen">go fullscreen</string>
+    <string name="new_posts_available">New posts</string>
+    <string name="click_to_refresh_and_get_new_posts">Click to refresh and get new posts</string>
 </resources>

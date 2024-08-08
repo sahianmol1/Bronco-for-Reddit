@@ -146,7 +146,10 @@ dependencies {
 
     // Work Manager
     implementation(libs.workmanager.kotlin)
-    implementation("androidx.hilt:hilt-work:1.1.0")
+    implementation(libs.androidx.hilt.work)
     // When using Kotlin.
     ksp("androidx.hilt:hilt-compiler:1.1.0")
+
+    // Datastore
+    implementation(libs.bundles.datastore)
 }
