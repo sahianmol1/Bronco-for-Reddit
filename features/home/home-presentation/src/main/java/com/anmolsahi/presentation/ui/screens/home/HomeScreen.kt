@@ -137,6 +137,9 @@ fun HomeScreen(
                         onClick = onClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getHotPosts(shouldRefreshData = true) },
+                        onPullRefresh = {
+                            homeViewModel.onPostsAvailableChipClick(HomePage.HOT)
+                        },
                         loadMoreData = { nextPageKey ->
                             nextPageKey?.let {
                                 homeViewModel.getHotPosts(nextPageKey = it)
@@ -161,6 +164,9 @@ fun HomeScreen(
                         onClick = onClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getNewPosts(true) },
+                        onPullRefresh = {
+                            homeViewModel.onPostsAvailableChipClick(HomePage.NEW)
+                        },
                         loadMoreData = { nextPageKey ->
                             nextPageKey?.let {
                                 homeViewModel.getNewPosts(nextPageKey = it)
@@ -185,6 +191,9 @@ fun HomeScreen(
                         onClick = onClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getTopPosts(true) },
+                        onPullRefresh = {
+                            homeViewModel.onPostsAvailableChipClick(HomePage.TOP)
+                        },
                         loadMoreData = { nextPageKey ->
                             nextPageKey?.let {
                                 homeViewModel.getTopPosts(nextPageKey = it)
@@ -209,6 +218,9 @@ fun HomeScreen(
                         onClick = onClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getBestPosts(true) },
+                        onPullRefresh = {
+                            homeViewModel.onPostsAvailableChipClick(HomePage.BEST)
+                        },
                         loadMoreData = { nextPageKey ->
                             nextPageKey?.let {
                                 homeViewModel.getBestPosts(nextPageKey = it)
@@ -233,6 +245,9 @@ fun HomeScreen(
                         onClick = onClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getRisingsPosts(true) },
+                        onPullRefresh = {
+                            homeViewModel.onPostsAvailableChipClick(HomePage.RISING)
+                        },
                         loadMoreData = { nextPageKey ->
                             nextPageKey?.let {
                                 homeViewModel.getRisingsPosts(nextPageKey = it)
@@ -257,6 +272,9 @@ fun HomeScreen(
                         onClick = onClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getControversialPosts(true) },
+                        onPullRefresh = {
+                            homeViewModel.onPostsAvailableChipClick(HomePage.CONTROVERSIAL)
+                        },
                         loadMoreData = { nextPageKey ->
                             nextPageKey?.let {
                                 homeViewModel.getControversialPosts(nextPageKey = it)

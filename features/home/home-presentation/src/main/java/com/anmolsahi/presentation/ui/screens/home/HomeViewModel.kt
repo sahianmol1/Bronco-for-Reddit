@@ -89,12 +89,7 @@ class HomeViewModel @Inject constructor(
         repository.getHotPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (shouldRefreshData) {
-                    _hotPosts.update {
-                        it.copy(
-                            isPullRefreshLoading = true,
-                            areNewPostsAvailable = false,
-                        )
-                    }
+                    _hotPosts.update { it.copy(areNewPostsAvailable = false) }
                 }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _hotPosts.update { it.copy(isLoading = true) }
@@ -128,12 +123,7 @@ class HomeViewModel @Inject constructor(
         repository.getNewPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (shouldRefreshData) {
-                    _newPosts.update {
-                        it.copy(
-                            isPullRefreshLoading = true,
-                            areNewPostsAvailable = false,
-                        )
-                    }
+                    _newPosts.update { it.copy(areNewPostsAvailable = false) }
                 }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _newPosts.update { it.copy(isLoading = true) }
@@ -169,12 +159,7 @@ class HomeViewModel @Inject constructor(
         repository.getTopPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (shouldRefreshData) {
-                    _topPosts.update {
-                        it.copy(
-                            isPullRefreshLoading = true,
-                            areNewPostsAvailable = false,
-                        )
-                    }
+                    _topPosts.update { it.copy(areNewPostsAvailable = false) }
                 }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _topPosts.update { it.copy(isLoading = true) }
@@ -210,12 +195,7 @@ class HomeViewModel @Inject constructor(
         repository.getBestPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (shouldRefreshData) {
-                    _bestPosts.update {
-                        it.copy(
-                            isPullRefreshLoading = true,
-                            areNewPostsAvailable = false,
-                        )
-                    }
+                    _bestPosts.update { it.copy(areNewPostsAvailable = false) }
                 }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _bestPosts.update { it.copy(isLoading = true) }
@@ -252,12 +232,7 @@ class HomeViewModel @Inject constructor(
         repository.getRisingPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (shouldRefreshData) {
-                    _risingPosts.update {
-                        it.copy(
-                            isPullRefreshLoading = true,
-                            areNewPostsAvailable = false,
-                        )
-                    }
+                    _risingPosts.update { it.copy(areNewPostsAvailable = false) }
                 }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _risingPosts.update { it.copy(isLoading = true) }
@@ -293,12 +268,7 @@ class HomeViewModel @Inject constructor(
         repository.getControversialPosts(shouldRefreshData, nextPageKey)
             .onStart {
                 if (shouldRefreshData) {
-                    _controversialPosts.update {
-                        it.copy(
-                            isPullRefreshLoading = true,
-                            areNewPostsAvailable = false,
-                        )
-                    }
+                    _controversialPosts.update { it.copy(areNewPostsAvailable = false) }
                 }
                 if (shouldShowLoadingIndicator(shouldRefreshData, nextPageKey, silentUpdate)) {
                     _controversialPosts.update { it.copy(isLoading = true) }
@@ -399,6 +369,21 @@ class HomeViewModel @Inject constructor(
                     }
                 },
             )
+        }
+    }
+
+    fun onPostsAvailableChipClick(homePage: HomePage) {
+        when (homePage) {
+            HomePage.HOT -> _hotPosts.update { it.copy(isPullRefreshLoading = true) }
+            HomePage.NEW -> _newPosts.update { it.copy(isPullRefreshLoading = true) }
+            HomePage.TOP -> _topPosts.update { it.copy(isPullRefreshLoading = true) }
+            HomePage.BEST -> _bestPosts.update { it.copy(isPullRefreshLoading = true) }
+            HomePage.RISING -> _risingPosts.update { it.copy(isPullRefreshLoading = true) }
+            HomePage.CONTROVERSIAL -> _controversialPosts.update {
+                it.copy(
+                    isPullRefreshLoading = true,
+                )
+            }
         }
     }
 }

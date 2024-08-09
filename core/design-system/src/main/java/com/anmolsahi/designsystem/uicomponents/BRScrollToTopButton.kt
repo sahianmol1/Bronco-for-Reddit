@@ -24,7 +24,6 @@ fun BRScrollToTopButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     IconButton(
         modifier = modifier
             .padding(16.dp)
-            .navigationBarsPadding()
             .background(MaterialTheme.colorScheme.primary, CircleShape)
             .padding(1.dp)
             .background(MaterialTheme.colorScheme.background, CircleShape),

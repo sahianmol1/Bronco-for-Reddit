@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -25,6 +26,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,12 +38,16 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.anmolsahi.commonui.components.NewPostsAvailableComponent
 import com.anmolsahi.commonui.components.PostComponent
+import com.anmolsahi.commonui.utils.animateScrollToTop
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
+import com.anmolsahi.designsystem.uicomponents.BRScrollToTopButton
 import com.anmolsahi.designsystem.utils.slideInFromBottom
 import com.anmolsahi.designsystem.utils.slideInFromTop
+import com.anmolsahi.designsystem.utils.slideOutToBottom
 import com.anmolsahi.designsystem.utils.slideOutToTop
 import com.anmolsahi.homepresentation.R
 import com.anmolsahi.presentation.ui.screens.home.PostsUiState
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,28 +59,34 @@ fun HomeScreenListings(
     onSaveIconClick: (postId: String) -> Unit,
     onShareIconClick: (postUrl: String) -> Unit,
     onFullScreenIconClick: (videoUrl: String?) -> Unit,
+    onPullRefresh: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
+    val coroutineScope = rememberCoroutineScope()
     val lazyListState = rememberLazyListState()
     val list by remember(uiState) { mutableStateOf(uiState.data.orEmpty()) }
 
-    LaunchedEffect(key1 = pullRefreshState.isRefreshing, key2 = uiState.isPullRefreshLoading) {
-        if (pullRefreshState.isRefreshing || uiState.isPullRefreshLoading) {
-            lazyListState.animateScrollToItem(0, 0)
+    LaunchedEffect(uiState.isPullRefreshLoading) {
+        if (!uiState.isPullRefreshLoading) {
+            lazyListState.animateScrollToTop()
+            pullRefreshState.endRefresh()
+        }
+
+        if (uiState.isPullRefreshLoading) {
+            lazyListState.animateScrollToTop()
             pullRefreshState.startRefresh()
             refreshData()
         }
     }
 
-    LaunchedEffect(uiState.isPullRefreshLoading) {
-        if (!uiState.isPullRefreshLoading) {
-            pullRefreshState.endRefresh()
-            lazyListState.animateScrollToItem(0, 0)
+    LaunchedEffect(pullRefreshState.isRefreshing) {
+        if (pullRefreshState.isRefreshing && !uiState.isPullRefreshLoading) {
+            onPullRefresh()
         }
     }
 
-    LaunchedEffect(key1 = lazyListState.canScrollForward) {
+    LaunchedEffect(lazyListState.canScrollForward) {
         if (!lazyListState.canScrollForward && uiState.data?.isNotEmpty() == true) {
             loadMoreData(list.last().after)
         }
@@ -82,6 +94,7 @@ fun HomeScreenListings(
 
     Box(
         modifier.nestedScroll(pullRefreshState.nestedScrollConnection),
+        contentAlignment = Alignment.BottomEnd,
     ) {
         if (list.isNotEmpty()) {
             LazyColumn(
@@ -156,11 +169,24 @@ fun HomeScreenListings(
             enter = slideInFromTop(),
             exit = slideOutToTop(),
         ) {
-            NewPostsAvailableComponent(
-                modifier = Modifier
-                    .padding(top = 16.dp),
-                onClick = refreshData,
-            )
+            Column {
+                NewPostsAvailableComponent(
+                    modifier = Modifier
+                        .padding(top = 16.dp),
+                    onClick = onPullRefresh,
+                )
+                Spacer(modifier = Modifier.weight(1f))
+            }
+        }
+
+        AnimatedVisibility(
+            visible = lazyListState.canScrollBackward,
+            enter = slideInFromBottom(),
+            exit = slideOutToBottom(),
+        ) {
+            BRScrollToTopButton {
+                coroutineScope.launch { lazyListState.animateScrollToTop() }
+            }
         }
 
         PullToRefreshContainer(
