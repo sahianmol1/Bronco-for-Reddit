@@ -10,6 +10,7 @@ import com.anmolsahi.designsystem.utils.slideInFromLeft
 import com.anmolsahi.designsystem.utils.slideInFromRight
 import com.anmolsahi.designsystem.utils.slideOutToLeft
 import com.anmolsahi.designsystem.utils.slideOutToRight
+import com.anmolsahi.postdetailspresentation.postdetails.ui.fullsizeimage.FullSizeImageScreen
 import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsScreen
 import com.anmolsahi.postdetailspresentation.postdetails.ui.videoplayer.VideoPlayerScreen
 
@@ -52,6 +53,12 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
                     Destinations.VideoPlayerDestination.route + "?video-url=$videoUrl",
                 )
             },
+            onImageClick = { imageList ->
+                navController.navigate(
+                    Destinations.FullSizeImageDestination.route +
+                        "?image-list=${imageList.toTypedArray()}",
+                )
+            },
         )
     }
 
@@ -67,5 +74,19 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
     ) { navBackStackEntry ->
         val videoUrl = navBackStackEntry.arguments?.getString("video-url")
         VideoPlayerScreen(videoUrl = videoUrl)
+    }
+
+    composable(
+        route = Destinations.FullSizeImageDestination.route + "?image-list={image-list}",
+        arguments = listOf(
+            navArgument("image-list") {
+                type = NavType.StringArrayType
+            },
+        ),
+        enterTransition = { slideInFromRight() },
+        popExitTransition = { slideOutToRight() },
+    ) { navBackStackEntry ->
+        val imageList = navBackStackEntry.arguments?.getStringArray("image-list")
+        FullSizeImageScreen(imageList = imageList.orEmpty())
     }
 }

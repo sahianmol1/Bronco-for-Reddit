@@ -69,6 +69,7 @@ fun PostDetailsScreen(
     viewModel: PostDetailsViewModel = hiltViewModel(),
     popBackStack: () -> Unit = {},
     onFullScreenIconClick: (videoUrl: String?) -> Unit,
+    onImageClick: (List<String>) -> Unit,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -153,6 +154,7 @@ fun PostDetailsScreen(
                         },
                         onShareIconClick = { shareRedditPost(postUrl, context) },
                         onFullScreenIconClick = onFullScreenIconClick,
+                        onImageClick = onImageClick,
                     )
                 }
 

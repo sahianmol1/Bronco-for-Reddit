@@ -56,6 +56,12 @@ fun NavGraphBuilder.savedPostsNavGraph(navController: NavHostController) {
                     Destinations.VideoPlayerDestination.route + "?video-url=$videoUrl",
                 )
             },
+            onImageClick = { imageList ->
+                navController.navigate(
+                    Destinations.FullSizeImageDestination.route +
+                        "?image-list=${imageList.toTypedArray()}",
+                )
+            },
         )
     }
 }

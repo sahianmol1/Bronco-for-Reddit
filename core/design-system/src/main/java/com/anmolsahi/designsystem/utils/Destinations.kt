@@ -1,6 +1,7 @@
 package com.anmolsahi.designsystem.utils
 
 import com.anmolsahi.designsystem.utils.Routes.ABOUT_SCREEN_ROUTE
+import com.anmolsahi.designsystem.utils.Routes.FULL_SIZE_IMAGE_ROUTE
 import com.anmolsahi.designsystem.utils.Routes.HOME_SCREEN_ROUTE
 import com.anmolsahi.designsystem.utils.Routes.POST_DETAILS_ROUTE
 import com.anmolsahi.designsystem.utils.Routes.SAVED_SCREEN_ROUTE
@@ -19,6 +20,8 @@ sealed class Destinations(val route: String) {
     data object PostDetailsDestinations : Destinations(route = POST_DETAILS_ROUTE)
 
     data object VideoPlayerDestination : Destinations(route = VIDEO_PLAYER_ROUTE)
+
+    data object FullSizeImageDestination : Destinations(route = FULL_SIZE_IMAGE_ROUTE)
 }
 
 object Routes {
@@ -28,4 +31,5 @@ object Routes {
     const val ABOUT_SCREEN_ROUTE = "about_us"
     const val POST_DETAILS_ROUTE = "post_details_route"
     const val VIDEO_PLAYER_ROUTE = "video_player_route"
+    const val FULL_SIZE_IMAGE_ROUTE = "full_size_image_route"
 }

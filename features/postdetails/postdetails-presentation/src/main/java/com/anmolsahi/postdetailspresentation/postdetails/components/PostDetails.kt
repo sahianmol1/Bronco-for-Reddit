@@ -26,6 +26,7 @@ fun PostDetailsComponent(
     onDeleteIconClick: () -> Unit,
     onShareIconClick: () -> Unit,
     onFullScreenIconClick: (videoUrl: String) -> Unit,
+    onImageClick: (List<String>) -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -55,13 +56,18 @@ fun PostDetailsComponent(
                         modifier = Modifier
                             .zIndex(1f),
                         imageUrl = this.first().orEmpty(),
-
+                        onImageClick = {
+                            onImageClick(this.filterNotNull())
+                        },
                     )
                 } else if (this.size > 1) {
                     PostImagePager(
                         modifier = Modifier
                             .zIndex(1f),
                         imageUrlList = this.filterNotNull(),
+                        onImageClick = {
+                            onImageClick(this.filterNotNull())
+                        },
                     )
                 }
             }

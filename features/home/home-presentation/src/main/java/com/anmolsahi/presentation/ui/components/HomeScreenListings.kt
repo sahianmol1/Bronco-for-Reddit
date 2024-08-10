@@ -60,6 +60,7 @@ fun HomeScreenListings(
     onShareIconClick: (postUrl: String) -> Unit,
     onFullScreenIconClick: (videoUrl: String?) -> Unit,
     onPullRefresh: () -> Unit,
+    onImageClick: (List<String>) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
@@ -119,6 +120,7 @@ fun HomeScreenListings(
                         onSaveIconClick = onSaveIconClick,
                         onShareIconClick = onShareIconClick,
                         onFullScreenIconClick = onFullScreenIconClick,
+                        onImageClick = onImageClick,
                     )
                 }
 

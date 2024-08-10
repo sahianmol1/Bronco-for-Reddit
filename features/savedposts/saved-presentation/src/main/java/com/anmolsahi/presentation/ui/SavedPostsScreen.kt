@@ -28,11 +28,12 @@ import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 
 @Composable
 fun SavedPostsScreen(
-    modifier: Modifier = Modifier,
     viewModel: SavedPostsViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier,
+    onFullScreenIconClick: (videoUrl: String?) -> Unit,
+    onImageClick: (List<String>) -> Unit,
     onClick: (postId: String, postUrl: String) -> Unit = { _, _ -> },
     onSaveIconClick: (String) -> Unit = {},
-    onFullScreenIconClick: (videoUrl: String?) -> Unit,
 ) {
     val context = LocalContext.current
     val uiState by viewModel.savedPostsUiState.collectAsStateWithLifecycle(
@@ -92,6 +93,7 @@ fun SavedPostsScreen(
                     },
                     onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                     onFullScreenIconClick = onFullScreenIconClick,
+                    onImageClick = onImageClick,
                 )
             }
         }

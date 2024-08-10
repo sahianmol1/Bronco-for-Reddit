@@ -32,6 +32,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     onClick: (postId: String, postUrl: String) -> Unit,
     onFullScreenIconClick: (videoUrl: String?) -> Unit,
+    onImageClick: (List<String>) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
@@ -135,6 +136,7 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = hotPosts.value,
                         onClick = onClick,
+                        onImageClick = onImageClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getHotPosts(shouldRefreshData = true) },
                         onPullRefresh = {
@@ -162,6 +164,7 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = newPosts.value,
                         onClick = onClick,
+                        onImageClick = onImageClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getNewPosts(true) },
                         onPullRefresh = {
@@ -189,6 +192,7 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = topPosts.value,
                         onClick = onClick,
+                        onImageClick = onImageClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getTopPosts(true) },
                         onPullRefresh = {
@@ -216,6 +220,7 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = bestPosts.value,
                         onClick = onClick,
+                        onImageClick = onImageClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getBestPosts(true) },
                         onPullRefresh = {
@@ -243,6 +248,7 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = risingPosts.value,
                         onClick = onClick,
+                        onImageClick = onImageClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getRisingsPosts(true) },
                         onPullRefresh = {
@@ -270,6 +276,7 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = controversialPosts.value,
                         onClick = onClick,
+                        onImageClick = onImageClick,
                         onFullScreenIconClick = onFullScreenIconClick,
                         refreshData = { homeViewModel.getControversialPosts(true) },
                         onPullRefresh = {

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -36,6 +37,7 @@ import com.anmolsahi.designsystem.theme.BRTheme
 fun PostImagePager(
     imageUrlList: List<String>,
     modifier: Modifier = Modifier,
+    showFullSizeImage: Boolean = false,
     onImageClick: () -> Unit = {},
 ) {
     val pagerState = rememberPagerState(
@@ -43,6 +45,12 @@ fun PostImagePager(
         initialPageOffsetFraction = 0f,
         pageCount = { imageUrlList.size },
     )
+
+    val heightModifier = if (!showFullSizeImage) {
+        Modifier.height(350.dp)
+    } else {
+        Modifier
+    }
 
     Column {
         Box(
@@ -62,9 +70,11 @@ fun PostImagePager(
                     PostImage(
                         modifier = Modifier
                             .animateContentSize()
+                            .then(heightModifier)
                             .zIndex(2f),
                         imageUrl = imageUrlList[index],
                         onImageClick = onImageClick,
+                        shouldResetOnGestureRelease = false,
                     )
                 }
             }
