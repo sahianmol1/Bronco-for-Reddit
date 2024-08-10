@@ -83,7 +83,7 @@ fun PostImagePager(
                         .zIndex(2f),
                     imageUrl = imageUrlList[index],
                     onImageClick = onImageClick,
-                    shouldResetOnGestureRelease = false,
+                    shouldResetOnGestureRelease = !showFullSizeImage,
                 )
             }
 

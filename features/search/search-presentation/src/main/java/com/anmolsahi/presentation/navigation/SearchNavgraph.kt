@@ -3,6 +3,7 @@ package com.anmolsahi.presentation.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.anmolsahi.commonui.utils.serialize
 import com.anmolsahi.designsystem.utils.Destinations
 import com.anmolsahi.designsystem.utils.isTopLevelDestination
 import com.anmolsahi.designsystem.utils.slideInFromBottom
@@ -58,7 +59,7 @@ fun NavGraphBuilder.searchNavGraph(navController: NavHostController) {
             onImageFullScreenIconClick = { imageList ->
                 navController.navigate(
                     Destinations.FullSizeImageDestination.route +
-                        "?image-list=${imageList.toTypedArray()}",
+                        "?image-list=${imageList.serialize()}",
                 )
             },
         )

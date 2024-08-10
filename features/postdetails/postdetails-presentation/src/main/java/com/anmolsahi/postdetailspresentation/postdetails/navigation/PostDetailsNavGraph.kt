@@ -5,6 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.anmolsahi.commonui.utils.deserialize
+import com.anmolsahi.commonui.utils.serialize
 import com.anmolsahi.designsystem.utils.Destinations
 import com.anmolsahi.designsystem.utils.slideInFromLeft
 import com.anmolsahi.designsystem.utils.slideInFromRight
@@ -56,7 +58,7 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
             onImageFullScreenIconClick = { imageList ->
                 navController.navigate(
                     Destinations.FullSizeImageDestination.route +
-                        "?image-list=${imageList.toTypedArray()}",
+                        "?image-list=${imageList.serialize()}",
                 )
             },
         )
@@ -80,13 +82,15 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
         route = Destinations.FullSizeImageDestination.route + "?image-list={image-list}",
         arguments = listOf(
             navArgument("image-list") {
-                type = NavType.StringArrayType
+                type = NavType.StringType
             },
         ),
         enterTransition = { slideInFromRight() },
         popExitTransition = { slideOutToRight() },
     ) { navBackStackEntry ->
-        val imageList = navBackStackEntry.arguments?.getStringArray("image-list")
+        val imageListArg = navBackStackEntry.arguments?.getString("image-list")
+        val imageList = imageListArg?.deserialize()
+
         FullSizeImageScreen(imageList = imageList.orEmpty())
     }
 }
