@@ -91,8 +91,8 @@ fun PostComponent(
     onSaveIconClick: (postId: String) -> Unit,
     onDeleteIconClick: (postId: String) -> Unit = {},
     onShareIconClick: (postUrl: String) -> Unit = {},
-    onImageClick: (List<String>) -> Unit = {},
-    onFullScreenIconClick: (videoUrl: String?) -> Unit,
+    onImageFullScreenIconClick: (List<String>) -> Unit = {},
+    onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -127,7 +127,10 @@ fun PostComponent(
                             .zIndex(1f),
                         imageUrlList = this.filterNotNull(),
                         onImageClick = {
-                            onImageClick(this.filterNotNull())
+                            onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty())
+                        },
+                        onFullScreenIconClick = {
+                            onImageFullScreenIconClick(this.filterNotNull())
                         },
                     )
                 }
@@ -139,7 +142,7 @@ fun PostComponent(
                 modifier = Modifier.zIndex(1f),
                 videoUrl = it,
                 onFullScreenIconClick = {
-                    onFullScreenIconClick(redditPostUiModel.videoUrl)
+                    onVideoFullScreenIconClick(redditPostUiModel.videoUrl)
                 },
             )
         }
@@ -559,7 +562,7 @@ fun PostPreview() {
         redditPostUiModel = RedditPostUiModel(id = "0"),
         onClick = { _, _ -> },
         onSaveIconClick = {},
-        onFullScreenIconClick = { _ -> },
+        onVideoFullScreenIconClick = { _ -> },
     )
 }
 

@@ -58,9 +58,9 @@ fun HomeScreenListings(
     loadMoreData: (nextPageKey: String?) -> Unit,
     onSaveIconClick: (postId: String) -> Unit,
     onShareIconClick: (postUrl: String) -> Unit,
-    onFullScreenIconClick: (videoUrl: String?) -> Unit,
+    onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
     onPullRefresh: () -> Unit,
-    onImageClick: (List<String>) -> Unit,
+    onImageFullScreenIconClick: (List<String>) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
@@ -119,8 +119,8 @@ fun HomeScreenListings(
                         onClick = onClick,
                         onSaveIconClick = onSaveIconClick,
                         onShareIconClick = onShareIconClick,
-                        onFullScreenIconClick = onFullScreenIconClick,
-                        onImageClick = onImageClick,
+                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
+                        onImageFullScreenIconClick = onImageFullScreenIconClick,
                     )
                 }
 

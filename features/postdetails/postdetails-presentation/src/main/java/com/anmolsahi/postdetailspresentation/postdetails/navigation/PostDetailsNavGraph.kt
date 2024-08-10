@@ -48,12 +48,12 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
             popBackStack = {
                 navController.popBackStack()
             },
-            onFullScreenIconClick = { videoUrl ->
+            onVideoFullScreenIconClick = { videoUrl ->
                 navController.navigate(
                     Destinations.VideoPlayerDestination.route + "?video-url=$videoUrl",
                 )
             },
-            onImageClick = { imageList ->
+            onImageFullScreenIconClick = { imageList ->
                 navController.navigate(
                     Destinations.FullSizeImageDestination.route +
                         "?image-list=${imageList.toTypedArray()}",

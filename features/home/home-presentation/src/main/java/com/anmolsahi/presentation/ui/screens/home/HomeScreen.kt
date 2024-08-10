@@ -31,8 +31,8 @@ import com.anmolsahi.presentation.ui.components.HomeScreenListings
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onClick: (postId: String, postUrl: String) -> Unit,
-    onFullScreenIconClick: (videoUrl: String?) -> Unit,
-    onImageClick: (List<String>) -> Unit,
+    onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
+    onImageFullScreenIconClick: (List<String>) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
@@ -136,8 +136,8 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = hotPosts.value,
                         onClick = onClick,
-                        onImageClick = onImageClick,
-                        onFullScreenIconClick = onFullScreenIconClick,
+                        onImageFullScreenIconClick = onImageFullScreenIconClick,
+                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         refreshData = { homeViewModel.getHotPosts(shouldRefreshData = true) },
                         onPullRefresh = {
                             homeViewModel.onPostsAvailableChipClick(HomePage.HOT)
@@ -164,8 +164,8 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = newPosts.value,
                         onClick = onClick,
-                        onImageClick = onImageClick,
-                        onFullScreenIconClick = onFullScreenIconClick,
+                        onImageFullScreenIconClick = onImageFullScreenIconClick,
+                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         refreshData = { homeViewModel.getNewPosts(true) },
                         onPullRefresh = {
                             homeViewModel.onPostsAvailableChipClick(HomePage.NEW)
@@ -192,8 +192,8 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = topPosts.value,
                         onClick = onClick,
-                        onImageClick = onImageClick,
-                        onFullScreenIconClick = onFullScreenIconClick,
+                        onImageFullScreenIconClick = onImageFullScreenIconClick,
+                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         refreshData = { homeViewModel.getTopPosts(true) },
                         onPullRefresh = {
                             homeViewModel.onPostsAvailableChipClick(HomePage.TOP)
@@ -220,8 +220,8 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = bestPosts.value,
                         onClick = onClick,
-                        onImageClick = onImageClick,
-                        onFullScreenIconClick = onFullScreenIconClick,
+                        onImageFullScreenIconClick = onImageFullScreenIconClick,
+                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         refreshData = { homeViewModel.getBestPosts(true) },
                         onPullRefresh = {
                             homeViewModel.onPostsAvailableChipClick(HomePage.BEST)
@@ -248,8 +248,8 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = risingPosts.value,
                         onClick = onClick,
-                        onImageClick = onImageClick,
-                        onFullScreenIconClick = onFullScreenIconClick,
+                        onImageFullScreenIconClick = onImageFullScreenIconClick,
+                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         refreshData = { homeViewModel.getRisingsPosts(true) },
                         onPullRefresh = {
                             homeViewModel.onPostsAvailableChipClick(HomePage.RISING)
@@ -276,8 +276,8 @@ fun HomeScreen(
                     HomeScreenListings(
                         uiState = controversialPosts.value,
                         onClick = onClick,
-                        onImageClick = onImageClick,
-                        onFullScreenIconClick = onFullScreenIconClick,
+                        onImageFullScreenIconClick = onImageFullScreenIconClick,
+                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         refreshData = { homeViewModel.getControversialPosts(true) },
                         onPullRefresh = {
                             homeViewModel.onPostsAvailableChipClick(HomePage.CONTROVERSIAL)

@@ -19,6 +19,7 @@ fun FullSizeImageScreen(modifier: Modifier = Modifier, imageList: Array<out Stri
             imageUrlList = imageList.toList(),
             showFullSizeImage = true,
             onImageClick = {},
+            onFullScreenIconClick = {},
         )
     }
 }

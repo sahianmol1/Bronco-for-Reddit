@@ -30,8 +30,8 @@ import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 fun SavedPostsScreen(
     viewModel: SavedPostsViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
-    onFullScreenIconClick: (videoUrl: String?) -> Unit,
-    onImageClick: (List<String>) -> Unit,
+    onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
+    onImageFullScreenIconClick: (List<String>) -> Unit,
     onClick: (postId: String, postUrl: String) -> Unit = { _, _ -> },
     onSaveIconClick: (String) -> Unit = {},
 ) {
@@ -92,8 +92,8 @@ fun SavedPostsScreen(
                         showDeletePostAlertDialog = true
                     },
                     onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
-                    onFullScreenIconClick = onFullScreenIconClick,
-                    onImageClick = onImageClick,
+                    onVideoFullScreenIconClick = onVideoFullScreenIconClick,
+                    onImageFullScreenIconClick = onImageFullScreenIconClick,
                 )
             }
         }

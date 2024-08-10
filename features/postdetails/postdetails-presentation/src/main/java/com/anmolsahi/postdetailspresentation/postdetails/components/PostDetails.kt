@@ -25,8 +25,8 @@ fun PostDetailsComponent(
     onSaveIconClick: () -> Unit,
     onDeleteIconClick: () -> Unit,
     onShareIconClick: () -> Unit,
-    onFullScreenIconClick: (videoUrl: String) -> Unit,
-    onImageClick: (List<String>) -> Unit,
+    onVideoFullScreenIconClick: (videoUrl: String) -> Unit,
+    onImageFullScreenIconClick: (List<String>) -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -57,7 +57,7 @@ fun PostDetailsComponent(
                             .zIndex(1f),
                         imageUrl = this.first().orEmpty(),
                         onImageClick = {
-                            onImageClick(this.filterNotNull())
+                            onImageFullScreenIconClick(this.filterNotNull())
                         },
                     )
                 } else if (this.size > 1) {
@@ -66,7 +66,10 @@ fun PostDetailsComponent(
                             .zIndex(1f),
                         imageUrlList = this.filterNotNull(),
                         onImageClick = {
-                            onImageClick(this.filterNotNull())
+                            onImageFullScreenIconClick(this.filterNotNull())
+                        },
+                        onFullScreenIconClick = {
+                            onImageFullScreenIconClick(this.filterNotNull())
                         },
                     )
                 }
@@ -78,7 +81,7 @@ fun PostDetailsComponent(
                 modifier = Modifier.zIndex(1f),
                 videoUrl = videoUrl,
                 onFullScreenIconClick = {
-                    onFullScreenIconClick(videoUrl)
+                    onVideoFullScreenIconClick(videoUrl)
                 },
             )
         }

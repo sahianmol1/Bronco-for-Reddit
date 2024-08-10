@@ -65,8 +65,8 @@ fun SearchScreen(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
     onPostClick: (postId: String, postUrl: String) -> Unit,
-    onFullScreenIconClick: (videoUrl: String?) -> Unit,
-    onImageClick: (List<String>) -> Unit,
+    onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
+    onImageFullScreenIconClick: (List<String>) -> Unit,
 ) {
     val context = LocalContext.current
     val lazyListState = rememberLazyListState()
@@ -166,8 +166,8 @@ fun SearchScreen(
                             viewModel.onSaveIconClick(searchedItemsList[index])
                         },
                         onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
-                        onFullScreenIconClick = onFullScreenIconClick,
-                        onImageClick = onImageClick,
+                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
+                        onImageFullScreenIconClick = onImageFullScreenIconClick,
                     )
                 }
 
