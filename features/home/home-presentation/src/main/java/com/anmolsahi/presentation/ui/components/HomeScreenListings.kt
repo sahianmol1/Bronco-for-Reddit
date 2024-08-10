@@ -69,7 +69,6 @@ fun HomeScreenListings(
 
     LaunchedEffect(uiState.isPullRefreshLoading) {
         if (!uiState.isPullRefreshLoading) {
-            lazyListState.animateScrollToTop()
             pullRefreshState.endRefresh()
         }
 
