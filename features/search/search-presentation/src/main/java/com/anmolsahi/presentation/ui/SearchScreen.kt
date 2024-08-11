@@ -4,8 +4,10 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,11 +36,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.commonui.utils.ErrorDialog
+import com.anmolsahi.commonui.utils.animateScrollToTop
 import com.anmolsahi.commonui.utils.isScrollingUp
 import com.anmolsahi.commonui.utils.scrollToTop
 import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
+import com.anmolsahi.designsystem.uicomponents.BRScrollToTopButton
 import com.anmolsahi.designsystem.uicomponents.BRSearchBar
+import com.anmolsahi.designsystem.utils.slideInFromBottom
+import com.anmolsahi.designsystem.utils.slideOutToBottom
 import com.anmolsahi.domain.model.RecentSearch
 import com.anmolsahi.presentation.ui.SearchScreenDefaults.LOADING_INDICATOR
 import com.anmolsahi.presentation.ui.SearchScreenDefaults.QUICK_RESULTS_FOOTER
@@ -50,6 +57,7 @@ import com.anmolsahi.presentation.ui.components.RecentSearchesComponent
 import com.anmolsahi.presentation.utils.shouldShowQuickResults
 import com.anmolsahi.presentation.utils.shouldShowRecentSearches
 import com.anmolsahi.searchpresentation.R
+import kotlinx.coroutines.launch
 
 private object SearchScreenDefaults {
     const val QUICK_RESULTS_HEADER = "quick_results_header"
@@ -70,6 +78,7 @@ fun SearchScreen(
 ) {
     val context = LocalContext.current
     val lazyListState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
     val uiState by viewModel.searchDataUiState.collectAsStateWithLifecycle()
     val searchedValue by viewModel.searchQuery.collectAsStateWithLifecycle()
     var showErrorDialog by remember { mutableStateOf(false) }
@@ -190,6 +199,22 @@ fun SearchScreen(
                 uiState.errorMessage.orEmpty(),
                 onConfirmButtonClick = { showErrorDialog = false },
             )
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.BottomEnd,
+    ) {
+        AnimatedVisibility(
+            visible = lazyListState.canScrollBackward,
+            enter = slideInFromBottom(),
+            exit = slideOutToBottom(),
+        ) {
+            BRScrollToTopButton {
+                coroutineScope.launch { lazyListState.animateScrollToTop() }
+            }
         }
     }
 }
