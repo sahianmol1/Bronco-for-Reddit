@@ -6,18 +6,22 @@ import com.anmolsahi.commonui.components.PostImage
 import com.anmolsahi.commonui.components.postimage.PostImagePager
 
 @Composable
-fun FullSizeImageScreen(modifier: Modifier = Modifier, imageList: List<String>) {
+fun FullSizeImageScreen(
+    modifier: Modifier = Modifier,
+    imageList: List<String>,
+    onExitIconClick: () -> Unit,
+) {
     if (imageList.size == 1) {
         PostImage(
             modifier = modifier,
             imageUrl = imageList.first(),
-            shouldResetOnGestureRelease = false,
         )
     } else {
         PostImagePager(
             modifier = modifier,
             imageUrlList = imageList.toList(),
             showFullSizeImage = true,
+            onExitIconClick = onExitIconClick,
         )
     }
 }

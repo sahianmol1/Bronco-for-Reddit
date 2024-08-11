@@ -1,6 +1,5 @@
 package com.anmolsahi.commonui.components.postimage
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -11,7 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,6 +20,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Fullscreen
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,6 +47,7 @@ fun PostImagePager(
     showFullSizeImage: Boolean = false,
     onImageClick: () -> Unit = {},
     onFullScreenIconClick: () -> Unit = {},
+    onExitIconClick: () -> Unit = {},
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0,
@@ -61,29 +62,24 @@ fun PostImagePager(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
     ) {
         Box(
-            modifier = modifier
-                .animateContentSize()
-                .fillMaxWidth()
-                .fillMaxHeight(),
+            modifier = Modifier
+                .fillMaxSize(),
         ) {
             HorizontalPager(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(),
+                    .fillMaxSize(),
                 state = pagerState,
             ) { index ->
                 PostImage(
                     modifier = Modifier
-                        .animateContentSize()
                         .then(heightModifier)
                         .zIndex(2f),
                     imageUrl = imageUrlList[index],
                     onImageClick = onImageClick,
-                    shouldResetOnGestureRelease = !showFullSizeImage,
                 )
             }
 
@@ -92,13 +88,40 @@ fun PostImagePager(
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = if (showFullSizeImage) 32.dp else 0.dp)
+                        .padding(16.dp),
                     horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
+                    if (showFullSizeImage) {
+                        IconButton(
+                            modifier = Modifier
+                                .zIndex(1f)
+                                .drawBehind {
+                                    drawCircle(
+                                        color = Color.Black.copy(alpha = 0.7f),
+                                        radius = 56.0f,
+                                    )
+                                },
+                            onClick = onExitIconClick,
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .size(20.dp),
+                                imageVector = Icons.Default.Close,
+                                contentDescription = stringResource(R.string.exit_fullscreen),
+                                tint = Color.White,
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.weight(1f))
+
                     Text(
                         modifier = Modifier
                             .zIndex(1f)
-                            .padding(16.dp)
                             .background(
                                 color = Color.Black.copy(alpha = 0.7f),
                                 shape = CircleShape,

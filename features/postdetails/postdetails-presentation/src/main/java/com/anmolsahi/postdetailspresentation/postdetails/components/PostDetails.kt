@@ -56,18 +56,12 @@ fun PostDetailsComponent(
                         modifier = Modifier
                             .zIndex(1f),
                         imageUrl = this.first().orEmpty(),
-                        onImageClick = {
-                            onImageFullScreenIconClick(this.filterNotNull())
-                        },
                     )
                 } else if (this.size > 1) {
                     PostImagePager(
                         modifier = Modifier
                             .zIndex(1f),
                         imageUrlList = this.filterNotNull(),
-                        onImageClick = {
-                            onImageFullScreenIconClick(this.filterNotNull())
-                        },
                         onFullScreenIconClick = {
                             onImageFullScreenIconClick(this.filterNotNull())
                         },

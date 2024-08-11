@@ -91,6 +91,9 @@ fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
         val imageListArg = navBackStackEntry.arguments?.getString("image-list")
         val imageList = imageListArg?.deserialize()
 
-        FullSizeImageScreen(imageList = imageList.orEmpty())
+        FullSizeImageScreen(
+            imageList = imageList.orEmpty(),
+            onExitIconClick = { navController.navigateUp() },
+        )
     }
 }

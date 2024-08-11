@@ -9,7 +9,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.Arrangement
@@ -55,7 +54,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -219,12 +217,7 @@ fun PostDescription(description: String, maxLines: Int = 3) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PostImage(
-    imageUrl: String,
-    modifier: Modifier = Modifier,
-    shouldResetOnGestureRelease: Boolean = true,
-    onImageClick: () -> Unit = {},
-) {
+fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () -> Unit = {}) {
     var isImageLoading by rememberSaveable { mutableStateOf(false) }
     var isImageLoadingError by rememberSaveable { mutableStateOf(false) }
 
@@ -237,7 +230,7 @@ fun PostImage(
     }
 
     LaunchedEffect(transformableState.isTransformInProgress) {
-        if (shouldResetOnGestureRelease && !transformableState.isTransformInProgress) {
+        if (!transformableState.isTransformInProgress) {
             scale = 1f
             offset = Offset.Zero
         }
@@ -253,19 +246,6 @@ fun PostImage(
         }
         AsyncImage(
             modifier = Modifier
-                .pointerInput(Unit) {
-                    if (!shouldResetOnGestureRelease) {
-                        detectTapGestures(
-                            onDoubleTap = {
-                                if (scale == 1f) {
-                                    scale *= 1.5f
-                                } else {
-                                    scale = 1f
-                                }
-                            },
-                        )
-                    }
-                }
                 .clickable(role = Role.Image) {
                     onImageClick()
                 }
