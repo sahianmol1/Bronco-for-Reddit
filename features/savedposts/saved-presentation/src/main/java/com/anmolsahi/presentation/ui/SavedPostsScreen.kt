@@ -1,7 +1,10 @@
 package com.anmolsahi.presentation.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -11,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -22,9 +26,13 @@ import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
-import com.anmolsahi.commonui.utils.scrollToTop
+import com.anmolsahi.commonui.utils.animateScrollToTop
 import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
+import com.anmolsahi.designsystem.uicomponents.BRScrollToTopButton
+import com.anmolsahi.designsystem.utils.slideInFromBottom
+import com.anmolsahi.designsystem.utils.slideOutToBottom
+import kotlinx.coroutines.launch
 
 @Composable
 fun SavedPostsScreen(
@@ -36,6 +44,7 @@ fun SavedPostsScreen(
     onSaveIconClick: (String) -> Unit = {},
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     val uiState by viewModel.savedPostsUiState.collectAsStateWithLifecycle(
         lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
     )
@@ -45,10 +54,17 @@ fun SavedPostsScreen(
     var selectedPostId by rememberSaveable { mutableStateOf("") }
     var showErrorDialog by rememberSaveable { mutableStateOf(false) }
 
-    LaunchedEffect(uiState.data) {
+    LaunchedEffect(Unit) {
         viewModel.getAllSavedPosts()
         list = uiState.data.orEmpty()
-        lazyListState.scrollToTop()
+    }
+
+    LaunchedEffect(uiState.data) {
+        val newItemAdded = uiState.data.orEmpty().size > list.size
+        list = uiState.data.orEmpty()
+        if (newItemAdded) {
+            lazyListState.animateScrollToTop()
+        }
     }
 
     LaunchedEffect(uiState.errorMessage) {
@@ -95,6 +111,22 @@ fun SavedPostsScreen(
                     onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                     onImageFullScreenIconClick = onImageFullScreenIconClick,
                 )
+            }
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.BottomEnd,
+    ) {
+        AnimatedVisibility(
+            visible = lazyListState.canScrollBackward,
+            enter = slideInFromBottom(),
+            exit = slideOutToBottom(),
+        ) {
+            BRScrollToTopButton {
+                coroutineScope.launch { lazyListState.animateScrollToTop() }
             }
         }
     }
