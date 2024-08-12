@@ -116,8 +116,8 @@ constructor(
         }
     }
 
-    fun saveRecentSearch(recentSearch: RecentSearch) {
-        val recentSearchValue = recentSearch.value.lowercase().trim()
+    fun saveRecentSearch(recentSearch: String) {
+        val recentSearchValue = recentSearch.lowercase().trim()
         if (_searchDataUiState.value.recentSearches.any { it.value == recentSearchValue }) {
             return
         }
@@ -127,7 +127,7 @@ constructor(
         }
 
         viewModelScope.launch {
-            repository.insertRecentSearch(recentSearch)
+            repository.insertRecentSearch(RecentSearch(recentSearch))
         }
     }
 
@@ -142,7 +142,7 @@ constructor(
     }
 
     fun onBackClick(searchedValue: String) {
-        saveRecentSearch(RecentSearch(value = searchedValue))
+        saveRecentSearch(searchedValue)
         updateSearchQuery("")
     }
 

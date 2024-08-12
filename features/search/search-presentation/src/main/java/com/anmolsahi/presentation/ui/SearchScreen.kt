@@ -127,7 +127,7 @@ fun SearchScreen(
                     viewModel.updateSearchQuery(it)
                 },
                 onSearch = {
-                    viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
+                    viewModel.saveRecentSearch(searchedValue)
                 },
                 onBack = {
                     viewModel.onBackClick(searchedValue)
@@ -137,11 +137,11 @@ fun SearchScreen(
                     uiState = uiState,
                     searchedValue = searchedValue,
                     onSeeAllResultsClick = {
-                        viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
+                        viewModel.saveRecentSearch(searchedValue)
                         viewModel.updateSearchBarActive(false)
                     },
                     onViewAllPostsClick = {
-                        viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
+                        viewModel.saveRecentSearch(searchedValue)
                         viewModel.updateSearchBarActive(false)
                     },
                     onRecentItemClick = { recentSearch ->
@@ -151,7 +151,7 @@ fun SearchScreen(
                         viewModel.onDeleteItemClick(recentSearch)
                     },
                     onQuickSearchPostClick = { id, url ->
-                        viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
+                        viewModel.saveRecentSearch(searchedValue)
                         onPostClick(id, url)
                     },
                 )
@@ -168,7 +168,7 @@ fun SearchScreen(
                     PostComponent(
                         redditPostUiModel = searchedItemsList[index],
                         onClick = { id, url ->
-                            viewModel.saveRecentSearch(RecentSearch(value = searchedValue))
+                            viewModel.saveRecentSearch(searchedValue)
                             onPostClick(id, url)
                         },
                         onSaveIconClick = {

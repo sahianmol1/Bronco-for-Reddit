@@ -50,7 +50,7 @@ fun RecentSearchesComponent(
 
         items(
             count = recentSearches.size,
-            key = { index -> recentSearches[index].id },
+            key = { index -> recentSearches[index].value },
             contentType = { "recent_searches_item" },
         ) { index ->
             Row(
@@ -105,10 +105,10 @@ private fun RecentSearchesPreview() {
     RecentSearchesComponent(
         recentSearches =
         listOf(
-            RecentSearch(0, "cat"),
-            RecentSearch(1, "dog"),
-            RecentSearch(2, "bird"),
-            RecentSearch(3, "funny"),
+            RecentSearch("cat"),
+            RecentSearch("dog"),
+            RecentSearch("bird"),
+            RecentSearch("funny"),
         ),
         onItemClick = {},
         onDeleteItemClick = {},
