@@ -23,7 +23,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideRedditPostDao(redditDatabase: RedditDatabase) = redditDatabase.getRedditPostDao()
+    fun provideHotPostDao(redditDatabase: RedditDatabase) = redditDatabase.getHotPostDao()
 
     @Provides
     @Singleton

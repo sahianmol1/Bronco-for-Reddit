@@ -14,11 +14,16 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.ktor.client.HttpClient
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object HomeDataModule {
+
+    @Provides
+    @Singleton
+    fun providesHomeApiRequests(client: HttpClient) = HomeService(client)
 
     @Singleton
     @Provides

@@ -37,7 +37,7 @@ import com.anmolsahi.data.typeconverters.ListStringConverter
 )
 @TypeConverters(ListStringConverter::class)
 abstract class RedditDatabase : RoomDatabase() {
-    abstract fun getRedditPostDao(): HotPostDao
+    abstract fun getHotPostDao(): HotPostDao
 
     abstract fun getTopPostDao(): TopPostDao
 

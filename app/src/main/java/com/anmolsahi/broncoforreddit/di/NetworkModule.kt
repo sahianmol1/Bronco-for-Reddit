@@ -1,8 +1,5 @@
 package com.anmolsahi.broncoforreddit.di
 
-import com.anmolsahi.data.remote.HomeService
-import com.anmolsahi.data.remote.SearchService
-import com.anmolsahi.postdetailsdata.remote.PostDetailsService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,16 +38,4 @@ object NetworkModule {
             socketTimeout = Constants.SOCKET_TIMEOUT_MILLIS
         }
     }
-
-    @Provides
-    @Singleton
-    fun providesHomeApiRequests(client: HttpClient) = HomeService(client)
-
-    @Provides
-    @Singleton
-    fun providesSearchApiRequests(client: HttpClient) = SearchService(client)
-
-    @Provides
-    @Singleton
-    fun providesPostDetailsApiRequests(client: HttpClient) = PostDetailsService(client)
 }
