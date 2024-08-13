@@ -208,7 +208,7 @@ fun SearchScreen(
         contentAlignment = Alignment.BottomEnd,
     ) {
         AnimatedVisibility(
-            visible = lazyListState.canScrollBackward,
+            visible = lazyListState.canScrollBackward && searchedItemsList.isNotEmpty(),
             enter = slideInFromBottom(),
             exit = slideOutToBottom(),
         ) {
