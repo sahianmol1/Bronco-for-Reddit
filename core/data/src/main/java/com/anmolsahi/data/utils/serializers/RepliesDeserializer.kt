@@ -1,4 +1,4 @@
-package com.anmolsahi.data.serializer
+package com.anmolsahi.data.utils.serializers
 
 import com.anmolsahi.data.model.remote.ListingsResponse
 import kotlinx.serialization.json.JsonElement

@@ -11,29 +11,30 @@ import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 abstract class DelegateModule {
+
     @Binds
-    @ViewModelScoped
+    @Singleton
     abstract fun getCommonUiDelegate(
         commonUiModuleManager: PostDetailsModuleManager,
     ): PostDetailsDelegate
 
     @Binds
-    @ViewModelScoped
+    @Singleton
     abstract fun getHomeDelegate(homeModuleManager: HomeModuleManager): HomeDelegate
 
     @Binds
-    @ViewModelScoped
+    @Singleton
     abstract fun getSavedPostDelegate(
         savedPostModuleManager: SavedPostModuleManager,
     ): SavedPostDelegate
 
     @Binds
-    @ViewModelScoped
+    @Singleton
     abstract fun getSearchDelegate(searchModuleManager: SearchModuleManager): SearchDelegate
 }

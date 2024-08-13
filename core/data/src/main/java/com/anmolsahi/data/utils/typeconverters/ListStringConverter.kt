@@ -1,4 +1,4 @@
-package com.anmolsahi.data.typeconverters
+package com.anmolsahi.data.utils.typeconverters
 
 import androidx.room.TypeConverter
 import kotlinx.serialization.encodeToString

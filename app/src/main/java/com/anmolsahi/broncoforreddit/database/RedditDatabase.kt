@@ -19,7 +19,7 @@ import com.anmolsahi.data.local.entities.HotPostEntity
 import com.anmolsahi.data.local.entities.NewPostEntity
 import com.anmolsahi.data.local.entities.RisingPostEntity
 import com.anmolsahi.data.local.entities.TopPostEntity
-import com.anmolsahi.data.typeconverters.ListStringConverter
+import com.anmolsahi.data.utils.typeconverters.ListStringConverter
 
 @Database(
     entities = [

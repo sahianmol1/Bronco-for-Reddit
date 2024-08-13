@@ -2,7 +2,7 @@ package com.anmolsahi.data.model.remote
 
 import com.anmolsahi.data.model.remote.mediametada.MediaMetadata
 import com.anmolsahi.data.model.remote.preview.Preview
-import com.anmolsahi.data.serializer.RepliesDeserializer
+import com.anmolsahi.data.utils.serializers.RepliesDeserializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
