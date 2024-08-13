@@ -1,4 +1,4 @@
-package com.anmolsahi.data
+package com.anmolsahi.data.repositories
 
 import com.anmolsahi.data.local.RecentSearchesDao
 import com.anmolsahi.data.mapper.asDomain

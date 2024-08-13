@@ -1,4 +1,4 @@
-package com.anmolsahi.data.datastore
+package com.anmolsahi.data.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -7,6 +7,8 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.anmolsahi.data.repository.AppPreferencesRepositoryImpl
+import com.anmolsahi.domain.repository.AppPreferencesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,4 +36,10 @@ object DataStoreModule {
             produceFile = { context.preferencesDataStoreFile(USER_PREFERENCES) },
         )
     }
+
+    @Singleton
+    @Provides
+    fun providePreferencesDataStoreRepository(
+        dataStore: DataStore<Preferences>,
+    ): AppPreferencesRepository = AppPreferencesRepositoryImpl(dataStore = dataStore)
 }
