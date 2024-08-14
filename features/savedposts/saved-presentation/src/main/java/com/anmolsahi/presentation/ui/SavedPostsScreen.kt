@@ -116,10 +116,6 @@ fun SavedPostsScreen(
         }
     }
 
-    if (list.isEmpty() && !uiState.isLoading) {
-        EmptySavedPostsComponent()
-    }
-
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -148,5 +144,7 @@ fun SavedPostsScreen(
 
     if (uiState.isLoading) {
         BRLinearProgressIndicator()
+    } else if (list.isEmpty()) {
+        EmptySavedPostsComponent()
     }
 }
