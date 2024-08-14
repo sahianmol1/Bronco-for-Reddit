@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="uh_oh_something_went_wrong">Uh oh! Something went wrong.</string>
+    <string name="no_posts_title">No Posts Yet</string>
+    <string name="no_posts_body">Looks like you haven\'t saved any posts yet.</string>
 </resources>

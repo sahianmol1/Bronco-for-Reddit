@@ -32,6 +32,7 @@ import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.designsystem.uicomponents.BRScrollToTopButton
 import com.anmolsahi.designsystem.utils.slideInFromBottom
 import com.anmolsahi.designsystem.utils.slideOutToBottom
+import com.anmolsahi.presentation.ui.components.EmptySavedPostsComponent
 import kotlinx.coroutines.launch
 
 @Composable
@@ -113,6 +114,10 @@ fun SavedPostsScreen(
                 )
             }
         }
+    }
+
+    if (list.isEmpty() && !uiState.isLoading) {
+        EmptySavedPostsComponent()
     }
 
     Box(
