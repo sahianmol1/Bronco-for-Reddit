@@ -1,12 +1,16 @@
 package com.anmolsahi.presentation.ui.components
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -67,6 +72,13 @@ fun HomeScreenListings(
     val coroutineScope = rememberCoroutineScope()
     val lazyListState = rememberLazyListState()
     val list by remember(uiState) { mutableStateOf(uiState.data.orEmpty()) }
+    val configuration = LocalConfiguration.current
+    val scrollToTopButtonModifier =
+        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Modifier.navigationBarsPadding()
+        } else {
+            Modifier
+        }
 
     LaunchedEffect(uiState.isPullRefreshLoading) {
         if (!uiState.isPullRefreshLoading) {
@@ -100,6 +112,7 @@ fun HomeScreenListings(
             LazyColumn(
                 state = lazyListState,
                 horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = WindowInsets.navigationBars.asPaddingValues(),
             ) {
                 itemsIndexed(
                     items = list,
@@ -111,10 +124,6 @@ fun HomeScreenListings(
                     },
                 ) { index, item ->
                     PostComponent(
-                        modifier = when (index) {
-                            list.size - 1 -> Modifier.navigationBarsPadding()
-                            else -> Modifier
-                        },
                         redditPostUiModel = item,
                         onClick = onClick,
                         onSaveIconClick = onSaveIconClick,
@@ -185,7 +194,9 @@ fun HomeScreenListings(
             enter = slideInFromBottom(),
             exit = slideOutToBottom(),
         ) {
-            BRScrollToTopButton {
+            BRScrollToTopButton(
+                modifier = scrollToTopButtonModifier,
+            ) {
                 coroutineScope.launch { lazyListState.animateScrollToTop() }
             }
         }

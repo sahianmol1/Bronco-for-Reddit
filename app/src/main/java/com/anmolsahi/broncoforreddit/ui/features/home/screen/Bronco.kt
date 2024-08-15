@@ -1,6 +1,7 @@
 package com.anmolsahi.broncoforreddit.ui.features.home.screen
 
 import android.app.Activity
+import android.content.res.Configuration
 import android.graphics.Color
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
@@ -26,7 +28,7 @@ import com.anmolsahi.designsystem.utils.isTopLevelDestination
 import com.anmolsahi.navigation.BRNavHost
 
 @Composable
-fun MainScreen(navController: NavHostController) {
+fun Bronco(navController: NavHostController) {
     val context = LocalContext.current
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination by remember(navBackStackEntry) {
@@ -34,13 +36,17 @@ fun MainScreen(navController: NavHostController) {
     }
 
     val view = LocalView.current
+    val configuration = LocalConfiguration.current
     val navigationBarColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
 
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
             window.navigationBarColor =
-                if (currentDestination.isTopLevelDestination()) {
+                if (
+                    currentDestination.isTopLevelDestination() &&
+                    configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+                ) {
                     navigationBarColor.toArgb()
                 } else {
                     Color.TRANSPARENT

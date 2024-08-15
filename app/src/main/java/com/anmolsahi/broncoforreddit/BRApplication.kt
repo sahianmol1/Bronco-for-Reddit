@@ -1,4 +1,4 @@
-package com.anmolsahi.broncoforreddit.ui
+package com.anmolsahi.broncoforreddit
 
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
