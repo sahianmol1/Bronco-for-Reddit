@@ -1,7 +1,11 @@
 package com.anmolsahi.postdetailspresentation.postdetails.ui.fullsizeimage
 
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import com.anmolsahi.commonui.components.PostImage
 import com.anmolsahi.commonui.components.postimage.PostImagePager
 
@@ -11,14 +15,23 @@ fun FullSizeImageScreen(
     imageList: List<String>,
     onExitIconClick: () -> Unit,
 ) {
+    val configuration = LocalConfiguration.current
+    val imageModifier = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        modifier
+            .navigationBarsPadding()
+            .statusBarsPadding()
+    } else {
+        modifier
+    }
+
     if (imageList.size == 1) {
         PostImage(
-            modifier = modifier,
+            modifier = imageModifier,
             imageUrl = imageList.first(),
         )
     } else {
         PostImagePager(
-            modifier = modifier,
+            modifier = imageModifier,
             imageUrlList = imageList.toList(),
             showFullSizeImage = true,
             onExitIconClick = onExitIconClick,

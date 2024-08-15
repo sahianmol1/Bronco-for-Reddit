@@ -1,5 +1,6 @@
 package com.anmolsahi.commonui.components
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Down
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Up
@@ -55,6 +56,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -218,6 +220,7 @@ fun PostDescription(description: String, maxLines: Int = 3) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () -> Unit = {}) {
+    val configuration = LocalConfiguration.current
     var isImageLoading by rememberSaveable { mutableStateOf(false) }
     var isImageLoadingError by rememberSaveable { mutableStateOf(false) }
 
@@ -265,7 +268,11 @@ fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () 
                     },
                 ),
             model = imageUrl,
-            contentScale = ContentScale.FillWidth,
+            contentScale = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                ContentScale.FillWidth
+            } else {
+                ContentScale.FillHeight
+            },
             onLoading = { isImageLoading = true },
             onSuccess = { isImageLoading = false },
             onError = {
