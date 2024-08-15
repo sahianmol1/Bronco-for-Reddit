@@ -38,7 +38,7 @@ import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.searchpresentation.R
 
 @Composable
-fun QuickSearchPostComponent(
+internal fun QuickSearchPostComponent(
     redditPostUiModel: RedditPostUiModel,
     modifier: Modifier = Modifier,
     onPostClick: (postId: String, postUrl: String) -> Unit,
@@ -139,7 +139,7 @@ fun QuickSearchPostComponent(
 }
 
 @Composable
-fun SearchPostActionItem(
+private fun SearchPostActionItem(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     label: String,

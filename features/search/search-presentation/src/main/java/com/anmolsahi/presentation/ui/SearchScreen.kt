@@ -75,7 +75,7 @@ private object SearchScreenDefaults {
 }
 
 @Composable
-fun SearchScreen(
+internal fun SearchScreen(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
     onPostClick: (postId: String, postUrl: String) -> Unit,
@@ -241,7 +241,7 @@ fun SearchScreen(
 }
 
 @Composable
-fun SearchBarContentView(
+private fun SearchBarContentView(
     uiState: SearchDataUiModel,
     searchedValue: String,
     onSeeAllResultsClick: () -> Unit,

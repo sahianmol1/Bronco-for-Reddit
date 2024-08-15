@@ -26,7 +26,7 @@ import com.anmolsahi.domain.model.RecentSearch
 import com.anmolsahi.searchpresentation.R
 
 @Composable
-fun RecentSearchesComponent(
+internal fun RecentSearchesComponent(
     recentSearches: List<RecentSearch>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),

@@ -4,7 +4,7 @@ import com.anmolsahi.data.apihelper.getSafeResponse
 import com.anmolsahi.data.model.remote.ListingsResponse
 import io.ktor.client.HttpClient
 
-class SearchService(
+internal class SearchService(
     private val client: HttpClient,
 ) {
     suspend fun searchReddit(

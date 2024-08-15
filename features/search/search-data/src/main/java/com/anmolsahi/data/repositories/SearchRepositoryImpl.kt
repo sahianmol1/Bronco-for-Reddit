@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
-class SearchRepositoryImpl(
+internal class SearchRepositoryImpl(
     private val dao: RecentSearchesDao,
     private val service: SearchService,
 ) : SearchRepository {

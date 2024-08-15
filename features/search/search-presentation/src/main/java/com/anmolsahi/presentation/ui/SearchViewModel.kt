@@ -28,9 +28,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel
-@Inject
-constructor(
+internal class SearchViewModel @Inject constructor(
     private val repository: SearchRepository,
     private val delegate: SearchDelegate,
     private val searchRedditUseCase: SearchRedditUseCase,
@@ -170,7 +168,7 @@ constructor(
     }
 }
 
-data class SearchDataUiModel(
+internal data class SearchDataUiModel(
     val isLoading: Boolean = false,
     val recentSearches: List<RecentSearch> = emptyList(),
     val searchedData: List<RedditPostUiModel>? = null,
