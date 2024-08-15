@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import com.anmolsahi.commonui.components.PostImage
+import com.anmolsahi.commonui.components.postimage.PostImage
 import com.anmolsahi.commonui.components.postimage.PostImagePager
 
 @Composable

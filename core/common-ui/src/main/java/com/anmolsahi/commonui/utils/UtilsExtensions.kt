@@ -18,6 +18,8 @@ fun List<String>.serialize(): String {
 fun String.deserialize(): List<String> = Json.decodeFromString<List<String>>(this)
 
 private fun encodeUrl(url: String): String = URLEncoder.encode(
+    /* s = */
     url,
+    /* enc = */
     StandardCharsets.UTF_8.toString(),
 )

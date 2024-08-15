@@ -10,11 +10,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.anmolsahi.commonui.components.OriginalPosterName
-import com.anmolsahi.commonui.components.PostActions
-import com.anmolsahi.commonui.components.PostImage
-import com.anmolsahi.commonui.components.PostVideo
 import com.anmolsahi.commonui.components.SubRedditName
+import com.anmolsahi.commonui.components.postactions.PostActions
+import com.anmolsahi.commonui.components.postimage.PostImage
 import com.anmolsahi.commonui.components.postimage.PostImagePager
+import com.anmolsahi.commonui.components.postvideo.PostVideo
 import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsUiState
 
 @Composable

@@ -31,9 +31,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.anmolsahi.commonui.components.PostDescription
-import com.anmolsahi.commonui.components.PostImage
 import com.anmolsahi.commonui.components.PostTitle
 import com.anmolsahi.commonui.components.SubRedditName
+import com.anmolsahi.commonui.components.postimage.PostImage
 import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.searchpresentation.R
 

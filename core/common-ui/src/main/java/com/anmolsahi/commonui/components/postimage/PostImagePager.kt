@@ -36,8 +36,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.anmolsahi.commonui.R
-import com.anmolsahi.commonui.components.PostImage
+import com.anmolsahi.commonui.components.postimage.PostImagePagerConstants.INDICATOR_ANIMATION_DURATION
 import com.anmolsahi.designsystem.theme.BRTheme
+
+private object PostImagePagerConstants {
+    const val INDICATOR_ANIMATION_DURATION = 200
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -178,7 +182,7 @@ fun PagerIndicator(modifier: Modifier = Modifier, count: Int, currentPage: Int) 
             val indicatorSize by animateDpAsState(
                 targetValue = if (currentPage == index) 8.dp else 6.dp,
                 label = "indicator size",
-                animationSpec = tween(200, easing = LinearEasing),
+                animationSpec = tween(INDICATOR_ANIMATION_DURATION, easing = LinearEasing),
             )
             Canvas(
                 modifier = modifier

@@ -7,7 +7,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material3.Icon
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.anmolsahi.commonui.R
 import com.anmolsahi.designsystem.theme.BRTheme
 
@@ -33,7 +35,7 @@ fun NewPostsAvailableComponent(modifier: Modifier = Modifier, onClick: () -> Uni
                 .clickable { onClick() }
                 .background(
                     color = BRTheme.colorScheme.primary,
-                    shape = RoundedCornerShape(50),
+                    shape = CircleShape,
                 ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
@@ -43,10 +45,12 @@ fun NewPostsAvailableComponent(modifier: Modifier = Modifier, onClick: () -> Uni
                     .padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
                 text = stringResource(R.string.new_posts_available),
                 color = BRTheme.colorScheme.onPrimary,
+                fontSize = 12.sp,
             )
 
             Icon(
                 modifier = Modifier
+                    .size(20.dp)
                     .padding(start = 4.dp, end = 16.dp),
                 imageVector = Icons.Default.ArrowUpward,
                 tint = BRTheme.colorScheme.onPrimary,
