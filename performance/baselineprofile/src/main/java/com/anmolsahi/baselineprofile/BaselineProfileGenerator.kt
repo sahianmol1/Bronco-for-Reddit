@@ -17,7 +17,8 @@ import org.junit.runner.RunWith
  * You can run the generator with the Generate Baseline Profile run configuration,
  * or directly with `generateBaselineProfile` Gradle task:
  * ```
- * ./gradlew :app:generateReleaseBaselineProfile -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
+ * ./gradlew :app:generateReleaseBaselineProfile
+ * -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile
  * ```
  * The run configuration runs the Gradle task and applies filtering to run only the generators.
  *

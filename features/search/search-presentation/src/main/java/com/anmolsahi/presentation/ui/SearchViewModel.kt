@@ -33,6 +33,11 @@ internal class SearchViewModel @Inject constructor(
     private val delegate: SearchDelegate,
     private val searchRedditUseCase: SearchRedditUseCase,
 ) : ViewModel() {
+
+    private companion object {
+        const val DEFAULT_DEBOUNCE_TIME = 500L
+    }
+
     private val _searchDataUiState = MutableStateFlow(SearchDataUiModel())
     val searchDataUiState: StateFlow<SearchDataUiModel> = _searchDataUiState.asStateFlow()
 
@@ -45,7 +50,7 @@ internal class SearchViewModel @Inject constructor(
     init {
         @Suppress("OPT_IN_USAGE")
         _searchQuery
-            .debounce(500)
+            .debounce(DEFAULT_DEBOUNCE_TIME)
             .distinctUntilChanged()
             .flowOn(Dispatchers.IO)
             .onEach { query ->

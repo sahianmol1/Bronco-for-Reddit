@@ -2,6 +2,7 @@ package com.anmolsahi.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 
+@SuppressWarnings("TooManyFunctions")
 interface AppPreferencesRepository {
 
     suspend fun getHotPostsTimestamp(): Flow<Long>

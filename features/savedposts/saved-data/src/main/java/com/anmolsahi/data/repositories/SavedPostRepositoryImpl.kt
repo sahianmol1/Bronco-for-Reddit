@@ -1,5 +1,6 @@
 package com.anmolsahi.data.repositories
 
+import android.util.Log
 import com.anmolsahi.data.local.SavedPostDao
 import com.anmolsahi.data.mappers.asDomain
 import com.anmolsahi.data.mappers.fromDomain
@@ -11,6 +12,11 @@ import kotlinx.coroutines.flow.flow
 internal class SavedPostRepositoryImpl(
     private val dao: SavedPostDao,
 ) : SavedPostRepository {
+
+    private companion object {
+        const val TAG = "SavedPostRepositoryImpl"
+    }
+
     override fun getAllSavedPosts(): Flow<List<SavedPost>> = flow {
         emit(dao.getAllSavedPosts().asDomain().reversed())
     }
@@ -23,6 +29,7 @@ internal class SavedPostRepositoryImpl(
         return try {
             dao.getSavedPostById(id)?.asDomain()
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             null
         }
     }

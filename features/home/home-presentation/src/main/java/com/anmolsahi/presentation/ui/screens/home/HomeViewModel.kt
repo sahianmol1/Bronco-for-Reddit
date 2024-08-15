@@ -35,8 +35,8 @@ internal class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private companion object {
-        const val TWELVE_HOURS_IN_MILLIS = 12 * 60 * 60 * 1000
-        const val SIX_HOURS_IN_MILLIS = 6 * 60 * 60 * 1000
+        const val TWELVE_HOURS_IN_MILLIS = 12 * 60 * 60 * 1000 // 12 hours
+        const val SIX_HOURS_IN_MILLIS = 6 * 60 * 60 * 1000 // 6 hours
     }
 
     // Ui State properties

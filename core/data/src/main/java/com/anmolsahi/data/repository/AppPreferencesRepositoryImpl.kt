@@ -8,6 +8,7 @@ import com.anmolsahi.domain.repository.AppPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+@SuppressWarnings("TooManyFunctions")
 class AppPreferencesRepositoryImpl(
     private val dataStore: DataStore<Preferences>,
 ) : AppPreferencesRepository {

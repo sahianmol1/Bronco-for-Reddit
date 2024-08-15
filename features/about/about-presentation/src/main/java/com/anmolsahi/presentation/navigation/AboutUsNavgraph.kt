@@ -11,6 +11,8 @@ import com.anmolsahi.designsystem.utils.slideOutToLeft
 import com.anmolsahi.designsystem.utils.slideOutToTop
 import com.anmolsahi.presentation.ui.AboutUsScreen
 
+// TODO: remove this warning once navController is used
+@SuppressWarnings("UnusedParameter")
 fun NavGraphBuilder.aboutUsNavGraph(navController: NavHostController) {
     composable(
         route = Destinations.AboutUsDestination.route,

@@ -16,6 +16,7 @@ import com.anmolsahi.postdetailspresentation.postdetails.ui.fullsizeimage.FullSi
 import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsScreen
 import com.anmolsahi.postdetailspresentation.postdetails.ui.videoplayer.VideoPlayerScreen
 
+@SuppressWarnings("LongMethod")
 fun NavGraphBuilder.postDetailsNavGraph(navController: NavHostController) {
     composable(
         route = Destinations.PostDetailsDestinations.route +
