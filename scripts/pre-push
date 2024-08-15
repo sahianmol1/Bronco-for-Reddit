@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Running git pre-push hook"
+
+function exitIfFailed() {
+    if [ $? -ne 0 ]; then
+        echo "Error: $result"
+        exit 1
+    fi
+}
+
+exitIfFailed
+./gradlew detektAll

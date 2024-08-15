@@ -19,6 +19,10 @@ plugins {
 tasks.register<Copy>("installGitHooks"){
     from("scripts/pre-commit")
     into(".git/hooks")
+
+    from("scripts/pre-push")
+    into(".git/hooks")
+
     fileMode = 7 * 64 + 7 * 8 + 7
 }
 
