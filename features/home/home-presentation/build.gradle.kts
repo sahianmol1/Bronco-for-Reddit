@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.kotlin.compose.compiler)
 }
@@ -42,12 +41,6 @@ kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
     }
-}
-
-detekt {
-    toolVersion = libs.versions.detekt.get()
-    config.setFrom(file("../../../config/detekt/detekt.yml"))
-    buildUponDefaultConfig = true
 }
 
 composeCompiler {

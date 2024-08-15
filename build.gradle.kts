@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.kotlin.compose.compiler) apply false
     alias(libs.plugins.hilt) apply false
-    alias(libs.plugins.detekt) apply false
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.androidTest) apply false
@@ -14,12 +13,37 @@ plugins {
     alias(libs.plugins.com.android.library) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.detekt)
 }
 
 tasks.register<Copy>("installGitHooks"){
     from("scripts/pre-commit")
     into(".git/hooks")
     fileMode = 7 * 64 + 7 * 8 + 7
+}
+
+val projectSource = file(projectDir)
+val configFile = files("$rootDir/config/detekt/detekt.yml")
+val kotlinFiles = "**/*.kt"
+val resourceFiles = "**/resources/**"
+val buildFiles = "**/build/**"
+
+tasks.register<io.gitlab.arturbosch.detekt.Detekt>("detektAll") {
+    val autoFix = project.hasProperty("detektAutoFix")
+    description = "Custom DETEKT task for all modules"
+    parallel = true
+    ignoreFailures = false
+    autoCorrect = autoFix
+    buildUponDefaultConfig = true
+    setSource(projectSource)
+    config.setFrom(configFile)
+    include(kotlinFiles)
+    exclude(resourceFiles, buildFiles)
+    reports {
+        html.enabled = true
+        xml.enabled = false
+        txt.enabled = false
+    }
 }
 
 tasks.getByPath(":app:preBuild").dependsOn(":installGitHooks")

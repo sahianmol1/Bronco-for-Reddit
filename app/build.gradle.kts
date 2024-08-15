@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.detekt)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.androidx.baselineprofile)
@@ -63,12 +62,6 @@ kotlin {
 composeCompiler {
     enableStrongSkippingMode = true
     includeSourceInformation = true
-}
-
-detekt {
-    toolVersion = libs.versions.detekt.get()
-    config.setFrom(file("../config/detekt/detekt.yml"))
-    buildUponDefaultConfig = true
 }
 
 ktlint {
