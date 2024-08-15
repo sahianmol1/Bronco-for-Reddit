@@ -22,7 +22,7 @@ import com.anmolsahi.designsystem.theme.BRTheme
 import com.anmolsahi.subredditpresentation.R
 
 @Composable
-fun EmptySavedPostsComponent(modifier: Modifier = Modifier) {
+internal fun EmptySavedPostsComponent(modifier: Modifier = Modifier) {
     val scrollState = rememberScrollState()
 
     Column(

@@ -3,7 +3,7 @@ package com.anmolsahi.data.mappers
 import com.anmolsahi.data.local.SavedPostEntity
 import com.anmolsahi.domain.model.SavedPost
 
-fun SavedPostEntity.asDomain(): SavedPost = SavedPost(
+internal fun SavedPostEntity.asDomain(): SavedPost = SavedPost(
     id = this.id,
     subName = this.subName,
     title = this.title,
@@ -18,7 +18,7 @@ fun SavedPostEntity.asDomain(): SavedPost = SavedPost(
     after = this.after,
 )
 
-fun SavedPost.fromDomain(): SavedPostEntity = SavedPostEntity(
+internal fun SavedPost.fromDomain(): SavedPostEntity = SavedPostEntity(
     id = this.id,
     subName = this.subName,
     title = this.title,
@@ -33,7 +33,7 @@ fun SavedPost.fromDomain(): SavedPostEntity = SavedPostEntity(
     after = this.after,
 )
 
-fun List<SavedPostEntity>.asDomain(): List<SavedPost> {
+internal fun List<SavedPostEntity>.asDomain(): List<SavedPost> {
     return this.map {
         SavedPost(
             id = it.id,

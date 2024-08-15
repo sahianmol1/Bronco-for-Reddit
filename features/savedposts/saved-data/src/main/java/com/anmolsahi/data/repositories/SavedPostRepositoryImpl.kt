@@ -8,7 +8,7 @@ import com.anmolsahi.domain.repositories.SavedPostRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class SavedPostRepositoryImpl(
+internal class SavedPostRepositoryImpl(
     private val dao: SavedPostDao,
 ) : SavedPostRepository {
     override fun getAllSavedPosts(): Flow<List<SavedPost>> = flow {

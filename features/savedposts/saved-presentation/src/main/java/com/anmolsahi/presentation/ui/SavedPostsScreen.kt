@@ -41,7 +41,7 @@ import com.anmolsahi.presentation.ui.components.EmptySavedPostsComponent
 import kotlinx.coroutines.launch
 
 @Composable
-fun SavedPostsScreen(
+internal fun SavedPostsScreen(
     viewModel: SavedPostsViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
     onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,

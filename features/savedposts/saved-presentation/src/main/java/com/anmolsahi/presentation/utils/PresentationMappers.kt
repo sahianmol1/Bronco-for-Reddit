@@ -3,7 +3,7 @@ package com.anmolsahi.presentation.utils
 import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.domain.model.SavedPost
 
-fun List<SavedPost>.asUiModel(): List<RedditPostUiModel> {
+internal fun List<SavedPost>.asUiModel(): List<RedditPostUiModel> {
     return this.map {
         RedditPostUiModel(
             id = it.id,
