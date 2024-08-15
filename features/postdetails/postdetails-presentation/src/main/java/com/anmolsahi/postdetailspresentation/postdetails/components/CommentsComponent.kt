@@ -38,12 +38,12 @@ import com.anmolsahi.commonui.utils.orZero
 import com.anmolsahi.postdetailspresentation.R
 import com.anmolsahi.postdetailspresentation.postdetails.components.CommentsComponentDefaults.DEFAULT_MAX_LINES
 
-object CommentsComponentDefaults {
+private object CommentsComponentDefaults {
     const val DEFAULT_MAX_LINES = 3
 }
 
 @Composable
-fun CommentsComponent(
+internal fun CommentsComponent(
     commentDetails: RedditPostUiModel,
     originalPosterName: String,
     modifier: Modifier = Modifier,
@@ -124,7 +124,7 @@ fun CommentsComponent(
 }
 
 @Composable
-fun UserImage() {
+private fun UserImage() {
     Icon(
         imageVector = Icons.Rounded.Person,
         contentDescription = "This is the comment poster's avatar.",
@@ -132,7 +132,7 @@ fun UserImage() {
 }
 
 @Composable
-fun OPBadge() {
+private fun OPBadge() {
     val opBackgroundColor = MaterialTheme.colorScheme.primary
     Text(
         modifier = Modifier
@@ -147,7 +147,7 @@ fun OPBadge() {
 }
 
 @Composable
-fun UserName(authorName: String) {
+private fun UserName(authorName: String) {
     Text(
         modifier = Modifier.padding(start = 4.dp),
         style = TextStyle(fontWeight = FontWeight.Bold),
@@ -159,7 +159,7 @@ fun UserName(authorName: String) {
 }
 
 @Composable
-fun CommentText(text: String, maxLines: Int) {
+private fun CommentText(text: String, maxLines: Int) {
     Text(
         modifier = Modifier
             .padding(top = 8.dp, end = 16.dp)
@@ -172,7 +172,7 @@ fun CommentText(text: String, maxLines: Int) {
 }
 
 @Composable
-fun CommentUpVotes(count: Int, modifier: Modifier = Modifier) {
+private fun CommentUpVotes(count: Int, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -194,7 +194,7 @@ fun CommentUpVotes(count: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CommentReplies(count: Int, modifier: Modifier = Modifier) {
+private fun CommentReplies(count: Int, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier.wrapContentHeight(),
         verticalAlignment = Alignment.CenterVertically,
@@ -216,7 +216,10 @@ fun CommentReplies(count: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ViewReplies(title: String = stringResource(R.string.view_replies), onClick: () -> Unit = {}) {
+private fun ViewReplies(
+    title: String = stringResource(R.string.view_replies),
+    onClick: () -> Unit = {},
+) {
     Text(
         modifier = Modifier
             .clickable { onClick() }

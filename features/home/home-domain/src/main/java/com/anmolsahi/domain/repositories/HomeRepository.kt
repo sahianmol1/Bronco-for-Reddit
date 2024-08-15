@@ -3,6 +3,7 @@ package com.anmolsahi.domain.repositories
 import com.anmolsahi.domain.models.RedditPost
 import kotlinx.coroutines.flow.Flow
 
+@SuppressWarnings("TooManyFunctions")
 interface HomeRepository {
     fun getHotPosts(
         shouldRefreshData: Boolean,

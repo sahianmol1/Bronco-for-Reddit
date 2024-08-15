@@ -24,7 +24,7 @@ import dagger.hilt.android.UnstableApi
  * This is the full screen Video player View/Screen
  */
 @Composable
-fun VideoPlayerScreen(modifier: Modifier = Modifier, videoUrl: String? = null) {
+internal fun VideoPlayerScreen(modifier: Modifier = Modifier, videoUrl: String? = null) {
     if (videoUrl == null) {
         ErrorDialog(errorMessage = "Video URL is null")
     } else {
@@ -34,7 +34,7 @@ fun VideoPlayerScreen(modifier: Modifier = Modifier, videoUrl: String? = null) {
 
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
-fun VideoPlayerView(videoUrl: String, modifier: Modifier = Modifier) {
+internal fun VideoPlayerView(videoUrl: String, modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     val lifecycleEvent = rememberLifecycleEvent()

@@ -18,7 +18,7 @@ import com.anmolsahi.commonui.components.postvideo.PostVideo
 import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsUiState
 
 @Composable
-fun PostDetailsComponent(
+internal fun PostDetailsComponent(
     uiState: PostDetailsUiState?,
     isFromSavedPosts: Boolean,
     modifier: Modifier = Modifier,
@@ -94,7 +94,7 @@ fun PostDetailsComponent(
 }
 
 @Composable
-fun PostDetailsTitle(title: String) {
+private fun PostDetailsTitle(title: String) {
     Text(
         modifier = Modifier.padding(vertical = 4.dp),
         fontWeight = FontWeight.Bold,
@@ -103,7 +103,7 @@ fun PostDetailsTitle(title: String) {
 }
 
 @Composable
-fun PostDetailsDescription(description: String) {
+private fun PostDetailsDescription(description: String) {
     Text(
         modifier = Modifier.padding(vertical = 4.dp),
         text = description,

@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PostDetailsViewModel @Inject constructor(
+internal class PostDetailsViewModel @Inject constructor(
     private val delegate: PostDetailsDelegate,
     private val deleteSavedPostUseCase: DeleteSavedPostUseCase,
     private val getPostDetailsUseCase: GetPostDetailsUseCase,
@@ -94,7 +94,7 @@ class PostDetailsViewModel @Inject constructor(
     }
 }
 
-data class PostDetailsUiState(
+internal data class PostDetailsUiState(
     val data: RedditPostUiModel? = null,
     val postComments: List<RedditPostUiModel>? = null,
     val isLoading: Boolean = false,

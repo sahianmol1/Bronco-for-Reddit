@@ -7,7 +7,7 @@ import com.anmolsahi.postdetailsdata.utils.comments
 import com.anmolsahi.postdetailsdata.utils.postContent
 import com.anmolsahi.postdetailsdomain.repositories.PostDetailsRepository
 
-class PostDetailsRepositoryImpl(
+internal class PostDetailsRepositoryImpl(
     private val service: PostDetailsService,
 ) : PostDetailsRepository {
 

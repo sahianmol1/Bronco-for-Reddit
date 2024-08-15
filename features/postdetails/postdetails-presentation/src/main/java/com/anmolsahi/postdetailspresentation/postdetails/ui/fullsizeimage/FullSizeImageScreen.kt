@@ -10,7 +10,7 @@ import com.anmolsahi.commonui.components.postimage.PostImage
 import com.anmolsahi.commonui.components.postimage.PostImagePager
 
 @Composable
-fun FullSizeImageScreen(
+internal fun FullSizeImageScreen(
     modifier: Modifier = Modifier,
     imageList: List<String>,
     onExitIconClick: () -> Unit,

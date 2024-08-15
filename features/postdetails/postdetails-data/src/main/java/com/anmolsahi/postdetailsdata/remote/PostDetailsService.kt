@@ -5,7 +5,7 @@ import com.anmolsahi.data.apihelper.getSafeResponse
 import com.anmolsahi.data.model.remote.ListingsResponse
 import io.ktor.client.HttpClient
 
-class PostDetailsService(
+internal class PostDetailsService(
     private val client: HttpClient,
 ) {
     suspend fun getPost(postUrl: String): Result<List<ListingsResponse>> {

@@ -61,7 +61,7 @@ private object PostDetailsScreenValues {
 }
 
 @Composable
-fun PostDetailsScreen(
+internal fun PostDetailsScreen(
     postId: String,
     postUrl: String,
     isFromSavedPosts: Boolean,
