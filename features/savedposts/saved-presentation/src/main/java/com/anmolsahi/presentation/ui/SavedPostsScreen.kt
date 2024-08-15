@@ -1,11 +1,14 @@
 package com.anmolsahi.presentation.ui
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -19,7 +22,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.commonui.components.PostComponent
@@ -54,6 +59,13 @@ fun SavedPostsScreen(
     var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
     var selectedPostId by rememberSaveable { mutableStateOf("") }
     var showErrorDialog by rememberSaveable { mutableStateOf(false) }
+    val configuration = LocalConfiguration.current
+    val scrollToTopButtonModifier =
+        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Modifier.navigationBarsPadding()
+        } else {
+            Modifier
+        }
 
     LaunchedEffect(Unit) {
         viewModel.getAllSavedPosts()
@@ -91,15 +103,22 @@ fun SavedPostsScreen(
             modifier = modifier,
             state = lazyListState,
             horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = WindowInsets.statusBars.asPaddingValues(),
+            contentPadding = WindowInsets.systemBars.asPaddingValues(),
         ) {
             itemsIndexed(
                 items = list,
                 key = { _, item -> item.id },
                 contentType = { _, _ -> "reddit_post" },
-            ) { _, item ->
+            ) { index, item ->
                 PostComponent(
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .padding(
+                            bottom = if (index == list.lastIndex) {
+                                68.dp
+                            } else {
+                                0.dp
+                            },
+                        ),
                     redditPostUiModel = item,
                     onClick = onClick,
                     onSaveIconClick = onSaveIconClick,
@@ -122,11 +141,13 @@ fun SavedPostsScreen(
         contentAlignment = Alignment.BottomEnd,
     ) {
         AnimatedVisibility(
-            visible = lazyListState.canScrollBackward,
+            visible = lazyListState.canScrollBackward && list.isNotEmpty(),
             enter = slideInFromBottom(),
             exit = slideOutToBottom(),
         ) {
-            BRScrollToTopButton {
+            BRScrollToTopButton(
+                modifier = scrollToTopButtonModifier,
+            ) {
                 coroutineScope.launch { lazyListState.animateScrollToTop() }
             }
         }
