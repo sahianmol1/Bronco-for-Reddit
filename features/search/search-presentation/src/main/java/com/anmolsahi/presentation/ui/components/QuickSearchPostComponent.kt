@@ -35,6 +35,7 @@ import com.anmolsahi.commonui.components.PostTitle
 import com.anmolsahi.commonui.components.SubRedditName
 import com.anmolsahi.commonui.components.postimage.PostImage
 import com.anmolsahi.commonui.models.RedditPostUiModel
+import com.anmolsahi.presentation.ui.components.QuickSearchPostConstants.POST_INFO_WEIGHT
 import com.anmolsahi.searchpresentation.R
 
 private object QuickSearchPostConstants {
@@ -71,7 +72,7 @@ internal fun QuickSearchPostComponent(
             ) {
                 Column(
                     modifier = Modifier
-                        .weight(2.5f),
+                        .weight(POST_INFO_WEIGHT),
                 ) {
                     SubRedditName(subName = redditPostUiModel.subName)
                     redditPostUiModel.title?.let { title -> PostTitle(title = title) }
