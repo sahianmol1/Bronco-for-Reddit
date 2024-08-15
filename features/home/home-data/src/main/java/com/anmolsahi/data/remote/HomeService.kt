@@ -5,7 +5,7 @@ import com.anmolsahi.data.model.remote.ListingsResponse
 import com.anmolsahi.data.remote.utils.EndPoints
 import io.ktor.client.HttpClient
 
-class HomeService(private val client: HttpClient) {
+internal class HomeService(private val client: HttpClient) {
     suspend fun getHotListings(nextPageKey: String? = null): Result<ListingsResponse> {
         return client.getSafeResponse(EndPoints.HOT + "?after=$nextPageKey&raw_json=1")
     }

@@ -56,7 +56,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreenListings(
+internal fun HomeScreenListings(
     uiState: PostsUiState,
     onClick: (postId: String, postUrl: String) -> Unit,
     refreshData: () -> Unit,
@@ -122,7 +122,7 @@ fun HomeScreenListings(
                     contentType = { _, _ ->
                         "reddit_post"
                     },
-                ) { index, item ->
+                ) { _, item ->
                     PostComponent(
                         redditPostUiModel = item,
                         onClick = onClick,

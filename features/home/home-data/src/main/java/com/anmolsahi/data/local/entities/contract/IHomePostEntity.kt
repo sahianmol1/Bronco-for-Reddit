@@ -1,3 +1,3 @@
 package com.anmolsahi.data.local.entities.contract
 
-interface IHomePostEntity
+internal interface IHomePostEntity

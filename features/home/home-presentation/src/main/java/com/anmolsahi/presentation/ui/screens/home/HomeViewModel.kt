@@ -25,13 +25,20 @@ import kotlinx.coroutines.launch
 import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
+@SuppressWarnings("TooManyFunctions")
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+internal class HomeViewModel @Inject constructor(
     private val repository: HomeRepository,
     private val togglePostSavedStatusUseCase: TogglePostSavedStatusUseCase,
     private val updateSavedPostsUseCase: UpdateSavedPostsUseCase,
     private val prefsRepository: AppPreferencesRepository,
 ) : ViewModel() {
+
+    private companion object {
+        const val TWELVE_HOURS_IN_MILLIS = 12 * 60 * 60 * 1000
+        const val SIX_HOURS_IN_MILLIS = 6 * 60 * 60 * 1000
+    }
+
     // Ui State properties
     private val _hotPosts: MutableStateFlow<PostsUiState> = MutableStateFlow(PostsUiState())
     var hotPosts: StateFlow<PostsUiState> = _hotPosts.asStateFlow()
@@ -53,8 +60,6 @@ class HomeViewModel @Inject constructor(
     var controversialPosts: StateFlow<PostsUiState> = _controversialPosts.asStateFlow()
 
     private val currentTime = System.currentTimeMillis()
-    private val twelveHoursInMillis = 12 * 60 * 60 * 1000 // 12 hours in milliseconds
-    private val sixHoursInMillis = 6 * 60 * 60 * 1000 // 6 hours in milliseconds
 
     init {
         viewModelScope.launch {
@@ -346,9 +351,9 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             timestampFlow.collect { prefsTimestamp ->
                 val timeDifference = currentTime - prefsTimestamp
-                if (timeDifference in sixHoursInMillis..twelveHoursInMillis) {
+                if (timeDifference in SIX_HOURS_IN_MILLIS..TWELVE_HOURS_IN_MILLIS) {
                     stateFlow.update { it.copy(areNewPostsAvailable = true) }
-                } else if (timeDifference > twelveHoursInMillis) {
+                } else if (timeDifference > TWELVE_HOURS_IN_MILLIS) {
                     refreshFunction(true, null, false)
                 }
             }
@@ -389,7 +394,7 @@ class HomeViewModel @Inject constructor(
 }
 
 @Immutable
-data class PostsUiState(
+internal data class PostsUiState(
     val data: List<RedditPostUiModel>? = null,
     val isLoading: Boolean = false,
     val isPullRefreshLoading: Boolean = false,

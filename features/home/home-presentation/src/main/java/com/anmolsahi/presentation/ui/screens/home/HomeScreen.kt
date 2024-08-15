@@ -28,7 +28,7 @@ import com.anmolsahi.presentation.ui.components.HomeScreenListings
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(
+internal fun HomeScreen(
     modifier: Modifier = Modifier,
     onClick: (postId: String, postUrl: String) -> Unit,
     onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,

@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 @SuppressWarnings("LongParameterList", "TooManyFunctions")
-class HomeRepositoryImpl(
+internal class HomeRepositoryImpl(
     private val hotPostDao: HotPostDao,
     private val topPostDao: TopPostDao,
     private val bestPostDao: BestPostDao,

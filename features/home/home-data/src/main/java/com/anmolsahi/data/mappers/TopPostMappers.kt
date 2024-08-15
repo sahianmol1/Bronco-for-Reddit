@@ -4,7 +4,7 @@ import com.anmolsahi.data.local.entities.TopPostEntity
 import com.anmolsahi.data.model.remote.ListingsResponse
 import com.anmolsahi.domain.models.RedditPost
 
-fun ListingsResponse.asTopPostEntity(): List<TopPostEntity> {
+internal fun ListingsResponse.asTopPostEntity(): List<TopPostEntity> {
     val after = this.data?.after
     return this.data?.children?.map {
         it.childrenData.run {
@@ -28,7 +28,7 @@ fun ListingsResponse.asTopPostEntity(): List<TopPostEntity> {
     }.orEmpty()
 }
 
-fun List<TopPostEntity>.asDomain(): List<RedditPost> {
+internal fun List<TopPostEntity>.asDomain(): List<RedditPost> {
     return this.map {
         RedditPost(
             id = it.id,
@@ -49,7 +49,7 @@ fun List<TopPostEntity>.asDomain(): List<RedditPost> {
     }
 }
 
-fun TopPostEntity.asDomain(): RedditPost {
+internal fun TopPostEntity.asDomain(): RedditPost {
     return RedditPost(
         id = this.id,
         subName = this.subName,
