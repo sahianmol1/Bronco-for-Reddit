@@ -1,8 +1,10 @@
 package com.anmolsahi.designsystem.uicomponents
 
+import android.content.res.Configuration
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -30,6 +32,7 @@ import com.anmolsahi.designsystem.R
 fun BRSearchBar(
     query: String,
     active: Boolean,
+    configuration: Configuration,
     modifier: Modifier = Modifier,
     onSearch: () -> Unit = {},
     onBack: () -> Unit = {},
@@ -38,13 +41,19 @@ fun BRSearchBar(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val searchBarModifier = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        modifier.navigationBarsPadding()
+    } else {
+        modifier
+    }
+
     val searchBarPadding by animateDpAsState(
         targetValue = if (!active) 16.dp else 0.dp,
         label = "searchBarPadding",
     )
 
     SearchBar(
-        modifier = modifier
+        modifier = searchBarModifier
             .fillMaxWidth()
             .padding(horizontal = searchBarPadding),
         query = query,

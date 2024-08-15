@@ -1,5 +1,6 @@
 package com.anmolsahi.presentation.ui
 
+import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
@@ -7,8 +8,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -26,6 +31,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -84,6 +90,14 @@ fun SearchScreen(
     var showErrorDialog by remember { mutableStateOf(false) }
     val searchedItemsList by remember(uiState) { mutableStateOf(uiState.searchedData.orEmpty()) }
     val searchBarActive by viewModel.searchBarActive.collectAsStateWithLifecycle()
+    val configuration = LocalConfiguration.current
+
+    val scrollToTopButtonModifier =
+        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Modifier.navigationBarsPadding()
+        } else {
+            Modifier
+        }
 
     LaunchedEffect(Unit) {
         viewModel.getAllRecentSearches()
@@ -120,6 +134,7 @@ fun SearchScreen(
                 modifier = modifier,
                 query = searchedValue,
                 active = searchBarActive,
+                configuration = configuration,
                 onActiveChange = {
                     viewModel.updateSearchBarActive(it)
                 },
@@ -159,7 +174,11 @@ fun SearchScreen(
         }
 
         if (searchedItemsList.isNotEmpty()) {
-            LazyColumn(state = lazyListState, horizontalAlignment = Alignment.CenterHorizontally) {
+            LazyColumn(
+                state = lazyListState,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = WindowInsets.navigationBars.asPaddingValues(),
+            ) {
                 items(
                     count = searchedItemsList.size,
                     key = { index -> searchedItemsList[index].id },
@@ -212,7 +231,9 @@ fun SearchScreen(
             enter = slideInFromBottom(),
             exit = slideOutToBottom(),
         ) {
-            BRScrollToTopButton {
+            BRScrollToTopButton(
+                modifier = scrollToTopButtonModifier,
+            ) {
                 coroutineScope.launch { lazyListState.animateScrollToTop() }
             }
         }
