@@ -1,5 +1,6 @@
 package com.anmolsahi.data.repositories.homerepository
 
+import android.util.Log
 import com.anmolsahi.data.local.dao.BestPostDao
 import com.anmolsahi.data.local.dao.ControversialPostDao
 import com.anmolsahi.data.local.dao.HotPostDao
@@ -21,7 +22,7 @@ import com.anmolsahi.domain.repository.AppPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-@SuppressWarnings("LongParameterList", "TooManyFunctions")
+@SuppressWarnings("LongParameterList", "TooManyFunctions", "TooGenericExceptionCaught")
 internal class HomeRepositoryImpl(
     private val hotPostDao: HotPostDao,
     private val topPostDao: TopPostDao,
@@ -32,6 +33,10 @@ internal class HomeRepositoryImpl(
     private val homeService: HomeService,
     private val prefs: AppPreferencesRepository,
 ) : HomeRepository {
+    private companion object {
+        const val TAG = "HomeRepositoryImpl"
+    }
+
     override fun getHotPosts(
         shouldRefreshData: Boolean,
         nextPageKey: String?,
@@ -286,6 +291,7 @@ internal class HomeRepositoryImpl(
             )
             hotPostDao.getRedditPostById(id = postId).isSaved
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             false
         }
     }
@@ -298,6 +304,7 @@ internal class HomeRepositoryImpl(
             )
             topPostDao.getRedditPostById(id = postId).isSaved
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             false
         }
     }
@@ -310,6 +317,7 @@ internal class HomeRepositoryImpl(
             )
             newPostDao.getRedditPostById(id = postId).isSaved
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             false
         }
     }
@@ -322,6 +330,7 @@ internal class HomeRepositoryImpl(
             )
             bestPostDao.getRedditPostById(id = postId).isSaved
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             false
         }
     }
@@ -334,6 +343,7 @@ internal class HomeRepositoryImpl(
             )
             risingPostDao.getRedditPostById(id = postId).isSaved
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             false
         }
     }
@@ -346,6 +356,7 @@ internal class HomeRepositoryImpl(
             )
             controversialPostDao.getRedditPostById(id = postId).isSaved
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             false
         }
     }
@@ -354,6 +365,7 @@ internal class HomeRepositoryImpl(
         return try {
             hotPostDao.getRedditPostById(id = postId).asDomain()
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             null
         }
     }
@@ -362,6 +374,7 @@ internal class HomeRepositoryImpl(
         return try {
             topPostDao.getRedditPostById(id = postId).asDomain()
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             null
         }
     }
@@ -370,6 +383,7 @@ internal class HomeRepositoryImpl(
         return try {
             newPostDao.getRedditPostById(id = postId).asDomain()
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             null
         }
     }
@@ -378,6 +392,7 @@ internal class HomeRepositoryImpl(
         return try {
             bestPostDao.getRedditPostById(id = postId).asDomain()
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             null
         }
     }
@@ -386,6 +401,7 @@ internal class HomeRepositoryImpl(
         return try {
             risingPostDao.getRedditPostById(id = postId).asDomain()
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             null
         }
     }
@@ -394,6 +410,7 @@ internal class HomeRepositoryImpl(
         return try {
             controversialPostDao.getRedditPostById(id = postId).asDomain()
         } catch (e: Throwable) {
+            Log.e(TAG, e.message.toString())
             null
         }
     }

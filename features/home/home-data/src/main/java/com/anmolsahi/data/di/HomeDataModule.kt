@@ -27,6 +27,7 @@ internal object HomeDataModule {
 
     @Singleton
     @Provides
+    @SuppressWarnings("LongParameterList")
     fun provideHomeRepository(
         homeService: HomeService,
         hotPostDao: HotPostDao,

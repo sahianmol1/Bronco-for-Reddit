@@ -75,4 +75,31 @@ fun Bronco(navController: NavHostController) {
             )
         }
     }
+    /**
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     * lamba krdo
+     */
 }

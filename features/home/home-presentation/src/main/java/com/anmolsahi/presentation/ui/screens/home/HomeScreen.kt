@@ -27,6 +27,7 @@ import com.anmolsahi.homepresentation.R
 import com.anmolsahi.presentation.ui.components.HomeScreenListings
 
 @OptIn(ExperimentalFoundationApi::class)
+@SuppressWarnings("CyclomaticComplexMethod") // TODO: refactor this
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,

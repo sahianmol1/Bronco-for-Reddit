@@ -128,9 +128,13 @@ complexity:
     threshold: 600
   LongMethod:
     active: true
+    ignoreAnnotated:
+      - 'Composable'
     threshold: 60
   LongParameterList:
     active: true
+    ignoreAnnotated:
+      - 'Composable'
     functionThreshold: 6
     constructorThreshold: 7
     ignoreDefaultParameters: false
