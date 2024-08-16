@@ -39,7 +39,7 @@ import com.anmolsahi.postdetailspresentation.R
 import com.anmolsahi.postdetailspresentation.postdetails.components.CommentsComponentDefaults.DEFAULT_MAX_LINES
 
 private object CommentsComponentDefaults {
-    const val DEFAULT_MAX_LINES = 3
+    const val DEFAULT_MAX_LINES = 5
 }
 
 @Composable

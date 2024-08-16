@@ -85,18 +85,18 @@ fun AboutUsScreen(modifier: Modifier = Modifier) {
         InfoIconButton(
             modifier = Modifier
                 .padding(top = 16.dp),
-            text = "anmolsahi1",
-            icon = R.drawable.github_logo,
-            onClick = {
-                "https://github.com/sahianmol1".openAsCustomTab(context)
-            },
-        )
-
-        InfoIconButton(
             text = "Source Code",
             icon = Icons.Outlined.Code,
             onClick = {
                 "https://github.com/sahianmol1/Bronco-for-Reddit".openAsCustomTab(context)
+            },
+        )
+
+        InfoIconButton(
+            text = "anmolsahi1",
+            icon = R.drawable.github_logo,
+            onClick = {
+                "https://github.com/sahianmol1".openAsCustomTab(context)
             },
         )
 

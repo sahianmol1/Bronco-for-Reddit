@@ -9,7 +9,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PostDescription(description: String, modifier: Modifier = Modifier, maxLines: Int = 3) {
+fun PostDescription(description: String, modifier: Modifier = Modifier, maxLines: Int = 5) {
     Text(
         modifier = modifier
             .padding(vertical = 4.dp),
