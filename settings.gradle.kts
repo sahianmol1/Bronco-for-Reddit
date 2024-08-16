@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Bronco for reddit"
+rootProject.name = "Bronco for Reddit"
 include(":app")
 include(":performance:benchmark")
 include(":performance:baselineprofile")
