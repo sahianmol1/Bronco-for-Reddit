@@ -61,31 +61,6 @@ internal class HomeViewModel @Inject constructor(
 
     private val currentTime = System.currentTimeMillis()
 
-    init {
-        viewModelScope.launch {
-            /**
-             * Force refresh if stale data is present in the database
-             *
-             * Get the timestamp from the datastore as soon as the viewmodel is launched
-             * and decide if force refresh is needed
-             */
-            listOf(
-                Triple(prefsRepository.getHotPostsTimestamp(), _hotPosts, ::getHotPosts),
-                Triple(prefsRepository.getTopPostsTimestamp(), _topPosts, ::getTopPosts),
-                Triple(prefsRepository.getNewPostsTimestamp(), _newPosts, ::getNewPosts),
-                Triple(prefsRepository.getBestPostsTimestamp(), _bestPosts, ::getBestPosts),
-                Triple(prefsRepository.getRisingPostsTimestamp(), _risingPosts, ::getRisingsPosts),
-                Triple(
-                    prefsRepository.getControversialPostsTimestamp(),
-                    _controversialPosts,
-                    ::getControversialPosts,
-                ),
-            ).forEach { (timestampFlow, uiStateFlow, refreshFunction) ->
-                checkAndForceRefreshPosts(timestampFlow, uiStateFlow, refreshFunction)
-            }
-        }
-    }
-
     fun getHotPosts(
         shouldRefreshData: Boolean = false,
         nextPageKey: String? = "",
@@ -311,6 +286,46 @@ internal class HomeViewModel @Inject constructor(
         }
     }
 
+    fun checkAndForceRefreshPosts() {
+        viewModelScope.launch {
+            /**
+             * Force refresh if stale data is present in the database
+             *
+             * Get the timestamp from the datastore as soon as the viewmodel is launched
+             * and decide if force refresh is needed
+             */
+            listOf(
+                Triple(prefsRepository.getHotPostsTimestamp(), _hotPosts, ::getHotPosts),
+                Triple(prefsRepository.getTopPostsTimestamp(), _topPosts, ::getTopPosts),
+                Triple(prefsRepository.getNewPostsTimestamp(), _newPosts, ::getNewPosts),
+                Triple(prefsRepository.getBestPostsTimestamp(), _bestPosts, ::getBestPosts),
+                Triple(prefsRepository.getRisingPostsTimestamp(), _risingPosts, ::getRisingsPosts),
+                Triple(
+                    prefsRepository.getControversialPostsTimestamp(),
+                    _controversialPosts,
+                    ::getControversialPosts,
+                ),
+            ).forEach { (timestampFlow, uiStateFlow, refreshFunction) ->
+                checkAndForceRefreshPosts(timestampFlow, uiStateFlow, refreshFunction)
+            }
+        }
+    }
+
+    fun onPostsAvailableChipClick(homePage: HomePage) {
+        when (homePage) {
+            HomePage.HOT -> _hotPosts.update { it.copy(isPullRefreshLoading = true) }
+            HomePage.NEW -> _newPosts.update { it.copy(isPullRefreshLoading = true) }
+            HomePage.TOP -> _topPosts.update { it.copy(isPullRefreshLoading = true) }
+            HomePage.BEST -> _bestPosts.update { it.copy(isPullRefreshLoading = true) }
+            HomePage.RISING -> _risingPosts.update { it.copy(isPullRefreshLoading = true) }
+            HomePage.CONTROVERSIAL -> _controversialPosts.update {
+                it.copy(
+                    isPullRefreshLoading = true,
+                )
+            }
+        }
+    }
+
     private fun updatePostSavedUiState(
         postId: String,
         isPostSaved: Boolean,
@@ -374,21 +389,6 @@ internal class HomeViewModel @Inject constructor(
                     }
                 },
             )
-        }
-    }
-
-    fun onPostsAvailableChipClick(homePage: HomePage) {
-        when (homePage) {
-            HomePage.HOT -> _hotPosts.update { it.copy(isPullRefreshLoading = true) }
-            HomePage.NEW -> _newPosts.update { it.copy(isPullRefreshLoading = true) }
-            HomePage.TOP -> _topPosts.update { it.copy(isPullRefreshLoading = true) }
-            HomePage.BEST -> _bestPosts.update { it.copy(isPullRefreshLoading = true) }
-            HomePage.RISING -> _risingPosts.update { it.copy(isPullRefreshLoading = true) }
-            HomePage.CONTROVERSIAL -> _controversialPosts.update {
-                it.copy(
-                    isPullRefreshLoading = true,
-                )
-            }
         }
     }
 }

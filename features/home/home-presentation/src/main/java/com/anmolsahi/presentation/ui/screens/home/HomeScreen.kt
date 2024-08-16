@@ -17,7 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.anmolsahi.commonui.utils.rememberLifecycleEvent
 import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRHorizontalPager
 import com.anmolsahi.designsystem.uicomponents.BRScrollableTabRow
@@ -27,7 +29,8 @@ import com.anmolsahi.homepresentation.R
 import com.anmolsahi.presentation.ui.components.HomeScreenListings
 
 @OptIn(ExperimentalFoundationApi::class)
-@SuppressWarnings("CyclomaticComplexMethod") // TODO: refactor this
+// TODO: refactor this, probably need to use strategy design pattern
+@SuppressWarnings("CyclomaticComplexMethod")
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -37,6 +40,7 @@ internal fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
+    val lifecycleEvent = rememberLifecycleEvent()
 
     val hotPosts = homeViewModel.hotPosts.collectAsStateWithLifecycle(
         lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
@@ -97,6 +101,12 @@ internal fun HomeScreen(
             homeViewModel.getControversialPosts()
         } else {
             homeViewModel.getControversialPosts(silentUpdate = true)
+        }
+    }
+
+    LaunchedEffect(lifecycleEvent) {
+        if (lifecycleEvent == Lifecycle.Event.ON_RESUME) {
+            homeViewModel.checkAndForceRefreshPosts()
         }
     }
 
