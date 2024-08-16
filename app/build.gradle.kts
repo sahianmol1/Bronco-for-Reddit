@@ -22,7 +22,7 @@ android {
         minSdk = libs.versions.min.sdk.get().toInt()
         targetSdk = libs.versions.target.sdk.get().toInt()
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
@@ -140,7 +140,6 @@ dependencies {
     // Work Manager
     implementation(libs.workmanager.kotlin)
     implementation(libs.androidx.hilt.work)
-    // When using Kotlin.
     ksp("androidx.hilt:hilt-compiler:1.1.0")
 
     // Datastore

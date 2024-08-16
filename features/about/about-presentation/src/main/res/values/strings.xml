@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_icon">App icon</string>
+    <string name="package_name">Package name</string>
+    <string name="app_version">Current version</string>
+    <string name="app_description">Bronco for Reddit is a free open source Reddit client made with ❤️ using Jetpack compose.</string>
+</resources>
