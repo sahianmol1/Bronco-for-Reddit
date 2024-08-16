@@ -85,7 +85,7 @@ fun PostVideo(videoUrl: String, modifier: Modifier = Modifier, onFullScreenIconC
         AndroidView(
             modifier = Modifier
                 .padding(vertical = 4.dp)
-                .defaultMinSize(minHeight = 250.dp)
+                .defaultMinSize(minHeight = 300.dp)
                 .fillMaxWidth()
                 .graphicsLayer {
                     scaleX = scale
