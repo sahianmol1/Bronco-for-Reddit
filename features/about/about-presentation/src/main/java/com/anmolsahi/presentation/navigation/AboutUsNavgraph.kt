@@ -1,7 +1,6 @@
 package com.anmolsahi.presentation.navigation
 
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.anmolsahi.designsystem.utils.Destinations
 import com.anmolsahi.designsystem.utils.isTopLevelDestination
@@ -11,9 +10,8 @@ import com.anmolsahi.designsystem.utils.slideOutToLeft
 import com.anmolsahi.designsystem.utils.slideOutToTop
 import com.anmolsahi.presentation.ui.AboutUsScreen
 
-// TODO: remove this warning once navController is used
 @SuppressWarnings("UnusedParameter")
-fun NavGraphBuilder.aboutUsNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.aboutUsNavGraph() {
     composable(
         route = Destinations.AboutUsDestination.route,
         enterTransition = {

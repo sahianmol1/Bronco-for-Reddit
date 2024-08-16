@@ -21,7 +21,7 @@ fun BRNavHost(modifier: Modifier = Modifier, navController: NavHostController) {
         homeNavGraph(navController = navController)
         searchNavGraph(navController = navController)
         savedPostsNavGraph(navController = navController)
-        aboutUsNavGraph(navController = navController)
+        aboutUsNavGraph()
         postDetailsNavGraph(navController = navController)
     }
 }

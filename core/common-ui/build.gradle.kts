@@ -86,4 +86,7 @@ dependencies {
     // dagger hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    // Chrome custom tabs
+    implementation(libs.androidx.browser)
 }

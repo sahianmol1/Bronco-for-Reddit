@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.anmolsahi.aboutpresentation.R
+import com.anmolsahi.commonui.chrometabs.openAsCustomTab
 import com.anmolsahi.designsystem.theme.BRTheme
 
 @Composable
@@ -86,19 +87,25 @@ fun AboutUsScreen(modifier: Modifier = Modifier) {
                 .padding(top = 16.dp),
             text = "anmolsahi1",
             icon = R.drawable.github_logo,
-            onClick = { /*TODO*/ },
+            onClick = {
+                "https://github.com/sahianmol1".openAsCustomTab(context)
+            },
         )
 
         InfoIconButton(
             text = "Source Code",
             icon = Icons.Outlined.Code,
-            onClick = { /*TODO*/ },
+            onClick = {
+                "https://github.com/sahianmol1/Bronco-for-Reddit".openAsCustomTab(context)
+            },
         )
 
         InfoIconButton(
             text = "App Icon source",
             icon = Icons.Outlined.Language,
-            onClick = { /*TODO*/ },
+            onClick = {
+                "https://www.svgrepo.com/svg/34625/trot-horse-outline".openAsCustomTab(context)
+            },
         )
 
         Spacer(modifier = Modifier.weight(1f))
