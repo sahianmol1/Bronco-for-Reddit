@@ -89,21 +89,16 @@ dependencies {
     // modules
     implementation(project(":core:design-system"))
     implementation(project(":core:navigation"))
-    implementation(project(":core:common-ui"))
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
     implementation(project(":features:home:home-domain"))
     implementation(project(":features:home:home-data"))
-    implementation(project(":features:home:home-presentation"))
     implementation(project(":features:savedposts:saved-data"))
     implementation(project(":features:savedposts:saved-domain"))
-    implementation(project(":features:savedposts:saved-presentation"))
-    implementation(project(":features:postdetails:postdetails-presentation"))
     implementation(project(":features:postdetails:postdetails-domain"))
     implementation(project(":features:postdetails:postdetails-data"))
     implementation(project(":features:search:search-data"))
     implementation(project(":features:search:search-domain"))
-    implementation(project(":features:search:search-presentation"))
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)
@@ -140,7 +135,7 @@ dependencies {
     // Work Manager
     implementation(libs.workmanager.kotlin)
     implementation(libs.androidx.hilt.work)
-    ksp("androidx.hilt:hilt-compiler:1.1.0")
+    ksp(libs.androidx.hilt.compiler)
 
     // Datastore
     implementation(libs.bundles.datastore)

@@ -91,6 +91,7 @@ workmanager-kotlin = { module = "androidx.work:work-runtime-ktx", version.ref = 
 datastore-android = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 datastore-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidx-browser" }
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltWork" }
 
 [bundles]
 datastore = ["datastore-android", "datastore-core"]
