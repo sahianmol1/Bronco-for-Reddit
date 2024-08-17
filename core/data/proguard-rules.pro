@@ -20,7 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.anmolsahi.commonui.models.** {*;}
+-keep class com.anmolsahi.data.model.** { *; }
 
 # These rules were asked to be added by the R8 itself through build error while
 # buidling release apk

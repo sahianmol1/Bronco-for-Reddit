@@ -20,13 +20,10 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.anmolsahi.broncoforreddit.data.models.** {
-    <init>();
-}
-
--keep class com.anmolsahi.broncoforreddit.ui.models.** {
-    <init>();
-}
+# Room database
+-keep class * extends androidx.room.RoomDatabase
+-dontwarn androidx.room.paging.**
+-keep @androidx.room.Entity class * { *; }
 
 -dontwarn org.slf4j.impl.StaticLoggerBinder
 
