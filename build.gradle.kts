@@ -50,4 +50,4 @@ tasks.register<io.gitlab.arturbosch.detekt.Detekt>("detektAll") {
     }
 }
 
-tasks.getByPath(":app:preBuild").dependsOn(":installGitHooks")
+//tasks.getByPath(":app:preBuild").dependsOn(":installGitHooks")
