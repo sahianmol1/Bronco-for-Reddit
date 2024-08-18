@@ -20,8 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.anmolsahi.commonui.models.** {*;}
-
 # These rules were asked to be added by the R8 itself through build error while
 # buidling release apk
 -dontwarn java.lang.invoke.StringConcatFactory

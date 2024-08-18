@@ -21,6 +21,8 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class com.anmolsahi.data.model.** { *; }
+-keep class com.anmolsahi.data.utils.typeconverters.** { *; }
+-keep class com.anmolsahi.data.datastore.** { *; }
 
 # These rules were asked to be added by the R8 itself through build error while
 # buidling release apk

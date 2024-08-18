@@ -23,11 +23,23 @@
 # Room database
 -keep class * extends androidx.room.RoomDatabase
 -dontwarn androidx.room.paging.**
--keep @androidx.room.Entity class * { *; }
-
 -dontwarn org.slf4j.impl.StaticLoggerBinder
+
+-dontwarn com.anmolsahi.data.di.DataStoreModule_ProvidePreferencesDataStoreFactory
+-dontwarn com.anmolsahi.data.di.DataStoreModule_ProvidePreferencesDataStoreRepositoryFactory
+-dontwarn com.anmolsahi.data.di.HomeDataModule_ProvideHomeRepositoryFactory
+-dontwarn com.anmolsahi.data.di.HomeDataModule_ProvidesHomeApiRequestsFactory
+-dontwarn com.anmolsahi.data.remote.HomeService
+-dontwarn com.anmolsahi.postdetailspresentation.postdetails.navigation.PostDetailsNavGraphKt
+-dontwarn com.anmolsahi.presentation.navigation.AboutUsNavgraphKt
+-dontwarn com.anmolsahi.presentation.navigation.HomeNavgraphKt
+-dontwarn com.anmolsahi.presentation.navigation.SavedPostsNavigationKt
+-dontwarn com.anmolsahi.presentation.navigation.SearchNavgraphKt
+-dontwarn com.anmolsahi.designsystem.theme.ThemeKt
+-dontwarn com.anmolsahi.designsystem.uicomponents.BRNavigationBarKt
+-dontwarn com.anmolsahi.designsystem.utils.TopLevelDestinationKt
+-dontwarn com.anmolsahi.navigation.BRNavHostKt
 
 # Firebase Crashlytics
 -keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
 -keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
-
