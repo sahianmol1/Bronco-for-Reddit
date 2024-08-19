@@ -16,7 +16,7 @@ plugins {
     alias(libs.plugins.detekt)
 }
 
-tasks.register<Copy>("installGitHooks"){
+tasks.register<Copy>("installGitHooks") {
     from("scripts/pre-commit")
     into(".git/hooks")
 
@@ -50,4 +50,4 @@ tasks.register<io.gitlab.arturbosch.detekt.Detekt>("detektAll") {
     }
 }
 
-//tasks.getByPath(":app:preBuild").dependsOn(":installGitHooks")
+tasks.getByPath(":app:preBuild").dependsOn(":installGitHooks")
