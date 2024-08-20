@@ -21,6 +21,7 @@ import androidx.compose.material.icons.outlined.Code
 import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -79,6 +80,7 @@ fun AboutUsScreen(modifier: Modifier = Modifier) {
                 .padding(horizontal = 16.dp),
             text = stringResource(R.string.app_description),
             textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.90f),
             style = BRTheme.typography.bodyMedium,
         )
 
