@@ -50,7 +50,9 @@ import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.designsystem.uicomponents.BRScrollToTopButton
 import com.anmolsahi.designsystem.uicomponents.BRSearchBar
 import com.anmolsahi.designsystem.utils.slideInFromBottom
+import com.anmolsahi.designsystem.utils.slideInFromTop
 import com.anmolsahi.designsystem.utils.slideOutToBottom
+import com.anmolsahi.designsystem.utils.slideOutToTop2
 import com.anmolsahi.domain.model.RecentSearch
 import com.anmolsahi.presentation.ui.SearchScreenDefaults.LOADING_INDICATOR
 import com.anmolsahi.presentation.ui.SearchScreenDefaults.QUICK_RESULTS_FOOTER
@@ -128,10 +130,62 @@ internal fun SearchScreen(
         }
     }
 
-    Column {
-        AnimatedVisibility(lazyListState.isScrollingUp()) {
+    Box(modifier = modifier) {
+        if (searchedItemsList.isNotEmpty()) {
+            LazyColumn(
+                state = lazyListState,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = WindowInsets.navigationBars.asPaddingValues(),
+            ) {
+                items(
+                    count = searchedItemsList.size,
+                    key = { index -> searchedItemsList[index].id },
+                    contentType = { REDDIT_POST },
+                ) { index ->
+                    PostComponent(
+                        modifier = Modifier
+                            .padding(
+                                top = if (index == 0) {
+                                    88.dp
+                                } else {
+                                    0.dp
+                                },
+                            ),
+                        redditPostUiModel = searchedItemsList[index],
+                        onClick = { id, url ->
+                            viewModel.saveRecentSearch(searchedValue)
+                            onPostClick(id, url)
+                        },
+                        onSaveIconClick = {
+                            viewModel.onSaveIconClick(searchedItemsList[index])
+                        },
+                        onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
+                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
+                        onImageFullScreenIconClick = onImageFullScreenIconClick,
+                    )
+                }
+
+                if (!searchedItemsList.last().after.isNullOrEmpty()) {
+                    item(contentType = LOADING_INDICATOR) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.padding(16.dp),
+                        )
+                    }
+                }
+            }
+        }
+
+        if (uiState.isLoading) {
+            BRLinearProgressIndicator()
+        }
+
+        AnimatedVisibility(
+            visible = lazyListState.isScrollingUp(),
+            enter = slideInFromTop(),
+            exit = slideOutToTop2(),
+        ) {
             BRSearchBar(
-                modifier = modifier,
+                modifier = Modifier,
                 query = searchedValue,
                 active = searchBarActive,
                 configuration = configuration,
@@ -171,46 +225,6 @@ internal fun SearchScreen(
                     },
                 )
             }
-        }
-
-        if (searchedItemsList.isNotEmpty()) {
-            LazyColumn(
-                state = lazyListState,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                contentPadding = WindowInsets.navigationBars.asPaddingValues(),
-            ) {
-                items(
-                    count = searchedItemsList.size,
-                    key = { index -> searchedItemsList[index].id },
-                    contentType = { REDDIT_POST },
-                ) { index ->
-                    PostComponent(
-                        redditPostUiModel = searchedItemsList[index],
-                        onClick = { id, url ->
-                            viewModel.saveRecentSearch(searchedValue)
-                            onPostClick(id, url)
-                        },
-                        onSaveIconClick = {
-                            viewModel.onSaveIconClick(searchedItemsList[index])
-                        },
-                        onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
-                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
-                        onImageFullScreenIconClick = onImageFullScreenIconClick,
-                    )
-                }
-
-                if (!searchedItemsList.last().after.isNullOrEmpty()) {
-                    item(contentType = LOADING_INDICATOR) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.padding(16.dp),
-                        )
-                    }
-                }
-            }
-        }
-
-        if (uiState.isLoading) {
-            BRLinearProgressIndicator()
         }
 
         if (showErrorDialog) {

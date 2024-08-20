@@ -50,6 +50,15 @@ fun slideOutToTop(): ExitTransition {
     )
 }
 
+fun slideOutToTop2(): ExitTransition {
+    return slideOutVertically(
+        animationSpec = tween,
+        targetOffsetY = { screenHeight ->
+            -screenHeight
+        },
+    )
+}
+
 fun slideInFromRight(): EnterTransition {
     return slideInHorizontally(
         animationSpec = tween,
