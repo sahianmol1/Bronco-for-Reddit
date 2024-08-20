@@ -13,6 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/src/release/google-services.json
 # Kotlin 2.0
 .kotlin/
-google-services.json
+/app/release/app-release.apk
