@@ -3,6 +3,7 @@ package com.anmolsahi.presentation.ui
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -101,6 +102,11 @@ internal fun SearchScreen(
             Modifier
         }
 
+    val searchBarPadding by animateDpAsState(
+        targetValue = if (searchedItemsList.isNotEmpty() && !searchBarActive) 16.dp else 0.dp,
+        label = "searchBarPadding",
+    )
+
     LaunchedEffect(Unit) {
         viewModel.getAllRecentSearches()
     }
@@ -185,7 +191,8 @@ internal fun SearchScreen(
             exit = slideOutToTop2(),
         ) {
             BRSearchBar(
-                modifier = Modifier,
+                modifier = Modifier
+                    .padding(horizontal = searchBarPadding),
                 query = searchedValue,
                 active = searchBarActive,
                 configuration = configuration,
