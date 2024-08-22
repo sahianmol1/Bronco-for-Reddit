@@ -77,6 +77,7 @@ private object SearchScreenDefaults {
     const val QUICK_SEARCH_RESULTS_MAX_ITEMS = 10
 }
 
+@SuppressWarnings("CyclomaticComplexMethod")
 @Composable
 internal fun SearchScreen(
     modifier: Modifier = Modifier,
