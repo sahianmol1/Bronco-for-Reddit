@@ -201,7 +201,7 @@ internal fun SearchScreen(
                     Image(
                         modifier = Modifier
                             .padding(top = 48.dp)
-                            .width(224.dp),
+                            .width(220.dp),
                         painter = painterResource(R.drawable.search),
                         contentDescription = null,
                     )
