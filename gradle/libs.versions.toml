@@ -38,6 +38,8 @@ uiTooling = "1.6.8"
 work_version = "2.9.1"
 datastore = "1.1.1"
 androidx-browser = "1.8.0"
+junitJupiter = "5.8.2"
+mockk = "1.13.12"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -92,9 +94,15 @@ datastore-android = { module = "androidx.datastore:datastore-preferences", versi
 datastore-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidx-browser" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltWork" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesCore" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+mockk-core = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
+mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
 
 [bundles]
 datastore = ["datastore-android", "datastore-core"]
+mockk = ["mockk-core", "mockk-android", "mockk-agent"]
 
 [plugins]
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

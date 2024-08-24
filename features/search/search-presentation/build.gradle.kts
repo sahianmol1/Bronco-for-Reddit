@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
@@ -51,6 +52,12 @@ dependencies {
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.tooling.preview)
     implementation(libs.compose.material3)
+
+    // Coroutines test
+    testImplementation(libs.coroutines.test)
+
+    // Mockk
+    testImplementation(libs.bundles.mockk)
 
     // Compose navigation
     implementation(libs.androidx.navigation.compose)
