@@ -32,7 +32,7 @@ internal class SearchRepositoryImpl(
     }
 
     override suspend fun insertRecentSearch(recentSearch: RecentSearch) {
-        dao.insert(recentSearch.asEntity())
+        dao.upsert(recentSearch.asEntity())
     }
 
     override suspend fun deleteRecentSearch(recentSearch: RecentSearch) {

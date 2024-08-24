@@ -11,6 +11,7 @@ import com.anmolsahi.domain.model.RecentSearch
 import com.anmolsahi.domain.repositories.SearchRepository
 import com.anmolsahi.domain.usecase.SearchRedditUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +21,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
@@ -33,6 +33,7 @@ internal class SearchViewModel @Inject constructor(
     private val repository: SearchRepository,
     private val delegate: SearchDelegate,
     private val searchRedditUseCase: SearchRedditUseCase,
+    ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : ViewModel() {
 
     private companion object {
@@ -53,7 +54,7 @@ internal class SearchViewModel @Inject constructor(
         _searchQuery
             .debounce(DEFAULT_DEBOUNCE_TIME)
             .distinctUntilChanged()
-            .flowOn(Dispatchers.IO)
+            .flowOn(ioDispatcher)
             .onEach { query ->
                 searchReddit(query)
             }
@@ -76,7 +77,6 @@ internal class SearchViewModel @Inject constructor(
     fun getAllRecentSearches() {
         repository.getRecentSearches()
             .onStart { _searchDataUiState.update { it.copy(isLoading = true) } }
-            .map { it.reversed() }
             .onEach { recentSearches ->
                 _searchDataUiState.update {
                     it.copy(
@@ -98,10 +98,6 @@ internal class SearchViewModel @Inject constructor(
     fun saveRecentSearch(recentSearch: String) {
         val trimmedSearch = recentSearch.trim()
         if (recentSearch.isEmpty()) {
-            return
-        }
-
-        if (isRecentSearchAlreadySaved(trimmedSearch)) {
             return
         }
 
@@ -161,12 +157,6 @@ internal class SearchViewModel @Inject constructor(
             }
             .catch { throwable -> handleException(throwable) }
             .launchIn(viewModelScope)
-    }
-
-    private fun isRecentSearchAlreadySaved(searchQuery: String): Boolean {
-        return _searchDataUiState.value.recentSearches.any {
-            it.value.equals(searchQuery, ignoreCase = true)
-        }
     }
 
     private fun handleException(throwable: Throwable) {
