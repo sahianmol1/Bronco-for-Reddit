@@ -82,8 +82,8 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     implementation(project(":core:common-ui"))
+    implementation(project(":core:common"))
     implementation(project(":core:domain"))
     implementation(project(":core:design-system"))
     implementation(project(":features:search:search-domain"))
-    implementation(project(":core:design-system"))
 }

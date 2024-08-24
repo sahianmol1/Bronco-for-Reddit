@@ -46,7 +46,7 @@ class SearchViewModelTest {
     private lateinit var viewModel: SearchViewModel
 
     @Before
-    fun init() {
+    fun setup() {
         mockkStatic(Log::class)
         every { Log.e(any(), any()) } returns 0
         MockKAnnotations.init(this)
@@ -58,6 +58,12 @@ class SearchViewModelTest {
             searchRedditUseCase = useCase,
             ioDispatcher = testDispatcher,
         )
+    }
+
+    @After
+    fun tearDown() {
+        clearStaticMockk(Log::class)
+        Dispatchers.resetMain()
     }
 
     @Test
@@ -214,12 +220,6 @@ class SearchViewModelTest {
         // THEN
         val actualExceptionMessage = viewModel.searchDataUiState.value.errorMessage
         assertEquals(exceptionMessage, actualExceptionMessage)
-    }
-
-    @After
-    fun tearDown() {
-        clearStaticMockk(Log::class)
-        Dispatchers.resetMain()
     }
 
     private fun getPost() = RedditPost(

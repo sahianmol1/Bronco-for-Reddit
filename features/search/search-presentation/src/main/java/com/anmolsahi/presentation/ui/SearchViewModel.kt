@@ -3,6 +3,7 @@ package com.anmolsahi.presentation.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anmolsahi.common.di.IoDispatcher
 import com.anmolsahi.commonui.mappers.asDomain
 import com.anmolsahi.commonui.mappers.asUiModel
 import com.anmolsahi.commonui.models.RedditPostUiModel
@@ -12,7 +13,6 @@ import com.anmolsahi.domain.repositories.SearchRepository
 import com.anmolsahi.domain.usecase.SearchRedditUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,7 +33,7 @@ internal class SearchViewModel @Inject constructor(
     private val repository: SearchRepository,
     private val delegate: SearchDelegate,
     private val searchRedditUseCase: SearchRedditUseCase,
-    ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private companion object {
