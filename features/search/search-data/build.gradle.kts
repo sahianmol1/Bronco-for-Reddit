@@ -37,6 +37,12 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
 
+    // Unit tests
+    testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.bundles.mockk)
+
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
 

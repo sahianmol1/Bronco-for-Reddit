@@ -18,7 +18,7 @@ fun ListingsResponse.asDomain(): List<RedditPost> {
                     ?: listOf(this.preview?.images?.first()?.source?.url),
                 postUrl = this.postUrl,
                 videoUrl = this.secureMedia?.redditVideo?.videoUrl,
-                gifUrl = "",
+                gifUrl = null,
                 author = this.author.orEmpty(),
                 thumbnailUrl = this.thumbnailUrl,
                 replies = this.replies?.asDomain(),
