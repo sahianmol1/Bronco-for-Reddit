@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -64,6 +65,7 @@ import com.anmolsahi.presentation.ui.SearchScreenDefaults.QUICK_RESULTS_HEADER
 import com.anmolsahi.presentation.ui.SearchScreenDefaults.QUICK_SEARCH_POST
 import com.anmolsahi.presentation.ui.SearchScreenDefaults.QUICK_SEARCH_RESULTS_MAX_ITEMS
 import com.anmolsahi.presentation.ui.SearchScreenDefaults.REDDIT_POST
+import com.anmolsahi.presentation.ui.SearchScreenDefaults.SEARCH_BAR_HEIGHT
 import com.anmolsahi.presentation.ui.components.QuickSearchPostComponent
 import com.anmolsahi.presentation.ui.components.RecentSearchesComponent
 import com.anmolsahi.presentation.utils.shouldShowQuickResults
@@ -78,6 +80,7 @@ private object SearchScreenDefaults {
     const val REDDIT_POST = "reddit_post"
     const val LOADING_INDICATOR = "loading_indicator"
     const val QUICK_SEARCH_RESULTS_MAX_ITEMS = 10
+    const val SEARCH_BAR_HEIGHT = 56
 }
 
 @SuppressWarnings("CyclomaticComplexMethod")
@@ -156,7 +159,8 @@ internal fun SearchScreen(
                         modifier = Modifier
                             .padding(
                                 top = if (index == 0) {
-                                    88.dp
+                                    WindowInsets.statusBars.asPaddingValues()
+                                        .calculateTopPadding() + SEARCH_BAR_HEIGHT.dp + 8.dp
                                 } else {
                                     0.dp
                                 },
