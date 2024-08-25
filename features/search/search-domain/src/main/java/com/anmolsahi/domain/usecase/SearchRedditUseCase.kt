@@ -12,25 +12,25 @@ class SearchRedditUseCase(
     private val searchRepository: SearchRepository,
     private val searchDelegate: SearchDelegate,
 ) {
-    operator fun invoke(query: String, nextPageKey: String? = null): Flow<List<RedditPost>?> =
-        flow {
+    operator fun invoke(query: String, nextPageKey: String? = null): Flow<List<RedditPost>?> {
+        return flow {
             if (query.isBlank()) {
                 emit(null)
             } else {
                 emitAll(
-                    searchRepository.searchReddit(query, nextPageKey)
-                        .map { posts ->
-                            posts?.map { post ->
-                                if (searchDelegate.getSavedPosts()
-                                        .any { savedPost -> savedPost.id == post.id }
-                                ) {
-                                    post.copy(isSaved = true)
-                                } else {
-                                    post
-                                }
+                    searchRepository.searchReddit(query, nextPageKey).map { posts ->
+                        posts?.map { post ->
+                            if (searchDelegate.getSavedPosts()
+                                    .any { savedPost -> savedPost.id == post.id }
+                            ) {
+                                post.copy(isSaved = true)
+                            } else {
+                                post
                             }
-                        },
+                        }
+                    },
                 )
             }
         }
+    }
 }

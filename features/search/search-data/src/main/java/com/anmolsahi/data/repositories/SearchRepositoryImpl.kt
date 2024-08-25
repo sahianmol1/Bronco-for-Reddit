@@ -21,7 +21,7 @@ internal class SearchRepositoryImpl(
             if (query.isBlank()) {
                 emit(null)
             } else {
-                emit(service.searchReddit(query, nextPageKey).getOrThrow().asDomain())
+                emit(service.searchReddit(query, nextPageKey).asDomain())
             }
         }
     }

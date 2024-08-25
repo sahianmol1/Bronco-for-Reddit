@@ -11,6 +11,13 @@ java {
 }
 dependencies {
 
+    // Unit test
+    testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockk.core)
+    testImplementation(libs.mockk.agent)
+    testImplementation(libs.coroutines.test)
+
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(project(":core:domain"))
