@@ -2,11 +2,13 @@ package com.anmolsahi.data.repositories
 
 import com.anmolsahi.data.local.RecentSearchEntity
 import com.anmolsahi.data.local.RecentSearchesDao
+import com.anmolsahi.data.mapper.asEntity
 import com.anmolsahi.data.model.remote.ChildrenData
 import com.anmolsahi.data.model.remote.ListingsChildren
 import com.anmolsahi.data.model.remote.ListingsData
 import com.anmolsahi.data.model.remote.ListingsResponse
 import com.anmolsahi.data.remote.SearchService
+import com.anmolsahi.data.utils.Clock
 import com.anmolsahi.domain.model.RecentSearch
 import com.anmolsahi.domain.models.RedditPost
 import com.anmolsahi.domain.repositories.SearchRepository
@@ -14,6 +16,8 @@ import io.mockk.MockKAnnotations
 import io.mockk.clearStaticMockk
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -22,8 +26,6 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 class SearchRepositoryImplTest {
 
@@ -33,7 +35,12 @@ class SearchRepositoryImplTest {
     @RelaxedMockK
     private lateinit var service: SearchService
 
+    @MockK
+    private lateinit var mockClock: Clock
+
     private lateinit var repository: SearchRepository
+
+    private val fixedTimestamp = 1678886400000L
 
     private val redditPostList = listOf(
         RedditPost(id = "1", title = "example_title_1", imageUrls = listOf(null)),
@@ -48,7 +55,9 @@ class SearchRepositoryImplTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        repository = SearchRepositoryImpl(dao = dao, service = service)
+        repository = SearchRepositoryImpl(dao = dao, service = service, clock = mockClock)
+
+        every { mockClock.currentTimeMillis() } returns fixedTimestamp
     }
 
     @After
@@ -99,14 +108,13 @@ class SearchRepositoryImplTest {
     fun `when insertRecentSearch is called, then verify dao#upsert is called`() = runTest {
         // GIVEN
         val recentSearch = RecentSearch("dog")
-        val timeStamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
 
         // WHEN
         repository.insertRecentSearch(recentSearch)
 
         // THEN
         coVerify(exactly = 1) {
-            dao.upsert(RecentSearchEntity("dog", timeStamp))
+            dao.upsert(recentSearch.asEntity(fixedTimestamp))
         }
     }
 
@@ -114,14 +122,13 @@ class SearchRepositoryImplTest {
     fun `when deleteRecentSearch is called, then verify dao#delete is called`() = runTest {
         // GIVEN
         val recentSearch = RecentSearch("dog")
-        val timeStamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
 
         // WHEN
         repository.deleteRecentSearch(recentSearch)
 
         // THEN
         coVerify(exactly = 1) {
-            dao.delete(RecentSearchEntity("dog", timeStamp))
+            dao.delete(recentSearch.asEntity(fixedTimestamp))
         }
     }
 
@@ -147,6 +154,15 @@ class SearchRepositoryImplTest {
     }
 
     private fun getRecentSearches(): List<RecentSearchEntity> {
-        return listOf(RecentSearchEntity("dog"), RecentSearchEntity("cat"))
+        return listOf(
+            RecentSearchEntity(
+                name = "dog",
+                timestamp = fixedTimestamp,
+            ),
+            RecentSearchEntity(
+                name = "cat",
+                timestamp = fixedTimestamp,
+            ),
+        )
     }
 }

@@ -3,6 +3,7 @@ package com.anmolsahi.data.di
 import com.anmolsahi.data.local.RecentSearchesDao
 import com.anmolsahi.data.remote.SearchService
 import com.anmolsahi.data.repositories.SearchRepositoryImpl
+import com.anmolsahi.data.utils.SystemClock
 import com.anmolsahi.domain.repositories.SearchRepository
 import dagger.Module
 import dagger.Provides
@@ -27,5 +28,6 @@ internal object SearchPostsDataModule {
     ): SearchRepository = SearchRepositoryImpl(
         dao = searchesDao,
         service = searchService,
+        clock = SystemClock,
     )
 }
