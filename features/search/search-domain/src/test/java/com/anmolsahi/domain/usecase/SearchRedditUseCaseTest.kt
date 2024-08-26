@@ -13,7 +13,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class SearchRedditUseCaseTest {
+internal class SearchRedditUseCaseTest {
     @RelaxedMockK
     private lateinit var repository: SearchRepository
 

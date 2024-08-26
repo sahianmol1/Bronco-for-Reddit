@@ -27,7 +27,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class SearchRepositoryImplTest {
+internal class SearchRepositoryImplTest {
 
     @RelaxedMockK
     private lateinit var dao: RecentSearchesDao

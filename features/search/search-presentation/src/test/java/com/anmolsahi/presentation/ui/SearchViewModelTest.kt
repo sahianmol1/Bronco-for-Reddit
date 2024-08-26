@@ -30,7 +30,7 @@ import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class SearchViewModelTest {
+internal class SearchViewModelTest {
 
     @RelaxedMockK
     private lateinit var repository: SearchRepository
