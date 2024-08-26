@@ -9,8 +9,6 @@ internal class SearchService(
     private val client: HttpClient,
 ) {
     suspend fun searchReddit(query: String, nextPageKey: String? = null): ListingsResponse {
-        return client
-            .get("${EndPoints.SEARCH}?q=$query&after=$nextPageKey&raw_json=1")
-            .body()
+        return client.get("${EndPoints.SEARCH}?q=$query&after=$nextPageKey&raw_json=1").body()
     }
 }

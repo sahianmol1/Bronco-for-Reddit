@@ -19,5 +19,5 @@ internal class PostDetailsRepositoryImpl(
         return getPostDetails(postUrl).comments().asDomain()
     }
 
-    private suspend fun getPostDetails(postUrl: String) = service.getPost(postUrl).getOrThrow()
+    private suspend fun getPostDetails(postUrl: String) = service.getPost(postUrl)
 }

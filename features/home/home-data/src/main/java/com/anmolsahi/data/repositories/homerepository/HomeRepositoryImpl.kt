@@ -51,8 +51,7 @@ internal class HomeRepositoryImpl(
                 } else {
                     // If a refresh is needed or there are no posts in the database, fetch new data.
                     val listings =
-                        homeService.getHotListings(nextPageKey = nextPageKey).getOrThrow()
-                            .asHotPostEntity()
+                        homeService.getHotListings(nextPageKey = nextPageKey).asHotPostEntity()
 
                     // After fetching the data, update the timestamp in data store preferences
                     // if the database is empty or a refresh is explicitly requested.
@@ -92,8 +91,7 @@ internal class HomeRepositoryImpl(
                 } else {
                     // If a refresh is needed or there are no posts in the database, fetch new data.
                     val listings =
-                        homeService.getTopListings(nextPageKey = nextPageKey).getOrThrow()
-                            .asTopPostEntity()
+                        homeService.getTopListings(nextPageKey = nextPageKey).asTopPostEntity()
 
                     // After fetching the data, update the timestamp in data store preferences
                     // if the database is empty or a refresh is explicitly requested.
@@ -133,8 +131,7 @@ internal class HomeRepositoryImpl(
                 } else {
                     // If a refresh is needed or there are no posts in the database, fetch new data.
                     val listings =
-                        homeService.getNewListings(nextPageKey = nextPageKey).getOrThrow()
-                            .asNewPostEntity()
+                        homeService.getNewListings(nextPageKey = nextPageKey).asNewPostEntity()
 
                     // After fetching the data, update the timestamp in data store preferences
                     // if the database is empty or a refresh is explicitly requested.
@@ -174,8 +171,7 @@ internal class HomeRepositoryImpl(
                 } else {
                     // If a refresh is needed or there are no posts in the database, fetch new data.
                     val listings =
-                        homeService.getBestListings(nextPageKey = nextPageKey).getOrThrow()
-                            .asBestPostEntity()
+                        homeService.getBestListings(nextPageKey = nextPageKey).asBestPostEntity()
 
                     // After fetching the data, update the timestamp in data store preferences
                     // if the database is empty or a refresh is explicitly requested.
@@ -215,7 +211,7 @@ internal class HomeRepositoryImpl(
                 } else {
                     // If a refresh is needed or there are no posts in the database, fetch new data.
                     val listings =
-                        homeService.getRisingListings(nextPageKey = nextPageKey).getOrThrow()
+                        homeService.getRisingListings(nextPageKey = nextPageKey)
                             .asRisingPostEntity()
 
                     // After fetching the data, update the timestamp in data store preferences
@@ -256,7 +252,7 @@ internal class HomeRepositoryImpl(
                 } else {
                     // If a refresh is needed or there are no posts in the database, fetch new data.
                     val listings =
-                        homeService.getControversialListings(nextPageKey = nextPageKey).getOrThrow()
+                        homeService.getControversialListings(nextPageKey = nextPageKey)
                             .asControversialPostEntity()
 
                     // After fetching the data, update the timestamp in data store preferences

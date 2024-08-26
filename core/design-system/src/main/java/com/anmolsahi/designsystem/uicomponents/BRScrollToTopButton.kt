@@ -25,7 +25,7 @@ fun BRScrollToTopButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
         modifier = modifier
             .padding(16.dp)
             .background(MaterialTheme.colorScheme.primary, CircleShape)
-            .padding(1.dp)
+            .padding(2.dp)
             .background(MaterialTheme.colorScheme.background, CircleShape),
         onClick = onClick,
     ) {
