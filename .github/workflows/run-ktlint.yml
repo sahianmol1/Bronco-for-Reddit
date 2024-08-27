@@ -1,4 +1,4 @@
-name: Static Kotlin Code Analysis
+name: Kotlin lint check
 
 on:
   pull_request:
@@ -8,13 +8,13 @@ on:
       - synchronize
 
 jobs:
-  detekt:
+  ktlintCheck:
     if: github.event.pull_request.draft == false
     runs-on: [ ubuntu-latest ]
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -28,5 +28,5 @@ jobs:
       - name: Grant execute permission for gradle
         run: chmod +x gradlew
 
-      - name: Run Detekt using the ruleset in detekt.yml
+      - name: Run ktlintCheck
         run: ./gradlew ktlintCheck
