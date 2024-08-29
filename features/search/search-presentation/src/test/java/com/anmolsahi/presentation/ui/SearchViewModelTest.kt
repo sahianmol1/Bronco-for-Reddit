@@ -199,6 +199,18 @@ internal class SearchViewModelTest {
     }
 
     @Test
+    fun `when clear all recent searches action is performed, then delete them from db`() = runTest {
+        // WHEN
+        viewModel.clearAllRecentSearches()
+        advanceUntilIdle()
+
+        // THEN
+        coVerify(exactly = 1) {
+            repository.deleteAllRecentSearches()
+        }
+    }
+
+    @Test
     fun `when search bar is active, then update the ui state`() {
         // WHEN
         viewModel.updateSearchBarActive(true)

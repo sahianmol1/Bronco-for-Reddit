@@ -4,6 +4,8 @@ import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -258,6 +260,9 @@ internal fun SearchScreen(
                         viewModel.saveRecentSearch(searchedValue)
                         onPostClick(id, url)
                     },
+                    onClearAllRecentSearchesClick = {
+                        viewModel.clearAllRecentSearches()
+                    },
                 )
             }
         }
@@ -295,18 +300,24 @@ private fun SearchBarContentView(
     searchedValue: String,
     onSeeAllResultsClick: () -> Unit,
     onViewAllPostsClick: () -> Unit,
+    onClearAllRecentSearchesClick: () -> Unit,
     onRecentItemClick: (RecentSearch) -> Unit,
     onRecentItemDeleteClick: (RecentSearch) -> Unit,
     onQuickSearchPostClick: (id: String, url: String) -> Unit,
 ) {
     val searchedData by remember(uiState) { mutableStateOf(uiState.searchedData.orEmpty()) }
 
-    if (shouldShowRecentSearches(searchedValue, uiState)) {
+    AnimatedVisibility(
+        shouldShowRecentSearches(searchedValue, uiState),
+        enter = fadeIn(),
+        exit = fadeOut(),
+    ) {
         RecentSearchesComponent(
             modifier = Modifier,
             recentSearches = uiState.recentSearches,
             onItemClick = onRecentItemClick,
             onDeleteItemClick = onRecentItemDeleteClick,
+            onClearAllClick = onClearAllRecentSearchesClick,
         )
     }
 
