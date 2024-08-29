@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "100100",
+    "project_id": "bronco-for-reddit",
+    "storage_bucket": "bronco-for-reddit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "dummy",
+        "android_client_info": {
+          "package_name": "com.anmolsahi.broncoforreddit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "dummy_key"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
