@@ -40,4 +40,8 @@ internal class SearchRepositoryImpl(
     override suspend fun deleteRecentSearch(recentSearch: RecentSearch) {
         dao.delete(recentSearch.asEntity(clock.currentTimeMillis()))
     }
+
+    override suspend fun deleteAllRecentSearches() {
+        dao.deleteAll()
+    }
 }

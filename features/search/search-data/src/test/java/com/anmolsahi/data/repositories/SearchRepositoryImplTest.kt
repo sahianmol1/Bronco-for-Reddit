@@ -132,6 +132,17 @@ internal class SearchRepositoryImplTest {
         }
     }
 
+    @Test
+    fun `when deleteAllRecentSearches is called, then verify dao$deleteAll is called`() = runTest {
+        // WHEN
+        repository.deleteAllRecentSearches()
+
+        // THEN
+        coVerify(exactly = 1) {
+            dao.deleteAll()
+        }
+    }
+
     private fun getListingsResponse(): ListingsResponse {
         return ListingsResponse(
             data = ListingsData(

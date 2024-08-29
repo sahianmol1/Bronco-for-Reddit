@@ -16,4 +16,7 @@ interface RecentSearchesDao {
 
     @Query("SELECT * FROM recent_searches ORDER BY timestamp DESC")
     fun getRecentSearches(): Flow<List<RecentSearchEntity>>
+
+    @Query("DELETE from recent_searches")
+    suspend fun deleteAll()
 }

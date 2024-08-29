@@ -106,6 +106,12 @@ internal class SearchViewModel @Inject constructor(
         }
     }
 
+    fun clearAllRecentSearches() {
+        viewModelScope.launch {
+            repository.deleteAllRecentSearches()
+        }
+    }
+
     fun onBackClick(searchedValue: String) {
         saveRecentSearch(searchedValue)
         updateSearchQuery("")
