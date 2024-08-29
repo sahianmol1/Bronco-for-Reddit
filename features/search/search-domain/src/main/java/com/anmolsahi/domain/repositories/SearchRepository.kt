@@ -12,4 +12,6 @@ interface SearchRepository {
     suspend fun insertRecentSearch(recentSearch: RecentSearch)
 
     suspend fun deleteRecentSearch(recentSearch: RecentSearch)
+
+    suspend fun deleteAllRecentSearches()
 }

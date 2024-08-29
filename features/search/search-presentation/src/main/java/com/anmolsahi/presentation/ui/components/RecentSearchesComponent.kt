@@ -1,6 +1,8 @@
 package com.anmolsahi.presentation.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,12 +20,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.anmolsahi.designsystem.theme.BRTheme
 import com.anmolsahi.domain.model.RecentSearch
+import com.anmolsahi.presentation.ui.components.RecentSearchesComponentConstants.SHOW_CLEAR_ALL_LABEL_REQUIREMENT
 import com.anmolsahi.searchpresentation.R
+
+private object RecentSearchesComponentConstants {
+    const val SHOW_CLEAR_ALL_LABEL_REQUIREMENT = 7
+}
 
 @Composable
 internal fun RecentSearchesComponent(
@@ -32,6 +41,7 @@ internal fun RecentSearchesComponent(
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (RecentSearch) -> Unit,
     onDeleteItemClick: (RecentSearch) -> Unit,
+    onClearAllClick: () -> Unit,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -41,11 +51,30 @@ internal fun RecentSearchesComponent(
             key = "recent_searches_title",
             contentType = "recent_searches_title",
         ) {
-            Text(
-                modifier = Modifier.padding(16.dp),
-                text = stringResource(R.string.recent_searches),
-                fontWeight = FontWeight.Bold,
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    modifier = Modifier.padding(16.dp),
+                    text = stringResource(R.string.recent_searches),
+                    fontWeight = FontWeight.Bold,
+                )
+
+                AnimatedVisibility(recentSearches.size > SHOW_CLEAR_ALL_LABEL_REQUIREMENT) {
+                    Text(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .clickable { onClearAllClick() },
+                        text = stringResource(R.string.clear_all),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        textDecoration = TextDecoration.Underline,
+                        color = BRTheme.colorScheme.error,
+                    )
+                }
+            }
         }
 
         items(
@@ -112,5 +141,27 @@ private fun RecentSearchesPreview() {
         ),
         onItemClick = {},
         onDeleteItemClick = {},
+        onClearAllClick = {},
+    )
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun SingleRecentSearchePreview() {
+    RecentSearchesComponent(
+        recentSearches =
+        listOf(
+            RecentSearch("cat"),
+            RecentSearch("dog"),
+            RecentSearch("bird"),
+            RecentSearch("funny"),
+            RecentSearch("cute"),
+            RecentSearch("r/aww"),
+            RecentSearch("hello"),
+            RecentSearch("movies"),
+        ),
+        onItemClick = {},
+        onDeleteItemClick = {},
+        onClearAllClick = {},
     )
 }
