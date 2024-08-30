@@ -25,7 +25,7 @@ jobs:
           java-version: 17
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v2
+        uses: android-actions/setup-android@v3
 
       - name: Create Google Services file
         run: cat /home/runner/work/HelloEyes-Android/HelloEyes-Android/app/release/google-services.json | base64
