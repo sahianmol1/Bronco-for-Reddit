@@ -27,21 +27,40 @@ class StartupBenchmark {
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
+    // No ahead-of-time (AOT) compilation at all. Represents performance of a
+    // fresh install on a user's device if you don't enable Baseline Profiles—
+    // generally the worst case performance.
     @Test
-    fun startupCold() = startup(StartupMode.COLD)
+    fun startupNoCompilation() = startup(CompilationMode.None())
 
+    // Partial pre-compilation with Baseline Profiles. Represents performance of
+    // a fresh install on a user's device.
     @Test
-    fun startupHot() = startup(StartupMode.HOT)
+    fun startupPartialWithBaselineProfiles() =
+        startup(CompilationMode.Partial(baselineProfileMode = BaselineProfileMode.Require))
 
+    // Partial pre-compilation with some just-in-time (JIT) compilation.
+    // Represents performance after some app usage.
     @Test
-    fun startupWarm() = startup(StartupMode.WARM)
+    fun startupPartialCompilation() = startup(
+        CompilationMode.Partial(
+            baselineProfileMode = BaselineProfileMode.Disable,
+            warmupIterations = 3,
+        ),
+    )
 
-    private fun startup(startupMode: StartupMode) = benchmarkRule.measureRepeated(
-        packageName = "com.bestway.broncoforreddit",
+    // Full pre-compilation. Generally not representative of real user
+    // experience, but can yield more stable performance metrics by removing
+    // noise from JIT compilation within benchmark runs.
+    @Test
+    fun startupFullCompilation() = startup(CompilationMode.Full())
+
+    private fun startup(compilationMode: CompilationMode) = benchmarkRule.measureRepeated(
+        packageName = "com.anmolsahi.broncoforreddit",
         metrics = listOf(StartupTimingMetric()),
-        iterations = 5,
-        startupMode = startupMode,
-        compilationMode = CompilationMode.Partial(BaselineProfileMode.Require),
+        iterations = 10,
+        startupMode = StartupMode.COLD,
+        compilationMode = compilationMode,
     ) {
         pressHome()
         startActivityAndWait()

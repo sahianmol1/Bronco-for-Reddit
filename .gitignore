@@ -14,6 +14,8 @@
 .cxx
 local.properties
 /app/src/release/google-services.json
+/app/src/benchmarkRelease/google-services.json
+/app/src/nonMinifiedRelease/google-services.json
 # Kotlin 2.0
 .kotlin/
 /app/release/app-release.apk
