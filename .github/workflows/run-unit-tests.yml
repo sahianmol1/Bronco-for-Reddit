@@ -28,12 +28,12 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Create Google Services file
-        run: cat /home/runner/work/Bronco-for-Reddit/Bronco-for-Reddit/app/src/release/google-services.json | base64
+        run: touch app/src/release/google-services.json
 
-      - name: Putting Google Services Data
+      - name: Put Google Services Data
         env:
           DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        run: echo $DATA > /home/runner/work/Bronco-for-Reddit/Bronco-for-Reddit/app/src/release/google-services.json
+        run: echo $DATA > app/src/release/google-services.json
 
       - name: Grant execute permission for gradle
         run: chmod +x gradlew

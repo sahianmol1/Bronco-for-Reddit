@@ -1,4 +1,4 @@
-name: Static Kotlin Code Analysis
+name: Static Code Analysis / Detekt
 
 on:
   pull_request:
