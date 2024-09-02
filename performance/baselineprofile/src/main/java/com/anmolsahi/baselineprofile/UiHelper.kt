@@ -45,7 +45,7 @@ private fun UiDevice.flingRedditPosts(context: Context) {
 
 fun UiDevice.flingElementDownUp(element: UiObject2) {
     // Set some margin from the sides to prevent triggering system navigation
-    element.setGestureMargin(displayWidth / 5)
+    element.setGestureMargin(displayWidth / 2)
 
     element.fling(Direction.DOWN)
     waitForIdle()

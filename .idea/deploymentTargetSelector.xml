@@ -25,6 +25,9 @@
       <SelectionState runConfigName="HomeScreenBenchmark">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="generateHomeScreenBaselineProfile()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
