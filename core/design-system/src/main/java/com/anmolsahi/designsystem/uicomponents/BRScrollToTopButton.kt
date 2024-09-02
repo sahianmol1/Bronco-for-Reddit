@@ -23,7 +23,7 @@ import com.anmolsahi.designsystem.R
 fun BRScrollToTopButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     IconButton(
         modifier = modifier
-            .padding(12.dp)
+            .padding(16.dp)
             .background(MaterialTheme.colorScheme.primary, CircleShape)
             .padding(1.dp)
             .background(MaterialTheme.colorScheme.background, CircleShape),

@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-08-25T16:56:06.617673Z">
+        <DropdownSelection timestamp="2024-09-01T13:09:46.178147Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=RZCW410CHGJ" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/anmolsinghsahi/.android/avd/Pixel_8_API_35.avd" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -20,6 +20,9 @@
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="StartupBenchmark">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="HomeScreenBenchmark">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

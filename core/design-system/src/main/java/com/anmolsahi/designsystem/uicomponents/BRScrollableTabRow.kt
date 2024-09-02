@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BRScrollableTabRow(modifier: Modifier = Modifier, tabs: List<String>, pagerState: PagerState) {
+fun BRScrollableTabRow(tabs: List<String>, pagerState: PagerState, modifier: Modifier = Modifier) {
     val coroutineScope = rememberCoroutineScope()
 
     ScrollableTabRow(

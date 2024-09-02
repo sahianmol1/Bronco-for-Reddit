@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -105,11 +106,14 @@ internal fun HomeScreenListings(
     }
 
     Box(
-        modifier.nestedScroll(pullRefreshState.nestedScrollConnection),
+        modifier
+            .nestedScroll(pullRefreshState.nestedScrollConnection),
         contentAlignment = Alignment.BottomEnd,
     ) {
         if (list.isNotEmpty()) {
             LazyColumn(
+                modifier = Modifier
+                    .testTag("home_screen_list"),
                 state = lazyListState,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 contentPadding = WindowInsets.navigationBars.asPaddingValues(),
