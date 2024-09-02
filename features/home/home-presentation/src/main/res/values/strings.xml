@@ -10,4 +10,5 @@
     <string name="controversial">Controversial</string>
     <string name="unavailable">Unavailable</string>
     <string name="post_saved_success">Post Saved Successfully!</string>
+    <string name="content_description_home_screen_list">List of reddit posts. Scroll or swipe to see more posts</string>
 </resources>

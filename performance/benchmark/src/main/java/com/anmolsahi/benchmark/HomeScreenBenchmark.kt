@@ -1,11 +1,13 @@
 package com.anmolsahi.benchmark
 
+import android.content.Context
 import androidx.benchmark.macro.BaselineProfileMode
 import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.FrameTimingMetric
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,6 +17,8 @@ class HomeScreenBenchmark {
 
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
+
+    private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
     // No ahead-of-time (AOT) compilation at all. Represents performance of a
     // fresh install on a user's device if you don't enable Baseline Profiles—
@@ -51,6 +55,6 @@ class HomeScreenBenchmark {
         startupMode = StartupMode.COLD,
         compilationMode = compilationMode,
     ) {
-        this.homeScreenFlow()
+        homeScreenFlow(context)
     }
 }
