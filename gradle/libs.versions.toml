@@ -40,7 +40,7 @@ datastore = "1.1.1"
 androidx-browser = "1.8.0"
 junitJupiter = "5.8.2"
 mockk = "1.13.12"
-moduleGraph = "2.5.0"
+moduleGraph = "2.7.1"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
