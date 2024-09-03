@@ -23,10 +23,14 @@ jobs:
         run: touch app/src/release/google-services.json
 
       - name: Create Google Services file for benchmarkRelease
-        run: touch app/src/benchmarkRelease/google-services.json
+        run: |
+          mkdir app/src/benchmarkRelease
+          touch app/src/benchmarkRelease/google-services.json
 
       - name: Create Google Services file for nonMinifiedRelease
-        run: touch app/src/nonMinifiedRelease/google-services.json
+        run: |
+          mkdir app/src/nonMinifiedRelease
+          touch app/src/nonMinifiedRelease/google-services.json
 
       - name: Put Google Services Data
         env:
