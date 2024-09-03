@@ -1,0 +1,43 @@
+name: Generate Baseline Profiles
+
+on: workflow_dispatch
+
+jobs:
+  generateBaselineProfiles:
+    runs-on: [ ubuntu-latest ]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Create Google Services file for release
+        run: touch app/src/release/google-services.json
+
+      - name: Create Google Services file for benchmarkRelease
+        run: touch app/src/benchmarkRelease/google-services.json
+
+      - name: Create Google Services file for nonMinifiedRelease
+        run: touch app/src/nonMinifiedRelease/google-services.json
+
+      - name: Put Google Services Data
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          echo $DATA > app/src/release/google-services.json
+          echo $DATA > app/src/benchmarkRelease/google-services.json
+          echo $DATA > app/src/nonMinifiedRelease/google-services.json
+
+      - name: Grant execute permission for gradle
+        run: chmod +x gradlew
+
+      - name: Run unit tests gradle task
+        run: ./gradlew generateBaselineProfile
