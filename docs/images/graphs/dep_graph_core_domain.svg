@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128pt" height="44pt" viewBox="0 0 128.1 44">
+    <g class="graph">
+        <path fill="#fff" d="M0 44V0h128.1v44z"/>
+        <g class="node" transform="translate(4 40)">
+            <ellipse cx="60.05" cy="-18" fill="none" stroke="#000" rx="60.05" ry="18"/>
+            <text x="60.05" y="-12.95" font-family="Times,serif" font-size="14" text-anchor="middle">:core:domain</text>
+        </g>
+    </g>
+</svg>

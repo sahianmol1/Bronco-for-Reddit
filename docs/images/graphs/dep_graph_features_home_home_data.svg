@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400pt" height="188pt" viewBox="0 0 400.21 188">
+    <g class="graph">
+        <path fill="#fff" d="M0 188V0h400.21v188z"/>
+        <g class="node" transform="translate(4 184)">
+            <ellipse cx="269.96" cy="-162" fill="none" stroke="#000" rx="108.16" ry="18"/>
+            <text x="269.96" y="-156.95" font-family="Times,serif" font-size="14" text-anchor="middle">:features:home:home-data</text>
+        </g>
+        <g class="node" transform="translate(4 184)">
+            <ellipse cx="120.96" cy="-90" fill="none" stroke="#000" rx="120.96" ry="18"/>
+            <text x="120.96" y="-84.95" font-family="Times,serif" font-size="14" text-anchor="middle">:features:home:home-domain</text>
+        </g>
+        <g stroke="red" stroke-width="2" class="edge">
+            <path fill="none" d="M239.02 39.41c-20.42 9.6-46.42 21.81-68.45 32.16"/>
+            <path fill="red" d="m173.73 73.96-10.54 1.08 7.56-7.42z"/>
+        </g>
+        <g class="node" transform="translate(4 184)">
+            <ellipse cx="269.96" cy="-18" fill="none" stroke="#000" rx="60.05" ry="18"/>
+            <text x="269.96" y="-12.95" font-family="Times,serif" font-size="14" text-anchor="middle">:core:domain</text>
+        </g>
+        <g stroke="#000" class="edge">
+            <path fill="none" d="M273.96 40.41v96.17"/>
+            <path d="m277.46 136.38-3.5 10-3.5-10z"/>
+        </g>
+        <g class="node" transform="translate(4 184)">
+            <ellipse cx="344.96" cy="-90" fill="none" stroke="#000" rx="47.26" ry="18"/>
+            <text x="344.96" y="-84.95" font-family="Times,serif" font-size="14" text-anchor="middle">:core:data</text>
+        </g>
+        <g stroke="#000" class="edge">
+            <path fill="none" d="M292.11 39.95c9.42 8.78 21.07 19.66 31.38 29.28"/>
+            <path d="m325.71 66.52 4.93 9.38-9.7-4.26z"/>
+        </g>
+        <g stroke="red" stroke-width="2" class="edge">
+            <path fill="none" d="M160.27 111.59c21.69 10.19 49.58 23.29 72.31 33.97"/>
+            <path fill="red" d="m232.64 141.72 7.56 7.42-10.54-1.08z"/>
+        </g>
+        <g stroke="#000" class="edge">
+            <path fill="none" d="M331.94 110.88c-9.48 8.85-21.48 20.05-32.1 29.96"/>
+            <path d="m302.5 143.15-9.7 4.27 4.92-9.39z"/>
+        </g>
+    </g>
+</svg>

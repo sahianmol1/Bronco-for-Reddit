@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="384" height="188pt" viewBox="0 0 287.79 188">
+    <g class="graph">
+        <path fill="#fff" d="M0 188V0h287.79v188z"/>
+        <g class="node" transform="translate(4 184)">
+            <ellipse cx="139.89" cy="-162" fill="none" stroke="#000" rx="127.1" ry="18"/>
+            <text x="139.89" y="-156.95" font-family="Times,serif" font-size="14" text-anchor="middle">:features:savedposts:saved-data</text>
+        </g>
+        <g class="node" transform="translate(4 184)">
+            <ellipse cx="139.89" cy="-90" fill="none" stroke="#000" rx="139.89" ry="18"/>
+            <text x="139.89" y="-84.95" font-family="Times,serif" font-size="14" text-anchor="middle">:features:savedposts:saved-domain</text>
+        </g>
+        <g stroke="red" stroke-width="2" class="edge">
+            <path fill="none" d="M143.89 40.3v24.16"/>
+            <path fill="red" d="m147.39 62.87-3.5 10-3.5-10z"/>
+        </g>
+        <g class="node" transform="translate(4 184)">
+            <ellipse cx="139.89" cy="-18" fill="none" stroke="#000" rx="60.05" ry="18"/>
+            <text x="139.89" y="-12.95" font-family="Times,serif" font-size="14" text-anchor="middle">:core:domain</text>
+        </g>
+        <g stroke="red" stroke-width="2" class="edge">
+            <path fill="none" d="M143.89 112.3v24.16"/>
+            <path fill="red" d="m147.39 134.87-3.5 10-3.5-10z"/>
+        </g>
+    </g>
+</svg>

@@ -40,6 +40,7 @@ datastore = "1.1.1"
 androidx-browser = "1.8.0"
 junitJupiter = "5.8.2"
 mockk = "1.13.12"
+moduleGraph = "2.5.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -119,3 +120,4 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+module-graph = { id = "com.jraska.module.graph.assertion", version.ref = "moduleGraph" }
