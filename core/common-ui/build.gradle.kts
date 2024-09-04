@@ -53,7 +53,6 @@ dependencies {
     implementation(libs.compose.tooling.preview)
     implementation(libs.compose.material3)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation(project(":core:design-system"))
     implementation(project(":core:domain"))
 
@@ -80,4 +79,7 @@ dependencies {
 
     // Chrome custom tabs
     implementation(libs.androidx.browser)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }

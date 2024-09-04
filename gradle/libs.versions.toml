@@ -10,6 +10,7 @@ hilt-navigation-compose = "1.2.0"
 hiltWork = "1.2.0"
 junit = "4.13.2"
 kotlinxCoroutinesCore = "1.8.1"
+kotlinxSerializationJson = "1.7.2"
 ktor-client-version = "2.3.12"
 leakcanary-android = "2.14"
 lifecycle-runtime-ktx = "2.8.4"
@@ -65,6 +66,7 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor-client-version" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-client-version" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-client-version" }

@@ -19,6 +19,6 @@ kotlin {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+    implementation(libs.kotlinx.coroutines.core)
     implementation(project(":core:domain"))
 }

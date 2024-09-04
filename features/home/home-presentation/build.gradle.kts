@@ -53,7 +53,7 @@ dependencies {
     implementation(libs.compose.tooling.preview)
     implementation(libs.compose.material3)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation(libs.kotlinx.serialization.json)
 
     // Compose navigation
     implementation(libs.androidx.navigation.compose)
@@ -66,7 +66,6 @@ dependencies {
     implementation(project(":core:common-ui"))
     implementation(project(":core:design-system"))
     implementation(project(":features:home:home-domain"))
-    implementation(project(":features:postdetails:postdetails-presentation"))
 
     // androidx-compose-lifecycle
     implementation(libs.viewmodel.lifecycle)
