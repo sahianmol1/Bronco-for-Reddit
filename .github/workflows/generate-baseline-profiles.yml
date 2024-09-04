@@ -1,6 +1,7 @@
 name: Generate Baseline Profiles
 
-on: workflow_dispatch
+on:
+  workflow_dispatch
 
 jobs:
   generateBaselineProfiles:
@@ -43,5 +44,24 @@ jobs:
       - name: Grant execute permission for gradle
         run: chmod +x gradlew
 
+      # This allows us to build most of what we need without the emulator running and using resources
+      - name: Build app and benchmark
+        run: ./gradlew :performance:benchmark:assembleBenchmark
+
+      # Cleans managed device if previously settle and space currently is not available
+      - name: Clean Gradle Managed Devices
+        run: ./gradlew cleanManagedDevices --unused-only
+
+      # Generates Baseline Profile
       - name: Generate Baseline profile gradle task
-        run: ./gradlew generateBaselineProfile
+        run: ./gradlew generateBaselineProfile -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect" -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile -Pandroid.experimental.testOptions.managedDevices.setupTimeoutMinutes=20 -Dorg.gradle.workers.max=4
+
+      # Create Pull Request
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "Generate baseline profiles"
+          title: "Generate baseline profiles"
+          delete-branch: true
+          reviewers: sahianmol1
+          branch: actions/baseline-profiles
