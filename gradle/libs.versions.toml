@@ -1,5 +1,5 @@
 [versions]
-activity-compose = "1.9.1"
+activity-compose = "1.9.2"
 androidx-junit = "1.2.1"
 coil-compose = "2.7.0"
 core-ktx = "1.13.1"
