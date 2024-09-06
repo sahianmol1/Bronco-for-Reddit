@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.commonui.components.PostComponent
-import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.commonui.utils.animateScrollToTop
@@ -42,8 +40,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun SavedPostsScreen(
-    viewModel: SavedPostsViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
+    viewModel: SavedPostsViewModel = hiltViewModel(),
     onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
     onImageFullScreenIconClick: (List<String>) -> Unit,
     onClick: (postId: String, postUrl: String) -> Unit = { _, _ -> },
@@ -51,11 +49,11 @@ internal fun SavedPostsScreen(
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val uiState by viewModel.savedPostsUiState.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-    )
     val lazyListState = rememberLazyListState()
-    var list by remember { mutableStateOf(emptyList<RedditPostUiModel>()) }
+    val savedPosts by remember { viewModel.savedPosts }.collectAsStateWithLifecycle()
+    val isLoading by remember { viewModel.isLoading }.collectAsStateWithLifecycle(
+        initialValue = false,
+    )
     var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
     var selectedPostId by rememberSaveable { mutableStateOf("") }
     var showErrorDialog by rememberSaveable { mutableStateOf(false) }
@@ -67,24 +65,80 @@ internal fun SavedPostsScreen(
             Modifier
         }
 
-    LaunchedEffect(Unit) {
-        viewModel.getAllSavedPosts()
-        list = uiState.data.orEmpty()
-    }
+    savedPosts
+        .onSuccess { data ->
+            showErrorDialog = false
+            if (data.isEmpty()) {
+                if (isLoading) {
+                    BRLinearProgressIndicator()
+                } else {
+                    EmptySavedPostsComponent()
+                }
+            } else {
+                LazyColumn(
+                    modifier = modifier,
+                    state = lazyListState,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    contentPadding = WindowInsets.systemBars.asPaddingValues(),
+                ) {
+                    itemsIndexed(
+                        items = data,
+                        key = { _, item -> item.id },
+                        contentType = { _, _ -> "reddit_post" },
+                    ) { index, item ->
+                        PostComponent(
+                            modifier = Modifier
+                                .padding(
+                                    bottom = if (index == data.lastIndex) {
+                                        68.dp
+                                    } else {
+                                        0.dp
+                                    },
+                                ),
+                            redditPostUiModel = item,
+                            onClick = onClick,
+                            onSaveIconClick = onSaveIconClick,
+                            shouldShowDeleteIcon = true,
+                            onDeleteIconClick = { redditPostId ->
+                                selectedPostId = redditPostId
+                                showDeletePostAlertDialog = true
+                            },
+                            onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
+                            onVideoFullScreenIconClick = onVideoFullScreenIconClick,
+                            onImageFullScreenIconClick = onImageFullScreenIconClick,
+                        )
+                    }
+                }
 
-    LaunchedEffect(uiState.data) {
-        val newItemAdded = uiState.data.orEmpty().size > list.size
-        list = uiState.data.orEmpty()
-        if (newItemAdded) {
-            lazyListState.animateScrollToTop()
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.BottomEnd,
+                ) {
+                    AnimatedVisibility(
+                        visible = lazyListState.canScrollBackward && data.isNotEmpty(),
+                        enter = slideInFromBottom(),
+                        exit = slideOutToBottom(),
+                    ) {
+                        BRScrollToTopButton(
+                            modifier = scrollToTopButtonModifier,
+                        ) {
+                            coroutineScope.launch { lazyListState.animateScrollToTop() }
+                        }
+                    }
+                }
+            }
         }
-    }
-
-    LaunchedEffect(uiState.errorMessage) {
-        if (!uiState.errorMessage.isNullOrBlank()) {
-            showErrorDialog = true
+        .onFailure { throwable ->
+            if (showErrorDialog) {
+                ErrorDialog(
+                    errorMessage = throwable.localizedMessage.orEmpty(),
+                    onConfirmButtonClick = {
+                        showErrorDialog = false
+                    },
+                )
+            }
         }
-    }
 
     if (showDeletePostAlertDialog) {
         DeleteSavedPostAlertDialog(
@@ -96,76 +150,5 @@ internal fun SavedPostsScreen(
                 showDeletePostAlertDialog = false
             },
         )
-    }
-
-    if (list.isNotEmpty()) {
-        LazyColumn(
-            modifier = modifier,
-            state = lazyListState,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = WindowInsets.systemBars.asPaddingValues(),
-        ) {
-            itemsIndexed(
-                items = list,
-                key = { _, item -> item.id },
-                contentType = { _, _ -> "reddit_post" },
-            ) { index, item ->
-                PostComponent(
-                    modifier = Modifier
-                        .padding(
-                            bottom = if (index == list.lastIndex) {
-                                68.dp
-                            } else {
-                                0.dp
-                            },
-                        ),
-                    redditPostUiModel = item,
-                    onClick = onClick,
-                    onSaveIconClick = onSaveIconClick,
-                    shouldShowDeleteIcon = true,
-                    onDeleteIconClick = { redditPostId ->
-                        selectedPostId = redditPostId
-                        showDeletePostAlertDialog = true
-                    },
-                    onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
-                    onVideoFullScreenIconClick = onVideoFullScreenIconClick,
-                    onImageFullScreenIconClick = onImageFullScreenIconClick,
-                )
-            }
-        }
-    }
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.BottomEnd,
-    ) {
-        AnimatedVisibility(
-            visible = lazyListState.canScrollBackward && list.isNotEmpty(),
-            enter = slideInFromBottom(),
-            exit = slideOutToBottom(),
-        ) {
-            BRScrollToTopButton(
-                modifier = scrollToTopButtonModifier,
-            ) {
-                coroutineScope.launch { lazyListState.animateScrollToTop() }
-            }
-        }
-    }
-
-    // Show error screen
-    if (showErrorDialog) {
-        ErrorDialog(
-            errorMessage = uiState.errorMessage.orEmpty(),
-            onConfirmButtonClick = {
-                showErrorDialog = false
-            },
-        )
-    }
-
-    if (uiState.isLoading) {
-        BRLinearProgressIndicator()
-    } else if (list.isEmpty()) {
-        EmptySavedPostsComponent()
     }
 }

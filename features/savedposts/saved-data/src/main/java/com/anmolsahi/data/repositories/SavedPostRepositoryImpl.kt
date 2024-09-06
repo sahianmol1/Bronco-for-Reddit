@@ -7,7 +7,7 @@ import com.anmolsahi.data.mappers.fromDomain
 import com.anmolsahi.domain.model.SavedPost
 import com.anmolsahi.domain.repositories.SavedPostRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 internal class SavedPostRepositoryImpl(
     private val dao: SavedPostDao,
@@ -17,9 +17,16 @@ internal class SavedPostRepositoryImpl(
         const val TAG = "SavedPostRepositoryImpl"
     }
 
-    override fun getAllSavedPosts(): Flow<List<SavedPost>> = flow {
-        emit(dao.getAllSavedPosts().asDomain().reversed())
-    }
+    override fun getAllSavedPosts(): Flow<Result<List<SavedPost>>> = dao.getAllSavedPosts()
+        .map { entityList ->
+            runCatching {
+                entityList.map { it.asDomain() }
+            }.map { domainList ->
+                Result.success(domainList)
+            }.getOrElse { throwable ->
+                Result.failure(throwable)
+            }
+        }
 
     override suspend fun insertPost(post: SavedPost) {
         dao.insertPost(post.fromDomain())
