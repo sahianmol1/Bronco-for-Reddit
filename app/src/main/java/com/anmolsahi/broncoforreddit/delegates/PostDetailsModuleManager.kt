@@ -1,6 +1,7 @@
 package com.anmolsahi.broncoforreddit.delegates
 
-import com.anmolsahi.domain.model.SavedPost
+import com.anmolsahi.broncoforreddit.utils.asSavedPost
+import com.anmolsahi.broncoforreddit.utils.toRedditPost
 import com.anmolsahi.domain.models.RedditPost
 import com.anmolsahi.domain.repositories.HomeRepository
 import com.anmolsahi.domain.repositories.SavedPostRepository
@@ -53,19 +54,4 @@ class PostDetailsModuleManager @Inject constructor(
         // Toggle the post saved status in the saved posts database
         return savedPostsRepository.togglePostSavedStatusInDb(post?.asSavedPost())
     }
-
-    private fun SavedPost.toRedditPost(): RedditPost = RedditPost(
-        id = id,
-        subName = subName,
-        title = title,
-        description = description,
-        upVotes = upVotes,
-        comments = comments,
-        imageUrls = imageUrls,
-        postUrl = postUrl,
-        videoUrl = videoUrl,
-        gifUrl = gifUrl,
-        author = author,
-        after = after,
-    )
 }

@@ -1,7 +1,7 @@
 package com.anmolsahi.broncoforreddit.delegates
 
+import com.anmolsahi.broncoforreddit.utils.asSavedPost
 import com.anmolsahi.domain.delegate.HomeDelegate
-import com.anmolsahi.domain.model.SavedPost
 import com.anmolsahi.domain.models.RedditPost
 import com.anmolsahi.domain.repositories.SavedPostRepository
 import javax.inject.Inject
@@ -19,18 +19,3 @@ class HomeModuleManager @Inject constructor(
         }
     }
 }
-
-fun RedditPost.asSavedPost() = SavedPost(
-    id = this.id,
-    subName = this.subName,
-    title = this.title,
-    description = this.description,
-    upVotes = this.upVotes,
-    comments = this.comments,
-    imageUrls = this.imageUrls,
-    postUrl = this.postUrl,
-    videoUrl = this.videoUrl,
-    gifUrl = this.gifUrl,
-    author = this.author,
-    after = this.after,
-)
