@@ -1,5 +1,5 @@
 ## High level module structure
-![Dependency graph](/docs/images/coremodulegraph/high_level_module_graph.p)
+![Dependency graph](/docs/images/coremodulegraph/high_level_module_graph.png)
 
 This is the high level multi module dependency graph. For detailed dependencies checkout [module wise dependency graph](/docs/images/graphs).
 
