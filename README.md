@@ -3,4 +3,4 @@
 
 This is the high level multi module dependency graph. For detailed dependencies checkout [module wise dependency graph](/docs/images/graphs).
 
-^*^ There are a lot more features. Currently showing only 3 for the sake of simplicity.
+* There are a lot more features. Currently showing only 3 for the sake of simplicity.
