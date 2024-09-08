@@ -17,16 +17,8 @@ internal class SavedPostRepositoryImpl(
         const val TAG = "SavedPostRepositoryImpl"
     }
 
-    override fun getAllSavedPosts(): Flow<Result<List<SavedPost>>> = dao.getAllSavedPosts()
-        .map { entityList ->
-            runCatching {
-                entityList.map { it.asDomain() }
-            }.map { domainList ->
-                Result.success(domainList)
-            }.getOrElse { throwable ->
-                Result.failure(throwable)
-            }
-        }
+    override fun getAllSavedPosts(): Flow<List<SavedPost>> =
+        dao.getAllSavedPosts().map { data -> data.asDomain() }
 
     override suspend fun insertPost(post: SavedPost) {
         dao.insertPost(post.fromDomain())
