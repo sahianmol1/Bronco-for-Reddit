@@ -1,5 +1,6 @@
 package com.anmolsahi.broncoforreddit.delegates
 
+import com.anmolsahi.broncoforreddit.utils.asSavedPost
 import com.anmolsahi.domain.delegate.SearchDelegate
 import com.anmolsahi.domain.model.asRedditPost
 import com.anmolsahi.domain.models.RedditPost
