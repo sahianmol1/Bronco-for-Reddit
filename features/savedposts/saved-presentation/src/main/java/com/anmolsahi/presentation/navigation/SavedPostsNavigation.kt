@@ -10,7 +10,7 @@ import com.anmolsahi.designsystem.utils.slideInFromBottom
 import com.anmolsahi.designsystem.utils.slideInFromLeft
 import com.anmolsahi.designsystem.utils.slideOutToLeft
 import com.anmolsahi.designsystem.utils.slideOutToTop
-import com.anmolsahi.presentation.ui.SavedPostsScreen
+import com.anmolsahi.presentation.ui.screens.savedposts.SavedPostsView
 
 fun NavGraphBuilder.savedPostsNavGraph(navController: NavHostController) {
     composable(
@@ -45,8 +45,8 @@ fun NavGraphBuilder.savedPostsNavGraph(navController: NavHostController) {
         },
     ) {
         val isSavedPostsFlow = true
-        SavedPostsScreen(
-            onClick = { postId, postUrl ->
+        SavedPostsView(
+            onPostClick = { postId, postUrl ->
                 navController.navigate(
                     Destinations.PostDetailsDestinations.route +
                         "?post-id=$postId&is-from-saved-posts=$isSavedPostsFlow&post_url=$postUrl",

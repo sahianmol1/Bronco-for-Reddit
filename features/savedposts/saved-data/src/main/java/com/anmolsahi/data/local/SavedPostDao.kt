@@ -3,6 +3,7 @@ package com.anmolsahi.data.local
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SavedPostDao {
@@ -10,7 +11,7 @@ interface SavedPostDao {
     suspend fun insertPost(post: SavedPostEntity)
 
     @Query("SELECT * FROM saved_post")
-    suspend fun getAllSavedPosts(): List<SavedPostEntity>
+    fun getAllSavedPosts(): Flow<List<SavedPostEntity>>
 
     @Query("SELECT * FROM saved_post WHERE id=:id")
     suspend fun getSavedPostById(id: String): SavedPostEntity?
