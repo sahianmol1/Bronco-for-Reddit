@@ -39,7 +39,7 @@ uiTooling = "1.7.0"
 work_version = "2.9.1"
 datastore = "1.1.1"
 androidx-browser = "1.8.0"
-junitJupiter = "5.8.2"
+junitJupiter = "5.11.0"
 mockk = "1.13.12"
 moduleGraph = "2.7.1"
 
