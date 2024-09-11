@@ -59,6 +59,11 @@ dependencies {
     // Mockk
     testImplementation(libs.bundles.mockk)
 
+    // Turbine
+    testImplementation(libs.turbine) {
+        because("A lightweight library for testing kotlin flows")
+    }
+
     // Compose navigation
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
