@@ -1,12 +1,14 @@
 package com.anmolsahi.presentation.ui
 
 import android.util.Log
+import app.cash.turbine.test
 import com.anmolsahi.commonui.mappers.asUiModel
 import com.anmolsahi.domain.delegate.SearchDelegate
 import com.anmolsahi.domain.model.RecentSearch
 import com.anmolsahi.domain.models.RedditPost
 import com.anmolsahi.domain.repositories.SearchRepository
 import com.anmolsahi.domain.usecase.SearchRedditUseCase
+import com.anmolsahi.presentation.ui.searchscreen.SearchViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.clearStaticMockk
 import io.mockk.coEvery
@@ -183,20 +185,14 @@ internal class SearchViewModelTest {
     }
 
     @Test
-    fun `when recent searches are fetched from db, then update the ui state`() = runTest {
-        // GIVEN
-        coEvery { repository.getRecentSearches() } answers {
-            flow { emit(getRecentSearches()) }
+    fun `when recent searches are fetched from db, then update viewmodel#recentSearches`() =
+        runTest {
+            coEvery { repository.getRecentSearches() } returns flow { emit(getRecentSearches()) }
+            viewModel.recentSearches().test {
+                skipItems(1)
+                assertEquals(getRecentSearches(), awaitItem())
+            }
         }
-
-        // WHEN
-        viewModel.getAllRecentSearches()
-        advanceUntilIdle()
-
-        // THEN
-        val actualViewState = viewModel.searchDataUiState.value.recentSearches
-        assertEquals(getRecentSearches(), actualViewState)
-    }
 
     @Test
     fun `when clear all recent searches action is performed, then delete them from db`() = runTest {

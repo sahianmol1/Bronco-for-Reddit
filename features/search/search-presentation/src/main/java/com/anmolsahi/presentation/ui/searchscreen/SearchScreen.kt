@@ -1,4 +1,4 @@
-package com.anmolsahi.presentation.ui
+package com.anmolsahi.presentation.ui.searchscreen
 
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
@@ -61,15 +61,15 @@ import com.anmolsahi.designsystem.utils.slideInFromTop
 import com.anmolsahi.designsystem.utils.slideOutToBottom
 import com.anmolsahi.designsystem.utils.slideOutToTop2
 import com.anmolsahi.domain.model.RecentSearch
-import com.anmolsahi.presentation.ui.SearchScreenDefaults.LOADING_INDICATOR
-import com.anmolsahi.presentation.ui.SearchScreenDefaults.QUICK_RESULTS_FOOTER
-import com.anmolsahi.presentation.ui.SearchScreenDefaults.QUICK_RESULTS_HEADER
-import com.anmolsahi.presentation.ui.SearchScreenDefaults.QUICK_SEARCH_POST
-import com.anmolsahi.presentation.ui.SearchScreenDefaults.QUICK_SEARCH_RESULTS_MAX_ITEMS
-import com.anmolsahi.presentation.ui.SearchScreenDefaults.REDDIT_POST
-import com.anmolsahi.presentation.ui.SearchScreenDefaults.SEARCH_BAR_HEIGHT
 import com.anmolsahi.presentation.ui.components.QuickSearchPostComponent
 import com.anmolsahi.presentation.ui.components.RecentSearchesComponent
+import com.anmolsahi.presentation.ui.searchscreen.SearchScreenDefaults.LOADING_INDICATOR
+import com.anmolsahi.presentation.ui.searchscreen.SearchScreenDefaults.QUICK_RESULTS_FOOTER
+import com.anmolsahi.presentation.ui.searchscreen.SearchScreenDefaults.QUICK_RESULTS_HEADER
+import com.anmolsahi.presentation.ui.searchscreen.SearchScreenDefaults.QUICK_SEARCH_POST
+import com.anmolsahi.presentation.ui.searchscreen.SearchScreenDefaults.QUICK_SEARCH_RESULTS_MAX_ITEMS
+import com.anmolsahi.presentation.ui.searchscreen.SearchScreenDefaults.REDDIT_POST
+import com.anmolsahi.presentation.ui.searchscreen.SearchScreenDefaults.SEARCH_BAR_HEIGHT
 import com.anmolsahi.presentation.utils.shouldShowQuickResults
 import com.anmolsahi.presentation.utils.shouldShowRecentSearches
 import com.anmolsahi.searchpresentation.R
@@ -97,11 +97,14 @@ internal fun SearchScreen(
     val context = LocalContext.current
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    val uiState by viewModel.searchDataUiState.collectAsStateWithLifecycle()
-    val searchedValue by viewModel.searchQuery.collectAsStateWithLifecycle()
+
+    val uiState by remember { viewModel.searchDataUiState }.collectAsStateWithLifecycle()
+    val recentSearches by remember { viewModel.recentSearches() }.collectAsStateWithLifecycle()
+    val searchedValue by remember { viewModel.searchQuery }.collectAsStateWithLifecycle()
+    val searchBarActive by remember { viewModel.searchBarActive }.collectAsStateWithLifecycle()
+
     var showErrorDialog by remember { mutableStateOf(false) }
     val searchedItemsList by remember(uiState) { mutableStateOf(uiState.searchedData.orEmpty()) }
-    val searchBarActive by viewModel.searchBarActive.collectAsStateWithLifecycle()
     val configuration = LocalConfiguration.current
 
     val scrollToTopButtonModifier =
@@ -115,10 +118,6 @@ internal fun SearchScreen(
         targetValue = if (searchedItemsList.isNotEmpty() && !searchBarActive) 16.dp else 0.dp,
         label = "searchBarPadding",
     )
-
-    LaunchedEffect(Unit) {
-        viewModel.getAllRecentSearches()
-    }
 
     LaunchedEffect(uiState.errorMessage) {
         if (!uiState.errorMessage.isNullOrEmpty()) {
@@ -241,6 +240,7 @@ internal fun SearchScreen(
             ) {
                 SearchBarContentView(
                     uiState = uiState,
+                    recentSearches = recentSearches,
                     searchedValue = searchedValue,
                     onSeeAllResultsClick = {
                         viewModel.saveRecentSearch(searchedValue)
@@ -297,6 +297,7 @@ internal fun SearchScreen(
 @Composable
 private fun SearchBarContentView(
     uiState: SearchDataUiModel,
+    recentSearches: List<RecentSearch>,
     searchedValue: String,
     onSeeAllResultsClick: () -> Unit,
     onViewAllPostsClick: () -> Unit,
@@ -308,13 +309,13 @@ private fun SearchBarContentView(
     val searchedData by remember(uiState) { mutableStateOf(uiState.searchedData.orEmpty()) }
 
     AnimatedVisibility(
-        shouldShowRecentSearches(searchedValue, uiState),
+        shouldShowRecentSearches(searchedValue, uiState, recentSearches),
         enter = fadeIn(),
         exit = fadeOut(),
     ) {
         RecentSearchesComponent(
             modifier = Modifier,
-            recentSearches = uiState.recentSearches,
+            recentSearches = recentSearches,
             onItemClick = onRecentItemClick,
             onDeleteItemClick = onRecentItemDeleteClick,
             onClearAllClick = onClearAllRecentSearchesClick,
