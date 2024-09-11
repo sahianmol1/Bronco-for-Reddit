@@ -99,7 +99,7 @@ internal fun SearchScreen(
     val coroutineScope = rememberCoroutineScope()
 
     val uiState by remember { viewModel.searchDataUiState }.collectAsStateWithLifecycle()
-    val recentSearches by remember { viewModel.recentSearches() }.collectAsStateWithLifecycle()
+    val recentSearches by remember { viewModel.getRecentSearches() }.collectAsStateWithLifecycle()
     val searchedValue by remember { viewModel.searchQuery }.collectAsStateWithLifecycle()
     val searchBarActive by remember { viewModel.searchBarActive }.collectAsStateWithLifecycle()
 

@@ -185,12 +185,12 @@ internal class SearchViewModelTest {
     }
 
     @Test
-    fun `when recent searches are fetched from db, then update viewmodel#recentSearches`() =
+    fun `when recent searches are fetched from db, then update viewmodel#getRecentSearches`() =
         runTest {
-            coEvery { repository.getRecentSearches() } returns flow { emit(getRecentSearches()) }
-            viewModel.recentSearches().test {
+            coEvery { repository.getRecentSearches() } returns flow { emit(getGetRecentSearches()) }
+            viewModel.getRecentSearches().test {
                 skipItems(1)
-                assertEquals(getRecentSearches(), awaitItem())
+                assertEquals(getGetRecentSearches(), awaitItem())
             }
         }
 
@@ -237,7 +237,7 @@ internal class SearchViewModelTest {
         isSaved = false,
     )
 
-    private fun getRecentSearches() = listOf(
+    private fun getGetRecentSearches() = listOf(
         RecentSearch("dog"),
         RecentSearch("cat"),
     )

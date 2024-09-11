@@ -66,7 +66,7 @@ internal class SearchViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun recentSearches(): StateFlow<List<RecentSearch>> = repository.getRecentSearches()
+    fun getRecentSearches(): StateFlow<List<RecentSearch>> = repository.getRecentSearches()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
@@ -179,13 +179,3 @@ internal data class SearchDataUiModel(
     val searchedData: List<RedditPostUiModel>? = null,
     val errorMessage: String? = null,
 )
-
-sealed interface SearchDataUiState {
-    data object Loading : SearchDataUiState
-    data class Success(
-        val recentSearches: List<RecentSearch>,
-        val searchedData: List<RedditPostUiModel>,
-    )
-
-    data class Failure(val error: String)
-}
