@@ -7,7 +7,7 @@ My motivation for developing this project was to gain hands-on experience with m
 🚧 Currently, the app is in its MVP stage, and I plan to add more features in future updates. These updates will further demonstrate the scalability, testability, and flexibility of this architecture. 🚧
 
 ## High level multi module architecture
-![Dependency graph](/docs/images/coremodulegraph/high_level_module_graph.png)
+![Dependency graph](/docs/images/coremodulegraph/high_level_module_graph_2.png)
 
 <sup>*</sup> There are many features. Currently showing only 3 for the sake of simplicity.
 
