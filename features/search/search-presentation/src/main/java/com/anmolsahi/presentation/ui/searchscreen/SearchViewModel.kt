@@ -1,4 +1,4 @@
-package com.anmolsahi.presentation.ui
+package com.anmolsahi.presentation.ui.searchscreen
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -14,6 +14,7 @@ import com.anmolsahi.domain.usecase.SearchRedditUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -23,6 +24,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -41,13 +43,16 @@ internal class SearchViewModel @Inject constructor(
     }
 
     private val _searchDataUiState = MutableStateFlow(SearchDataUiModel())
-    val searchDataUiState: StateFlow<SearchDataUiModel> = _searchDataUiState.asStateFlow()
+    val searchDataUiState: StateFlow<SearchDataUiModel>
+        get() = _searchDataUiState.asStateFlow()
 
     private val _searchQuery = MutableStateFlow("")
-    val searchQuery = _searchQuery.asStateFlow()
+    val searchQuery: StateFlow<String>
+        get() = _searchQuery.asStateFlow()
 
     private val _searchBarActive = MutableStateFlow(false)
-    val searchBarActive = _searchBarActive.asStateFlow()
+    val searchBarActive: StateFlow<Boolean>
+        get() = _searchBarActive.asStateFlow()
 
     init {
         @Suppress("OPT_IN_USAGE")
@@ -61,6 +66,13 @@ internal class SearchViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
+    fun getRecentSearches(): StateFlow<List<RecentSearch>> = repository.getRecentSearches()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = emptyList(),
+        )
+
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
         if (_searchQuery.value.isEmpty()) {
@@ -72,21 +84,6 @@ internal class SearchViewModel @Inject constructor(
 
     fun updateSearchBarActive(active: Boolean) {
         _searchBarActive.value = active
-    }
-
-    fun getAllRecentSearches() {
-        repository.getRecentSearches()
-            .onStart { _searchDataUiState.update { it.copy(isLoading = true) } }
-            .onEach { recentSearches ->
-                _searchDataUiState.update {
-                    it.copy(
-                        isLoading = false,
-                        recentSearches = recentSearches,
-                    )
-                }
-            }
-            .catch { throwable -> handleException(throwable) }
-            .launchIn(viewModelScope)
     }
 
     fun onDeleteItemClick(recentSearch: RecentSearch) {

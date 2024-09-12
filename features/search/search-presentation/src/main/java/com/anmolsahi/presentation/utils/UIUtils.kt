@@ -1,11 +1,16 @@
 package com.anmolsahi.presentation.utils
 
 import com.anmolsahi.commonui.models.RedditPostUiModel
-import com.anmolsahi.presentation.ui.SearchDataUiModel
+import com.anmolsahi.domain.model.RecentSearch
+import com.anmolsahi.presentation.ui.searchscreen.SearchDataUiModel
 
-internal fun shouldShowRecentSearches(searchedValue: String, uiState: SearchDataUiModel): Boolean {
+internal fun shouldShowRecentSearches(
+    searchedValue: String,
+    uiState: SearchDataUiModel,
+    recentSearches: List<RecentSearch>,
+): Boolean {
     return searchedValue.isEmpty() &&
-        uiState.recentSearches.isNotEmpty() &&
+        recentSearches.isNotEmpty() &&
         !uiState.isLoading &&
         uiState.errorMessage.isNullOrEmpty()
 }

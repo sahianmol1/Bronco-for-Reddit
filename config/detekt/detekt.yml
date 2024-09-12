@@ -618,6 +618,7 @@ style:
       - '0'
       - '1'
       - '2'
+      - '5_000'
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: true
     ignoreLocalVariableDeclaration: false

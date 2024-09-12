@@ -16,13 +16,7 @@
       <SelectionState runConfigName="Generate Baseline Profile">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="BaselineProfileGenerator">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="StartupBenchmark">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="HomeScreenBenchmark">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

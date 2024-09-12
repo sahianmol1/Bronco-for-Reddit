@@ -10,7 +10,7 @@ import com.anmolsahi.designsystem.utils.slideInFromBottom
 import com.anmolsahi.designsystem.utils.slideInFromLeft
 import com.anmolsahi.designsystem.utils.slideOutToLeft
 import com.anmolsahi.designsystem.utils.slideOutToTop
-import com.anmolsahi.presentation.ui.SearchScreen
+import com.anmolsahi.presentation.ui.searchscreen.SearchScreen
 
 fun NavGraphBuilder.searchNavGraph(navController: NavHostController) {
     composable(
