@@ -1,6 +1,5 @@
 package com.anmolsahi.presentation.ui.screens.home
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +30,6 @@ import com.anmolsahi.designsystem.utils.showToast
 import com.anmolsahi.homepresentation.R
 import com.anmolsahi.presentation.ui.components.HomeScreenListings
 
-@OptIn(ExperimentalFoundationApi::class)
 // TODO: refactor this, probably need to use strategy design pattern
 @SuppressWarnings("CyclomaticComplexMethod")
 @Composable
@@ -44,62 +43,52 @@ internal fun HomeScreen(
     val context = LocalContext.current
     val lifecycleEvent = rememberLifecycleEvent()
 
-    val hotPosts = homeViewModel.hotPosts.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-    )
+    val hotPosts by remember { homeViewModel.hotPosts }.collectAsStateWithLifecycle()
 
-    val newPosts = homeViewModel.newPosts.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-    )
+    val newPosts by remember { homeViewModel.newPosts }.collectAsStateWithLifecycle()
 
-    val topPosts = homeViewModel.topPosts.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-    )
+    val topPosts by remember { homeViewModel.topPosts }.collectAsStateWithLifecycle()
 
-    val bestPosts = homeViewModel.bestPosts.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-    )
+    val bestPosts by remember { homeViewModel.bestPosts }.collectAsStateWithLifecycle()
 
-    val risingPosts = homeViewModel.risingPosts.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-    )
+    val risingPosts by remember { homeViewModel.risingPosts }.collectAsStateWithLifecycle()
 
-    val controversialPosts = homeViewModel.controversialPosts.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-    )
+    val controversialPosts by remember {
+        homeViewModel.controversialPosts
+    }.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        if (hotPosts.value.data == null) {
+        if (hotPosts.data == null) {
             homeViewModel.getHotPosts()
         } else {
             homeViewModel.getHotPosts(silentUpdate = true)
         }
 
-        if (newPosts.value.data == null) {
+        if (newPosts.data == null) {
             homeViewModel.getNewPosts()
         } else {
             homeViewModel.getNewPosts(silentUpdate = true)
         }
 
-        if (topPosts.value.data == null) {
+        if (topPosts.data == null) {
             homeViewModel.getTopPosts()
         } else {
             homeViewModel.getTopPosts(silentUpdate = true)
         }
 
-        if (bestPosts.value.data == null) {
+        if (bestPosts.data == null) {
             homeViewModel.getBestPosts()
         } else {
             homeViewModel.getBestPosts(silentUpdate = true)
         }
 
-        if (risingPosts.value.data == null) {
+        if (risingPosts.data == null) {
             homeViewModel.getRisingsPosts()
         } else {
             homeViewModel.getRisingsPosts(silentUpdate = true)
         }
 
-        if (controversialPosts.value.data == null) {
+        if (controversialPosts.data == null) {
             homeViewModel.getControversialPosts()
         } else {
             homeViewModel.getControversialPosts(silentUpdate = true)
@@ -152,7 +141,7 @@ internal fun HomeScreen(
             when (page) {
                 HomePage.HOT -> {
                     HomeScreenListings(
-                        uiState = hotPosts.value,
+                        uiState = hotPosts,
                         onClick = onClick,
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
@@ -180,7 +169,7 @@ internal fun HomeScreen(
 
                 HomePage.NEW -> {
                     HomeScreenListings(
-                        uiState = newPosts.value,
+                        uiState = newPosts,
                         onClick = onClick,
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
@@ -208,7 +197,7 @@ internal fun HomeScreen(
 
                 HomePage.TOP -> {
                     HomeScreenListings(
-                        uiState = topPosts.value,
+                        uiState = topPosts,
                         onClick = onClick,
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
@@ -236,7 +225,7 @@ internal fun HomeScreen(
 
                 HomePage.BEST -> {
                     HomeScreenListings(
-                        uiState = bestPosts.value,
+                        uiState = bestPosts,
                         onClick = onClick,
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
@@ -264,7 +253,7 @@ internal fun HomeScreen(
 
                 HomePage.RISING -> {
                     HomeScreenListings(
-                        uiState = risingPosts.value,
+                        uiState = risingPosts,
                         onClick = onClick,
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
@@ -292,7 +281,7 @@ internal fun HomeScreen(
 
                 HomePage.CONTROVERSIAL -> {
                     HomeScreenListings(
-                        uiState = controversialPosts.value,
+                        uiState = controversialPosts,
                         onClick = onClick,
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,

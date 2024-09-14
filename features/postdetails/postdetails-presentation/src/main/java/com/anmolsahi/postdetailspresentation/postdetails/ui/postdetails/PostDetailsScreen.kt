@@ -74,9 +74,7 @@ internal fun PostDetailsScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val lazyListState = rememberLazyListState()
-    val uiState by viewModel.postDetailsUiState.collectAsStateWithLifecycle(
-        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
-    )
+    val uiState by remember { viewModel.postDetailsUiState }.collectAsStateWithLifecycle()
     var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
     var showErrorDialog by rememberSaveable { mutableStateOf(false) }
     val comments by remember(uiState) { mutableStateOf(uiState.postComments.orEmpty()) }
