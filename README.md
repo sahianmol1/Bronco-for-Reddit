@@ -1,5 +1,5 @@
 <div align="center">
-  <a href=""><img width="300" src="https://www.svgrepo.com/show/34625/trot-horse-outline.svg"></a>
+  <a href=""><img width="200" src="https://www.svgrepo.com/show/34625/trot-horse-outline.svg"></a>
   <h1>Bronco for Reddit</h1>
 </div>
 
