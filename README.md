@@ -16,9 +16,6 @@
 [![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 <br>
 
-
-## Bronco for Reddit
-
 **Bronco for Reddit** is a free, open-source Reddit client for Android that showcases the use of a **multi-module, clean code MVVM architecture**. It is an offline-first app built using Jetpack Compose and adheres to Material 3 guidelines.
 
 Reddit has an undocumented feature that provides data from their servers as JSON feed. Bronco uses this public JSON feed instead of the official APIs, which makes it suitable only for accessing public data from Reddit's servers.
