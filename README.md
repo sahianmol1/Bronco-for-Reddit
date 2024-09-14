@@ -1,4 +1,14 @@
-# Bronco for Reddit
+<div align="center">
+  <a href=""><img width="300" src="https://www.svgrepo.com/show/34625/trot-horse-outline.svg"></a>
+  <h2>Bronco for Reddit</h2>
+</div>
+
+<p align="center">
+  <a href="https://www.android.com"><img src="https://forthebadge.com/images/badges/built-for-android.svg"></a>
+  <a href="https://www.github.com/starry-shivam"><img src="https://forthebadge.com/images/badges/built-with-love.svg"/></a>
+</p>
+
+## Bronco for Reddit
 
 **Bronco for Reddit** is a free, open-source Reddit client for Android that showcases the use of a **multi-module, clean code MVVM architecture**. It is an offline-first app built using Jetpack Compose and adheres to Material 3 guidelines.
 
