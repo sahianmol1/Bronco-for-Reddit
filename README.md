@@ -23,6 +23,6 @@ This architecture leverages the [Dependency Inversion principle](https://en.wiki
 
 ## ✅ Unit tests
 I have added unit tests for the `:search` module. checkout the unit test here.
-<br>Unit test for the other modules are work in progress 🚧.
+🚧 <br>Unit test for the other modules are work in progress 🚧.
 
 If you find this project valuable or if you like the app, please give it a star ⭐️! Your support means a lot and motivates me to continue improving the project. 🙏
