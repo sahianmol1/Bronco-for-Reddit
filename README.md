@@ -9,7 +9,7 @@
 </p>
 
 <p align = "center">
-  <img src="https://github.com/sahianmol1/Bronco-for-Reddit/actions/workflows/run-tests/badge.svg" />
+  <img src="https://github.com/sahianmol1/Bronco-for-Reddit/actions/workflows/run-tests.yml/badge.svg" />
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" />
   <img src="https://img.shields.io/github/stars/sahianmol1/Bronco-for-Reddit?logo=star" />
 <!-- ![Android-CI Actions Status](https://github.com/sahianmol1/Bronco-for-Reddit/actions/workflows/run-tests/badge.svg)
