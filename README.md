@@ -9,9 +9,12 @@
 </p>
 
 <p align = "center">
-![Android-CI Actions Status](https://github.com/sahianmol1/Bronco-for-Reddit/actions/workflows/run-tests/badge.svg)
+  <img src="https://github.com/sahianmol1/Bronco-for-Reddit/actions/workflows/run-tests/badge.svg" />
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg" />
+  <img src="https://img.shields.io/github/stars/sahianmol1/Bronco-for-Reddit?logo=star" />
+<!-- ![Android-CI Actions Status](https://github.com/sahianmol1/Bronco-for-Reddit/actions/workflows/run-tests/badge.svg)
 ![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-![GitHub Repo stars](https://img.shields.io/github/stars/sahianmol1/Bronco-for-Reddit?logo=star)
+![GitHub Repo stars](https://img.shields.io/github/stars/sahianmol1/Bronco-for-Reddit?logo=star) -->
 </p>
 
 **Bronco for Reddit** is a free, open-source Reddit client for Android that showcases the use of a **multi-module, clean code MVVM architecture**. It is an offline-first app built using Jetpack Compose and adheres to Material 3 guidelines.
