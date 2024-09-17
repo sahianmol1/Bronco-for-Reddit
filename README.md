@@ -8,7 +8,7 @@
   <a href="https://www.github.com/sahianmol1"><img src="https://forthebadge.com/images/badges/built-with-love.svg"/></a>
 </p>
 
-[![Android-CI Actions Status](https://github.com/sahianmol1/Bronco-for-Reddit/workflows/Run tests/badge.svg)](https://github.com/sahianmol1/Bronco-for-Reddit/actions)
+[![Android-CI Actions Status](https://github.com/sahianmol1/Bronco-for-Reddit/workflows/run-tests/badge.svg)](https://github.com/sahianmol1/Bronco-for-Reddit/actions)
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![GitHub Repo stars](https://img.shields.io/github/stars/sahianmol1/Bronco-for-Reddit?logo=star)
 [![Offline First](https://img.shields.io/badge/offline%20first-%F0%9F%93%B2-8A2BE)]()
