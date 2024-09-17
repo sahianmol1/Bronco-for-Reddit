@@ -17,11 +17,9 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/sahianmol1/Bronco-for-Reddit?logo=star) -->
 </p>
 
-**Bronco for Reddit** is a free, open-source Reddit client for Android that showcases the use of a **multi-module, clean code MVVM architecture**. It is an offline-first app built using Jetpack Compose and adheres to Material 3 guidelines.
+**Bronco for Reddit** is a free, open-source Reddit client for Android built to demonstarte the use of **multi-module, clean code MVVM architecture** in Android projects. It is an offline-first app built using Jetpack Compose and adheres to Material 3 guidelines.
 
 Reddit has an undocumented feature that provides data from their servers as JSON feed. Bronco uses this public JSON feed instead of the official APIs, which makes it suitable only for accessing public data from Reddit's servers.
-
-My motivation for developing this project was to gain hands-on experience with multi-module architecture in Android. Many tutorials and sample apps I found were either too simplistic (lacking real-world complexity) or overly complicated. Bronco for Reddit strikes a balance, making it an ideal project for learning about clean code architecture.
 
 🚧 Currently, the app is in its MVP stage, and I plan to add more features in future updates. These updates will further demonstrate the scalability, testability, and flexibility of this architecture. 🚧
 
