@@ -225,9 +225,4 @@ internal class SearchViewModelTest {
         description = "description 1",
         isSaved = false,
     )
-
-    private fun getGetRecentSearches() = listOf(
-        RecentSearch("dog"),
-        RecentSearch("cat"),
-    )
 }
