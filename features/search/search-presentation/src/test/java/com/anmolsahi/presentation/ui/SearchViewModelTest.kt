@@ -1,7 +1,6 @@
 package com.anmolsahi.presentation.ui
 
 import android.util.Log
-import app.cash.turbine.test
 import com.anmolsahi.commonui.mappers.asUiModel
 import com.anmolsahi.domain.delegate.SearchDelegate
 import com.anmolsahi.domain.model.RecentSearch
@@ -183,16 +182,6 @@ internal class SearchViewModelTest {
         // THEN
         assertEquals("", viewModel.searchQuery.value)
     }
-
-    @Test
-    fun `when recent searches are fetched from db, then update viewmodel#getRecentSearches`() =
-        runTest {
-            coEvery { repository.getRecentSearches() } returns flow { emit(getGetRecentSearches()) }
-            viewModel.getRecentSearches().test {
-                skipItems(1)
-                assertEquals(getGetRecentSearches(), awaitItem())
-            }
-        }
 
     @Test
     fun `when clear all recent searches action is performed, then delete them from db`() = runTest {

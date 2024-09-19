@@ -54,6 +54,13 @@ internal class SearchViewModel @Inject constructor(
     val searchBarActive: StateFlow<Boolean>
         get() = _searchBarActive.asStateFlow()
 
+    val recentSearches: StateFlow<List<RecentSearch>> = repository.getRecentSearches()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = emptyList(),
+        )
+
     init {
         @Suppress("OPT_IN_USAGE")
         _searchQuery
@@ -65,13 +72,6 @@ internal class SearchViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
     }
-
-    fun getRecentSearches(): StateFlow<List<RecentSearch>> = repository.getRecentSearches()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = emptyList(),
-        )
 
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query

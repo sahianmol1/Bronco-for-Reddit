@@ -98,7 +98,7 @@ internal fun SearchScreen(
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
     val uiState by remember { viewModel.searchDataUiState }.collectAsStateWithLifecycle()
-    val recentSearches by remember { viewModel.getRecentSearches() }.collectAsStateWithLifecycle()
+    val recentSearches by remember { viewModel.recentSearches }.collectAsStateWithLifecycle()
     val searchedValue by remember { viewModel.searchQuery }.collectAsStateWithLifecycle()
     val searchBarActive by remember { viewModel.searchBarActive }.collectAsStateWithLifecycle()
     var showErrorDialog by remember { mutableStateOf(false) }
