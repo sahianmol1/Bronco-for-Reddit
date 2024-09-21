@@ -4,10 +4,11 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
+import com.anmolsahi.data.local.dao.contract.IHomePostDao
 import com.anmolsahi.data.local.entities.RisingPostEntity
 
 @Dao
-interface RisingPostDao {
+interface RisingPostDao : IHomePostDao {
     @Query("SELECT * FROM rising_post")
     suspend fun getAllRedditPosts(): List<RisingPostEntity>
 
