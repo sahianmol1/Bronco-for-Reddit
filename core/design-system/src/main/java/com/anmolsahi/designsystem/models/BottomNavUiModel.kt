@@ -9,4 +9,5 @@ data class BottomNavUiModel(
     val title: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
+    val onClick: () -> Unit,
 )

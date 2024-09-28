@@ -12,7 +12,7 @@ import com.anmolsahi.designsystem.utils.slideOutToLeft
 import com.anmolsahi.designsystem.utils.slideOutToTop
 import com.anmolsahi.presentation.ui.searchscreen.SearchScreen
 
-fun NavGraphBuilder.searchNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.searchNavGraph(navController: NavHostController, resetScroll: Boolean) {
     composable(
         route = Destinations.SearchScreenDestination.route,
         enterTransition = {

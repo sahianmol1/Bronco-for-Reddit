@@ -12,16 +12,23 @@ import com.anmolsahi.presentation.navigation.savedPostsNavGraph
 import com.anmolsahi.presentation.navigation.searchNavGraph
 
 @Composable
-fun BRNavHost(modifier: Modifier = Modifier, navController: NavHostController) {
+fun BRNavHost(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    resetScrollSearch: Boolean,
+    resetScrollAbout: Boolean,
+    resetScrollSaved: Boolean,
+    resetScrollHome: Boolean,
+) {
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = HomeScreenDestination.route,
     ) {
-        homeNavGraph(navController = navController)
-        searchNavGraph(navController = navController)
-        savedPostsNavGraph(navController = navController)
-        aboutUsNavGraph()
+        homeNavGraph(navController = navController, resetScroll = resetScrollHome)
+        searchNavGraph(navController = navController, resetScroll = resetScrollSearch)
+        savedPostsNavGraph(navController = navController, resetScroll = resetScrollSaved)
+        aboutUsNavGraph(resetScroll = resetScrollAbout)
         postDetailsNavGraph(navController = navController)
     }
 }

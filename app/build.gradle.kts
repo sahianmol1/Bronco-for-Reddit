@@ -140,4 +140,7 @@ dependencies {
 
     // Datastore
     implementation(libs.bundles.datastore)
+
+    // Extended icons
+    implementation(libs.extended.icons)
 }

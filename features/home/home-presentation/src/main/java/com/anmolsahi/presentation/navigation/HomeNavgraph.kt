@@ -12,7 +12,7 @@ import com.anmolsahi.designsystem.utils.slideOutToLeft
 import com.anmolsahi.designsystem.utils.slideOutToTop
 import com.anmolsahi.presentation.ui.screens.home.HomeScreen
 
-fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.homeNavGraph(navController: NavHostController, resetScroll: Boolean) {
     composable(
         route = Destinations.HomeScreenDestination.route,
         enterTransition = {
@@ -45,6 +45,7 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
         },
     ) {
         HomeScreen(
+            resetScroll = resetScroll,
             onClick = { postId, postUrl ->
                 navController.navigate(
                     Destinations.PostDetailsDestinations.route +

@@ -43,6 +43,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.anmolsahi.commonui.components.NewPostsAvailableComponent
 import com.anmolsahi.commonui.components.PostComponent
+import com.anmolsahi.commonui.utils.ScrollHelper
 import com.anmolsahi.commonui.utils.animateScrollToTop
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.designsystem.uicomponents.BRScrollToTopButton
@@ -67,10 +68,13 @@ internal fun HomeScreenListings(
     onPullRefresh: () -> Unit,
     onImageFullScreenIconClick: (List<String>) -> Unit,
     modifier: Modifier = Modifier,
+    resetScroll: Boolean,
+    postResetScroll: () -> Unit,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
     val coroutineScope = rememberCoroutineScope()
     val lazyListState = rememberLazyListState()
+    lazyListState.ScrollHelper(resetScroll = resetScroll, postResetScroll)
     val list by remember(uiState) { mutableStateOf(uiState.data.orEmpty()) }
     val configuration = LocalConfiguration.current
     val scrollToTopButtonModifier =

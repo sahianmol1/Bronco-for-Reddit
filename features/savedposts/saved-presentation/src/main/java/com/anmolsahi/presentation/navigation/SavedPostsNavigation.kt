@@ -12,7 +12,7 @@ import com.anmolsahi.designsystem.utils.slideOutToLeft
 import com.anmolsahi.designsystem.utils.slideOutToTop
 import com.anmolsahi.presentation.ui.screens.savedposts.SavedPostsView
 
-fun NavGraphBuilder.savedPostsNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.savedPostsNavGraph(navController: NavHostController, resetScroll: Boolean) {
     composable(
         route = Destinations.SavedScreenDestination.route,
         enterTransition = {

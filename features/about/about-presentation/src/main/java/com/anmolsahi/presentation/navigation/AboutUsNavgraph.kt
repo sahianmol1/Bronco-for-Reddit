@@ -11,7 +11,7 @@ import com.anmolsahi.designsystem.utils.slideOutToTop
 import com.anmolsahi.presentation.ui.AboutUsScreen
 
 @SuppressWarnings("UnusedParameter")
-fun NavGraphBuilder.aboutUsNavGraph() {
+fun NavGraphBuilder.aboutUsNavGraph(resetScroll: Boolean) {
     composable(
         route = Destinations.AboutUsDestination.route,
         enterTransition = {
