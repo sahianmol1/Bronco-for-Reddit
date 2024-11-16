@@ -1,5 +1,10 @@
 package com.anmolsahi.commonui.utils
 
+import androidx.compose.foundation.ScrollState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.net.URLEncoder
@@ -23,3 +28,14 @@ private fun encodeUrl(url: String): String = URLEncoder.encode(
     /* enc = */
     StandardCharsets.UTF_8.toString(),
 )
+
+@Composable
+fun ScrollState.ScrollHelper(resetScroll: Boolean, postScroll: () -> Unit) {
+    val coroutineScope = rememberCoroutineScope()
+    LaunchedEffect(key1 = resetScroll) {
+        if (resetScroll) {
+            withContext(coroutineScope.coroutineContext) { animateScrollTo(0) }
+            postScroll()
+        }
+    }
+}

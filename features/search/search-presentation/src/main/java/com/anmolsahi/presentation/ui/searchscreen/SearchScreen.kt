@@ -49,6 +49,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.commonui.utils.ErrorDialog
+import com.anmolsahi.commonui.utils.ScrollHelper
 import com.anmolsahi.commonui.utils.animateScrollToTop
 import com.anmolsahi.commonui.utils.isScrollingUp
 import com.anmolsahi.commonui.utils.scrollToTop
@@ -88,6 +89,8 @@ private object SearchScreenDefaults {
 @SuppressWarnings("CyclomaticComplexMethod")
 @Composable
 internal fun SearchScreen(
+    resetScroll: Boolean,
+    postScroll: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
     onPostClick: (postId: String, postUrl: String) -> Unit,
@@ -104,6 +107,7 @@ internal fun SearchScreen(
     var showErrorDialog by remember { mutableStateOf(false) }
     val searchedItemsList by remember(uiState) { mutableStateOf(uiState.searchedData.orEmpty()) }
     val configuration = LocalConfiguration.current
+    lazyListState.ScrollHelper(resetScroll = resetScroll, postScroll)
 
     val scrollToTopButtonModifier =
         if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {

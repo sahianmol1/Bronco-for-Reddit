@@ -35,6 +35,7 @@ import com.anmolsahi.presentation.ui.components.HomeScreenListings
 @Composable
 internal fun HomeScreen(
     resetScroll: Boolean,
+    postScroll: () -> Unit,
     modifier: Modifier = Modifier,
     onClick: (postId: String, postUrl: String) -> Unit,
     onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
@@ -143,6 +144,7 @@ internal fun HomeScreen(
                 HomePage.HOT -> {
                     HomeScreenListings(
                         resetScroll = resetScroll,
+                        postResetScroll = postScroll,
                         uiState = hotPosts,
                         onClick = onClick,
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
@@ -166,7 +168,6 @@ internal fun HomeScreen(
                             }
                         },
                         onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
-                        postResetScroll = {},
                     )
                 }
 
@@ -196,7 +197,7 @@ internal fun HomeScreen(
                         },
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         resetScroll = resetScroll,
-                        postResetScroll = {},
+                        postResetScroll = postScroll,
                     )
                 }
 
@@ -226,7 +227,7 @@ internal fun HomeScreen(
                         },
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         resetScroll = resetScroll,
-                        postResetScroll = {},
+                        postResetScroll = postScroll,
                     )
                 }
 
@@ -256,7 +257,7 @@ internal fun HomeScreen(
                         },
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         resetScroll = resetScroll,
-                        postResetScroll = {},
+                        postResetScroll = postScroll,
                     )
                 }
 
@@ -286,7 +287,7 @@ internal fun HomeScreen(
                         },
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         resetScroll = resetScroll,
-                        postResetScroll = {},
+                        postResetScroll = postScroll,
                     )
                 }
 
@@ -319,7 +320,7 @@ internal fun HomeScreen(
                         },
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         resetScroll = resetScroll,
-                        postResetScroll = {},
+                        postResetScroll = postScroll,
                     )
                 }
 

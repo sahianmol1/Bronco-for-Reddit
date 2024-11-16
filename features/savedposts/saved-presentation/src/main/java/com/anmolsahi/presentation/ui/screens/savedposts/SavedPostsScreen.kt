@@ -30,6 +30,7 @@ import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
+import com.anmolsahi.commonui.utils.ScrollHelper
 import com.anmolsahi.commonui.utils.animateScrollToTop
 import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
@@ -41,6 +42,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun SavedPostsView(
+    resetScroll: Boolean,
+    postScroll: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SavedPostsViewModel = hiltViewModel(),
     onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
@@ -52,6 +55,8 @@ internal fun SavedPostsView(
 
     SavedPostsView(
         uiState = uiState,
+        resetScroll = resetScroll,
+        postScroll = postScroll,
         modifier = modifier,
         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
         onImageFullScreenIconClick = onImageFullScreenIconClick,
@@ -66,6 +71,8 @@ internal fun SavedPostsView(
 @Composable
 fun SavedPostsView(
     uiState: SavedPostsUiState,
+    resetScroll: Boolean,
+    postScroll: () -> Unit,
     modifier: Modifier = Modifier,
     onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
     onImageFullScreenIconClick: (List<String>) -> Unit,
@@ -83,6 +90,8 @@ fun SavedPostsView(
         is SavedPostsUiState.Success -> {
             SavedPostsListView(
                 savedPostsList = uiState.savedPosts,
+                resetScroll = resetScroll,
+                postScroll = postScroll,
                 modifier = modifier,
                 onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                 onImageFullScreenIconClick = onImageFullScreenIconClick,
@@ -108,6 +117,8 @@ fun SavedPostsView(
 @Composable
 fun SavedPostsListView(
     savedPostsList: List<RedditPostUiModel>,
+    resetScroll: Boolean,
+    postScroll: () -> Unit,
     onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
     onImageFullScreenIconClick: (List<String>) -> Unit,
     onPostClick: (postId: String, postUrl: String) -> Unit,
@@ -126,6 +137,7 @@ fun SavedPostsListView(
             Configuration.ORIENTATION_LANDSCAPE -> Modifier.navigationBarsPadding()
             else -> Modifier
         }
+    lazyListState.ScrollHelper(resetScroll = resetScroll, postScroll)
 
     when (savedPostsList.isEmpty()) {
         true -> {

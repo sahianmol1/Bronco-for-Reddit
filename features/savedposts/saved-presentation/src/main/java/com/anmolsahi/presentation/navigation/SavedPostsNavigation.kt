@@ -12,7 +12,11 @@ import com.anmolsahi.designsystem.utils.slideOutToLeft
 import com.anmolsahi.designsystem.utils.slideOutToTop
 import com.anmolsahi.presentation.ui.screens.savedposts.SavedPostsView
 
-fun NavGraphBuilder.savedPostsNavGraph(navController: NavHostController, resetScroll: Boolean) {
+fun NavGraphBuilder.savedPostsNavGraph(
+    navController: NavHostController,
+    resetScroll: Boolean,
+    postScroll: () -> Unit,
+) {
     composable(
         route = Destinations.SavedScreenDestination.route,
         enterTransition = {
@@ -46,6 +50,8 @@ fun NavGraphBuilder.savedPostsNavGraph(navController: NavHostController, resetSc
     ) {
         val isSavedPostsFlow = true
         SavedPostsView(
+            resetScroll = resetScroll,
+            postScroll = postScroll,
             onPostClick = { postId, postUrl ->
                 navController.navigate(
                     Destinations.PostDetailsDestinations.route +

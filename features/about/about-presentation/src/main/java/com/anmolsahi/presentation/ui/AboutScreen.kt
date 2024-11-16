@@ -36,10 +36,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.anmolsahi.aboutpresentation.R
 import com.anmolsahi.commonui.chrometabs.openAsCustomTab
+import com.anmolsahi.commonui.utils.ScrollHelper
 import com.anmolsahi.designsystem.theme.BRTheme
 
 @Composable
-fun AboutUsScreen(modifier: Modifier = Modifier) {
+fun AboutUsScreen(
+    resetScroll: Boolean = false,
+    postScroll: () -> Unit = {},
+    modifier: Modifier = Modifier,
+) {
     val scrollState = rememberScrollState()
     val configuration = LocalConfiguration.current
     val context = LocalContext.current
@@ -49,6 +54,7 @@ fun AboutUsScreen(modifier: Modifier = Modifier) {
         Configuration.ORIENTATION_LANDSCAPE -> modifier.navigationBarsPadding()
         else -> modifier
     }
+    scrollState.ScrollHelper(resetScroll = resetScroll, postScroll)
 
     Column(
         modifier = topLevelModifier

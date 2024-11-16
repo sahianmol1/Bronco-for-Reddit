@@ -7,7 +7,7 @@ import androidx.navigation.NavOptionsBuilder
 import com.anmolsahi.designsystem.utils.Destinations
 
 class BottomNavActionCoordinator(private val navController: NavHostController) {
-    val navigateToHomeNavBar: () -> Unit = {
+    fun navigateToHomeNavBar() {
         navController.navigate(
             Destinations.HomeScreenDestination.route,
             builder = { navConfig(navController) },
@@ -21,14 +21,14 @@ class BottomNavActionCoordinator(private val navController: NavHostController) {
         )
     }
 
-    val navigateToSavedPostsNavBar: () -> Unit = {
+    fun navigateToSavedPostsNavBar() {
         navController.navigate(
             Destinations.SavedScreenDestination.route,
             builder = { navConfig(navController) },
         )
     }
 
-    val navigateToAboutNavBar: () -> Unit = {
+    fun navigateToAboutNavBar() {
         navController.navigate(
             Destinations.AboutUsDestination.route,
             builder = { navConfig(navController) },

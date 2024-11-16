@@ -79,7 +79,7 @@ fun Bronco(
                         ) {
                             viewModel.resetScrollHome()
                         } else {
-                            bottomTabsNavigator.navigateToHomeNavBar
+                            bottomTabsNavigator.navigateToHomeNavBar()
                         }
                     },
                 ),
@@ -109,7 +109,7 @@ fun Bronco(
                         ) {
                             viewModel.resetScrollSaved()
                         } else {
-                            bottomTabsNavigator.navigateToSavedPostsNavBar
+                            bottomTabsNavigator.navigateToSavedPostsNavBar()
                         }
                     },
                 ),
@@ -124,7 +124,7 @@ fun Bronco(
                         ) {
                             viewModel.resetScrollAbout()
                         } else {
-                            bottomTabsNavigator.navigateToAboutNavBar
+                            bottomTabsNavigator.navigateToAboutNavBar()
                         }
                     },
                 ),
@@ -169,6 +169,10 @@ fun Bronco(
                 resetScrollAbout = resetScrollAbout,
                 resetScrollSaved = resetScrollSaved,
                 resetScrollHome = resetScrollHome,
+                postScrollSearch = viewModel::postScrollSearch,
+                postScrollAbout = viewModel::postScrollAbout,
+                postScrollSaved = viewModel::postScrollSaved,
+                postScrollHome = viewModel::postScrollHome,
             )
         }
     }

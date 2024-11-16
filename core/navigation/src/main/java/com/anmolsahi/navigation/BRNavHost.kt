@@ -16,19 +16,35 @@ fun BRNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     resetScrollSearch: Boolean,
+    postScrollSearch: () -> Unit,
     resetScrollAbout: Boolean,
+    postScrollAbout: () -> Unit,
     resetScrollSaved: Boolean,
+    postScrollSaved: () -> Unit,
     resetScrollHome: Boolean,
+    postScrollHome: () -> Unit,
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = HomeScreenDestination.route,
     ) {
-        homeNavGraph(navController = navController, resetScroll = resetScrollHome)
-        searchNavGraph(navController = navController, resetScroll = resetScrollSearch)
-        savedPostsNavGraph(navController = navController, resetScroll = resetScrollSaved)
-        aboutUsNavGraph(resetScroll = resetScrollAbout)
+        homeNavGraph(
+            navController = navController,
+            resetScroll = resetScrollHome,
+            postScroll = postScrollHome,
+        )
+        searchNavGraph(
+            navController = navController,
+            resetScroll = resetScrollSearch,
+            postScroll = postScrollSearch,
+        )
+        savedPostsNavGraph(
+            navController = navController,
+            resetScroll = resetScrollSaved,
+            postScroll = postScrollSaved,
+        )
+        aboutUsNavGraph(resetScroll = resetScrollAbout, postScroll = postScrollAbout)
         postDetailsNavGraph(navController = navController)
     }
 }

@@ -48,4 +48,28 @@ class MainViewModel : ViewModel() {
             _resetScrollAbout.emit(true)
         }
     }
+
+    fun postScrollHome() {
+        viewModelScope.launch {
+            _resetScrollHome.emit(false)
+        }
+    }
+
+    fun postScrollSearch() {
+        viewModelScope.launch {
+            _resetScrollSearch.emit(false)
+        }
+    }
+
+    fun postScrollSaved() {
+        viewModelScope.launch {
+            _resetScrollSaved.emit(false)
+        }
+    }
+
+    fun postScrollAbout() {
+        viewModelScope.launch {
+            _resetScrollAbout.emit(false)
+        }
+    }
 }

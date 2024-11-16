@@ -12,7 +12,11 @@ import com.anmolsahi.designsystem.utils.slideOutToLeft
 import com.anmolsahi.designsystem.utils.slideOutToTop
 import com.anmolsahi.presentation.ui.searchscreen.SearchScreen
 
-fun NavGraphBuilder.searchNavGraph(navController: NavHostController, resetScroll: Boolean) {
+fun NavGraphBuilder.searchNavGraph(
+    navController: NavHostController,
+    resetScroll: Boolean,
+    postScroll: () -> Unit,
+) {
     composable(
         route = Destinations.SearchScreenDestination.route,
         enterTransition = {
@@ -62,6 +66,8 @@ fun NavGraphBuilder.searchNavGraph(navController: NavHostController, resetScroll
                         "?image-list=${imageList.serialize()}",
                 )
             },
+            resetScroll = resetScroll,
+            postScroll = postScroll,
         )
     }
 }

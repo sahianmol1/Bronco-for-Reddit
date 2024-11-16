@@ -8,7 +8,7 @@ import com.anmolsahi.commonui.R
 fun shareRedditPost(postUrl: String, context: Context) {
     val sendIntent: Intent = Intent().apply {
         action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, "Check out this post on reddit: https://www.reddit.com$postUrl")
+        putExtra(Intent.EXTRA_TEXT, "https://www.reddit.com$postUrl")
         type = "text/plain"
     }
 
