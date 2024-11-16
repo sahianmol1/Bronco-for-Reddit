@@ -1,11 +1,8 @@
 package com.anmolsahi.presentation.ui.screens.savedposts
 
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
@@ -31,14 +28,9 @@ import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.commonui.utils.ScrollHelper
-import com.anmolsahi.commonui.utils.animateScrollToTop
 import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
-import com.anmolsahi.designsystem.uicomponents.BRScrollToTopButton
-import com.anmolsahi.designsystem.utils.slideInFromBottom
-import com.anmolsahi.designsystem.utils.slideOutToBottom
 import com.anmolsahi.presentation.ui.components.EmptySavedPostsComponent
-import kotlinx.coroutines.launch
 
 @Composable
 internal fun SavedPostsView(
@@ -176,24 +168,6 @@ fun SavedPostsListView(
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                     )
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.BottomEnd,
-            ) {
-                AnimatedVisibility(
-                    visible = lazyListState.canScrollBackward && savedPostsList.isNotEmpty(),
-                    enter = slideInFromBottom(),
-                    exit = slideOutToBottom(),
-                ) {
-                    BRScrollToTopButton(
-                        modifier = scrollToTopButtonModifier,
-                    ) {
-                        coroutineScope.launch { lazyListState.animateScrollToTop() }
-                    }
                 }
             }
 

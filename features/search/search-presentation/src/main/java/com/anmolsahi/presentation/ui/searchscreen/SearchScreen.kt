@@ -50,16 +50,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.commonui.utils.ScrollHelper
-import com.anmolsahi.commonui.utils.animateScrollToTop
 import com.anmolsahi.commonui.utils.isScrollingUp
 import com.anmolsahi.commonui.utils.scrollToTop
 import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
-import com.anmolsahi.designsystem.uicomponents.BRScrollToTopButton
 import com.anmolsahi.designsystem.uicomponents.BRSearchBar
-import com.anmolsahi.designsystem.utils.slideInFromBottom
 import com.anmolsahi.designsystem.utils.slideInFromTop
-import com.anmolsahi.designsystem.utils.slideOutToBottom
 import com.anmolsahi.designsystem.utils.slideOutToTop2
 import com.anmolsahi.domain.model.RecentSearch
 import com.anmolsahi.presentation.ui.components.QuickSearchPostComponent
@@ -74,7 +70,6 @@ import com.anmolsahi.presentation.ui.searchscreen.SearchScreenDefaults.SEARCH_BA
 import com.anmolsahi.presentation.utils.shouldShowQuickResults
 import com.anmolsahi.presentation.utils.shouldShowRecentSearches
 import com.anmolsahi.searchpresentation.R
-import kotlinx.coroutines.launch
 
 private object SearchScreenDefaults {
     const val QUICK_RESULTS_HEADER = "quick_results_header"
@@ -274,24 +269,6 @@ internal fun SearchScreen(
                 uiState.errorMessage.orEmpty(),
                 onConfirmButtonClick = { showErrorDialog = false },
             )
-        }
-    }
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.BottomEnd,
-    ) {
-        AnimatedVisibility(
-            visible = lazyListState.canScrollBackward && searchedItemsList.isNotEmpty(),
-            enter = slideInFromBottom(),
-            exit = slideOutToBottom(),
-        ) {
-            BRScrollToTopButton(
-                modifier = scrollToTopButtonModifier,
-            ) {
-                coroutineScope.launch { lazyListState.animateScrollToTop() }
-            }
         }
     }
 }

@@ -46,14 +46,11 @@ import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.commonui.utils.ScrollHelper
 import com.anmolsahi.commonui.utils.animateScrollToTop
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
-import com.anmolsahi.designsystem.uicomponents.BRScrollToTopButton
 import com.anmolsahi.designsystem.utils.slideInFromBottom
 import com.anmolsahi.designsystem.utils.slideInFromTop
-import com.anmolsahi.designsystem.utils.slideOutToBottom
 import com.anmolsahi.designsystem.utils.slideOutToTop
 import com.anmolsahi.homepresentation.R
 import com.anmolsahi.presentation.ui.screens.home.PostsUiState
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -191,18 +188,6 @@ internal fun HomeScreenListings(
                     onClick = onPullRefresh,
                 )
                 Spacer(modifier = Modifier.weight(1f))
-            }
-        }
-
-        AnimatedVisibility(
-            visible = lazyListState.canScrollBackward,
-            enter = slideInFromBottom(),
-            exit = slideOutToBottom(),
-        ) {
-            BRScrollToTopButton(
-                modifier = scrollToTopButtonModifier,
-            ) {
-                coroutineScope.launch { lazyListState.animateScrollToTop() }
             }
         }
 
