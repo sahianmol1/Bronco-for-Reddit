@@ -1,6 +1,5 @@
 package com.anmolsahi.presentation.ui.searchscreen
 
-import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -17,7 +16,6 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
@@ -33,7 +31,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -94,7 +91,6 @@ internal fun SearchScreen(
 ) {
     val context = LocalContext.current
     val lazyListState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
     val uiState by remember { viewModel.searchDataUiState }.collectAsStateWithLifecycle()
     val recentSearches by remember { viewModel.recentSearches }.collectAsStateWithLifecycle()
     val searchedValue by remember { viewModel.searchQuery }.collectAsStateWithLifecycle()
@@ -103,13 +99,6 @@ internal fun SearchScreen(
     val searchedItemsList by remember(uiState) { mutableStateOf(uiState.searchedData.orEmpty()) }
     val configuration = LocalConfiguration.current
     lazyListState.ScrollHelper(resetScroll = resetScroll, postScroll)
-
-    val scrollToTopButtonModifier =
-        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Modifier.navigationBarsPadding()
-        } else {
-            Modifier
-        }
 
     val searchBarPadding by animateDpAsState(
         targetValue = if (searchedItemsList.isNotEmpty() && !searchBarActive) 16.dp else 0.dp,

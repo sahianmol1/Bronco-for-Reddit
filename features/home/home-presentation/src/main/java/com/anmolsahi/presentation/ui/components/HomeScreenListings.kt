@@ -1,6 +1,5 @@
 package com.anmolsahi.presentation.ui.components
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -30,14 +28,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -69,17 +65,9 @@ internal fun HomeScreenListings(
     postResetScroll: () -> Unit,
 ) {
     val pullRefreshState = rememberPullToRefreshState()
-    val coroutineScope = rememberCoroutineScope()
     val lazyListState = rememberLazyListState()
     lazyListState.ScrollHelper(resetScroll = resetScroll, postResetScroll)
     val list by remember(uiState) { mutableStateOf(uiState.data.orEmpty()) }
-    val configuration = LocalConfiguration.current
-    val scrollToTopButtonModifier =
-        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Modifier.navigationBarsPadding()
-        } else {
-            Modifier
-        }
 
     LaunchedEffect(uiState.isPullRefreshLoading) {
         if (!uiState.isPullRefreshLoading) {
