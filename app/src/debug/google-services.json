@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "dummy",
         "android_client_info": {
-          "package_name": "com.anmolsahi.broncoforreddit"
+          "package_name": "com.anmolsahi.broncoforreddit.debug"
         }
       },
       "oauth_client": [],

@@ -37,6 +37,10 @@ android {
                 "proguard-rules.pro",
             )
         }
+        debug {
+            applicationIdSuffix = ".debug"
+            resValue("string", "app_name", "Bronco Debug")
+        }
         create("benchmark") {
             initWith(buildTypes.getByName("release"))
             signingConfig = signingConfigs.getByName("debug")
