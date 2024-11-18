@@ -31,7 +31,7 @@ This architecture leverages the [Dependency Inversion principle](https://en.wiki
 
 **Delegates** are used for [module to module communication](https://developer.android.com/topic/modularization/patterns#communication). Delegates are powerful because they enable class-level runtime polymorphism, promoting the use of [composition](https://en.wikipedia.org/wiki/Composition_over_inheritance) for code reuse. Checkout [/app/delegates](app/src/main/java/com/anmolsahi/broncoforreddit/delegates).
 
-<sup>*</sup> There are many features. Currently showing only 3 for the sake of simplicity.
+<sup>*</sup> There are many features. Showing only 3 in the diagram for the sake of simplicity.
 
 ## ✅ Unit tests
 I have added unit tests for the `:search` module. checkout the unit test here.
