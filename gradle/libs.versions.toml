@@ -40,7 +40,7 @@ work_version = "2.10.0"
 datastore = "1.1.1"
 androidx-browser = "1.8.0"
 junitJupiter = "5.11.0"
-mockk = "1.13.12"
+mockk = "1.13.13"
 moduleGraph = "2.7.1"
 turbine = "1.1.0"
 
