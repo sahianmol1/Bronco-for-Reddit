@@ -151,7 +151,7 @@ internal fun HomeScreen(
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         refreshData = { homeViewModel.getHotPosts(shouldRefreshData = true) },
                         onPullRefresh = {
-                            homeViewModel.onPostsAvailableChipClick(HomePage.HOT)
+                            homeViewModel.onPullRefresh(HomePage.HOT)
                         },
                         loadMoreData = { nextPageKey ->
                             nextPageKey?.let {
@@ -193,7 +193,7 @@ internal fun HomeScreen(
                         onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         onPullRefresh = {
-                            homeViewModel.onPostsAvailableChipClick(HomePage.NEW)
+                            homeViewModel.onPullRefresh(HomePage.NEW)
                         },
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         resetScroll = resetScroll,
@@ -223,7 +223,7 @@ internal fun HomeScreen(
                         onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         onPullRefresh = {
-                            homeViewModel.onPostsAvailableChipClick(HomePage.TOP)
+                            homeViewModel.onPullRefresh(HomePage.TOP)
                         },
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         resetScroll = resetScroll,
@@ -253,7 +253,7 @@ internal fun HomeScreen(
                         onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         onPullRefresh = {
-                            homeViewModel.onPostsAvailableChipClick(HomePage.BEST)
+                            homeViewModel.onPullRefresh(HomePage.BEST)
                         },
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         resetScroll = resetScroll,
@@ -283,7 +283,7 @@ internal fun HomeScreen(
                         onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         onPullRefresh = {
-                            homeViewModel.onPostsAvailableChipClick(HomePage.RISING)
+                            homeViewModel.onPullRefresh(HomePage.RISING)
                         },
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         resetScroll = resetScroll,
@@ -316,7 +316,7 @@ internal fun HomeScreen(
                         onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
                         onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         onPullRefresh = {
-                            homeViewModel.onPostsAvailableChipClick(HomePage.CONTROVERSIAL)
+                            homeViewModel.onPullRefresh(HomePage.CONTROVERSIAL)
                         },
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                         resetScroll = resetScroll,

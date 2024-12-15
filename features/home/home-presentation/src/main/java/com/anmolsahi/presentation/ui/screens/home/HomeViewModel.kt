@@ -295,23 +295,19 @@ internal class HomeViewModel @Inject constructor(
              * and decide if force refresh is needed
              */
             listOf(
-                Triple(prefsRepository.getHotPostsTimestamp(), _hotPosts, ::getHotPosts),
-                Triple(prefsRepository.getTopPostsTimestamp(), _topPosts, ::getTopPosts),
-                Triple(prefsRepository.getNewPostsTimestamp(), _newPosts, ::getNewPosts),
-                Triple(prefsRepository.getBestPostsTimestamp(), _bestPosts, ::getBestPosts),
-                Triple(prefsRepository.getRisingPostsTimestamp(), _risingPosts, ::getRisingsPosts),
-                Triple(
-                    prefsRepository.getControversialPostsTimestamp(),
-                    _controversialPosts,
-                    ::getControversialPosts,
-                ),
-            ).forEach { (timestampFlow, uiStateFlow, refreshFunction) ->
-                checkAndForceRefreshPosts(timestampFlow, uiStateFlow, refreshFunction)
+                Pair(prefsRepository.getHotPostsTimestamp(), _hotPosts),
+                Pair(prefsRepository.getTopPostsTimestamp(), _topPosts),
+                Pair(prefsRepository.getNewPostsTimestamp(), _newPosts),
+                Pair(prefsRepository.getBestPostsTimestamp(), _bestPosts),
+                Pair(prefsRepository.getRisingPostsTimestamp(), _risingPosts),
+                Pair(prefsRepository.getControversialPostsTimestamp(), _controversialPosts),
+            ).forEach { (timestampFlow, uiStateFlow) ->
+                checkAndForceRefreshPosts(timestampFlow, uiStateFlow)
             }
         }
     }
 
-    fun onPostsAvailableChipClick(homePage: HomePage) {
+    fun onPullRefresh(homePage: HomePage) {
         when (homePage) {
             HomePage.HOT -> _hotPosts.update { it.copy(isPullRefreshLoading = true) }
             HomePage.NEW -> _newPosts.update { it.copy(isPullRefreshLoading = true) }
@@ -319,9 +315,7 @@ internal class HomeViewModel @Inject constructor(
             HomePage.BEST -> _bestPosts.update { it.copy(isPullRefreshLoading = true) }
             HomePage.RISING -> _risingPosts.update { it.copy(isPullRefreshLoading = true) }
             HomePage.CONTROVERSIAL -> _controversialPosts.update {
-                it.copy(
-                    isPullRefreshLoading = true,
-                )
+                it.copy(isPullRefreshLoading = true)
             }
         }
     }
@@ -350,18 +344,11 @@ internal class HomeViewModel @Inject constructor(
         shouldRefreshData: Boolean,
         nextPageKey: String?,
         silentUpdate: Boolean,
-    ): Boolean {
-        return !shouldRefreshData && nextPageKey.isNullOrEmpty() && !silentUpdate
-    }
+    ): Boolean = !shouldRefreshData && nextPageKey.isNullOrEmpty() && !silentUpdate
 
     private fun checkAndForceRefreshPosts(
         timestampFlow: Flow<Long>,
         stateFlow: MutableStateFlow<PostsUiState>,
-        refreshFunction: (
-            shouldRefreshData: Boolean,
-            nextPageKey: String?,
-            silentUpdate: Boolean,
-        ) -> Unit,
     ) {
         viewModelScope.launch {
             timestampFlow.collect { prefsTimestamp ->
@@ -369,7 +356,7 @@ internal class HomeViewModel @Inject constructor(
                 if (timeDifference in SIX_HOURS_IN_MILLIS..TWELVE_HOURS_IN_MILLIS) {
                     stateFlow.update { it.copy(areNewPostsAvailable = true) }
                 } else if (timeDifference > TWELVE_HOURS_IN_MILLIS) {
-                    refreshFunction(true, null, false)
+                    stateFlow.update { it.copy(isPullRefreshLoading = true) }
                 }
             }
         }

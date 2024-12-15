@@ -19,9 +19,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
-import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,8 +29,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -42,6 +37,7 @@ import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.commonui.utils.ScrollHelper
 import com.anmolsahi.commonui.utils.animateScrollToTop
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
+import com.anmolsahi.designsystem.uicomponents.BRPullToRefreshBox
 import com.anmolsahi.designsystem.utils.slideInFromBottom
 import com.anmolsahi.designsystem.utils.slideInFromTop
 import com.anmolsahi.designsystem.utils.slideOutToTop
@@ -70,20 +66,9 @@ internal fun HomeScreenListings(
     val list by remember(uiState) { mutableStateOf(uiState.data.orEmpty()) }
 
     LaunchedEffect(uiState.isPullRefreshLoading) {
-        if (!uiState.isPullRefreshLoading) {
-            pullRefreshState.endRefresh()
-        }
-
         if (uiState.isPullRefreshLoading) {
             lazyListState.animateScrollToTop()
-            pullRefreshState.startRefresh()
             refreshData()
-        }
-    }
-
-    LaunchedEffect(pullRefreshState.isRefreshing) {
-        if (pullRefreshState.isRefreshing && !uiState.isPullRefreshLoading) {
-            onPullRefresh()
         }
     }
 
@@ -93,106 +78,95 @@ internal fun HomeScreenListings(
         }
     }
 
-    Box(
-        modifier
-            .nestedScroll(pullRefreshState.nestedScrollConnection),
-        contentAlignment = Alignment.BottomEnd,
+    BRPullToRefreshBox(
+        isRefreshing = uiState.isPullRefreshLoading,
+        state = pullRefreshState,
+        onRefresh = onPullRefresh,
     ) {
-        if (list.isNotEmpty()) {
-            LazyColumn(
-                state = lazyListState,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                contentPadding = WindowInsets.navigationBars.asPaddingValues(),
-            ) {
-                itemsIndexed(
-                    items = list,
-                    key = { _, item ->
-                        item.id
-                    },
-                    contentType = { _, _ ->
-                        "reddit_post"
-                    },
-                ) { _, item ->
-                    PostComponent(
-                        redditPostUiModel = item,
-                        onClick = onClick,
-                        onSaveIconClick = onSaveIconClick,
-                        onShareIconClick = onShareIconClick,
-                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
-                        onImageFullScreenIconClick = onImageFullScreenIconClick,
-                    )
-                }
+        Box(
+            modifier,
+            contentAlignment = Alignment.BottomEnd,
+        ) {
+            if (list.isNotEmpty()) {
+                LazyColumn(
+                    state = lazyListState,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    contentPadding = WindowInsets.navigationBars.asPaddingValues(),
+                ) {
+                    itemsIndexed(
+                        items = list,
+                        key = { _, item ->
+                            item.id
+                        },
+                        contentType = { _, _ ->
+                            "reddit_post"
+                        },
+                    ) { _, item ->
+                        PostComponent(
+                            redditPostUiModel = item,
+                            onClick = onClick,
+                            onSaveIconClick = onSaveIconClick,
+                            onShareIconClick = onShareIconClick,
+                            onVideoFullScreenIconClick = onVideoFullScreenIconClick,
+                            onImageFullScreenIconClick = onImageFullScreenIconClick,
+                        )
+                    }
 
-                item("paging_loading_indicator", contentType = "loading_indicator") {
-                    CircularProgressIndicator(
-                        modifier = Modifier.padding(16.dp),
-                    )
+                    item("paging_loading_indicator", contentType = "loading_indicator") {
+                        CircularProgressIndicator(
+                            modifier = Modifier.padding(16.dp),
+                        )
+                    }
                 }
             }
-        }
 
-        // Show error screen
-        AnimatedVisibility(
-            visible = !uiState.errorMessage.isNullOrBlank() && list.isEmpty(),
-            enter = slideInFromBottom(),
-        ) {
-            var showLogs by rememberSaveable { mutableStateOf(false) }
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
+            // Show error screen
+            AnimatedVisibility(
+                visible = !uiState.errorMessage.isNullOrBlank() && list.isEmpty(),
+                enter = slideInFromBottom(),
             ) {
-                // TODO: Code Cleanup
-                Text(
-                    modifier = Modifier.clickable { showLogs = !showLogs },
-                    text =
-                    if (!showLogs) {
-                        stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
-                    } else {
-                        stringResource(R.string.uh_oh_something_went_wrong) +
-                            " Learn More /n ${uiState.errorMessage}"
-                    },
-                    textDecoration = TextDecoration.Underline,
-                )
-            }
-        }
-
-        if (uiState.isLoading) {
-            BRLinearProgressIndicator()
-        }
-
-        AnimatedVisibility(
-            uiState.areNewPostsAvailable,
-            enter = slideInFromTop(),
-            exit = slideOutToTop(),
-        ) {
-            Column {
-                NewPostsAvailableComponent(
+                var showLogs by rememberSaveable { mutableStateOf(false) }
+                Column(
                     modifier = Modifier
-                        .padding(top = 16.dp),
-                    onClick = onPullRefresh,
-                )
-                Spacer(modifier = Modifier.weight(1f))
+                        .fillMaxSize()
+                        .padding(16.dp)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    // TODO: Code Cleanup
+                    Text(
+                        modifier = Modifier.clickable { showLogs = !showLogs },
+                        text =
+                        if (!showLogs) {
+                            stringResource(R.string.uh_oh_something_went_wrong) + " Learn More"
+                        } else {
+                            stringResource(R.string.uh_oh_something_went_wrong) +
+                                " Learn More /n ${uiState.errorMessage}"
+                        },
+                        textDecoration = TextDecoration.Underline,
+                    )
+                }
+            }
+
+            if (uiState.isLoading) {
+                BRLinearProgressIndicator()
+            }
+
+            AnimatedVisibility(
+                uiState.areNewPostsAvailable,
+                enter = slideInFromTop(),
+                exit = slideOutToTop(),
+            ) {
+                Column {
+                    NewPostsAvailableComponent(
+                        modifier = Modifier
+                            .padding(top = 16.dp),
+                        onClick = onPullRefresh,
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                }
             }
         }
-
-        PullToRefreshContainer(
-            modifier = Modifier
-                .align(Alignment.TopCenter),
-            state = pullRefreshState,
-            containerColor =
-            if (hidePullRefreshContainer(pullRefreshState)) {
-                Color.Transparent
-            } else {
-                PullToRefreshDefaults.containerColor
-            },
-        )
     }
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
-private fun hidePullRefreshContainer(state: PullToRefreshState) =
-    state.progress == 0f && !state.isRefreshing
