@@ -23,6 +23,9 @@ data class Quadruple<out A, out B, out C, out D>(
     val third: C,
     val fourth: D,
 ) : Serializable {
+    companion object {
+        private const val serialVersionUID = 1L
+    }
 
     /**
      * Returns string representation of the [Quadruple] including its [first], [second], [third] and [fourth] values.
@@ -33,4 +36,4 @@ data class Quadruple<out A, out B, out C, out D>(
 /**
  * Converts this quadruple into a list.
  */
-public fun <T> Quadruple<T, T, T, T>.toList(): List<T> = listOf(first, second, third, fourth)
+fun <T> Quadruple<T, T, T, T>.toList(): List<T> = listOf(first, second, third, fourth)
