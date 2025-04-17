@@ -42,7 +42,7 @@ androidx-browser = "1.8.0"
 junitJupiter = "5.11.0"
 mockk = "1.13.12"
 moduleGraph = "2.8.0"
-turbine = "1.1.0"
+turbine = "1.2.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
