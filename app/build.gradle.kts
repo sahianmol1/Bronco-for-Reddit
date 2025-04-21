@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.kotlin.compose.compiler)
+    alias(libs.plugins.datadog)
 }
 
 android {
@@ -54,7 +55,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    buildFeatures { compose = true }
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
     packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
 }
 
@@ -113,6 +117,7 @@ dependencies {
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.okhttp)
 
     // dagger hilt
     implementation(libs.hilt.android)
@@ -147,4 +152,13 @@ dependencies {
 
     // Extended icons
     implementation(libs.extended.icons)
+
+    // Datadog
+    implementation(libs.datadog.rum)
+    implementation(libs.datadog.okhttp)
+    implementation(libs.datadog.webviews)
+    implementation(libs.datadog.trace)
+
+    // Okhttp
+    implementation(libs.okhttp)
 }

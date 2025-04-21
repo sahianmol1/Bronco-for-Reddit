@@ -15,6 +15,7 @@ plugins {
     alias(libs.plugins.ktlint) apply false
     alias(libs.plugins.detekt)
     alias(libs.plugins.module.graph) apply true // Plugin applied to allow module graph generation
+    alias(libs.plugins.datadog) apply false
 }
 
 tasks.register<Copy>("installGitHooks") {

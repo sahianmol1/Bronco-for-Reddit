@@ -43,6 +43,9 @@ junitJupiter = "5.12.2"
 mockk = "1.14.0"
 moduleGraph = "2.8.0"
 turbine = "1.2.0"
+datadog = "2.20.0"
+datadog-plugin = "1.16.0"
+okhttp = "4.12.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -72,6 +75,7 @@ ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "k
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-client-version" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-client-version" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-client-version" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor-client-version" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary-android" }
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
 compose-ui = { module = "androidx.compose.ui:ui" }
@@ -104,6 +108,11 @@ mockk-core = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+datadog-rum = { module = "com.datadoghq:dd-sdk-android-rum", version.ref = "datadog" }
+datadog-okhttp = { module = "com.datadoghq:dd-sdk-android-okhttp", version.ref = "datadog" }
+datadog-webviews = { module = "com.datadoghq:dd-sdk-android-webview", version.ref = "datadog" }
+datadog-trace = { module = "com.datadoghq:dd-sdk-android-trace", version.ref = "datadog" }
 
 [bundles]
 datastore = ["datastore-android", "datastore-core"]
@@ -125,3 +134,4 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 module-graph = { id = "com.jraska.module.graph.assertion", version.ref = "moduleGraph" }
+datadog = { id = "com.datadoghq.dd-sdk-android-gradle-plugin", version.ref = "datadog-plugin" }
