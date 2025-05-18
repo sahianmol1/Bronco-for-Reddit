@@ -82,4 +82,7 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
+
+    // Datadog
+    implementation(libs.bundles.datadog)
 }

@@ -67,6 +67,7 @@ import com.anmolsahi.presentation.ui.searchscreen.SearchScreenDefaults.SEARCH_BA
 import com.anmolsahi.presentation.utils.shouldShowQuickResults
 import com.anmolsahi.presentation.utils.shouldShowRecentSearches
 import com.anmolsahi.searchpresentation.R
+import com.datadog.android.rum.GlobalRumMonitor
 
 private object SearchScreenDefaults {
     const val QUICK_RESULTS_HEADER = "quick_results_header"
@@ -104,6 +105,10 @@ internal fun SearchScreen(
         targetValue = if (searchedItemsList.isNotEmpty() && !searchBarActive) 16.dp else 0.dp,
         label = "searchBarPadding",
     )
+
+    LaunchedEffect(Unit) {
+        GlobalRumMonitor.get().startView(key = "search", name = "search-screen")
+    }
 
     LaunchedEffect(uiState.errorMessage) {
         if (!uiState.errorMessage.isNullOrEmpty()) {

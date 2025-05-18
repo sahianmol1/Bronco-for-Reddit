@@ -59,4 +59,10 @@ dependencies {
 
     implementation(project(":core:common-ui"))
     implementation(project(":core:design-system"))
+
+    // Datadog
+    implementation(libs.datadog.rum)
+    implementation(libs.datadog.okhttp)
+    implementation(libs.datadog.webviews)
+    implementation(libs.datadog.trace)
 }

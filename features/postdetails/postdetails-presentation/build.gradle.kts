@@ -77,4 +77,10 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.exoplayer.dash)
     implementation(libs.androidx.media3.ui)
+
+    // Datadog
+    implementation(libs.datadog.rum)
+    implementation(libs.datadog.okhttp)
+    implementation(libs.datadog.webviews)
+    implementation(libs.datadog.trace)
 }

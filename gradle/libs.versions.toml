@@ -117,6 +117,7 @@ datadog-trace = { module = "com.datadoghq:dd-sdk-android-trace", version.ref = "
 [bundles]
 datastore = ["datastore-android", "datastore-core"]
 mockk = ["mockk-core", "mockk-android", "mockk-agent"]
+datadog = ["datadog-rum", "datadog-okhttp", "datadog-webviews", "datadog-trace"]
 
 [plugins]
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

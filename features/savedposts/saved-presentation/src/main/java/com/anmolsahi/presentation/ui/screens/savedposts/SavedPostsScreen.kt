@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,6 +28,7 @@ import com.anmolsahi.commonui.utils.ScrollHelper
 import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.presentation.ui.components.EmptySavedPostsComponent
+import com.datadog.android.rum.GlobalRumMonitor
 
 @Composable
 internal fun SavedPostsView(
@@ -40,6 +42,10 @@ internal fun SavedPostsView(
     onSaveIconClick: (String) -> Unit = {},
 ) {
     val uiState by remember { viewModel.uiState }.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        GlobalRumMonitor.get().startView(key = "saved-posts", name = "saved-posts-screen")
+    }
 
     SavedPostsView(
         uiState = uiState,

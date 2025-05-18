@@ -24,6 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -38,6 +39,7 @@ import com.anmolsahi.aboutpresentation.R
 import com.anmolsahi.commonui.chrometabs.openAsCustomTab
 import com.anmolsahi.commonui.utils.ScrollHelper
 import com.anmolsahi.designsystem.theme.BRTheme
+import com.datadog.android.rum.GlobalRumMonitor
 
 @Composable
 fun AboutUsScreen(
@@ -55,6 +57,10 @@ fun AboutUsScreen(
         else -> modifier
     }
     scrollState.ScrollHelper(resetScroll = resetScroll, postScroll)
+
+    LaunchedEffect(Unit) {
+        GlobalRumMonitor.get().startView(key = "about", name = "about-us-screen")
+    }
 
     Column(
         modifier = topLevelModifier

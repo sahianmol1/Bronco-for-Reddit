@@ -49,6 +49,7 @@ import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDeta
 import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsScreenValues.TYPE_LOADING
 import com.anmolsahi.postdetailspresentation.postdetails.ui.postdetails.PostDetailsScreenValues.TYPE_POST_DETAILS
 import com.anmolsahi.postdetailspresentation.postdetails.utils.shouldShowCommentsComponent
+import com.datadog.android.rum.GlobalRumMonitor
 import kotlinx.coroutines.launch
 import com.anmolsahi.commonui.R as commonUiR
 
@@ -78,6 +79,10 @@ internal fun PostDetailsScreen(
     var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
     var showErrorDialog by rememberSaveable { mutableStateOf(false) }
     val comments by remember(uiState) { mutableStateOf(uiState.postComments.orEmpty()) }
+
+    LaunchedEffect(Unit) {
+        GlobalRumMonitor.get().startView(key = "post-details", name = "post-details-screen")
+    }
 
     LaunchedEffect(Unit) {
         if (uiState.data == null) {

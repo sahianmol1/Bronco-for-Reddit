@@ -15,6 +15,8 @@ import com.anmolsahi.commonui.components.postimage.PostImage
 import com.anmolsahi.commonui.components.postimage.PostImagePager
 import com.anmolsahi.commonui.components.postvideo.PostVideo
 import com.anmolsahi.commonui.models.RedditPostUiModel
+import com.datadog.android.rum.GlobalRumMonitor
+import com.datadog.android.rum.RumActionType
 
 @Composable
 fun PostComponent(
@@ -87,7 +89,14 @@ fun PostComponent(
             comments = redditPostUiModel.comments,
             isSaved = redditPostUiModel.isSaved,
             shouldShowDeleteIcon = shouldShowDeleteIcon,
-            onSaveIconClick = { onSaveIconClick(redditPostUiModel.id) },
+            onSaveIconClick = {
+                GlobalRumMonitor.get().addAction(
+                    type = RumActionType.TAP,
+                    name = "onSaveIconClick",
+                    attributes = mapOf("postId" to redditPostUiModel.title),
+                )
+                onSaveIconClick(redditPostUiModel.id)
+            },
             onDeleteIconClick = { onDeleteIconClick(redditPostUiModel.id) },
             onShareIconClick = { onShareIconClick(redditPostUiModel.postUrl.orEmpty()) },
             onUpvoteIconClick = {

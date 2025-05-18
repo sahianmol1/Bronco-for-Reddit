@@ -29,6 +29,7 @@ import com.anmolsahi.designsystem.uicomponents.HomePage
 import com.anmolsahi.designsystem.utils.showToast
 import com.anmolsahi.homepresentation.R
 import com.anmolsahi.presentation.ui.components.HomeScreenListings
+import com.datadog.android.rum.GlobalRumMonitor
 
 // TODO: refactor this, probably need to use strategy design pattern
 @SuppressWarnings("CyclomaticComplexMethod")
@@ -60,6 +61,7 @@ internal fun HomeScreen(
     }.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
+        GlobalRumMonitor.get().startView(key = "home", name = "home-screen")
         if (hotPosts.data == null) {
             homeViewModel.getHotPosts()
         } else {

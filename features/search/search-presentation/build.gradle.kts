@@ -91,4 +91,10 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:design-system"))
     implementation(project(":features:search:search-domain"))
+
+    // Datadog
+    implementation(libs.datadog.rum)
+    implementation(libs.datadog.okhttp)
+    implementation(libs.datadog.webviews)
+    implementation(libs.datadog.trace)
 }
