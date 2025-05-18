@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -34,8 +35,10 @@ kotlin {
 }
 
 composeCompiler {
-    enableStrongSkippingMode = true
     includeSourceInformation = true
+    featureFlags = listOf(
+        ComposeFeatureFlag.StrongSkipping,
+    )
 }
 
 dependencies {

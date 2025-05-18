@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
@@ -35,8 +36,10 @@ kotlin {
 }
 
 composeCompiler {
-    enableStrongSkippingMode = true
     includeSourceInformation = true
+    featureFlags = listOf(
+        ComposeFeatureFlag.StrongSkipping,
+    )
 }
 
 dependencies {
