@@ -68,7 +68,7 @@ internal class SearchViewModel @Inject constructor(
             .distinctUntilChanged()
             .flowOn(ioDispatcher)
             .onEach { query ->
-                searchReddit(query)
+                searchReddit(query, shouldDeletePreviousResults = true)
             }
             .launchIn(viewModelScope)
     }
@@ -137,24 +137,44 @@ internal class SearchViewModel @Inject constructor(
         }
     }
 
-    private fun searchReddit(query: String, nextPageKey: String? = null) {
+    private fun searchReddit(
+        query: String,
+        nextPageKey: String? = null,
+        shouldDeletePreviousResults: Boolean = false,
+    ) {
         searchRedditUseCase(query, nextPageKey)
             .onStart {
-                if (nextPageKey.isNullOrEmpty()) {
+                // Only update isLoading if we are actually starting a new search
+                // or if the current data is null (implying a fresh load is needed).
+                if (shouldDeletePreviousResults || _searchDataUiState.value.searchedData == null) {
                     _searchDataUiState.update {
                         it.copy(
                             isLoading = true,
-                            searchedData = null,
+                            // Clear previous results only if shouldDeletePreviousResults is true
+                            searchedData = if (shouldDeletePreviousResults) {
+                                null
+                            } else {
+                                it.searchedData
+                            },
+                            errorMessage = null,
                         )
                     }
                 }
             }
-            .onEach { redditPosts ->
-                _searchDataUiState.update {
-                    it.copy(
-                        searchedData = it.searchedData.orEmpty() +
-                            redditPosts.orEmpty().map { post -> post.asUiModel() },
+            .onEach { redditPostsResult ->
+                // Perform mapping outside the update block for clarity
+                val newPostsUiModels = redditPostsResult.orEmpty().map { post -> post.asUiModel() }
+
+                _searchDataUiState.update { currentState ->
+                    val updatedSearchedData = if (shouldDeletePreviousResults) {
+                        newPostsUiModels
+                    } else {
+                        currentState.searchedData.orEmpty() + newPostsUiModels
+                    }
+                    currentState.copy(
+                        searchedData = updatedSearchedData,
                         isLoading = false,
+                        errorMessage = null,
                     )
                 }
             }
