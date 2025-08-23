@@ -1,6 +1,7 @@
 package com.anmolsahi.designsystem.uicomponents
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -42,7 +43,10 @@ fun BRNavigationBarView(
         remember(navBackStackEntry) { mutableStateOf(navBackStackEntry?.destination) }
 
     if (currentDestination.isTopLevelDestination()) {
-        NavigationBar(modifier = modifier) {
+        NavigationBar(
+            modifier = modifier,
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        ) {
             bottomNavItems.forEachIndexed { index, bottomNav ->
                 NavigationBarItem(
                     selected = getSelectedBottomNav(currentDestination, bottomNavItems, index),
@@ -73,6 +77,4 @@ private fun getSelectedBottomNav(
     currentDestination: NavDestination?,
     bottomNavItems: List<BottomNavUiModel>,
     index: Int,
-): Boolean {
-    return currentDestination?.hierarchy?.any { it.route == bottomNavItems[index].route } == true
-}
+): Boolean = currentDestination?.hierarchy?.any { it.route == bottomNavItems[index].route } == true

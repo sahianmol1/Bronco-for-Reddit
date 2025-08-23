@@ -18,7 +18,6 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -55,7 +54,7 @@ fun Bronco(
 
     val view = LocalView.current
     val configuration = LocalConfiguration.current
-    val navigationBarColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+    val navigationBarColor = MaterialTheme.colorScheme.surfaceContainer
     val resetScrollHome
         by remember { viewModel.resetScrollHome }.collectAsStateWithLifecycle(false)
     val resetScrollSearch
