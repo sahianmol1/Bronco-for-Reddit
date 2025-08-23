@@ -44,9 +44,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.media3.exoplayer.ExoPlayer
 import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.commonui.utils.ScrollHelper
+import com.anmolsahi.commonui.utils.determineCurrentlyPlayingItem
 import com.anmolsahi.commonui.utils.isScrollingUp
 import com.anmolsahi.commonui.utils.scrollToTop
 import com.anmolsahi.commonui.utils.shareRedditPost
@@ -99,6 +101,10 @@ internal fun SearchScreen(
     val searchedItemsList by remember(uiState) { mutableStateOf(uiState.searchedData.orEmpty()) }
     val configuration = LocalConfiguration.current
     lazyListState.ScrollHelper(resetScroll = resetScroll, postScroll)
+    val currentlyPlayingItem = determineCurrentlyPlayingItem(lazyListState, uiState.searchedData)
+    val exoPlayer = remember {
+        ExoPlayer.Builder(context).build()
+    }
 
     val searchBarPadding by animateDpAsState(
         targetValue = if (searchedItemsList.isNotEmpty() && !searchBarActive) 16.dp else 0.dp,
@@ -161,7 +167,6 @@ internal fun SearchScreen(
                             viewModel.onSaveIconClick(searchedItemsList[index])
                         },
                         onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
-                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                     )
                 }

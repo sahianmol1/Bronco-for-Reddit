@@ -13,7 +13,7 @@ import androidx.compose.ui.zIndex
 import com.anmolsahi.commonui.components.postactions.PostActions
 import com.anmolsahi.commonui.components.postimage.PostImage
 import com.anmolsahi.commonui.components.postimage.PostImagePager
-import com.anmolsahi.commonui.components.postvideo.PostVideo
+import com.anmolsahi.commonui.components.postvideo.PostVideoThumbnail
 import com.anmolsahi.commonui.models.RedditPostUiModel
 
 @Composable
@@ -26,7 +26,6 @@ fun PostComponent(
     onDeleteIconClick: (postId: String) -> Unit = {},
     onShareIconClick: (postUrl: String) -> Unit = {},
     onImageFullScreenIconClick: (List<String>) -> Unit = {},
-    onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -72,13 +71,14 @@ fun PostComponent(
         }
 
         redditPostUiModel.videoUrl?.let {
-            PostVideo(
-                modifier = Modifier.zIndex(1f),
-                videoUrl = it,
-                onFullScreenIconClick = {
-                    onVideoFullScreenIconClick(redditPostUiModel.videoUrl)
-                },
-            )
+            redditPostUiModel.imageUrlList?.first()?.let { thumbnailUrl ->
+                PostVideoThumbnail(
+                    thumbnailUrl = thumbnailUrl,
+                    onClick = {
+                        onClick(redditPostUiModel.id, redditPostUiModel.postUrl.orEmpty())
+                    },
+                )
+            }
         }
 
         PostActions(
@@ -108,6 +108,5 @@ private fun PostPreview() {
         redditPostUiModel = RedditPostUiModel(id = "0"),
         onClick = { _, _ -> },
         onSaveIconClick = {},
-        onVideoFullScreenIconClick = { _ -> },
     )
 }

@@ -19,17 +19,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.media3.exoplayer.ExoPlayer
 import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.commonui.models.RedditPostUiModel
 import com.anmolsahi.commonui.utils.DeleteSavedPostAlertDialog
 import com.anmolsahi.commonui.utils.ErrorDialog
 import com.anmolsahi.commonui.utils.ScrollHelper
+import com.anmolsahi.commonui.utils.determineCurrentlyPlayingItem
 import com.anmolsahi.commonui.utils.shareRedditPost
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.presentation.ui.components.EmptySavedPostsComponent
 
 @Composable
-internal fun SavedPostsView(
+internal fun SavedPostsScreen(
     resetScroll: Boolean,
     postScroll: () -> Unit,
     modifier: Modifier = Modifier,
@@ -39,10 +41,15 @@ internal fun SavedPostsView(
     onPostClick: (postId: String, postUrl: String) -> Unit = { _, _ -> },
     onSaveIconClick: (String) -> Unit = {},
 ) {
+    val context = LocalContext.current
     val uiState by remember { viewModel.uiState }.collectAsStateWithLifecycle()
+    val exoPlayer = remember {
+        ExoPlayer.Builder(context).build()
+    }
 
     SavedPostsView(
         uiState = uiState,
+        exoPlayer = exoPlayer,
         resetScroll = resetScroll,
         postScroll = postScroll,
         modifier = modifier,
@@ -59,6 +66,7 @@ internal fun SavedPostsView(
 @Composable
 fun SavedPostsView(
     uiState: SavedPostsUiState,
+    exoPlayer: ExoPlayer,
     resetScroll: Boolean,
     postScroll: () -> Unit,
     modifier: Modifier = Modifier,
@@ -77,6 +85,7 @@ fun SavedPostsView(
 
         is SavedPostsUiState.Success -> {
             SavedPostsListView(
+                exoPlayer = exoPlayer,
                 savedPostsList = uiState.savedPosts,
                 resetScroll = resetScroll,
                 postScroll = postScroll,
@@ -106,6 +115,7 @@ fun SavedPostsView(
 fun SavedPostsListView(
     savedPostsList: List<RedditPostUiModel>,
     resetScroll: Boolean,
+    exoPlayer: ExoPlayer,
     postScroll: () -> Unit,
     onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
     onImageFullScreenIconClick: (List<String>) -> Unit,
@@ -119,6 +129,7 @@ fun SavedPostsListView(
     var selectedPostId by rememberSaveable { mutableStateOf("") }
     var showDeletePostAlertDialog by rememberSaveable { mutableStateOf(false) }
     lazyListState.ScrollHelper(resetScroll = resetScroll, postScroll)
+    val currentlyPlayingItem = determineCurrentlyPlayingItem(lazyListState, savedPostsList)
 
     when (savedPostsList.isEmpty()) {
         true -> {
@@ -154,7 +165,6 @@ fun SavedPostsListView(
                             showDeletePostAlertDialog = true
                         },
                         onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
-                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                     )
                 }

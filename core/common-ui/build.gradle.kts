@@ -71,6 +71,7 @@ dependencies {
     // coil
     implementation(libs.coil.compose)
     implementation(libs.coil.gif)
+    implementation(libs.coil.video)
 
     // androidx-compose-lifecycle
     implementation(libs.viewmodel.lifecycle)

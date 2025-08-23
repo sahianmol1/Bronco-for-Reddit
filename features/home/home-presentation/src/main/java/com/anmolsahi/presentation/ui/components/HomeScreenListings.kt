@@ -107,7 +107,6 @@ internal fun HomeScreenListings(
                             onClick = onClick,
                             onSaveIconClick = onSaveIconClick,
                             onShareIconClick = onShareIconClick,
-                            onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                             onImageFullScreenIconClick = onImageFullScreenIconClick,
                         )
                     }

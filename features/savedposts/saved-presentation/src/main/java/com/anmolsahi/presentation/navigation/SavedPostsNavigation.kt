@@ -10,7 +10,7 @@ import com.anmolsahi.designsystem.utils.slideInFromBottom
 import com.anmolsahi.designsystem.utils.slideInFromLeft
 import com.anmolsahi.designsystem.utils.slideOutToLeft
 import com.anmolsahi.designsystem.utils.slideOutToTop
-import com.anmolsahi.presentation.ui.screens.savedposts.SavedPostsView
+import com.anmolsahi.presentation.ui.screens.savedposts.SavedPostsScreen
 
 fun NavGraphBuilder.savedPostsNavGraph(
     navController: NavHostController,
@@ -49,7 +49,7 @@ fun NavGraphBuilder.savedPostsNavGraph(
         },
     ) {
         val isSavedPostsFlow = true
-        SavedPostsView(
+        SavedPostsScreen(
             resetScroll = resetScroll,
             postScroll = postScroll,
             onPostClick = { postId, postUrl ->

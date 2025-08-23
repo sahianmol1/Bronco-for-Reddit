@@ -1,6 +1,5 @@
 package com.anmolsahi.commonui.components.postvideo
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.Box
@@ -40,7 +39,6 @@ private object PostVideoConstants {
 
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
-@OptIn(ExperimentalFoundationApi::class)
 fun PostVideo(videoUrl: String, modifier: Modifier = Modifier, onFullScreenIconClick: () -> Unit) {
     val context = LocalContext.current
 
