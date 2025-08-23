@@ -53,7 +53,6 @@ internal fun HomeScreenListings(
     loadMoreData: (nextPageKey: String?) -> Unit,
     onSaveIconClick: (postId: String) -> Unit,
     onShareIconClick: (postUrl: String) -> Unit,
-    onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
     onPullRefresh: () -> Unit,
     onImageFullScreenIconClick: (List<String>) -> Unit,
     modifier: Modifier = Modifier,
