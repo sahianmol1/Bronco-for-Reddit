@@ -86,7 +86,6 @@ internal fun SearchScreen(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
     onPostClick: (postId: String, postUrl: String) -> Unit,
-    onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
     onImageFullScreenIconClick: (List<String>) -> Unit,
 ) {
     val context = LocalContext.current
@@ -161,7 +160,6 @@ internal fun SearchScreen(
                             viewModel.onSaveIconClick(searchedItemsList[index])
                         },
                         onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
-                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                     )
                 }

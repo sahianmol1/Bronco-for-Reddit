@@ -29,12 +29,11 @@ import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.presentation.ui.components.EmptySavedPostsComponent
 
 @Composable
-internal fun SavedPostsView(
+internal fun SavedPostsScreen(
     resetScroll: Boolean,
     postScroll: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SavedPostsViewModel = hiltViewModel(),
-    onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
     onImageFullScreenIconClick: (List<String>) -> Unit,
     onPostClick: (postId: String, postUrl: String) -> Unit = { _, _ -> },
     onSaveIconClick: (String) -> Unit = {},
@@ -46,7 +45,6 @@ internal fun SavedPostsView(
         resetScroll = resetScroll,
         postScroll = postScroll,
         modifier = modifier,
-        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
         onImageFullScreenIconClick = onImageFullScreenIconClick,
         onPostClick = onPostClick,
         onSaveIconClick = onSaveIconClick,
@@ -62,7 +60,6 @@ fun SavedPostsView(
     resetScroll: Boolean,
     postScroll: () -> Unit,
     modifier: Modifier = Modifier,
-    onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
     onImageFullScreenIconClick: (List<String>) -> Unit,
     onPostClick: (postId: String, postUrl: String) -> Unit = { _, _ -> },
     onSaveIconClick: (String) -> Unit = {},
@@ -81,7 +78,6 @@ fun SavedPostsView(
                 resetScroll = resetScroll,
                 postScroll = postScroll,
                 modifier = modifier,
-                onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                 onImageFullScreenIconClick = onImageFullScreenIconClick,
                 onPostClick = onPostClick,
                 onSaveIconClick = onSaveIconClick,
@@ -107,7 +103,6 @@ fun SavedPostsListView(
     savedPostsList: List<RedditPostUiModel>,
     resetScroll: Boolean,
     postScroll: () -> Unit,
-    onVideoFullScreenIconClick: (videoUrl: String?) -> Unit,
     onImageFullScreenIconClick: (List<String>) -> Unit,
     onPostClick: (postId: String, postUrl: String) -> Unit,
     onSaveIconClick: (String) -> Unit,
@@ -154,7 +149,6 @@ fun SavedPostsListView(
                             showDeletePostAlertDialog = true
                         },
                         onShareIconClick = { postUrl -> shareRedditPost(postUrl, context) },
-                        onVideoFullScreenIconClick = onVideoFullScreenIconClick,
                         onImageFullScreenIconClick = onImageFullScreenIconClick,
                     )
                 }

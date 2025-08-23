@@ -25,4 +25,6 @@
     <string name="click_to_refresh_and_get_new_posts">Click to refresh and get new posts</string>
     <string name="exit_fullscreen">Exit fullscreen</string>
     <string name="reddit_post_image_description">This is a reddit post image.</string>
+    <string name="reddit_video_thumbnail_content_description">This is a video. Click to play.</string>
+    <string name="reddit_video">Reddit Video</string>
 </resources>

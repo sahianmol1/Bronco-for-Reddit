@@ -10,7 +10,7 @@ import com.anmolsahi.designsystem.utils.slideInFromBottom
 import com.anmolsahi.designsystem.utils.slideInFromLeft
 import com.anmolsahi.designsystem.utils.slideOutToLeft
 import com.anmolsahi.designsystem.utils.slideOutToTop
-import com.anmolsahi.presentation.ui.screens.savedposts.SavedPostsView
+import com.anmolsahi.presentation.ui.screens.savedposts.SavedPostsScreen
 
 fun NavGraphBuilder.savedPostsNavGraph(
     navController: NavHostController,
@@ -49,18 +49,13 @@ fun NavGraphBuilder.savedPostsNavGraph(
         },
     ) {
         val isSavedPostsFlow = true
-        SavedPostsView(
+        SavedPostsScreen(
             resetScroll = resetScroll,
             postScroll = postScroll,
             onPostClick = { postId, postUrl ->
                 navController.navigate(
                     Destinations.PostDetailsDestinations.route +
                         "?post-id=$postId&is-from-saved-posts=$isSavedPostsFlow&post_url=$postUrl",
-                )
-            },
-            onVideoFullScreenIconClick = { videoUrl ->
-                navController.navigate(
-                    Destinations.VideoPlayerDestination.route + "?video-url=$videoUrl",
                 )
             },
             onImageFullScreenIconClick = { imageList ->
