@@ -16,8 +16,8 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
@@ -36,6 +36,7 @@ import com.anmolsahi.commonui.components.NewPostsAvailableComponent
 import com.anmolsahi.commonui.components.PostComponent
 import com.anmolsahi.commonui.utils.ScrollHelper
 import com.anmolsahi.commonui.utils.animateScrollToTop
+import com.anmolsahi.designsystem.uicomponents.BRCircularProgressIndicator
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.designsystem.uicomponents.BRPullToRefreshBox
 import com.anmolsahi.designsystem.utils.slideInFromBottom
@@ -44,7 +45,7 @@ import com.anmolsahi.designsystem.utils.slideOutToTop
 import com.anmolsahi.homepresentation.R
 import com.anmolsahi.presentation.ui.screens.home.PostsUiState
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun HomeScreenListings(
     uiState: PostsUiState,
@@ -111,7 +112,7 @@ internal fun HomeScreenListings(
                     }
 
                     item("paging_loading_indicator", contentType = "loading_indicator") {
-                        CircularProgressIndicator(
+                        BRCircularProgressIndicator(
                             modifier = Modifier.padding(16.dp),
                         )
                     }
