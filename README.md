@@ -14,9 +14,22 @@
   <img src="https://img.shields.io/github/stars/sahianmol1/Bronco-for-Reddit?logo=star" />
 </p>
 
+ ## Table of Contents
+    - [Introduction](#introduction)
+    - [Screenshots](#Screenshots)
+    - [Architecture](#Architecture)
+    - [Tools](#Tools)
+    - [Installation](#Installation)
+    - [TODOs](#TODOs)
+    - [Unit tests](#Unit tests)
+    - [License](#license)
+
+## Introduction
 **Bronco for Reddit** is a free, open-source Reddit client for Android built to demonstarte the use of **multi-module, clean code MVVM architecture** in Android projects. It is an offline-first app built using Jetpack Compose and adheres to Material 3 guidelines.
 
 🚧 Currently, the app is in its MVP stage, and I plan to add more features in future updates. These updates will further demonstrate the scalability, testability, and flexibility of this architecture. 🚧
+
+## Screenshots
 
 ## Architecture
 ![Dependency graph](/docs/images/coremodulegraph/high_level_module_graph_2.png)
@@ -32,6 +45,12 @@ This architecture leverages the [Dependency Inversion principle](https://en.wiki
 **Delegates** are used for [module to module communication](https://developer.android.com/topic/modularization/patterns#communication). Delegates are powerful because they enable class-level runtime polymorphism, promoting the use of [composition](https://en.wikipedia.org/wiki/Composition_over_inheritance) for code reuse. Checkout [/app/delegates](app/src/main/java/com/anmolsahi/broncoforreddit/delegates).
 
 <sup>*</sup> There are many features. Showing only 3 in the diagram for the sake of simplicity.
+
+## Tools
+
+## Installation
+
+## TODOs
 
 ## ✅ Unit tests
 I have added unit tests for the `:search` module. checkout the unit test here.
