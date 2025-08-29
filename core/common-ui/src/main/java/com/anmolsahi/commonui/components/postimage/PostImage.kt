@@ -1,14 +1,13 @@
 package com.anmolsahi.commonui.components.postimage
 
 import android.content.res.Configuration
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,13 +29,14 @@ import coil.compose.AsyncImage
 import com.anmolsahi.commonui.R
 import com.anmolsahi.commonui.components.postimage.PostImageConstants.MAX_SCALE
 import com.anmolsahi.commonui.components.postimage.PostImageConstants.MIN_SCALE
+import com.anmolsahi.designsystem.uicomponents.BRCircularProgressIndicator
 
 private object PostImageConstants {
     const val MIN_SCALE = 0.5f
     const val MAX_SCALE = 5f
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () -> Unit = {}) {
     val configuration = LocalConfiguration.current
@@ -64,7 +64,7 @@ fun PostImage(imageUrl: String, modifier: Modifier = Modifier, onImageClick: () 
         contentAlignment = Alignment.Center,
     ) {
         if (isImageLoading) {
-            CircularProgressIndicator(modifier = Modifier.padding(vertical = 64.dp))
+            BRCircularProgressIndicator(modifier = Modifier.padding(vertical = 64.dp))
         }
         AsyncImage(
             modifier = Modifier

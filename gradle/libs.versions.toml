@@ -43,6 +43,7 @@ junitJupiter = "5.12.2"
 mockk = "1.14.2"
 moduleGraph = "2.8.0"
 turbine = "1.2.0"
+compose-m3 = "1.4.0-alpha10"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -78,7 +79,7 @@ compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-
 compose-ui = { module = "androidx.compose.ui:ui" }
 compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-compose-material3 = { module = "androidx.compose.material3:material3" }
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-m3" }
 compose-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-debug-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-debug-manifest = { module = "androidx.compose.ui:ui-test-manifest" }

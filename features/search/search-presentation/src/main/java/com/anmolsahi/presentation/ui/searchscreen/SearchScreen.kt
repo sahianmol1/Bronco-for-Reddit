@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -50,6 +49,7 @@ import com.anmolsahi.commonui.utils.ScrollHelper
 import com.anmolsahi.commonui.utils.isScrollingUp
 import com.anmolsahi.commonui.utils.scrollToTop
 import com.anmolsahi.commonui.utils.shareRedditPost
+import com.anmolsahi.designsystem.uicomponents.BRCircularProgressIndicator
 import com.anmolsahi.designsystem.uicomponents.BRLinearProgressIndicator
 import com.anmolsahi.designsystem.uicomponents.BRSearchBar
 import com.anmolsahi.designsystem.utils.slideInFromTop
@@ -166,7 +166,7 @@ internal fun SearchScreen(
 
                 if (!searchedItemsList.last().after.isNullOrEmpty()) {
                     item(contentType = LOADING_INDICATOR) {
-                        CircularProgressIndicator(
+                        BRCircularProgressIndicator(
                             modifier = Modifier.padding(16.dp),
                         )
                     }
