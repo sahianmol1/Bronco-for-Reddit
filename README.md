@@ -17,11 +17,11 @@
  ## Table of Contents
  - [Introduction](#introduction)
  - [Screenshots](#Screenshots)
+ - [Download](#Download)
  - [Architecture](#Architecture)
  - [Tools](#Tools)
- - [Installation](#Installation)
  - [TODOs](#TODOs)
- - [Unit tests](#Unit tests)
+ - [Tests](#Tests)
  - [License](#license)
 
 ## Introduction
@@ -30,6 +30,8 @@
 🚧 Currently, the app is in its MVP stage, and I plan to add more features in future updates. These updates will further demonstrate the scalability, testability, and flexibility of this architecture. 🚧
 
 ## Screenshots
+
+## Download
 
 ## Architecture
 ![Dependency graph](/docs/images/coremodulegraph/high_level_module_graph_2.png)
@@ -48,11 +50,9 @@ This architecture leverages the [Dependency Inversion principle](https://en.wiki
 
 ## Tools
 
-## Installation
-
 ## TODOs
 
-## ✅ Unit tests
+## ✅ Tests
 I have added unit tests for the `:search` module. checkout the unit test here.
 <br>🚧 Unit test for the other modules are work in progress 🚧.
 
