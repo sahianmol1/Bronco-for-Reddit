@@ -71,6 +71,7 @@ This architecture leverages the [Dependency Inversion principle](https://en.wiki
 - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - The ViewModel class is designed to store and manage UI-related data in a lifecycle conscious way. The ViewModel class allows data to survive configuration changes such as screen rotations.
 - [SplashScreen](https://developer.android.com/guide/topics/ui/splash-screen) - The SplashScreen API enables a new app launch animation for all apps when running on a device with Android 12 or higher. This includes an into-app motion at launch, a splash screen showing your app icon, and a transition to your app itself.
 - [Material Icons](https://developer.android.com/reference/kotlin/androidx/compose/material/icons/Icons) - Material Design system icons as seen on Google Fonts.
+- [Work Manager](https://developer.android.com/topic/libraries/architecture/workmanager) - WorkManager is a tool that provides APIs to schedule and runs background tasks persistently.
 - [Media3 ExoPlayer](https://developer.android.com/media/media3/exoplayer) - Media3 ExoPlayer is used to play the reddit videos.
 
 ## Tests
