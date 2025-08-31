@@ -35,10 +35,12 @@
 |------------|
 | <video src="https://github.com/user-attachments/assets/a9643509-9ea9-40b2-b0d7-1c8f7bb84b3c" /> |
 
-|Home Page|Search Page| Post Details|
-|---------------------|-----------------------|--------------------|
-| <img height="480" alt="home_page" src="https://github.com/user-attachments/assets/72207a33-5ac3-4678-8145-2d3430527d5c" /> | <img height="480" alt="search_screen" src="https://github.com/user-attachments/assets/89b170ac-f813-453b-94cd-a8fd46b538b7" /> <img height="480" alt="search_Screen_variant" src="https://github.com/user-attachments/assets/912fc80b-0d12-4f22-a3a8-e1d405a68560" /> | <img height="480" alt="post_details" src="https://github.com/user-attachments/assets/0a63c7c3-588b-4c60-a815-808d62130cbc" /> |
-| <img height="480" alt="home_screen_light" src="https://github.com/user-attachments/assets/69e217bf-16c0-47dd-8bc6-664c3020804a" /> | <img height="480" alt="search_screen_light" src="https://github.com/user-attachments/assets/7091442c-a596-48d5-9398-a2b81833220b" /> <img height="480" alt="search_variant_light" src="https://github.com/user-attachments/assets/89088f81-9f99-49f2-96c2-c4ebafea12b3" /> | <img height="480" alt="post_details_light" src="https://github.com/user-attachments/assets/05f06b4b-bff2-4d1e-bcaf-e2f3d88aa624" /> |
+|Light|Dark|
+|---------------------|-----------------------|
+| <img height="600" alt="home_screen_light" src="https://github.com/user-attachments/assets/69e217bf-16c0-47dd-8bc6-664c3020804a" /> | <img height="600" alt="home_page_n" src="https://github.com/user-attachments/assets/690c8d0c-5b0e-43e4-84d2-5125e2208acc" /> |
+| <img height="600" alt="search_screen_light" src="https://github.com/user-attachments/assets/7091442c-a596-48d5-9398-a2b81833220b" /> | <img height="600" alt="search_screen" src="https://github.com/user-attachments/assets/89b170ac-f813-453b-94cd-a8fd46b538b7" /> |
+| <img height="600" alt="search_variant_light" src="https://github.com/user-attachments/assets/89088f81-9f99-49f2-96c2-c4ebafea12b3" /> | <img height="600" alt="search_Screen_variant" src="https://github.com/user-attachments/assets/912fc80b-0d12-4f22-a3a8-e1d405a68560" /> |
+| <img height="600" alt="post_details_light" src="https://github.com/user-attachments/assets/05f06b4b-bff2-4d1e-bcaf-e2f3d88aa624" /> | <img height="600" alt="post_details" src="https://github.com/user-attachments/assets/0a63c7c3-588b-4c60-a815-808d62130cbc" /> |
 
 ## Download
 
