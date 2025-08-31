@@ -73,6 +73,7 @@ This architecture leverages the [Dependency Inversion principle](https://en.wiki
 - [Material Icons](https://developer.android.com/reference/kotlin/androidx/compose/material/icons/Icons) - Material Design system icons as seen on Google Fonts.
 - [Work Manager](https://developer.android.com/topic/libraries/architecture/workmanager) - WorkManager is a tool that provides APIs to schedule and runs background tasks persistently.
 - [Media3 ExoPlayer](https://developer.android.com/media/media3/exoplayer) - Media3 ExoPlayer is used to play the reddit videos.
+- [Turbine](https://github.com/cashapp/turbine) - To unit test kotlin flows.
 
 ## Tests
 I have added unit tests for the `:search` module. checkout the unit test here - [search module unit tests](/features/search/search-presentation/src/test/java/com/anmolsahi/presentation/ui).
