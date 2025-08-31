@@ -20,8 +20,8 @@
  - [Download](#Download)
  - [Architecture](#Architecture)
  - [Tools](#Tools)
- - [TODOs](#TODOs)
  - [Tests](#Tests)
+ - [TODOs](#TODOs)
  - [License](#license)
 
 ## Introduction
@@ -49,7 +49,7 @@
 
 This is a high level multi module dependency graph. For detailed dependencies checkout [module wise dependency graph](/docs/images/graphs).
 
-### Modularization Strategy
+#### Modularization Strategy
 
 This project follows modularization **by feature & layer** as described in [this video](https://youtu.be/16SwTvzDO0A?si=qHSqHXnW8jSHjitB&t=249). This approach ensures that modules are both highly cohesive and loosely coupled, while also reducing the redundant code.
 
@@ -72,16 +72,16 @@ This architecture leverages the [Dependency Inversion principle](https://en.wiki
 - [Material Icons](https://developer.android.com/reference/kotlin/androidx/compose/material/icons/Icons) - Material Design system icons as seen on Google Fonts.
 - [Media3 ExoPlayer](https://developer.android.com/media/media3/exoplayer) - Media3 ExoPlayer is used to play the reddit videos.
 
-## TODOs
-- Code Cleanup - While this project is great for understanding industry-standard architecture, some files still contain duplicate code and need cleanup. My plan is to refactor the code using Design Patterns and SOLID principles. Along the way, I’ll also be writing articles to demonstrate how I approached the cleanup process.
-- More Features - I will be adding more features like Subreddit page, user profile page and login.
-- M3 Expressive - The design will be kept up to date by adopting the latest Material 3 expressive components.
-- Adaptive Design - Make the app support multiple devices like foldables, tablets and the Android XR.
-- Kotlin Multiplatform - The goal is to take the app multiplatform by integration the kotlin multiplatform technology.
-
-## ✅ Tests
+## Tests
 I have added unit tests for the `:search` module. checkout the unit test here - [search module unit tests](/features/search/search-presentation/src/test/java/com/anmolsahi/presentation/ui).
 <br>🚧 Unit test for the other modules are work in progress 🚧.
+
+## TODOs
+- **Code Cleanup** - While this project is great for understanding industry-standard architecture, some files still contain duplicate code and need cleanup. My plan is to refactor the code using Design Patterns and SOLID principles. Along the way, I’ll also be writing articles to demonstrate how I approached the cleanup process.
+- **More Features** - I will be adding more features like Subreddit page, user profile page and login.
+- **M3 Expressive** - The design will be kept up to date by adding the M3 expressive components.
+- **Adaptive Design** - Make the app support multiple devices like foldables, tablets and the Android XR.
+- **Kotlin Multiplatform** - The goal is to take the app multiplatform by integration the kotlin multiplatform technology.
 
 If you find this project valuable or if you like the app, please give it a star ⭐️! Your support means a lot and motivates me to continue improving the project. 🙏
 
