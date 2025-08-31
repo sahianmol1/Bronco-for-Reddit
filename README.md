@@ -30,6 +30,8 @@
 🚧 Currently, the app is in its MVP stage, and I plan to add more features in future updates. These updates will further demonstrate the scalability, testability, and flexibility of this architecture. 🚧
 
 ## Screenshots
+<img height="400" alt="home_page" src="https://github.com/user-attachments/assets/72207a33-5ac3-4678-8145-2d3430527d5c" /><img height="400" alt="search_Screen_variant" src="https://github.com/user-attachments/assets/912fc80b-0d12-4f22-a3a8-e1d405a68560" /><img height="400" alt="post_details" src="https://github.com/user-attachments/assets/0a63c7c3-588b-4c60-a815-808d62130cbc" /><img height="400" alt="search_screen" src="https://github.com/user-attachments/assets/89b170ac-f813-453b-94cd-a8fd46b538b7" />
+
 
 ## Download
 
