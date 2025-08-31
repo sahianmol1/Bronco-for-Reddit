@@ -1,9 +1,9 @@
 package com.anmolsahi.designsystem.uicomponents
 
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,6 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.anmolsahi.designsystem.R
 import com.anmolsahi.designsystem.models.BottomNavUiModel
+import com.anmolsahi.designsystem.theme.BRTheme
 import com.anmolsahi.designsystem.utils.isTopLevelDestination
 
 @Composable
@@ -45,12 +46,19 @@ fun BRNavigationBarView(
     if (currentDestination.isTopLevelDestination()) {
         NavigationBar(
             modifier = modifier,
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            containerColor = BRTheme.colorScheme.surfaceContainer,
         ) {
             bottomNavItems.forEachIndexed { index, bottomNav ->
                 NavigationBarItem(
                     selected = getSelectedBottomNav(currentDestination, bottomNavItems, index),
                     onClick = bottomNav.onClick,
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = BRTheme.colorScheme.onPrimaryContainer,
+                        unselectedIconColor = BRTheme.colorScheme.onSurfaceVariant,
+                        selectedTextColor = BRTheme.colorScheme.onPrimaryContainer,
+                        unselectedTextColor = BRTheme.colorScheme.onSurfaceVariant,
+                        indicatorColor = BRTheme.colorScheme.primaryContainer,
+                    ),
                     icon = {
                         Icon(
                             imageVector = if (
