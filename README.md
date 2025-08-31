@@ -33,7 +33,7 @@
 
 |Working Demo|
 |------------|
-| <video height="600" src="https://github.com/user-attachments/assets/a9643509-9ea9-40b2-b0d7-1c8f7bb84b3c" /> |
+| <video src="https://github.com/user-attachments/assets/a9643509-9ea9-40b2-b0d7-1c8f7bb84b3c" /> |
 
 |Light|Dark|
 |---------------------|-----------------------|
