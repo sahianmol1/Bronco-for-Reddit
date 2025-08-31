@@ -25,7 +25,7 @@
  - [License](#license)
 
 ## Introduction
-**Bronco for Reddit** is a free, open-source Reddit client for Android built to demonstarte the use of **multi-module, clean code MVVM architecture** in Android projects. It is an offline-first app built using Jetpack Compose and adheres to Material 3 guidelines and supports the dynamic colors.
+**Bronco for Reddit** is a free, open-source Reddit client for Android built to demonstarte the use of **multi-module, clean code MVVM architecture** in Android projects. It is an offline-first app built using Jetpack Compose and adheres to Material 3 guidelines.
 
 🚧 Currently, the app is work in progress, and I plan to add more features in future updates. These updates will further demonstrate the scalability, testability, and flexibility of this architecture. 🚧
 
@@ -43,6 +43,7 @@
 | <img height="600" alt="post_details_light" src="https://github.com/user-attachments/assets/05f06b4b-bff2-4d1e-bcaf-e2f3d88aa624" /> | <img height="600" alt="post_details" src="https://github.com/user-attachments/assets/0a63c7c3-588b-4c60-a815-808d62130cbc" /> |
 
 ## Download
+Go to the [Releases](https://github.com/sahianmol1/Bronco-for-Reddit/releases/) to download the latest APK.
 
 ## Architecture
 ![Dependency graph](/docs/images/coremodulegraph/high_level_module_graph_2.png)
