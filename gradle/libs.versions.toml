@@ -43,7 +43,7 @@ junitJupiter = "5.14.0"
 mockk = "1.14.2"
 moduleGraph = "2.9.0"
 turbine = "1.2.1"
-compose-m3 = "1.4.0-alpha10"
+compose-m3 = "1.4.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
