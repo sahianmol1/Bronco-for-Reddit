@@ -55,7 +55,7 @@ fun BRNavigationBarView(
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = BRTheme.colorScheme.onPrimaryContainer,
                         unselectedIconColor = BRTheme.colorScheme.onSurfaceVariant,
-                        selectedTextColor = BRTheme.colorScheme.onPrimaryContainer,
+                        selectedTextColor = BRTheme.colorScheme.onSurfaceVariant,
                         unselectedTextColor = BRTheme.colorScheme.onSurfaceVariant,
                         indicatorColor = BRTheme.colorScheme.primaryContainer,
                     ),
