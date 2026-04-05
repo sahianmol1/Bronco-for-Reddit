@@ -1,9 +1,7 @@
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.com.android.application)
-    alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.google.services)
@@ -55,7 +53,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
-    buildFeatures { compose = true }
+    buildFeatures {
+        compose = true
+        resValues = true
+    }
     packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
 }
 
@@ -67,9 +68,6 @@ kotlin {
 
 composeCompiler {
     includeSourceInformation = true
-    featureFlags = listOf(
-        ComposeFeatureFlag.StrongSkipping,
-    )
 }
 
 ktlint {

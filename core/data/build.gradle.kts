@@ -3,14 +3,13 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.kotlin.serialization)
-    kotlin("android")
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.ksp)
     alias(libs.plugins.ktlint)
 }
 
 android {
-    namespace = "com.anmolsahi.homepresentation"
+    namespace = "com.anmolsahi.coredata"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {

@@ -1,7 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     alias(libs.plugins.com.android.application) apply false
-    alias(libs.plugins.kotlinAndroid) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.kotlin.compose.compiler) apply false
     alias(libs.plugins.hilt) apply false
@@ -24,7 +23,9 @@ tasks.register<Copy>("installGitHooks") {
     from("scripts/pre-push")
     into(".git/hooks")
 
-    fileMode = 7 * 64 + 7 * 8 + 7
+    filePermissions {
+        unix("777")
+    }
 }
 
 val projectSource = file(projectDir)
@@ -45,9 +46,9 @@ tasks.register<io.gitlab.arturbosch.detekt.Detekt>("detektAll") {
     include(kotlinFiles)
     exclude(resourceFiles, buildFiles)
     reports {
-        html.enabled = true
-        xml.enabled = false
-        txt.enabled = false
+        html.required.set(true)
+        xml.required.set(false)
+        txt.required.set(false)
     }
 }
 

@@ -5,7 +5,7 @@ coil-compose = "2.7.0"
 core-ktx = "1.17.0"
 core-splashscreen = "1.0.1"
 espresso-core = "3.6.1"
-hilt = "2.56.2"
+hilt = "2.59.2"
 hilt-navigation-compose = "1.2.0"
 hiltWork = "1.2.0"
 junit = "4.13.2"
@@ -18,19 +18,19 @@ media3-exoplayer = "1.8.0"
 compose-bom = "2026.01.00"
 navigation-compose = "2.9.3"
 firebase-bom-version = "33.13.0"
-agp = "8.13.2"
+agp = "9.0.1"
 profileinstaller = "1.4.1"
 room-version = "2.7.2"
 uiautomator = "2.3.0"
 benchmark-macro-junit4 = "1.4.0"
-kotlin = "2.2.0"
-androidx-baselineprofile = "1.4.1"
+kotlin = "2.2.10"
+androidx-baselineprofile = "1.5.0-alpha04"
 appcompat = "1.7.1"
 material = "1.12.0"
 firebase-crashlytics = "3.0.5"
 google-services = "4.4.3"
 detekt = "1.23.8"
-ksp = "2.2.0-2.0.2"
+ksp = "2.3.6"
 ktlint = "12.2.0"
 compile-sdk = "36"
 min-sdk = "24"
@@ -112,7 +112,6 @@ datastore = ["datastore-android", "datastore-core"]
 mockk = ["mockk-core", "mockk-android", "mockk-agent"]
 
 [plugins]
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-baselineprofile" }

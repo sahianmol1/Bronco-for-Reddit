@@ -1,10 +1,8 @@
-import com.android.build.api.dsl.ManagedVirtualDevice
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidTest)
-    alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.androidx.baselineprofile)
     alias(libs.plugins.ktlint)
 }
@@ -27,11 +25,15 @@ android {
 
     targetProjectPath = ":app"
 
-    testOptions.managedDevices.devices {
-        create<ManagedVirtualDevice>("pixel6Api33") {
-            device = "Pixel 6"
-            apiLevel = 33
-            systemImageSource = "aosp"
+    testOptions {
+        managedDevices {
+            localDevices {
+                create("pixel6Api33") {
+                    device = "Pixel 6"
+                    apiLevel = 33
+                    systemImageSource = "aosp"
+                }
+            }
         }
     }
 }
