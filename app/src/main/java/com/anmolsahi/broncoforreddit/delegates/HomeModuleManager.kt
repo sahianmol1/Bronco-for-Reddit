@@ -6,9 +6,8 @@ import com.anmolsahi.domain.models.RedditPost
 import com.anmolsahi.domain.repositories.SavedPostRepository
 import javax.inject.Inject
 
-class HomeModuleManager @Inject constructor(
-    private val savedPostRepository: SavedPostRepository,
-) : HomeDelegate {
+class HomeModuleManager @Inject constructor(private val savedPostRepository: SavedPostRepository) :
+    HomeDelegate {
     override suspend fun updateSavedPosts(shouldSavePost: Boolean, post: RedditPost?) {
         if (shouldSavePost && post != null) {
             savedPostRepository.insertPost(post.asSavedPost())

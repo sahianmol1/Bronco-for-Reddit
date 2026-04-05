@@ -6,10 +6,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 
-internal class PostDetailsService(
-    private val client: HttpClient,
-) {
-    suspend fun getPost(postUrl: String): List<ListingsResponse> {
-        return client.get("$BASE_URL$postUrl.json?raw_json=1").body()
-    }
+internal class PostDetailsService(private val client: HttpClient) {
+    suspend fun getPost(postUrl: String): List<ListingsResponse> =
+        client.get("$BASE_URL$postUrl.json?raw_json=1").body()
 }

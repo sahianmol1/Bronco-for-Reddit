@@ -3,9 +3,7 @@ package com.anmolsahi.postdetailsdomain.usecase
 import com.anmolsahi.postdetailsdomain.delegate.PostDetailsDelegate
 import java.util.logging.Logger
 
-class DeleteSavedPostUseCase(
-    private val delegate: PostDetailsDelegate,
-) {
+class DeleteSavedPostUseCase(private val delegate: PostDetailsDelegate) {
     private companion object {
         const val TAG = "DeleteSavedPostUseCase"
     }

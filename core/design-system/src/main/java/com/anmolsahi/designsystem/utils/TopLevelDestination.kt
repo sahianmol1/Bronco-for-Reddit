@@ -10,6 +10,4 @@ private val topLevelDestinations =
         Destinations.AboutUsDestination.route,
     )
 
-fun NavDestination?.isTopLevelDestination(): Boolean {
-    return this?.route in topLevelDestinations
-}
+fun NavDestination?.isTopLevelDestination(): Boolean = this?.route in topLevelDestinations

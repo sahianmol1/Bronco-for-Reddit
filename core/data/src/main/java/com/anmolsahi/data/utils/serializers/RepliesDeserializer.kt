@@ -8,7 +8,6 @@ import kotlinx.serialization.json.JsonTransformingSerializer
 object RepliesDeserializer : JsonTransformingSerializer<ListingsResponse>(
     ListingsResponse.serializer(),
 ) {
-    override fun transformDeserialize(element: JsonElement): JsonElement {
-        return if (element is JsonObject) element else JsonObject(emptyMap())
-    }
+    override fun transformDeserialize(element: JsonElement): JsonElement =
+        if (element is JsonObject) element else JsonObject(emptyMap())
 }

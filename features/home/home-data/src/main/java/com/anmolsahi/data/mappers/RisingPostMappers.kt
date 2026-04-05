@@ -28,42 +28,38 @@ internal fun ListingsResponse.asRisingPostEntity(): List<RisingPostEntity> {
     }.orEmpty()
 }
 
-internal fun List<RisingPostEntity>.asDomain(): List<RedditPost> {
-    return this.map {
-        RedditPost(
-            id = it.id,
-            subName = it.subName,
-            title = it.title,
-            description = it.description,
-            upVotes = it.upVotes,
-            comments = it.comments,
-            imageUrls = it.imageUrls,
-            postUrl = it.postUrl,
-            videoUrl = it.videoUrl,
-            gifUrl = it.gifUrl,
-            author = it.author,
-            after = it.after,
-            isSaved = it.isSaved,
-            thumbnailUrl = it.thumbnailUrl,
-        )
-    }
-}
-
-internal fun RisingPostEntity.asDomain(): RedditPost {
-    return RedditPost(
-        id = this.id,
-        subName = this.subName,
-        title = this.title,
-        description = this.description,
-        upVotes = this.upVotes,
-        comments = this.comments,
-        imageUrls = this.imageUrls,
-        postUrl = this.postUrl,
-        videoUrl = this.videoUrl,
-        gifUrl = this.gifUrl,
-        author = this.author,
-        after = this.after,
-        isSaved = this.isSaved,
-        thumbnailUrl = this.thumbnailUrl,
+internal fun List<RisingPostEntity>.asDomain(): List<RedditPost> = this.map {
+    RedditPost(
+        id = it.id,
+        subName = it.subName,
+        title = it.title,
+        description = it.description,
+        upVotes = it.upVotes,
+        comments = it.comments,
+        imageUrls = it.imageUrls,
+        postUrl = it.postUrl,
+        videoUrl = it.videoUrl,
+        gifUrl = it.gifUrl,
+        author = it.author,
+        after = it.after,
+        isSaved = it.isSaved,
+        thumbnailUrl = it.thumbnailUrl,
     )
 }
+
+internal fun RisingPostEntity.asDomain(): RedditPost = RedditPost(
+    id = this.id,
+    subName = this.subName,
+    title = this.title,
+    description = this.description,
+    upVotes = this.upVotes,
+    comments = this.comments,
+    imageUrls = this.imageUrls,
+    postUrl = this.postUrl,
+    videoUrl = this.videoUrl,
+    gifUrl = this.gifUrl,
+    author = this.author,
+    after = this.after,
+    isSaved = this.isSaved,
+    thumbnailUrl = this.thumbnailUrl,
+)

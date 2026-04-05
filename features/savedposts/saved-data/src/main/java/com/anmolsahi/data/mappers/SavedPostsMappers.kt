@@ -33,21 +33,19 @@ internal fun SavedPost.fromDomain(): SavedPostEntity = SavedPostEntity(
     after = this.after,
 )
 
-internal fun List<SavedPostEntity>.asDomain(): List<SavedPost> {
-    return this.map {
-        SavedPost(
-            id = it.id,
-            subName = it.subName,
-            title = it.title,
-            description = it.description,
-            upVotes = it.upVotes,
-            comments = it.comments,
-            imageUrls = it.imageUrls,
-            postUrl = it.postUrl,
-            videoUrl = it.videoUrl,
-            gifUrl = it.gifUrl,
-            author = it.author,
-            after = it.after,
-        )
-    }
+internal fun List<SavedPostEntity>.asDomain(): List<SavedPost> = this.map {
+    SavedPost(
+        id = it.id,
+        subName = it.subName,
+        title = it.title,
+        description = it.description,
+        upVotes = it.upVotes,
+        comments = it.comments,
+        imageUrls = it.imageUrls,
+        postUrl = it.postUrl,
+        videoUrl = it.videoUrl,
+        gifUrl = it.gifUrl,
+        author = it.author,
+        after = it.after,
+    )
 }

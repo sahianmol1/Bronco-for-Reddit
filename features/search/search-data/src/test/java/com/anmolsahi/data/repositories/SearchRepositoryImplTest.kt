@@ -143,37 +143,33 @@ internal class SearchRepositoryImplTest {
         }
     }
 
-    private fun getListingsResponse(): ListingsResponse {
-        return ListingsResponse(
-            data = ListingsData(
-                children = listOf(
-                    ListingsChildren(
-                        childrenData = ChildrenData(
-                            id = "1",
-                            title = "example_title_1",
-                        ),
+    private fun getListingsResponse(): ListingsResponse = ListingsResponse(
+        data = ListingsData(
+            children = listOf(
+                ListingsChildren(
+                    childrenData = ChildrenData(
+                        id = "1",
+                        title = "example_title_1",
                     ),
-                    ListingsChildren(
-                        childrenData = ChildrenData(
-                            id = "2",
-                            title = "example_title_2",
-                        ),
+                ),
+                ListingsChildren(
+                    childrenData = ChildrenData(
+                        id = "2",
+                        title = "example_title_2",
                     ),
                 ),
             ),
-        )
-    }
+        ),
+    )
 
-    private fun getRecentSearches(): List<RecentSearchEntity> {
-        return listOf(
-            RecentSearchEntity(
-                name = "dog",
-                timestamp = fixedTimestamp,
-            ),
-            RecentSearchEntity(
-                name = "cat",
-                timestamp = fixedTimestamp,
-            ),
-        )
-    }
+    private fun getRecentSearches(): List<RecentSearchEntity> = listOf(
+        RecentSearchEntity(
+            name = "dog",
+            timestamp = fixedTimestamp,
+        ),
+        RecentSearchEntity(
+            name = "cat",
+            timestamp = fixedTimestamp,
+        ),
+    )
 }

@@ -9,43 +9,31 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 @SuppressWarnings("TooManyFunctions")
-class AppPreferencesRepositoryImpl(
-    private val dataStore: DataStore<Preferences>,
-) : AppPreferencesRepository {
-    override suspend fun getHotPostsTimestamp(): Flow<Long> {
-        return dataStore.data.map { preferences ->
-            preferences[PreferencesKeys.hotPostsKey] ?: 0L
-        }
+class AppPreferencesRepositoryImpl(private val dataStore: DataStore<Preferences>) :
+    AppPreferencesRepository {
+    override suspend fun getHotPostsTimestamp(): Flow<Long> = dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.hotPostsKey] ?: 0L
     }
 
-    override suspend fun getTopPostsTimestamp(): Flow<Long> {
-        return dataStore.data.map { preferences ->
-            preferences[PreferencesKeys.topPostsKey] ?: 0L
-        }
+    override suspend fun getTopPostsTimestamp(): Flow<Long> = dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.topPostsKey] ?: 0L
     }
 
-    override suspend fun getRisingPostsTimestamp(): Flow<Long> {
-        return dataStore.data.map { preferences ->
-            preferences[PreferencesKeys.risingPostsKey] ?: 0L
-        }
+    override suspend fun getRisingPostsTimestamp(): Flow<Long> = dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.risingPostsKey] ?: 0L
     }
 
-    override suspend fun getBestPostsTimestamp(): Flow<Long> {
-        return dataStore.data.map { preferences ->
-            preferences[PreferencesKeys.bestPostsKey] ?: 0L
-        }
+    override suspend fun getBestPostsTimestamp(): Flow<Long> = dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.bestPostsKey] ?: 0L
     }
 
-    override suspend fun getControversialPostsTimestamp(): Flow<Long> {
-        return dataStore.data.map { preferences ->
+    override suspend fun getControversialPostsTimestamp(): Flow<Long> =
+        dataStore.data.map { preferences ->
             preferences[PreferencesKeys.controversialPostsKey] ?: 0L
         }
-    }
 
-    override suspend fun getNewPostsTimestamp(): Flow<Long> {
-        return dataStore.data.map { preferences ->
-            preferences[PreferencesKeys.newPostsKey] ?: 0L
-        }
+    override suspend fun getNewPostsTimestamp(): Flow<Long> = dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.newPostsKey] ?: 0L
     }
 
     override suspend fun saveHotPostsTimestamp(timestamp: Long) {

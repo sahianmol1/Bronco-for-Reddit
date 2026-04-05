@@ -9,9 +9,7 @@ import com.anmolsahi.domain.repositories.SavedPostRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class SavedPostRepositoryImpl(
-    private val dao: SavedPostDao,
-) : SavedPostRepository {
+internal class SavedPostRepositoryImpl(private val dao: SavedPostDao) : SavedPostRepository {
 
     private companion object {
         const val TAG = "SavedPostRepositoryImpl"
@@ -24,13 +22,11 @@ internal class SavedPostRepositoryImpl(
         dao.insertPost(post.fromDomain())
     }
 
-    override suspend fun getSavedPostById(id: String): SavedPost? {
-        return try {
-            dao.getSavedPostById(id)?.asDomain()
-        } catch (e: Throwable) {
-            Log.e(TAG, e.message.toString())
-            null
-        }
+    override suspend fun getSavedPostById(id: String): SavedPost? = try {
+        dao.getSavedPostById(id)?.asDomain()
+    } catch (e: Throwable) {
+        Log.e(TAG, e.message.toString())
+        null
     }
 
     override suspend fun deleteSavedPost(id: String) = dao.deleteSavedPost(id)

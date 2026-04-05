@@ -18,20 +18,16 @@ internal class SearchRepositoryImpl(
     private val service: SearchService,
     private val clock: Clock,
 ) : SearchRepository {
-    override fun searchReddit(query: String, nextPageKey: String?): Flow<List<RedditPost>?> {
-        return flow {
-            if (query.isBlank()) {
-                emit(null)
-            } else {
-                emit(service.searchReddit(query, nextPageKey).asDomain())
-            }
+    override fun searchReddit(query: String, nextPageKey: String?): Flow<List<RedditPost>?> = flow {
+        if (query.isBlank()) {
+            emit(null)
+        } else {
+            emit(service.searchReddit(query, nextPageKey).asDomain())
         }
     }
 
-    override fun getRecentSearches(): Flow<List<RecentSearch>> {
-        return dao.getRecentSearches()
-            .map { recentSearches -> recentSearches.map { it.asDomain() } }
-    }
+    override fun getRecentSearches(): Flow<List<RecentSearch>> = dao.getRecentSearches()
+        .map { recentSearches -> recentSearches.map { it.asDomain() } }
 
     override suspend fun insertRecentSearch(recentSearch: RecentSearch) {
         dao.upsert(recentSearch.asEntity(clock.currentTimeMillis()))

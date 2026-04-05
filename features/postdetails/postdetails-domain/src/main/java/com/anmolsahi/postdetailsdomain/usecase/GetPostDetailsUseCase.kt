@@ -8,7 +8,6 @@ class GetPostDetailsUseCase(
     private val delegate: PostDetailsDelegate,
     private val repository: PostDetailsRepository,
 ) {
-    suspend operator fun invoke(postId: String, postUrl: String): RedditPost {
-        return delegate.getPostById(postId) ?: repository.getPostContentFromNetwork(postUrl)
-    }
+    suspend operator fun invoke(postId: String, postUrl: String): RedditPost =
+        delegate.getPostById(postId) ?: repository.getPostContentFromNetwork(postUrl)
 }
